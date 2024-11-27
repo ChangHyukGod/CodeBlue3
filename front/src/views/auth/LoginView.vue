@@ -353,4 +353,3 @@ export default {
 }
 /* 모달 디자인 끝 */
 </style>
- 

@@ -1,10 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import MainView from "../views/main/MainView.vue";
 
 const routes = [
   {
     path: "/",
-    component: HomeView,
+    component: MainView,
+  },
+  {
+    path: "/add-main",
+    component: () => import("../views/main/MainAdd.vue"),
+  },
+  {
+    path: "/maindetail/:tourId",
+    component: () => import("../views/main/MainDetail.vue"),
   },
   {
     path: "/register",

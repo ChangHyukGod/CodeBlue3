@@ -17,6 +17,10 @@
         <b-nav-item>|</b-nav-item>
 
         <b-nav-item href="/faq">고객센터</b-nav-item>
+
+        <b-nav-item>|</b-nav-item>
+        <!-- 메인화면 카드 데이터 추가(임시 위치) -->
+        <b-nav-item href="/add-main">추가</b-nav-item>
       </div>
     </b-nav>
   </div>
@@ -26,11 +30,11 @@
         <img
           src="@/assets/icon.png"
           class="gpt-icon"
-          href="/home"
-          onclick="location.href='/home'"
+          href="/"
+          onclick="location.href='/'"
         />
         &nbsp;&nbsp;
-        <a class="navbar-brand" href="/home"> 지조결 L.L.A</a>
+        <a class="navbar-brand" href="/"> 지조결 L.L.A</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!-- 검색창 -->
         <div class="search_box">
