@@ -24,7 +24,7 @@
                       <input
                         type="password"
                         class="form-control form-control-user mb-3"
-                        placeholder="주민등록번호를 입력하세요."
+                        placeholder="비밀번호를 입력하세요."
                         v-model="user.password"
                       />
                     </div>
