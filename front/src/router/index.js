@@ -38,6 +38,18 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
+  {
+    path: "/admin",
+    component: ()=> import("../views/admin/AddAdminView.vue"),
+  },
+  {
+    path: "/admindb",
+    component: () => import("../views/admin/AdminDbView.vue")
+  },
+  {
+    path: "/postlist",
+    component : () => import("../views/admin/postlist.vue")
+  }
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
