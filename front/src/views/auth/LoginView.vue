@@ -5,7 +5,6 @@
         <div class="card custom-card mt-5">
           <div class="card-body p-0">
             <div class="row">
-              <!-- TODO: 입력양식 -->
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
@@ -24,14 +23,13 @@
                       <input
                         type="password"
                         class="form-control form-control-user mb-3"
-                        placeholder="주민등록번호를 입력하세요."
+                        placeholder="비밀번호를 입력하세요."
                         v-model="user.password"
                       />
                     </div>
                     <button class="btn btn-custom w-100 mb-3" @click="login">
                       Login
                     </button>
-                    <!-- 에러 메시지 표시 -->
                     <div
                       v-if="errorMessage"
                       class="alert alert-danger text-center mt-3"
@@ -47,8 +45,7 @@
                       <a
                         class="small mx-2"
                         href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#findEmailModal"
+                        @click="showFindEmailModal = true"
                       >
                         아이디 찾기
                       </a>
@@ -56,8 +53,7 @@
                       <a
                         class="small mx-2"
                         href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#updatePasswordModal"
+                        @click="showUpdatePasswordModal = true"
                       >
                         비밀번호 변경
                       </a>
@@ -73,11 +69,12 @@
 
     <!-- 이메일 찾기 모달 -->
     <div
-      class="modal fade"
-      id="findEmailModal"
+      v-if="showFindEmailModal"
+      class="modal fade show"
       tabindex="-1"
       aria-labelledby="findEmailModalLabel"
       aria-hidden="true"
+      style="display: block"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -86,7 +83,7 @@
             <button
               type="button"
               class="btn-close"
-              data-bs-dismiss="modal"
+              @click="showFindEmailModal = false"
               aria-label="Close"
             ></button>
           </div>
@@ -116,7 +113,7 @@
             <button
               type="button"
               class="btn btn-secondary"
-              data-bs-dismiss="modal"
+              @click="showFindEmailModal = false"
             >
               닫기
             </button>
@@ -130,11 +127,12 @@
 
     <!-- 비밀번호 변경 모달 -->
     <div
-      class="modal fade"
-      id="updatePasswordModal"
+      v-if="showUpdatePasswordModal"
+      class="modal fade show"
       tabindex="-1"
       aria-labelledby="findPasswordModalLabel"
       aria-hidden="true"
+      style="display: block"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -145,7 +143,7 @@
             <button
               type="button"
               class="btn-close"
-              data-bs-dismiss="modal"
+              @click="showUpdatePasswordModal = false"
               aria-label="Close"
             ></button>
           </div>
@@ -185,7 +183,7 @@
             <button
               type="button"
               class="btn btn-secondary"
-              data-bs-dismiss="modal"
+              @click="showUpdatePasswordModal = false"
             >
               닫기
             </button>
@@ -213,19 +211,18 @@ export default {
         email: "",
         password: "",
       },
-
       errorMessage: "", // 에러 메시지 상태 관리
-
       findEmailData: {
         name: "", // 이름
         ssn: "", // 주민번호
       },
-
       updatePasswordData: {
         email: "", // 이메일
-        ssn: "", // 주민번호
+        ssn: "", // 주민등록번호
         password: "", // 변경할 비밀번호
       },
+      showFindEmailModal: false, // 이메일 찾기 모달의 표시 상태
+      showUpdatePasswordModal: false, // 비밀번호 변경 모달의 표시 상태
     };
   },
 
@@ -233,14 +230,10 @@ export default {
     async login() {
       try {
         let response = await MemberService.login(this.user);
-        console.log(response.data);
-
         this.$store.state.loggedIn = true;
         localStorage.setItem("user", JSON.stringify(response.data));
-
         this.errorMessage = ""; // 에러 메시지 초기화
-
-        this.$router.push("/");
+        this.$router.push("/"); // 로그인 성공 후 홈으로 리다이렉트
       } catch (error) {
         this.$store.state.loggedIn = false;
         this.errorMessage = `로그인에 실패했습니다.<br />
@@ -251,28 +244,25 @@ export default {
 
     async findEmail() {
       try {
-        // 이메일 찾기 요청
         let response = await MemberService.findEmail(this.findEmailData);
-
-        // 이메일이 반환되면 이메일 목록을 출력
         let emailList = "아이디 목록:\n";
         response.data.forEach((email) => {
-          emailList += `${email}\n`; // 이메일을 줄바꿈을 포함하여 이어붙임
+          emailList += `${email}\n`;
         });
 
-        // 하나의 alert로 이메일 목록 표시
+        // 알림창 표시 후 모달 닫기
         alert(emailList);
-      } catch (error) {
-        // 에러가 발생했을 때
-        console.error(error);
 
-        // 서버에서 오류 메시지가 있을 경우 출력
-        if (error.response && error.response.data) {
-          alert(error.response.data);
-        } else {
-          // 서버에서 오류 메시지를 받지 못한 경우 기본 메시지 출력
-          alert("아이디를 찾을 수 없습니다.");
-        }
+        // 모달 닫고, 리다이렉트
+        this.showFindEmailModal = false;
+
+        // 0.5초 후 홈 페이지로 리다이렉트
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 500);
+      } catch (error) {
+        console.error(error);
+        alert("아이디를 찾을 수 없습니다.");
       }
     },
 
@@ -281,29 +271,25 @@ export default {
         let response = await MemberService.updatePassword(
           this.updatePasswordData
         );
-
-        // 성공적으로 비밀번호가 변경되면
         if (response.status === 200) {
-          alert(response.data); // 서버에서 반환된 메시지 그대로 사용
+          alert("비밀번호 변경이 성공했습니다.");
+          this.showUpdatePasswordModal = false; // 모달 닫기
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 500); // alert 후 0.5초 뒤에 리다이렉트
         } else {
-          // 서버에서 반환된 메시지가 없으면 기본 메시지 사용
           alert(response.data || "비밀번호를 변경할 수 없습니다.");
         }
       } catch (error) {
-        // 서버 오류나 네트워크 오류 시, 서버에서 전달한 메시지만 사용
-        if (error.response && error.response.data) {
-          alert(error.response.data); // 서버에서 전달한 에러 메시지
-        } else {
-          alert("비밀번호를 변경할 수 없습니다. 잠시 후 다시 시도해 주세요."); // 기본 에러 메시지
-        }
         console.error(error);
+        alert("비밀번호를 변경할 수 없습니다. 잠시 후 다시 시도해 주세요.");
       }
     },
   },
 
   mounted() {
     if (this.$store.state.loggedIn === true) {
-      this.$router.push("/");
+      this.$router.push("/"); // 이미 로그인 상태라면 홈 페이지로 리다이렉트
     }
   },
 };
@@ -367,3 +353,4 @@ export default {
 }
 /* 모달 디자인 끝 */
 </style>
+ 

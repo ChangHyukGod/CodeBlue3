@@ -16,11 +16,11 @@ const routes = [
   },
   {
     path: "/faq",
-    component: () => import("../views/FaqMain.vue"),
+    component: () => import("../views/faq/FaqMain.vue"),
   },
   {
     path: "/announcement",
-    component: () => import("../views/FaqAnnouncement.vue"),
+    component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
     path: "/review",

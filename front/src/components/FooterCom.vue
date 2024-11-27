@@ -1,5 +1,5 @@
 <template>
-  <div class="full-head">
+  <div class="full-foot">
     <nav class="bg-light">
       <hr />
       <div>
@@ -49,6 +49,9 @@
 export default {};
 </script>
 <style>
+.full-foot {
+  margin-top: 50px;
+}
 .footer-container {
   display: flex;
   justify-content: space-between;
