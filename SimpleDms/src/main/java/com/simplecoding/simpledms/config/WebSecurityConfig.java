@@ -72,6 +72,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(
                 req -> req.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll() // 옵션(페이지이동  허용)
                         .requestMatchers("/api/auth/**").permitAll()                // 이 url은 모두 접근 허용(로그인 관계없이)
+                        .requestMatchers("/api/coupon/**").permitAll()                // 이 url은 모두 접근 허용(로그인 관계없이)
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")          // 이 url은 ROLE_ADMIN만 접근 허용(로그인 해야함)
                         .requestMatchers("/api/basic/dept/**").permitAll()          // 부서 url은 모두 접근 허용(로그인 관계없이)
                         .requestMatchers("/").permitAll()                           // 첫 페이지는 모두 접근 허용(로그인 관계없이)
