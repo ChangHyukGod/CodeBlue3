@@ -15,6 +15,18 @@ const routes = [
     path: '/login',
     component: () => import('../views/auth/LoginView.vue')
   },
+  {
+    path: "/review",
+    component: () => import("../views/review/ReviewMain.vue"),
+  },
+  {
+    path: "/add-review",
+    component: () => import("../views/review/AddReview.vue"),
+  },
+  {
+    path: '/review/:uuid',
+    component: () => import('../views/review/ReviewDetail.vue')
+  }
 ]
 
 
