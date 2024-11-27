@@ -11,7 +11,7 @@ const routes = [
     component: () => import("../views/main/MainAdd.vue"),
   },
   {
-    path: "/maindetail",
+    path: "/maindetail/:tourId",
     component: () => import("../views/main/MainDetail.vue"),
   },
   {
