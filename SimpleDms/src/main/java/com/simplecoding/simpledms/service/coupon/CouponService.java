@@ -30,6 +30,19 @@ public class CouponService {
 
 
 
+//    public void insert(Coupon coupon, double value, String me) {
+//        // 20% 할인 금액 계산
+//        double discountAmount = totalPrice * 0.20; // 할인 금액 계산
+//
+//        // 쿠폰에 할인 금액과 이메일 값 설정
+//        coupon.setValue(discountAmount);  // 할인 금액
+//        coupon.setMemberEmail(memberEmail);  // 이메일 값 설정
+//
+//        // 쿠폰 삽입
+//        couponMapper.insert(coupon);
+//    }
+
+
 
 
 

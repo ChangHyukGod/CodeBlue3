@@ -4,10 +4,18 @@
 <mapper namespace="com.simplecoding.simpledms.mapper.coupon.CouponMapper">
 
   <!--   쿠폰을 DB에 저장하는 SQL -->
-    <insert id="insert" parameterType="Coupon">
+ <!--   <insert id="insert" parameterType="Coupon">
         INSERT INTO COUPONS (ID, VALUE, NAME, MEMBER_EMAIL)
         VALUES (#{id}, #{value}, #{name},#{memberEmail})
     </insert>
+-->
+      <insert id="insert" parameterType="Coupon">
+       INSERT INTO COUPONS (VALUE, NAME, MEMBER_EMAIL)
+       VALUES (#{value}, '신규 회원 20%할인',#{memberEmail})
+   </insert>
+
+
+
 
 
 </mapper>
