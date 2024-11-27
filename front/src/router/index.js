@@ -3,17 +3,16 @@ import HomeView from "../views/HomeView.vue";
 
 const routes = [
   {
-
     path: "/",
     component: HomeView,
   },
   {
-    path: '/register',
-    component: () => import('../views/auth/RegisterView.vue')
+    path: "/register",
+    component: () => import("../views/auth/RegisterView.vue"),
   },
   {
-    path: '/login',
-    component: () => import('../views/auth/LoginView.vue')
+    path: "/login",
+    component: () => import("../views/auth/LoginView.vue"),
   },
   {
     path: "/review",
@@ -26,9 +25,12 @@ const routes = [
   {
     path: '/review/:uuid',
     component: () => import('../views/review/ReviewDetail.vue')
-  }
-]
-
+  },
+  {
+    path: "/coupon",
+    component: () => import("../views/coupon/CouponView.vue"),
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
