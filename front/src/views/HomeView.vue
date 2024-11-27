@@ -1,6 +1,6 @@
 <template>
   <div>
-    HomeView.vue
+    야호
   </div>
 </template>
 <script>
