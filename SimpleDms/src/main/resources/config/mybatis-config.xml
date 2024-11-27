@@ -15,7 +15,7 @@
     <typeAliases>
         <typeAlias type="com.simplecoding.simpledms.vo.auth.Member" alias="Member"/>
         <typeAlias type="com.simplecoding.simpledms.vo.common.Criteria" alias="Criteria"/>
-        <typeAlias type="com.simplecoding.simpledms.vo.tour.Tour" alias="Tour"/>
+        <typeAlias type="com.simplecoding.simpledms.vo.main.Tour" alias="Tour"/>
 
     </typeAliases>
 </configuration>
