@@ -14,6 +14,6 @@
 <!--   TODO: 별칭 설정 -->
     <typeAliases>
         <typeAlias type="com.simplecoding.simpledms.vo.auth.Member" alias="Member"/>
-
+        <typeAlias type="com.simplecoding.simpledms.vo.coupon.Coupon" alias="Coupon"/>
     </typeAliases>
 </configuration>
