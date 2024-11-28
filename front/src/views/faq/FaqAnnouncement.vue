@@ -131,31 +131,31 @@ export default {
 }
 /* 검색창 */
 .search_bar_announce {
-  width: 35%; /* 검색창의 너비 */
-  margin: 1px auto; /* 검색창을 중앙 정렬 */
-  border-radius: 25px; /* 테두리 둥글게 */
+  width: 35%;
+  margin: 1px auto;
+  border-radius: 25px;
   border: none;
-  position: relative; /* 자식 요소의 절대 위치 기준으로 설정 */
+  position: relative;
   background-color: white;
   margin-right: 10px;
   margin-bottom: 10px;
 }
 /* 돋보기 아이콘 */
 .search_glass_announce {
-  position: absolute; /* 검색창 내부에서 절대 위치 설정 */
-  right: 15px; /* 검색창 내부에서 오른쪽 여백 */
-  top: 50%; /* 검색창의 세로 중앙 정렬 */
-  transform: translateY(-50%); /* 세로 중앙 정렬 보정 */
-  font-size: 1.2rem; /* 아이콘 크기 */
-  color: #ffeb33; /* 색상 */
-  cursor: pointer; /* 클릭 가능한 상태 */
+  position: absolute; 
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem; 
+  color: #ffeb33; 
+  cursor: pointer;
 }
 /* 입력 필드 */
 .input_text {
-  margin: 10px auto; /* 검색창을 중앙 정렬 */
+  margin: 10px auto;
   border-radius: 25px; /* 테두리 둥글게 */
   border: 1.5px solid #ccc; /* 테두리 색상 */
-  padding: 5px 15px; /* 내부 여백 */
+  padding: 5px 15px; 
   position: relative; /* 자식 요소의 절대 위치 기준으로 설정 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
   background-color: white;
