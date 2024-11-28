@@ -24,11 +24,11 @@ const routes = [
   },
   {
     path: "/faq",
-    component: () => import("../views/FaqMain.vue"),
+    component: () => import("../views/faq/FaqMain.vue"),
   },
   {
     path: "/announcement",
-    component: () => import("../views/FaqAnnouncement.vue"),
+    component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
     path: "/review",
@@ -46,7 +46,6 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
-
   {
     path: "/mypage",
     component: () => import("../views/mypage/MypageView.vue"),
@@ -55,6 +54,19 @@ const routes = [
   {
     path: "/recommend",
     component: () => import("../views/recommend/RecommendView.vue"),
+  },
+
+  {
+    path: "/addadmin",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
+  {
+    path: "/adminlist",
+    component: () => import("../views/admin/AdminDbDetail.vue"),
+  },
+  {
+    path: "/admindb",
+    component: () => import("../views/admin/AdminDbView.vue"),
   },
 ];
 const router = createRouter({
