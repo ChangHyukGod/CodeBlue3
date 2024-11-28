@@ -24,11 +24,11 @@ const routes = [
   },
   {
     path: "/faq",
-    component: () => import("../views/FaqMain.vue"),
+    component: () => import("../views/faq/FaqMain.vue"),
   },
   {
     path: "/announcement",
-    component: () => import("../views/FaqAnnouncement.vue"),
+    component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
     path: "/review",
@@ -46,6 +46,18 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
+  {
+    path: "/admin",
+    component: ()=> import("../views/admin/AddAdminView.vue"),
+  },
+  {
+    path: "/admindb",
+    component: () => import("../views/admin/AdminDbView.vue")
+  },
+  {
+    path: "/postlist",
+    component : () => import("../views/admin/postlist.vue")
+  }
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

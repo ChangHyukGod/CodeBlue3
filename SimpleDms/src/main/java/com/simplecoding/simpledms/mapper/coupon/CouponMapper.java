@@ -3,6 +3,8 @@ package com.simplecoding.simpledms.mapper.coupon;
 import com.simplecoding.simpledms.vo.coupon.Coupon;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 /**
  * @author : KTE-149
  * @fileName : CouponMapper
@@ -12,7 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CouponMapper {
 
-    int insert(Coupon coupon);  // 쿠폰 insert 메서드
+   int insert(Coupon coupon);  // 쿠폰 insert 메서드
+
 
 
 

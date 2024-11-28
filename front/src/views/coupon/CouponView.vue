@@ -26,7 +26,7 @@
               <div
                 class="discount-circle bg-gradient-primary text-light border-primary fw-bold"
               >
-                20%
+                {{ coupon.value }}%
               </div>
               <div class="ms-3">
                 <p class="mb-1 text-muted">최소 구매금액 제한 없음</p>
@@ -41,10 +41,7 @@
             </ul>
 
             <!-- 쿠폰 받기 버튼 -->
-            <button
-              class="btn btn-gradient-primary w-100"
-              @click="getHotelCoupon"
-            >
+            <button class="btn btn-gradient-primary w-100" @click="getCoupon">
               신규회원 한정 쿠폰 받기
             </button>
           </div>
@@ -96,51 +93,53 @@
 </template>
 
 <script>
+import CouponService from "@/services/coupon/CounponService";
+
 export default {
-  name: "CouponPage",
+  data() {
+    return {
+      coupon: {
+        value: 20.0,
+        name: "",
+        memberEmail: "",
+      },
+    };
+  },
+
   methods: {
-    async getHotelCoupon() {
+    async getCoupon() {
       try {
-        const response = await fetch("/api/coupon/claim", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ couponType: "hotel" }),
-        });
-
-        const result = await response.json();
-        if (result.success) {
-          alert("대표 호텔 쿠폰이 발급되었습니다!");
-        } else {
-          alert(`오류 발생: ${result.message}`);
-        }
+        let response = await CouponService.insert(this.coupon);
+        console.log(response.data);
+        // 성공하면 강제이동
+        alert("쿠폰이 발급되었습니다. 마이페이지에서 확인하세요.");
+        this.$router.push("/coupon");
       } catch (error) {
         console.error("쿠폰 발급 중 오류 발생:", error);
-        alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
+        alert("쿠폰 발급 실패");
       }
     },
-    async getWinterCoupon() {
-      try {
-        const response = await fetch("/api/coupon/claim", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ couponType: "winter-season" }),
-        });
+    // async getWinterCoupon() {
+    //   try {
+    //     const response = await fetch("/api/coupon/claim", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({ couponType: "winter-season" }),
+    //     });
 
-        const result = await response.json();
-        if (result.success) {
-          alert("겨울 시즌 쿠폰이 발급되었습니다!");
-        } else {
-          alert(`오류 발생: ${result.message}`);
-        }
-      } catch (error) {
-        console.error("쿠폰 발급 중 오류 발생:", error);
-        alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
-      }
-    },
+    //     const result = await response.json();
+    //     if (result.success) {
+    //       alert("겨울 시즌 쿠폰이 발급되었습니다!");
+    //     } else {
+    //       alert(`오류 발생: ${result.message}`);
+    //     }
+    //   } catch (error) {
+    //     console.error("쿠폰 발급 중 오류 발생:", error);
+    //     alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
+    //   }
+    // },
   },
 };
 </script>
