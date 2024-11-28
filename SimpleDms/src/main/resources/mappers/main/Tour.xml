@@ -7,7 +7,7 @@
         SELECT * FROM TOUR
         WHERE TOUR_ID LIKE '%'||#{searchKeyword}||'%'
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
-            FETCH NEXT #{recordCountPerPage} ROWS ONLY
+        FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
 
     <!-- 전체조회 _ 총건수 : public int selectTourTotCnt(Criteria searchVO); -->
@@ -18,13 +18,27 @@
 
     <!-- 추가, 업로드 : public int insert(Tour tour);-->
     <insert id="insert" parameterType="Tour">
-        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE)
-        VALUES(#{tourId}, #{name}, #{location}, #{description}, #{price})
+        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL)
+        VALUES(#{tourId}, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl})
     </insert>
 
-    <!-- 상세조회 : public Optional<Tour> select(int tourId); -->
-    <select id="select" parameterType="int" resultType="Tour">
+    <!-- 상세조회 : public Optional<Tour> select(String tourId); -->
+    <select id="select" parameterType="String" resultType="Tour">
         SELECT * FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </select>
+
+    <!-- 수정 : public int update(Tour tour); -->
+    <update id="update" parameterType="Tour">
+        UPDATE TOUR
+        SET NAME = #{name}, LOCATION = #{location}, DESCRIPTION = #{description},
+            PRICE = #{price}, TOUR_DATA = #{tourData}, TOUR_FILE_URL = #{tourFileUrl}
+        WHERE TOUR_ID = #{tourId}
+    </update>
+
+    <!-- 삭제 : public int delete(String tourId);-->
+    <delete id="delete" parameterType="String">
+        DELETE TOUR
+        WHERE TOUR_ID = #{tourId}
+    </delete>
 </mapper>

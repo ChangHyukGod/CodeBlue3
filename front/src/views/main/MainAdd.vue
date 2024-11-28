@@ -24,8 +24,11 @@
         <label for="loc">price</label>
     </div>
 
-    <!-- 버튼 -->
-    <button type="button" class="btn btn-primary" @click="save">저장</button>
+    <!-- image -->
+    <div class="input-group">
+      <input type="file" class="form-control" ref="file" @change="select"/>
+      <button class="btn btn-outline-secondary" type="button" @click="save">저장</button>
+    </div>
 </div>
 </template>
 <script>
@@ -37,11 +40,16 @@ export default {
                 name:"",
                 location:"",
                 description:"",
-                price:""
+                price:"",
+                tourFileUrl: "",
+                image: undefined
             }
         }
     },
     methods: {
+        select(){
+            this.main.image = this.$refs.file.files[0];
+        },
         async save(){
             try {
             let response = await MainService.insert(this.main);
@@ -49,6 +57,7 @@ export default {
             // TODO : 저장후 강제이동 : 전체조회 페이지(/dept)
             this.$router.push("/")
             } catch (error) {
+                this.main.image = undefined;
                 console.log(error);
             }
         }
