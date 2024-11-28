@@ -4,13 +4,23 @@
   <div>
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
-        <b-nav-item href="/login">로그인</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login"
+          >로그인
+        </b-nav-item>
 
-        <b-nav-item>|</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
 
-        <b-nav-item href="/register">회원가입</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register"
+          >회원가입</b-nav-item
+        >
 
-        <b-nav-item>|</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
+
+        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
+          >로그아웃</b-nav-item
+        >
+
+        <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
 
         <b-nav-item>예약확인</b-nav-item>
 
@@ -83,8 +93,22 @@
 </template>
 
 <script>
-export default {};
+import MemberService from "@/services/auth/MemberService";
+export default {
+  methods: {
+    logout() {
+      MemberService.logout();
+
+      // 공유변수
+      this.$store.state.loggedIn = false;
+
+      // 로그인 페이지 강제이동
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
+
 <style>
 /* 최상단 메뉴 */
 .upper_menu {
