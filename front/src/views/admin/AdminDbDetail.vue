@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import AdminService from '@/service/admin/AdminService';
+import AdminService from '@/services/admin/AdminService';
 export default {
     data() {
         return {

@@ -47,15 +47,15 @@ const routes = [
     component: () => import("../views/coupon/CouponView.vue"),
   },
   {
-    path: "/admin",
+    path: "/addadmin",
     component: ()=> import("../views/admin/AddAdminDb.vue"),
   },
   {
-    path: "/admindb",
+    path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue")
   },
   {
-    path: "/postlist",
+    path: "/admindb",
     component : () => import("../views/admin/AdminDbView.vue")
   }
 ];
