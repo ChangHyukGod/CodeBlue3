@@ -111,6 +111,7 @@ export default {
 .new,
 .announce {
   color: #ffeb33;
+  -webkit-text-stroke: 0.4px black;
   font-size: 16px;
   font-family: dohyeon;
 }
