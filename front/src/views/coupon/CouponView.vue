@@ -112,6 +112,7 @@ export default {
         let response = await CouponService.insert(this.coupon);
         console.log(response.data);
         // 성공하면 강제이동
+
         alert("쿠폰이 발급되었습니다. 마이페이지에서 확인하세요.");
         this.$router.push("/coupon");
       } catch (error) {
