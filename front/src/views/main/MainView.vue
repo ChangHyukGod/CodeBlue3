@@ -43,15 +43,17 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col" v-for="(data, index) in mains" :key="index">
         <div class="card h-100">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top">
+          <img :src="data.tourFileUrl" class="card-img-top">
           <div class="card-body">
-            <router-link :to='"/maindetail/" + data.tourId'>
-              <span class="badge bg-primary">{{data.tourId}}</span>
-            </router-link>
+            <!-- ↓ 기본키는 잘 넘어가는지 확인용, 최종 디자인에서 지울예정 -->
+            <span class="badge bg-primary">{{data.tourId}}</span>
             <h5 class="card-title mt-2">{{data.name}}</h5>
             <p class="card-text">{{data.location}}</p>
             <p class="card-text">{{data.description}}</p>
             <p class="text-primary fw-bold">{{data.price}}</p>
+            <router-link :to='"/maindetail/" + data.tourId'>
+              <button class="btn btn-primary">보러가기</button>
+            </router-link>
           </div>
         </div>
       </div>
