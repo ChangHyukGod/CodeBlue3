@@ -18,5 +18,7 @@ public interface TourMapper {
     public List<?> selectTour(Criteria searchVO);  //전체조회
     public int selectTourTotCnt(Criteria searchVO);  //총건수
     public int insert(Tour tour);  //추가, 업로드
-    public Optional<Tour> select(int tourId);  //상세조회
+    public Optional<Tour> select(String tourId);  //상세조회
+    public int update(Tour tour);  //수정
+    public int delete(String tourId);  //삭제
 }
