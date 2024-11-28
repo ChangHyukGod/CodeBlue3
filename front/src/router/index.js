@@ -15,6 +15,10 @@ const routes = [
     component: () => import("../views/main/MainDetail.vue"),
   },
   {
+    path: "/mainupdate/:tourId",
+    component: () => import("../views/main/MainUpdate.vue"),
+  },
+  {
     path: "/register",
     component: () => import("../views/auth/RegisterView.vue"),
   },

@@ -29,6 +29,15 @@
       <img :src="tour.tourFileUrl" width="200px"/>
     </div>
 
+    <!-- 파일선택상자 -->
+    <div class="input-group">
+      <input type="file" class="form-control" ref="file" @change="select" />
+    </div>
+    <div class="mt-3" style="display:flex; justify-content: space-between;">
+      <button class="btn btn-warning" type="button" @click="update">수정</button>
+      <button class="btn btn-danger" type="button" @click="remove">삭제</button>
+    </div>
+
   </div>
 </template>
 <script>
@@ -57,6 +66,31 @@ export default {
           console.log(error);
         }
       },
+    select() {
+      this.tour.image = this.$refs.file.files[0];
+    },
+    async update() {
+      try {
+        let response = await MainService.update(
+          this.tour.tourId,
+          this.tour
+        );
+        console.log(response.data);
+        alert("수정되었습니다.");
+      } catch (error) {
+        this.tour.image = undefined;
+        console.log(error);
+      }
+    },
+    async remove() {
+      try {
+        let response = await MainService.remove(this.tour.tourId);
+        console.log(response.data);
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
     this.getDetail(this.$route.params.tourId);
