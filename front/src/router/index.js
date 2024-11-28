@@ -51,6 +51,11 @@ const routes = [
     path: "/mypage",
     component: () => import("../views/mypage/MypageView.vue"),
   },
+
+  {
+    path: "/recommend",
+    component: () => import("../views/recommend/RecommendView.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
