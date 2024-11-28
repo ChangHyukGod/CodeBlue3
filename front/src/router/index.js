@@ -46,6 +46,11 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
+
+  {
+    path: "/mypage",
+    component: () => import("../views/mypage/MypageView.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
