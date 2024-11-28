@@ -16,4 +16,5 @@ import java.util.List;
 public interface ReviewMapper {
     public List<?> selectReviewList(Criteria searchVO);
     public int selectReviewListTotCnt(Criteria searchVO);
+    
 }
