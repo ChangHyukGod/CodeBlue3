@@ -49,6 +49,8 @@ room - 방예약DB
 - check_in	: 체크인 시간 (문자열 100자)
 - check_out	: 체크아웃 시간 (문자열 100자)
 
+ 
+
 CREATE TABLE "TOUR_DB"."COUPONS" 
 (
     "ID"           VARCHAR2(20 BYTE), 
@@ -126,4 +128,14 @@ CREATE TABLE "TOUR_DB"."TOUR"
     "TOUR_FILE_URL" VARCHAR2(1000 BYTE)
 );
 
+CREATE TABLE "RECOMMEND" 
+(
+    "TD_ID" NUMBER PRIMARY KEY,  -- 여행지 고유 ID
+    "TD_NAME" VARCHAR2(255 BYTE) NOT NULL,  -- 여행지 이름
+    "LOC" VARCHAR2(255 BYTE) NOT NULL,  -- 위치
+    "DESCRIPTION" CLOB,  -- 여행지 설명
+    "IMAGE_URL" VARCHAR2(1000 BYTE),  -- 이미지 URL
+    "IMAGE_DATA " BLOB, -- 이미지 데이터
+    "POPULARITY" NUMBER  -- 인기도
+);
 
