@@ -47,16 +47,16 @@ const routes = [
     component: () => import("../views/coupon/CouponView.vue"),
   },
   {
-    path: "/admin",
-    component: ()=> import("../views/admin/AddAdminView.vue"),
+    path: "/addadmin",
+    component: ()=> import("../views/admin/AddAdminDb.vue"),
+  },
+  {
+    path: "/adminlist",
+    component: () => import("../views/admin/AdminDbDetail.vue")
   },
   {
     path: "/admindb",
-    component: () => import("../views/admin/AdminDbView.vue")
-  },
-  {
-    path: "/postlist",
-    component : () => import("../views/admin/postlist.vue")
+    component : () => import("../views/admin/AdminDbView.vue")
   }
 ];
 const router = createRouter({

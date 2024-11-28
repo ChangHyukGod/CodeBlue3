@@ -16,6 +16,25 @@
 
 
 
+    <select id="selectCouponList" parameterType="Criteria" resultType="Coupon">
+
+      SELECT * FROM COUPONS
+      WHERE NAME LIKE '%신규 회원 20%할인%'
+      OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
+          FETCH NEXT #{recordCountPerPage} ROWS ONLY
+
+
+    </select>
+
+
+    <select id="selectCouponListTotCnt"
+            parameterType="Criteria"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM COUPONS
+        WHERE NAME LIKE '%신규 회원 20%할인%'
+    </select>
+
 
 
 </mapper>

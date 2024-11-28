@@ -11,44 +11,52 @@
                 <textarea v-model="post.content" id="content" required class="form-textarea"></textarea>
             </div>
             <div class="mb-3">
-                <label for="formFile" class="form-label">{{ file }} </label>
-                <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
+                <label for="formFile" class="form-label">{{ fileLabel }}</label>
+                <input class="form-control" type="file" id="formFile" @change="handleFileUpload" />
             </div>
             <div class="form-actions">
-                <button type="submit" class="submit-button">{{ formTitle }}</button>
+                <button type="submit" class="submit-button" :disabled="isLoading">
+                    {{ formTitle }}
+                </button>
             </div>
         </form>
+        <div v-if="isLoading" class="loading-overlay">
+            <p>저장 중...</p>
+        </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+import AdminService from "@/services/admin/AdminService";
 
 export default {
-    name: 'PostForm',
+    name: "PostForm",
     data() {
         return {
             post: {
-                title: '',
-                content: '',
+                title: "",
+                content: "",
             },
             selectedFile: null, // 파일 저장을 위한 변수
+            isLoading: false, // 로딩 상태 추가
         };
     },
     computed: {
         formTitle() {
-            return this.$route.params.id ? '게시물 수정' : '게시물 작성';
+            return this.$route.params.id ? "게시물 수정" : "게시물 작성";
         },
-        file() {
-            return this.$route.params.id ? '게시물 수정' : '첨부파일';
-        }
+        fileLabel() {
+            return this.$route.params.id ? "게시물 수정" : "첨부파일";
+        },
     },
-    created() {
+    async created() {
         if (this.$route.params.id) {
-            const post = this.$store.state.posts.find(
-                (post) => post.id === this.$route.params.id
-            );
-            this.post = { ...post };
+            try {
+                const response = await AdminService.getPostById(this.$route.params.id);
+                this.post = response.data;
+            } catch (error) {
+                console.error("게시물 로드 실패:", error);
+            }
         }
     },
     methods: {
@@ -60,27 +68,30 @@ export default {
         // 게시물 저장
         async savePost() {
             try {
+                this.isLoading = true; // 로딩 시작
                 const formData = new FormData();
-                formData.append('title', this.post.title);
-                formData.append('content', this.post.content);
+                formData.append("title", this.post.title);
+                formData.append("content", this.post.content);
                 if (this.selectedFile) {
-                    formData.append('file', this.selectedFile);
+                    formData.append("file", this.selectedFile);
                 }
 
-                // 게시물 작성 API 호출
                 if (this.$route.params.id) {
-                    await axios.put(`/api/posts/${this.$route.params.id}`, formData); // 수정 요청
+                    await AdminService.updatePost(this.$route.params.id, formData); // 수정 요청
                 } else {
-                    await axios.post('/api/posts', formData); // 새 게시물 추가 요청
+                    await AdminService.createPost(formData); // 새 게시물 추가 요청
                 }
-                this.$router.push('/admin');
+                this.$router.push("/admin");
             } catch (error) {
-                console.error('게시물 저장 실패:', error);
+                console.error("게시물 저장 실패:", error);
+            } finally {
+                this.isLoading = false; // 로딩 종료
             }
         },
     },
 };
 </script>
+
 <style scoped>
 .post-form-container {
     max-width: 600px;
@@ -137,9 +148,31 @@ label {
     border-radius: 10px;
     cursor: pointer;
     margin-top: 20px;
+    transition: all 0.3s ease-in-out;
 }
 
 .submit-button:hover {
-    background-color: #ffeb33;
+    background-color: #ffd700;
+    transform: scale(1.02);
+}
+
+.submit-button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    z-index: 1000;
 }
 </style>
