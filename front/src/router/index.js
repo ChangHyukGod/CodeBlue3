@@ -40,15 +40,15 @@ const routes = [
   },
   {
     path: "/admin",
-    component: ()=> import("../views/admin/AddAdminView.vue"),
+    component: ()=> import("../views/admin/AddAdminDb.vue"),
   },
   {
     path: "/admindb",
-    component: () => import("../views/admin/AdminDbView.vue")
+    component: () => import("../views/admin/AdminDbDetail.vue")
   },
   {
     path: "/postlist",
-    component : () => import("../views/admin/postlist.vue")
+    component : () => import("../views/admin/AdminDbView.vue")
   }
 ];
 const router = createRouter({
