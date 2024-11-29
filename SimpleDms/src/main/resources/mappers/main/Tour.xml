@@ -50,7 +50,7 @@
 
     <!-- 삭제 : public int delete(int tourId);-->
     <delete id="delete" parameterType="int">
-        DELETE TOUR
+        DELETE FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </delete>
 </mapper>
