@@ -141,6 +141,7 @@ export default {
     return new Date(date).toLocaleDateString('ko-KR', options);
   },
 },
+
 mounted() {
   this.loadReviews(); // 페이지 로드 시 리뷰 목록을 불러옵니다.
 },
@@ -150,3 +151,4 @@ mounted() {
 <style>
 
 </style>
+
