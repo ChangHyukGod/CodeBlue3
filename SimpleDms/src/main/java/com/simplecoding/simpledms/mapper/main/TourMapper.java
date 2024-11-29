@@ -17,8 +17,13 @@ import java.util.Optional;
 public interface TourMapper {
     public List<?> selectTour(Criteria searchVO);  //전체조회
     public int selectTourTotCnt(Criteria searchVO);  //총건수
-    public int insert(Tour tour);  //추가, 업로드
-    public Optional<Tour> select(String tourId);  //상세조회
+
+    //추가, 업로드 -> 시퀀스 정수형일때
+    public int insert(Tour tour);
+    public int updateTourUrl(Tour tour);  // URL 업데이트 추가(tourId + tourUrl)
+    public int selectGenerateTourId();  // tourId 생성 후 가져오는 매서드
+
+    public Optional<Tour> select(int tourId);  //상세조회
     public int update(Tour tour);  //수정
-    public int delete(String tourId);  //삭제
+    public int delete(int tourId);  //삭제
 }
