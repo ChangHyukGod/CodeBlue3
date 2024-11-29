@@ -1,16 +1,25 @@
-// components/HeaderCom.vue // vueInit
 <template>
   <!-- 최상단 메뉴 -->
   <div>
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
-        <b-nav-item href="/login">로그인</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login"
+          >로그인
+        </b-nav-item>
 
-        <b-nav-item>|</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
 
-        <b-nav-item href="/register">회원가입</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register"
+          >회원가입</b-nav-item
+        >
 
-        <b-nav-item>|</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
+
+        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
+          >로그아웃</b-nav-item
+        >
+
+        <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
 
         <b-nav-item>예약확인</b-nav-item>
 
