@@ -54,18 +54,24 @@ const routes = [
     path: "/mypage",
     component: () => import("../views/mypage/MypageView.vue"),
   },
+
+  {
+    path: "/recommend",
+    component: () => import("../views/recommend/RecommendView.vue"),
+  },
+
   {
     path: "/addadmin",
-    component: ()=> import("../views/admin/AddAdminDb.vue"),
+    component: () => import("../views/admin/AddAdminDb.vue"),
   },
   {
     path: "/adminlist",
-    component: () => import("../views/admin/AdminDbDetail.vue")
+    component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
     path: "/admindb",
-    component : () => import("../views/admin/AdminDbView.vue")
-  }
+    component: () => import("../views/admin/AdminDbView.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
