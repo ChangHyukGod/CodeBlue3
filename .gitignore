@@ -1,4 +1,5 @@
 front/node_modules/.cache/eslint/3d2e9dd7.json
-front/node_modules/.cache/eslint/3d2e9dd7.json
-front/node_modules/.cache/eslint/3d2e9dd7.json
 
+# IntelliJ IDEA 관련 파일 및 폴더 무시
+.idea/
+*.iml
