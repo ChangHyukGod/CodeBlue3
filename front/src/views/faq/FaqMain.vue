@@ -105,6 +105,7 @@
                   <!-- 질문 -->
                   <p
                     v-for="(text, tIndex) in question.texts"
+
                     :key="`text-${question.id}-${tIndex}`"
                     class="card-body"
                     data-bs-toggle="popover"
@@ -120,6 +121,7 @@
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
+
                   <b-button variant="primary" class="card-button"
                     >자세히 보기</b-button
                   >
@@ -127,6 +129,7 @@
               </div>
             </div>
           </div>
+
         </div>
         <!-- 모달 -->
         <!-- <div>
@@ -174,6 +177,7 @@
 </template>
 
 <script>
+
 import * as bootstrap from "bootstrap";
 export default {
   // 팝오버
@@ -192,6 +196,7 @@ export default {
     });
   },
 
+
   data() {
     return {
       cards: [
@@ -204,6 +209,7 @@ export default {
               title: "예약 변경",
               icon: "bi bi-journal-richtext",
               texts: [
+
                 {
                   text: "예약 변경은 출발 3일 전까지 가능합니다.",
                   popbody:
@@ -217,12 +223,14 @@ export default {
                   text: "같은 날짜 다발성 예약은 불가합니다.",
                   popbody: "같은 날짜에 여러 예약은 불가능합니다.",
                 },
+
               ],
             },
             {
               title: "취소 규정",
               icon: "bi bi-clipboard-check",
               texts: [
+
                 {
                   text: "취소는 출발 5일 전까지 가능합니다.",
                   popbody:
@@ -236,12 +244,14 @@ export default {
                   text: "수수료가 부과될 수 있습니다.",
                   popbody: "취소 시 수수료가 부과될 수 있습니다.",
                 },
+
               ],
             },
             {
               title: "예약 확인 방법",
               icon: "bi bi-eye",
               texts: [
+
                 {
                   text: "예약 확인은 이메일로 안내됩니다.",
                   popbody: "이메일을 통해 예약 정보를 확인하세요.",
@@ -255,6 +265,7 @@ export default {
                   text: "문의 시 예약번호를 준비해주세요.",
                   popbody: "고객센터 문의 시 예약번호를 반드시 준비해주세요.",
                 },
+
               ],
             },
           ],
@@ -268,6 +279,7 @@ export default {
               title: "비자 발급",
               icon: "bi bi-flag",
               texts: [
+
                 {
                   text: "비자 발급 조건은 국가별로 다릅니다.",
                   popbody: "각국의 비자 발급 조건을 확인하세요.",
@@ -281,12 +293,14 @@ export default {
                   popbody:
                     "비자 발급에 필요한 서류 목록은 담당 기관에 문의하세요.",
                 },
+
               ],
             },
             {
               title: "여행자 보험",
               icon: "bi bi-shield",
               texts: [
+
                 {
                   text: "여행자 보험은 필수로 가입하는 것을 권장합니다.",
                   popbody:
@@ -300,6 +314,7 @@ export default {
                   text: "보장 내용을 꼭 확인하세요.",
                   popbody: "보장 항목과 제한 사항을 반드시 확인하세요.",
                 },
+
               ],
             },
           ],
@@ -313,6 +328,7 @@ export default {
               title: "결제 수단",
               icon: "bi bi-wallet",
               texts: [
+
                 {
                   text: "어떤 결제 수단을 사용할 수 있나요?",
                   popbody: "지원되는 결제 수단: 카드, 계좌이체, 간편결제 등.",
@@ -326,12 +342,14 @@ export default {
                   popbody:
                     "해외 결제는 지원되며, 환율 변동에 따라 금액이 달라질 수 있습니다.",
                 },
+
               ],
             },
             {
               title: "환불 요청",
               icon: "bi bi-arrow-return-left",
               texts: [
+
                 {
                   text: "환불 요청은 어떻게 하나요?",
                   popbody: "환불 요청은 고객센터나 마이페이지에서 가능합니다.",
@@ -344,6 +362,7 @@ export default {
                   text: "부분 환불은 가능한가요?",
                   popbody: "부분 환불은 결제 수단에 따라 다를 수 있습니다.",
                 },
+
               ],
             },
           ],
@@ -354,6 +373,7 @@ export default {
           icon: "bi bi-person",
           questions: [
             {
+
               title: "비밀번호 재설정",
               icon: "bi bi-shield-lock",
               texts: [
@@ -374,6 +394,7 @@ export default {
           ],
         },
       ],
+
     };
   },
 };
