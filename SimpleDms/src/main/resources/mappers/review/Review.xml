@@ -17,6 +17,62 @@
         FROM REVIEWS
         WHERE TITLE LIKE '%' || #{searchKeyword} || '%'
     </select>
+
+    <insert id="insert"
+            parameterType="Review">
+        INSERT INTO REVIEWS (
+            REVIEW_ID,
+            TITLE,
+            CONTENT,
+            RATING,
+            IMAGE_URL,
+            AUTHOR_EMAIL,
+            TARGET_ID,
+            CREATED_AT,
+            UPDATED_AT,
+            LOC
+        ) VALUES (
+                     #{reviewId},
+                     #{title},
+                     #{content},
+                     #{rating},
+                     #{imageUrl},
+                     #{authorEmail},
+                     #{targetId},
+                     #{createdAt},
+                     #{updatedAt},
+                     #{loc}
+                 )
+    </insert>
+
+    <select id="selectReview"
+            parameterType="int"
+            resultType="Review">
+        SELECT *
+        FROM REVIEWS
+        WHERE REVIEW_ID = #{reviewId}
+    </select>
+
+    <!-- Update -->
+    <update id="update" parameterType="Review">
+        UPDATE REVIEWS
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            RATING = #{rating},
+            IMAGE_URL = #{imageUrl},
+            AUTHOR_EMAIL = #{authorEmail},
+            TARGET_ID = #{targetId},
+            UPDATED_AT = #{updatedAt},
+            LOC = #{loc}
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
+
+    <!-- Delete -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM REVIEWS
+        WHERE REVIEW_ID = #{reviewId}
+    </delete>
     
 
 

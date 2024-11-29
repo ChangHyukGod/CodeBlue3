@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : KTE
@@ -28,5 +29,22 @@ public class ReviewService {
         return page;
     }
 
+    //    리뷰추가
+    public void insert(Review review) {
+        reviewMapper.insert(review);
+    }
+
+    //    상세조회
+    public Optional<Review> selectReview(int reviewId ) {return reviewMapper.selectReview(reviewId); }
+
+    //    리뷰수정
+    public void update(Review review) {
+        reviewMapper.update(review);
+    }
+
+    //    리뷰삭제
+    public void delete(int reviewId) {
+        reviewMapper.delete(reviewId);
+    }
 
 }

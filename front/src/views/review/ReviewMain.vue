@@ -14,46 +14,13 @@
     <h5 style="margin-bottom: 40px; font-weight: bold;">이달의 추천 숙박업소</h5>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" v-for="review in reviews" :key="review.reviewId">
           <div class="card" style="width: 15rem; border: none;">
-            <img src="/images/침대.jfif" class="card-img-top" alt="...">
+            <img :src="review.imageUrl || '/images/침대.jfif'" class="card-img-top" alt="...">
             <div class="card-body">
-              <p class="card-text">좋음
-                <br>
-                <br> 박창혁 / 2024.11.11
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card" style="width: 15rem; border: none;">
-            <img src="/images/침대.jfif" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">개좋음
-                <br>
-                <br> 최현정 / 2024.11.11
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card" style="width: 15rem; border: none;">
-            <img src="/images/침대.jfif" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">너무 좋음
-                <br>
-                <br> 장우석 / 2024.11.11
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card" style="width: 15rem; border: none;">
-            <img src="/images/침대.jfif" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">최고
-                <br>
-                <br> 곽효진 / 2024.11.11
+              <p class="card-text">
+                {{ review.title }}<br><br>
+                {{ review.authorEmail }} / {{ formatDate(review.createdAt) }}
               </p>
             </div>
           </div>
@@ -61,6 +28,7 @@
       </div>
     </div>
 
+    <!-- 지역 선택 -->
     <div class="d-flex">
       <div class="btn-group">
         <button type="button" class="btn dropdown-toggle custom-dropdown mt-4"
@@ -77,6 +45,7 @@
       </div>
     </div>
 
+    <!-- 리뷰 목록 테이블 -->
     <div class="container mt-2">
       <table class="table table-hover table-with-top-border">
         <thead>
@@ -89,51 +58,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
+          <tr v-for="(review, index) in filteredReviews" :key="review.reviewId">
+            <th scope="row">{{ index + 1 }}</th>
             <td>
-              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black;">부산</button>
+              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black;">
+                {{ review.loc }}
+              </button>
             </td>
-            <td>좋음</td>
-            <td>박창혁</td>
-            <td>2024.11.11</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>
-              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black">부산</button>
-            </td>
-            <td>개좋음</td>
-            <td>최현정</td>
-            <td>2024.11.11</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>
-              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black">부산</button>
-            </td>
-            <td>너무 좋음</td>
-            <td>장우석</td>
-            <td>2024.11.11</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>
-              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black;">부산</button>
-            </td>
-            <td>최고</td>
-            <td>곽효진</td>
-            <td>2024.11.11</td>
+            <td>{{ review.title }}</td>
+            <td>{{ review.authorEmail }}</td>
+            <td>{{ formatDate(review.createdAt) }}</td>
           </tr>
         </tbody>
       </table>
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-warning" @click="goToAddReview" style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
+        <button type="button" class="btn btn-warning" @click="goToAddReview"
+          style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
           글등록
         </button>
       </div>
     </div>
 
+    <!-- 주의사항 카드 -->
     <div class="card w-100 mt-5 mb-5">
       <div class="card-body">
         <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
@@ -153,22 +99,54 @@
 </template>
 
 <script>
+import ReviewService from "@/services/review/ReviewService"; // ReviewService를 import
+
 export default {
   data() {
     return {
       selectedRegion: null, // 선택된 지역을 저장할 변수
+      reviews: [], // 리뷰 목록
     };
   },
-  methods: {
-    selectRegion(region) {
-      this.selectedRegion = region; // 선택된 지역을 변수에 저장
-    },
-    goToAddReview() {
-      this.$router.push('/add-review'); // '/add-review' 페이지로 이동
+  computed: {
+    // 선택된 지역에 따라 필터링된 리뷰 목록
+    filteredReviews() {
+      if (!this.selectedRegion || this.selectedRegion === '지역선택') {
+        return this.reviews;
+      }
+      return this.reviews.filter(review => review.loc === this.selectedRegion);
     },
   },
-}
+ methods: {
+  // 리뷰 목록을 불러오는 메소드
+  async loadReviews() {
+    try {
+      const response = await ReviewService.getAll('', 0, 10); // 인증 없이 데이터 호출
+      this.reviews = response.data;
+    } catch (error) {
+      console.error("리뷰 목록을 가져오는 중 오류가 발생했습니다:", error);
+    }
+  },
+  // 지역 선택 메소드
+  selectRegion(region) {
+    this.selectedRegion = region; // 선택된 지역을 변수에 저장
+  },
+  // 글등록 버튼 클릭 시 이동
+  goToAddReview() {
+    this.$router.push('/add-review'); // '/add-review' 페이지로 이동
+  },
+  // 날짜 포맷팅
+  formatDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(date).toLocaleDateString('ko-KR', options);
+  },
+},
+mounted() {
+  this.loadReviews(); // 페이지 로드 시 리뷰 목록을 불러옵니다.
+},
+};
 </script>
 
 <style>
+
 </style>
