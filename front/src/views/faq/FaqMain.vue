@@ -92,11 +92,20 @@
                     :key="`text-${item.id}-${qIndex}-${tIndex}`"
                     class="card-body"
                     data-bs-toggle="modal"
-                    :data-bs-target="`#mo-${tIndex + 1}`"
+                    :data-bs-target="`#mo-${qIndex}-${tIndex + 1}`"
                   >
                     - {{ text }}
                   </p>
                   <hr />
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="popover"
+                    title="Popover 제목"
+                    data-bs-content="여기에 팝오버 내용을 입력하세요."
+                  >
+                    팝오버 버튼
+                  </button>
                   <b-button variant="primary" class="card-button"
                     >자세히 보기</b-button
                   >
@@ -152,9 +161,21 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
+import * as bootstrap from "bootstrap";
 export default {
   data() {
     return {
+      setup() {
+        onMounted(() => {
+          const popoverTriggerList = document.querySelectorAll(
+            '[data-bs-toggle="popover"]'
+          );
+          popoverTriggerList.forEach((popoverTriggerEl) => {
+            new bootstrap.Popover(popoverTriggerEl);
+          });
+        });
+      },
       cards: [
         {
           id: "reservation",
@@ -331,6 +352,16 @@ export default {
           link: {
             url: "/faqlogin?searchKeyword=깃",
             label: "#능",
+          },
+        },
+        {
+          id: "mo-4",
+          title: "a44",
+          body: "지444한될 수 있습니다.",
+          icon: "bi bi-calendar-event",
+          link: {
+            url: "/faqlogin?searchKeyword=깃",
+            label: "#444",
           },
         },
         // 추가 모달 데이터
