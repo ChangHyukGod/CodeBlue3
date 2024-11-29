@@ -1,4 +1,16 @@
 <template>
+  <div>
+    <!-- Bootstrap Popover 버튼 -->
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-toggle="popover"
+      title="Popover 제목"
+      data-bs-content="Popover 내용입니다!"
+    >
+      Popover 테스트
+    </button>
+  </div>
   <div class="container d-flex justify-content-center align-items-center">
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
@@ -6,10 +18,14 @@
         <b-button variant="outline-dark" class="custom-button">
           <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
         </b-button>
-        <b-button variant="outline-dark" class="custom-button">
-          <i class="bi bi-receipt-cutoff custom-icon"></i><br />견적 문의
+        <b-button variant="outline-dark" class="custom-button" href="/faq/list">
+          <i class="bi bi-receipt-cutoff custom-icon"></i><br />질문 게시판
         </b-button>
-        <b-button variant="outline-dark" class="custom-button">
+        <b-button
+          variant="outline-dark"
+          class="custom-button"
+          href="/faq/payment"
+        >
           <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
         </b-button>
         <b-button variant="outline-dark" class="custom-button">
@@ -89,23 +105,21 @@
                   <!-- 질문 -->
                   <p
                     v-for="(text, tIndex) in question.texts"
-                    :key="`text-${item.id}-${qIndex}-${tIndex}`"
+                    :key="`text-${question.id}-${tIndex}`"
                     class="card-body"
-                    data-bs-toggle="modal"
-                    :data-bs-target="`#mo-${qIndex}-${tIndex + 1}`"
-                  >
-                    - {{ text }}
-                  </p>
-                  <hr />
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
                     data-bs-toggle="popover"
-                    title="Popover 제목"
-                    data-bs-content="여기에 팝오버 내용을 입력하세요."
+                    :data-bs-content="text.popbody"
                   >
-                    팝오버 버튼
-                  </button>
+                    - {{ text.text }}
+                  </p>
+                  <!-- @mouseenter="showPopover = true"
+                  @mouseleave="showPopover = false" -->
+
+                  <hr />
+                  <div v-if="showPopover" class="popover" :style="popoverStyle">
+                    <h3 class="popover-title">Popover Title</h3>
+                    <div class="popover-content">I am popover content!</div>
+                  </div>
                   <b-button variant="primary" class="card-button"
                     >자세히 보기</b-button
                   >
@@ -114,9 +128,8 @@
             </div>
           </div>
         </div>
-
-        <div>
-          <!-- 모달 -->
+        <!-- 모달 -->
+        <!-- <div>
           <div>
             <div
               v-for="modal in modals"
@@ -154,28 +167,33 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import { onMounted } from "vue";
 import * as bootstrap from "bootstrap";
 export default {
+  // 팝오버
+  name: "FaqMain",
+  mounted() {
+    // Popover 초기화
+    const popoverTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="popover"]'
+    );
+    popoverTriggerList.forEach((popoverTriggerEl) => {
+      new bootstrap.Popover(popoverTriggerEl, {
+        trigger: "hover", // 호버 시 표시
+        delay: { show: 200, hide: 200 }, // 숨김 시 딜레이 추가
+        placement: "right", // 팝오버 위치 (필요시 조정)
+      });
+    });
+  },
+
   data() {
     return {
-      setup() {
-        onMounted(() => {
-          const popoverTriggerList = document.querySelectorAll(
-            '[data-bs-toggle="popover"]'
-          );
-          popoverTriggerList.forEach((popoverTriggerEl) => {
-            new bootstrap.Popover(popoverTriggerEl);
-          });
-        });
-      },
       cards: [
         {
           id: "reservation",
@@ -186,36 +204,57 @@ export default {
               title: "예약 변경",
               icon: "bi bi-journal-richtext",
               texts: [
-                "예약 변경은 출발 3일 전까지 가능합니다.",
-                "단순 변심 변경은 7일 전까지 가능합니다.",
-                "같은 날짜 다발성 예약은 불가합니다.",
+                {
+                  text: "예약 변경은 출발 3일 전까지 가능합니다.",
+                  popbody:
+                    "예약 변경은 출발 3일 전에 가능합니다. 자세한 사항은 문의 바랍니다.",
+                },
+                {
+                  text: "단순 변심 변경은 7일 전까지 가능합니다.",
+                  popbody: "단순 변심에 의한 변경은 7일 전까지 가능합니다.",
+                },
+                {
+                  text: "같은 날짜 다발성 예약은 불가합니다.",
+                  popbody: "같은 날짜에 여러 예약은 불가능합니다.",
+                },
               ],
             },
             {
               title: "취소 규정",
               icon: "bi bi-clipboard-check",
               texts: [
-                "취소는 출발 5일 전까지 가능합니다.",
-                "취소 후 재예약은 제한될 수 있습니다.",
-                "수수료가 부과될 수 있습니다.",
-              ],
-            },
-            {
-              title: "객실 이용 시간",
-              icon: "bi bi-clock",
-              texts: [
-                "체크인은 오후 3시부터 가능합니다.",
-                "체크아웃은 오전 11시까지 완료해야 합니다.",
-                "조기 체크인은 요청 가능합니다.",
+                {
+                  text: "취소는 출발 5일 전까지 가능합니다.",
+                  popbody:
+                    "취소는 출발 5일 전까지 가능하며, 일부 수수료가 발생할 수 있습니다.",
+                },
+                {
+                  text: "취소 후 재예약은 제한될 수 있습니다.",
+                  popbody: "취소 후 동일 날짜 재예약은 제한될 수 있습니다.",
+                },
+                {
+                  text: "수수료가 부과될 수 있습니다.",
+                  popbody: "취소 시 수수료가 부과될 수 있습니다.",
+                },
               ],
             },
             {
               title: "예약 확인 방법",
               icon: "bi bi-eye",
               texts: [
-                "예약 확인은 이메일로 안내됩니다.",
-                "예약 정보는 마이페이지에서 확인 가능합니다.",
-                "문의 시 예약번호를 준비해주세요.",
+                {
+                  text: "예약 확인은 이메일로 안내됩니다.",
+                  popbody: "이메일을 통해 예약 정보를 확인하세요.",
+                },
+                {
+                  text: "예약 정보는 마이페이지에서 확인 가능합니다.",
+                  popbody:
+                    "마이페이지에서 현재 예약 상태를 확인할 수 있습니다.",
+                },
+                {
+                  text: "문의 시 예약번호를 준비해주세요.",
+                  popbody: "고객센터 문의 시 예약번호를 반드시 준비해주세요.",
+                },
               ],
             },
           ],
@@ -229,27 +268,38 @@ export default {
               title: "비자 발급",
               icon: "bi bi-flag",
               texts: [
-                "비자 발급 조건은 국가별로 다릅니다.",
-                "비자 발급 소요시간은 2주입니다.",
-                "필요한 서류 목록을 확인하세요.",
-              ],
-            },
-            {
-              title: "항공권 예약",
-              icon: "bi bi-airplane",
-              texts: [
-                "저렴한 항공권 예약은 3개월 전에 가능합니다.",
-                "환불 가능한 항공권을 선택하세요.",
-                "좌석 업그레이드는 항공사에 문의하세요.",
+                {
+                  text: "비자 발급 조건은 국가별로 다릅니다.",
+                  popbody: "각국의 비자 발급 조건을 확인하세요.",
+                },
+                {
+                  text: "비자 발급 소요시간은 2주입니다.",
+                  popbody: "비자 발급은 평균적으로 2주가 소요됩니다.",
+                },
+                {
+                  text: "필요한 서류 목록을 확인하세요.",
+                  popbody:
+                    "비자 발급에 필요한 서류 목록은 담당 기관에 문의하세요.",
+                },
               ],
             },
             {
               title: "여행자 보험",
               icon: "bi bi-shield",
               texts: [
-                "여행자 보험은 필수로 가입하는 것을 권장합니다.",
-                "보험료는 여행일정에 따라 달라집니다.",
-                "보장 내용을 꼭 확인하세요.",
+                {
+                  text: "여행자 보험은 필수로 가입하는 것을 권장합니다.",
+                  popbody:
+                    "여행자 보험은 예기치 못한 상황에 대비하기 위해 필수적입니다.",
+                },
+                {
+                  text: "보험료는 여행일정에 따라 달라집니다.",
+                  popbody: "보험료는 여행 기간 및 목적지에 따라 상이합니다.",
+                },
+                {
+                  text: "보장 내용을 꼭 확인하세요.",
+                  popbody: "보장 항목과 제한 사항을 반드시 확인하세요.",
+                },
               ],
             },
           ],
@@ -263,27 +313,37 @@ export default {
               title: "결제 수단",
               icon: "bi bi-wallet",
               texts: [
-                "어떤 결제 수단을 사용할 수 있나요?",
-                "결제 후 변경 가능한가요?",
-                "해외 결제는 지원되나요?",
+                {
+                  text: "어떤 결제 수단을 사용할 수 있나요?",
+                  popbody: "지원되는 결제 수단: 카드, 계좌이체, 간편결제 등.",
+                },
+                {
+                  text: "결제 후 변경 가능한가요?",
+                  popbody: "결제 후 변경은 불가능합니다.",
+                },
+                {
+                  text: "해외 결제는 지원되나요?",
+                  popbody:
+                    "해외 결제는 지원되며, 환율 변동에 따라 금액이 달라질 수 있습니다.",
+                },
               ],
             },
             {
               title: "환불 요청",
               icon: "bi bi-arrow-return-left",
               texts: [
-                "환불 요청은 어떻게 하나요?",
-                "환불 처리 기간은 얼마나 걸리나요?",
-                "부분 환불은 가능한가요?",
-              ],
-            },
-            {
-              title: "결제 오류",
-              icon: "bi bi-exclamation-circle",
-              texts: [
-                "결제 오류 시 어떻게 해결하나요?",
-                "결제 실패 후 다시 시도하려면?",
-                "결제 기록은 어디서 확인하나요?",
+                {
+                  text: "환불 요청은 어떻게 하나요?",
+                  popbody: "환불 요청은 고객센터나 마이페이지에서 가능합니다.",
+                },
+                {
+                  text: "환불 처리 기간은 얼마나 걸리나요?",
+                  popbody: "환불 처리는 7~10 영업일 소요될 수 있습니다.",
+                },
+                {
+                  text: "부분 환불은 가능한가요?",
+                  popbody: "부분 환불은 결제 수단에 따라 다를 수 있습니다.",
+                },
               ],
             },
           ],
@@ -294,77 +354,25 @@ export default {
           icon: "bi bi-person",
           questions: [
             {
-              title: "회원가입",
-              icon: "bi bi-person-plus",
-              texts: [
-                "회원가입 절차는 어떻게 되나요?",
-                "회원가입 시 제공 혜택은 무엇인가요?",
-                "회원 정보는 안전하게 보호되나요?",
-              ],
-            },
-            {
               title: "비밀번호 재설정",
               icon: "bi bi-shield-lock",
               texts: [
-                "비밀번호를 잊었을 때 어떻게 하나요?",
-                "재설정 링크가 오지 않을 경우?",
-                "보안 절차는 어떻게 진행되나요?",
-              ],
-            },
-            {
-              title: "계정 탈퇴",
-              icon: "bi bi-person-x",
-              texts: [
-                "계정 탈퇴는 어떻게 진행되나요?",
-                "탈퇴 후 복구가 가능한가요?",
-                "회원 데이터는 완전히 삭제되나요?",
+                {
+                  text: "비밀번호를 잊었을 때 어떻게 하나요?",
+                  popbody: "로그인 화면에서 비밀번호 찾기를 클릭하세요.",
+                },
+                {
+                  text: "재설정 링크가 오지 않을 경우?",
+                  popbody: "스팸 메일함을 확인하거나 고객센터에 문의하세요.",
+                },
+                {
+                  text: "보안 절차는 어떻게 진행되나요?",
+                  popbody: "보안 질문 확인 후 비밀번호를 재설정할 수 있습니다.",
+                },
               ],
             },
           ],
         },
-      ],
-      modals: [
-        {
-          id: "mo-1",
-          title: "예약변경",
-          body: "02-555-5000",
-          icon: "bi bi-quora",
-          link: {
-            url: "/faqlogin?searchKeyword=계정관리",
-            label: "#계정관리",
-          },
-        },
-        {
-          id: "mo-2",
-          title: "예약 변경 안내",
-          body: "예약 변경은 출발 3일 전까지 가능합니다. 변경 시 일부 수수료가 발생할 수 있습니다.",
-          icon: "bi bi-calendar-event",
-          link: {
-            url: "/faqlogin?searchKeyword=예약변경",
-            label: "#예약변경",
-          },
-        },
-        {
-          id: "mo-3",
-          title: "다발성예약",
-          body: "지속적인 다중 예약은 적발시 기능이 제한될 수 있습니다.",
-          icon: "bi bi-calendar-event",
-          link: {
-            url: "/faqlogin?searchKeyword=깃",
-            label: "#능",
-          },
-        },
-        {
-          id: "mo-4",
-          title: "a44",
-          body: "지444한될 수 있습니다.",
-          icon: "bi bi-calendar-event",
-          link: {
-            url: "/faqlogin?searchKeyword=깃",
-            label: "#444",
-          },
-        },
-        // 추가 모달 데이터
       ],
     };
   },
@@ -372,6 +380,23 @@ export default {
 </script>
 
 <style scoped>
+.popover {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.popover-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.popover-content {
+  font-size: 14px;
+}
 /* 메인 아이콘 스타일 */
 .custom-icon {
   font-size: 60px;

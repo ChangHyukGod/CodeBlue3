@@ -31,6 +31,14 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
+    path: "/faq/payment",
+    component: () => import("../views/faq/FaqHowtoPay.vue"),
+  },
+  {
+    path: "/faq/list",
+    component: () => import("../views/faq/FaqQuestionList.vue"),
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
