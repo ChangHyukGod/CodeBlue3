@@ -4,7 +4,6 @@
   <div>
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
-<<<<<<< Updated upstream
         <b-nav-item v-if="!this.$store.state.loggedIn" href="/login"
           >로그인
         </b-nav-item>
@@ -23,12 +22,6 @@
 
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
 
-=======
-        <b-nav-item href="/login">로그인</b-nav-item>
-        <b-nav-item>|</b-nav-item>
-        <b-nav-item href="/register">회원가입</b-nav-item>
-        <b-nav-item>|</b-nav-item>
->>>>>>> Stashed changes
         <b-nav-item>예약확인</b-nav-item>
         <b-nav-item>|</b-nav-item>
         <b-nav-item href="/faq">고객센터</b-nav-item>
