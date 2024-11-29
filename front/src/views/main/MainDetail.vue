@@ -24,6 +24,11 @@
       <label for="price">price</label>
     </div>
 
+    <!-- TODO: 현재 이미지 보기 -->
+    <div class="mb-3 col-12">
+      <img :src="tour.tourFileUrl" width="200px"/>
+    </div>
+
   </div>
 </template>
 <script>
@@ -36,7 +41,9 @@ export default {
             name:"",
             location:"",
             description:"",
-            price:""
+            price:"",
+            tourFileUrl: "",
+            image: undefined
         }
       }
     },

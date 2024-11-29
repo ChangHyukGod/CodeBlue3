@@ -2,6 +2,8 @@ package com.simplecoding.simpledms.vo.coupon;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 /**
  * @author : KTE-149
  * @fileName : Coupon
@@ -22,5 +24,9 @@ public class Coupon {
     private double value;        // 할인율
     private String name;         // 쿠폰 이벤트명
     private String memberEmail;  // 회원 이메일 (선택사항)
+
+
+
+
 
 }

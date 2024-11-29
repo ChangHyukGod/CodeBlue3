@@ -15,6 +15,10 @@ const routes = [
     component: () => import("../views/main/MainDetail.vue"),
   },
   {
+    path: "/mainupdate/:tourId",
+    component: () => import("../views/main/MainUpdate.vue"),
+  },
+  {
     path: "/register",
     component: () => import("../views/auth/RegisterView.vue"),
   },
@@ -53,6 +57,28 @@ const routes = [
   {
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
+  },
+  {
+    path: "/mypage",
+    component: () => import("../views/mypage/MypageView.vue"),
+  },
+
+  {
+    path: "/recommend",
+    component: () => import("../views/recommend/RecommendView.vue"),
+  },
+
+  {
+    path: "/addadmin",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
+  {
+    path: "/adminlist",
+    component: () => import("../views/admin/AdminDbDetail.vue"),
+  },
+  {
+    path: "/admindb",
+    component: () => import("../views/admin/AdminDbView.vue"),
   },
 ];
 const router = createRouter({

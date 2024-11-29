@@ -6,10 +6,14 @@ import com.simplecoding.simpledms.vo.dto.ResultDto;
 import com.simplecoding.simpledms.vo.main.Tour;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +40,26 @@ public class TourController {
 
 //  추가, 업로드
     @PostMapping("/api/tour/add")
-    public ResponseEntity<?> insert(@RequestBody Tour tour) {
+    public ResponseEntity<?> insert(@RequestParam(defaultValue = "")String name,
+                                    @RequestParam(defaultValue = "")String location,
+                                    @RequestParam(defaultValue = "")String description,
+                                    @RequestParam(defaultValue = "")String price,
+                                    @RequestParam(required = false) MultipartFile image) throws Exception {
+        Tour tour = new Tour(name, location, description, price, image.getBytes());
         tourService.insert(tour);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+//  이미지 다운로드 함수
+    @GetMapping("/api/tour/{tourId}")
+    public ResponseEntity<byte[]> findDownload(@PathVariable int tourId) throws Exception {
+//      상세조회 : 객체받기(첨부파일)
+        Tour tour = tourService.select(tourId).orElseThrow(() -> new FileNotFoundException("데이터 없음"));
+//      첨부파일 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", String.valueOf(tour.getTourId()));  //int형 변환
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//      첨부파일 headers에 담아서 전송
+        return new ResponseEntity<byte[]>(tour.getTourData(), headers, HttpStatus.OK);
     }
 
 //  상세조회
@@ -50,5 +71,25 @@ public class TourController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tour.get(), HttpStatus.OK);
+    }
+
+//    수정
+    @PutMapping("/api/tour/update/{tourId}")
+    public ResponseEntity<?> update(@PathVariable int tourId,
+                                    @RequestParam(defaultValue = "")String name,
+                                    @RequestParam(defaultValue = "")String location,
+                                    @RequestParam(defaultValue = "")String description,
+                                    @RequestParam(defaultValue = "")String price,
+                                    @RequestParam MultipartFile image) throws Exception {
+        Tour tour = new Tour(tourId, name, location, description, price, image.getBytes());
+        tourService.update(tour);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//    삭제
+    @DeleteMapping("/api/tour/deletion/{tourId}")
+    public ResponseEntity<?> delete(@PathVariable int tourId) {
+        tourService.delete(tourId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
