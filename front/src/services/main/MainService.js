@@ -7,6 +7,10 @@ const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
     return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
 };
 
+const getALLnp = () => {
+    return axios.get(baseURL+`/tour`);
+};
+
 // 이미지 업로드
 const insertForm = (data) => {
     let formData= new FormData();
@@ -45,6 +49,7 @@ const MainService = {
     insert,
     get,
     update,
-    remove
+    remove,
+    getALLnp
 }
 export default MainService;
