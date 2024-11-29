@@ -1,199 +1,94 @@
+// views/advanced/fileDb/FileDbView.vue // vueInit
 <template>
-  <div class="container mt-4">
-    <!-- 검색 바 -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control"
-          placeholder="어디든지 검색..."
-        />
-      </div>
-    </div>
-
-    <!-- 여행지 리스트 -->
-    <div class="row">
-      <div
-        v-for="(place, index) in filteredPlaces"
-        :key="index"
-        class="col-md-4 mb-4"
+  <div>
+    <!-- TODO: 검색어 입력상자 -->
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="검색어"
+        v-model="searchKeyword"
+      />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        @click="getrecommend"
       >
-        <div class="card shadow-sm border-0">
-          <img :src="place.image" class="card-img-top" alt="Place image" />
+        검색
+      </button>
+    </div>
+    <!-- TODO: 카드 -->
+    <div class="row">
+      <div v-for="(data, index) in recommends" :key="index" class="col-6">
+        <div class="card" style="width: 18rem">
+          <img :src="data.imageUrl" class="card-img-top" alt="카드" />
           <div class="card-body">
-            <h5 class="card-title text-warning">{{ place.name }}</h5>
-            <p class="card-text text-muted">{{ place.description }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <!-- 별점 -->
-                <span class="text-warning">
-                  <i
-                    v-for="i in 5"
-                    :key="i"
-                    :class="i <= place.rating ? 'fas fa-star' : 'far fa-star'"
-                  ></i>
-                </span>
-                {{ place.rating }} / 5
-              </div>
-              <div>
-                <!-- 좋아요 -->
-                <button
-                  @click="toggleLike(index)"
-                  class="btn btn-outline-warning"
-                >
-                  <i :class="place.liked ? 'fas fa-heart' : 'far fa-heart'"></i>
-                  {{ place.likes }}
-                </button>
-              </div>
-            </div>
+            <h5 class="card-title">{{ data.tdName }}</h5>
+            <p class="card-text">
+              {{ data.loc }}
+              <br />
+              <br />
+              {{ data.description }}
+            </p>
+
+            <router-link
+              :to="'/recommend/recommendadd' + data.tdId"
+              class="btn btn-primary"
+            >
+              수정
+            </router-link>
           </div>
         </div>
       </div>
     </div>
+    <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지)  -->
+    <div class="mt-3">
+      <!-- TODO: v-model="뷰변수(현재페이지번호)"
+                 ,total-rows="전체개수"
+                 ,per-page="1페이지당화면에보일개수"
+                    -->
+      <b-pagination
+        v-model="pageIndex"
+        :total-rows="totalCount"
+        :per-page="recordCountPerPage"
+        @click="getrecommend"
+      ></b-pagination>
+    </div>
   </div>
 </template>
-
 <script>
+import RecommendService from "@/services/recommend/RecommendService";
 export default {
   data() {
     return {
-      searchQuery: "",
-      places: [
-        {
-          name: "비스타 루프탑 바",
-          description:
-            "항공 블럭 '세디고 파고다' 배경의 포토 스팟으로 유명한 루프탑 바.",
-          image: "https://via.placeholder.com/400x200",
-          rating: 5,
-          likes: 23,
-          liked: false,
-        },
-        {
-          name: "파스테이스 드 벨렘",
-          description: "200년 전통의 에그타르트 원조 맛집 매우 매우 맛있음",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.7,
-          likes: 4161,
-          liked: false,
-        },
-        {
-          name: "마켓 광장",
-          description:
-            "매년 헬싱키 청년 축제가 개최되는, 기념품과 커피를 즐길 수 있는 명소",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.7,
-          likes: 433,
-          liked: false,
-        },
-        {
-          name: "중앙 우체국",
-          description: "건물 곳곳이 포토 스팟인 아름다운 우체국",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.0,
-          likes: 7956,
-          liked: false,
-        },
-        {
-          name: "세비야 대성당",
-          description: "스페인 최대 규모의 성당이자, 여행객의 필수 사진 명소",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.8,
-          likes: 4220,
-          liked: false,
-        },
-        {
-          name: "시부야 스카이",
-          description: "넓을 놓고 바라보게 만드는 스카이라인을 자랑하는 전망대",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.6,
-          likes: 19936,
-          liked: false,
-        },
-      ],
+      pageIndex: 1,
+      totalCount: 0,
+      recordCountPerPage: 3,
+      searchKeyword: "",
+      recommends: [], // 빈배열
     };
   },
-  computed: {
-    filteredPlaces() {
-      return this.places.filter((place) =>
-        place.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+  methods: {
+    async getrecommend() {
+      try {
+        let response = await RecommendService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 벡엔드 전송되는것: results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.recommends = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
-  methods: {
-    toggleLike(index) {
-      const place = this.places[index];
-      place.liked = !place.liked;
-      place.likes += place.liked ? 1 : -1;
-    },
+  mounted() {
+    this.getrecommend();
   },
 };
 </script>
-
-<style scoped>
-/* 카드 이미지 크기 설정 */
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-}
-
-/* 별점 아이콘 */
-.fas,
-.far {
-  cursor: pointer;
-}
-
-/* 좋아요 아이콘 */
-.fas.fa-heart {
-  color: red;
-}
-
-.far.fa-heart {
-  color: #ccc;
-}
-
-/* 배경 색상과 카드 스타일 */
-.container {
-  background-color: #fff9e6; /* 밝은 노란색 배경 */
-}
-
-.card {
-  background-color: #fff; /* 카드 배경은 흰색 */
-  border: 1px solid #f2c94c; /* 노란색 테두리 */
-  border-radius: 10px;
-}
-
-.card-body {
-  padding: 1.5rem;
-}
-
-/* 텍스트 색상 */
-.card-title {
-  color: #f39c12; /* 노란색 */
-}
-
-.card-text {
-  color: #6c757d; /* 어두운 회색 */
-}
-
-.card-body .btn-outline-warning {
-  color: #f39c12;
-  border-color: #f39c12;
-}
-
-.card-body .btn-outline-warning:hover {
-  background-color: #f39c12;
-  color: #fff;
-}
-
-input.form-control {
-  background-color: #f9e6a7;
-  border: 1px solid #f39c12;
-  color: #6c757d;
-  padding: 0.75rem 1rem;
-}
-
-input.form-control::placeholder {
-  color: #6c757d;
-}
-</style>
+<style></style>
