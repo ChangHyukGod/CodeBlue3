@@ -19,11 +19,23 @@
     <!-- 추가, 업로드 : public int insert(Tour tour);-->
     <insert id="insert" parameterType="Tour">
         INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL)
-        VALUES(#{tourId}, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl})
+        VALUES(TOUR_SEQ.NEXTVAL, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl})
     </insert>
 
-    <!-- 상세조회 : public Optional<Tour> select(String tourId); -->
-    <select id="select" parameterType="String" resultType="Tour">
+    <!-- URL 업데이트 : public int updateTourUrl(Tour tour); -->
+    <update id="updateTourUrl" parameterType="Tour">
+        UPDATE TOUR
+        SET TOUR_FILE_URL = #{tourFileUrl}
+        WHERE TOUR_ID = #{tourId}
+    </update>
+
+    <!-- 생성된 tourId를 조회 : public int selectGenerateTourId(); -->
+    <select id="selectGenerateTourId" resultType="int">
+        SELECT TOUR_SEQ.CURRVAL FROM DUAL
+    </select>
+
+    <!-- 상세조회 : public Optional<Tour> select(int tourId); -->
+    <select id="select" parameterType="int" resultType="Tour">
         SELECT * FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </select>
@@ -36,8 +48,8 @@
         WHERE TOUR_ID = #{tourId}
     </update>
 
-    <!-- 삭제 : public int delete(String tourId);-->
-    <delete id="delete" parameterType="String">
+    <!-- 삭제 : public int delete(int tourId);-->
+    <delete id="delete" parameterType="int">
         DELETE TOUR
         WHERE TOUR_ID = #{tourId}
     </delete>

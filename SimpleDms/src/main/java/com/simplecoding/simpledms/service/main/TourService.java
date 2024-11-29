@@ -9,7 +9,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author : KTE
@@ -33,37 +32,42 @@ public class TourService {
 
 //  추가, 업로드
     public void insert(Tour tour){
-        String tourId = UUID.randomUUID().toString();
-        String url = generateDownloadUrl(tourId);
-        tour.setTourId(tourId);
-        tour.setTourFileUrl(url);
         tourMapper.insert(tour);
+//      생성된 tourId를 DB에서 가져오기(SQL문 CURRVAL)
+        int tourId = tourMapper.selectGenerateTourId();
+//      생성된 tourId를 tour객체에 저장
+        tour.setTourId(tourId);
+//      URL생성
+        String url = generateTourUrl(tour.getTourId());
+        tour.setTourFileUrl(url);
+//      URL 업데이트
+        tourMapper.updateTourUrl(tour);
     }
-//  generateDownloadUrl 매서드 정의
-    public String generateDownloadUrl(String uuid) {
+//  generateTourUrl 매서드 정의
+    public String generateTourUrl(int tourId) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()        // spring 기본주소 : http://localhost:8000
-                .path("/api/tour/")              // 추가 경로 넣기 : /advanced/fileDb/
-                .path(uuid)                      // uuid 넣기     : xxxxxx
-                .toUriString();                  // 합치기 : http://localhost:8000/advanced/fileDb/xxxxxx
+                .path("/api/tour/")              // 추가 경로 넣기 : /api/tour/
+                .path(String.valueOf(tourId))
+                .toUriString();                  // 합치기 : http://localhost:8000/api/tour/xxxxxx
     }
 
 //  상세조회
-    public Optional<Tour> select(String tourId){
+    public Optional<Tour> select(int tourId){
         return tourMapper.select(tourId);
     }
 
 //  수정
     public void update(Tour tour){
-        String tourId = tour.getTourId();
-        String url = generateDownloadUrl(tourId);
+        int tourId = tour.getTourId();
+        String url = generateTourUrl(tourId);
         tour.setTourId(tourId);
         tour.setTourFileUrl(url);
         tourMapper.update(tour);
     }
 
 //  삭제
-    public void delete(String tourId){
+    public void delete(int tourId){
         tourMapper.delete(tourId);
     }
 }
