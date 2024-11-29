@@ -29,6 +29,11 @@
       <input type="file" class="form-control" ref="file" @change="select"/>
       <button class="btn btn-outline-secondary" type="button" @click="save">저장</button>
     </div>
+    <br/>
+    <!-- 현재 이미지 미리보기 -->
+    <div class="mb-3">
+      <img :src="main.tourFileUrl" alt="이미지" class="img-fluid rounded" style="max-height: 400px; object-fit: cover"/>
+    </div>
 </div>
 </template>
 <script>
@@ -48,7 +53,12 @@ export default {
     },
     methods: {
         select(){
-            this.main.image = this.$refs.file.files[0];
+            const file = this.$refs.file.files[0];
+            if(file){
+                this.main.image = file;
+                // 이미지 URL을 생성하여 tourFileUrl에 할당
+                this.main.tourFileUrl = URL.createObjectURL(file);
+            }
         },
         async save(){
             try {

@@ -44,19 +44,19 @@ public class TourController {
                                     @RequestParam(defaultValue = "")String location,
                                     @RequestParam(defaultValue = "")String description,
                                     @RequestParam(defaultValue = "")String price,
-                                    @RequestParam MultipartFile image) throws Exception {
+                                    @RequestParam(required = false) MultipartFile image) throws Exception {
         Tour tour = new Tour(name, location, description, price, image.getBytes());
         tourService.insert(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 //  이미지 다운로드 함수
     @GetMapping("/api/tour/{tourId}")
-    public ResponseEntity<byte[]> findDownload(@PathVariable String tourId) throws Exception {
+    public ResponseEntity<byte[]> findDownload(@PathVariable int tourId) throws Exception {
 //      상세조회 : 객체받기(첨부파일)
         Tour tour = tourService.select(tourId).orElseThrow(() -> new FileNotFoundException("데이터 없음"));
 //      첨부파일 생성
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", tour.getTourId());
+        headers.setContentDispositionFormData("attachment", String.valueOf(tour.getTourId()));  //int형 변환
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 //      첨부파일 headers에 담아서 전송
         return new ResponseEntity<byte[]>(tour.getTourData(), headers, HttpStatus.OK);
@@ -64,7 +64,7 @@ public class TourController {
 
 //  상세조회
     @GetMapping("/api/tour/get/{tourId}")
-    public ResponseEntity<?> select(@PathVariable String tourId) {
+    public ResponseEntity<?> select(@PathVariable int tourId) {
         Optional<Tour> tour = tourService.select(tourId);
 //      에러처리
         if (tour.isEmpty()) {
@@ -75,7 +75,7 @@ public class TourController {
 
 //    수정
     @PutMapping("/api/tour/update/{tourId}")
-    public ResponseEntity<?> update(@PathVariable String tourId,
+    public ResponseEntity<?> update(@PathVariable int tourId,
                                     @RequestParam(defaultValue = "")String name,
                                     @RequestParam(defaultValue = "")String location,
                                     @RequestParam(defaultValue = "")String description,
@@ -88,7 +88,7 @@ public class TourController {
 
 //    삭제
     @DeleteMapping("/api/tour/deletion/{tourId}")
-    public ResponseEntity<?> delete(@PathVariable String tourId) {
+    public ResponseEntity<?> delete(@PathVariable int tourId) {
         tourService.delete(tourId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

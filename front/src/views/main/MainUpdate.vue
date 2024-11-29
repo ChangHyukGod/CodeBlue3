@@ -25,14 +25,16 @@
     </div>
 
     <!-- TODO: 현재 이미지 보기 -->
-    <div class="mb-3 col-12">
-      <img :src="tour.tourFileUrl" width="200px"/>
+    <div class="mb-3">
+      <img :src="tour.tourFileUrl" alt="이미지" class="img-fluid rounded" style="max-height: 400px; object-fit: cover"/>
     </div>
 
     <!-- 파일선택상자 -->
     <div class="input-group">
       <input type="file" class="form-control" ref="file" @change="select" />
     </div>
+    <br/>
+
     <div class="mt-3" style="display:flex; justify-content: space-between;">
       <button class="btn btn-warning" type="button" @click="update">수정</button>
       <button class="btn btn-danger" type="button" @click="remove">삭제</button>
@@ -67,7 +69,12 @@ export default {
         }
       },
     select() {
-      this.tour.image = this.$refs.file.files[0];
+      const file = this.$refs.file.files[0];
+      if(file){
+          this.tour.image = file;
+          // 이미지 URL을 생성하여 tourFileUrl에 할당
+          this.tour.tourFileUrl = URL.createObjectURL(file);
+      }
     },
     async update() {
       try {
