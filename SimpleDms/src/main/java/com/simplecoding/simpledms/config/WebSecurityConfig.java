@@ -73,6 +73,7 @@ public class WebSecurityConfig {
                 req -> req.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll() // 옵션(페이지이동  허용)
                         .requestMatchers("/api/auth/**").permitAll()                // 이 url은 모두 접근 허용(로그인 관계없이)
                         .requestMatchers("/api/tour/**").permitAll()
+                        .requestMatchers("/api/room/**").permitAll()
                         .requestMatchers("/api/coupon/**").permitAll()
                         .requestMatchers("/**").permitAll()                           // 첫 페이지는 모두 접근 허용(로그인 관계없이)
                         .anyRequest().authenticated() // => 나머지 url들은 인증(로그인) 해야 볼 수 있음

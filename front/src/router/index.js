@@ -85,6 +85,18 @@ const routes = [
     path: "/admindb",
     component: () => import("../views/admin/AdminDbView.vue"),
   },
+  {
+    path: "/addRoom/:tourId",
+    component: () => import("../views/room/AddRoomView.vue"),
+  },
+  {
+    path: "/editRoom/:roomId",
+    component: () => import("../views/room/UpdateRoomView.vue"),
+  },
+  {
+    path: "/addRoomPhoto/:roomId",
+    component: () => import("../views/room/addRoomPhoto.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

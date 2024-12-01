@@ -19,7 +19,7 @@
         <typeAlias type="com.simplecoding.simpledms.vo.common.Criteria" alias="Criteria"/>
         <typeAlias type="com.simplecoding.simpledms.vo.main.Tour" alias="Tour"/>
         <typeAlias type="com.simplecoding.simpledms.vo.review.Review" alias="Review"/>
-
+        <typeAlias type="com.simplecoding.simpledms.vo.room.Room" alias="Room"/>
 
     </typeAliases>
 </configuration>
