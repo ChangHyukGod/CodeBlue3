@@ -1,199 +1,274 @@
 <template>
-  <div class="container mt-4">
-    <!-- 검색 바 -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control"
-          placeholder="어디든지 검색..."
-        />
+  <div>
+    <!-- TODO: 캐러셀 -->
+    <div
+      id="carouselExampleAutoplaying"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="1500"
+    >
+      <div class="carousel-inner">
+        <!-- 슬라이드 1 -->
+        <div class="carousel-item active">
+          <img
+            :src="require('@/assets/images/re4.jpg')"
+            alt="Slide 1"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
+        <!-- 슬라이드 2 -->
+        <div class="carousel-item">
+          <img
+            :src="require('@/assets/images/re2.jpg')"
+            alt="Slide 2"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
+        <!-- 슬라이드 3 -->
+        <div class="carousel-item">
+          <img
+            :src="require('@/assets/images/re3.jpg')"
+            alt="Slide 3"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
       </div>
+      <!-- 캐러셀 컨트롤러 (좌우 버튼) -->
+      <!-- <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button> -->
     </div>
 
-    <!-- 여행지 리스트 -->
-    <div class="row">
-      <div
-        v-for="(place, index) in filteredPlaces"
-        :key="index"
-        class="col-md-4 mb-4"
+    <!-- TODO: 검색어 입력상자 -->
+    <div class="input-group mb-3 mt-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="검색어"
+        v-model="searchKeyword"
+      />
+      <button
+        class="btn btn-outline-warning"
+        type="button"
+        @click="getrecommend"
       >
-        <div class="card shadow-sm border-0">
-          <img :src="place.image" class="card-img-top" alt="Place image" />
-          <div class="card-body">
-            <h5 class="card-title text-warning">{{ place.name }}</h5>
-            <p class="card-text text-muted">{{ place.description }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <!-- 별점 -->
-                <span class="text-warning">
-                  <i
-                    v-for="i in 5"
-                    :key="i"
-                    :class="i <= place.rating ? 'fas fa-star' : 'far fa-star'"
-                  ></i>
-                </span>
-                {{ place.rating }} / 5
-              </div>
-              <div>
-                <!-- 좋아요 -->
-                <button
-                  @click="toggleLike(index)"
-                  class="btn btn-outline-warning"
-                >
-                  <i :class="place.liked ? 'fas fa-heart' : 'far fa-heart'"></i>
-                  {{ place.likes }}
-                </button>
-              </div>
+        검색
+      </button>
+    </div>
+
+    <!-- TODO: 카드 -->
+    <div class="row">
+      <!-- 카드 반복 -->
+      <div v-for="(data, index) in recommends" :key="index" class="col-4 mb-4">
+        <div class="card custom-card">
+          <img
+            :src="data.imageUrl"
+            class="card-img-top custom-card-img"
+            alt="카드"
+            @click="goToDetailPage(data)"
+          />
+          <div class="card-body custom-card-body">
+            <h5 class="card-title text-warning">{{ data.tdName }}</h5>
+            <p class="card-text text-light">
+              {{ data.loc }}
+              <br />
+              {{ data.description }}
+            </p>
+            <!-- 수정 버튼 -->
+            <div class="d-flex justify-content-between">
+              <router-link
+                :to="'/recommendupdate/' + data.tdId"
+                class="btn btn-dark btn-sm"
+              >
+                수정
+              </router-link>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지) -->
+    <div
+      class="mt-3 text-center d-flex justify-content-between align-items-center"
+    >
+      <!-- 페이지네이션 -->
+      <b-pagination
+        v-model="pageIndex"
+        :total-rows="totalCount"
+        :per-page="recordCountPerPage"
+        @click="getrecommend"
+        style="margin-left: 42%"
+        class="custom-pagination"
+      ></b-pagination>
+
+      <!-- 추가 버튼 -->
+      <router-link to="/add-recommend" class="btn btn-warning btn-sm ml-3">
+        추가
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import RecommendService from "@/services/recommend/RecommendService";
 export default {
   data() {
     return {
-      searchQuery: "",
-      places: [
-        {
-          name: "비스타 루프탑 바",
-          description:
-            "항공 블럭 '세디고 파고다' 배경의 포토 스팟으로 유명한 루프탑 바.",
-          image: "https://via.placeholder.com/400x200",
-          rating: 5,
-          likes: 23,
-          liked: false,
-        },
-        {
-          name: "파스테이스 드 벨렘",
-          description: "200년 전통의 에그타르트 원조 맛집 매우 매우 맛있음",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.7,
-          likes: 4161,
-          liked: false,
-        },
-        {
-          name: "마켓 광장",
-          description:
-            "매년 헬싱키 청년 축제가 개최되는, 기념품과 커피를 즐길 수 있는 명소",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.7,
-          likes: 433,
-          liked: false,
-        },
-        {
-          name: "중앙 우체국",
-          description: "건물 곳곳이 포토 스팟인 아름다운 우체국",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.0,
-          likes: 7956,
-          liked: false,
-        },
-        {
-          name: "세비야 대성당",
-          description: "스페인 최대 규모의 성당이자, 여행객의 필수 사진 명소",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.8,
-          likes: 4220,
-          liked: false,
-        },
-        {
-          name: "시부야 스카이",
-          description: "넓을 놓고 바라보게 만드는 스카이라인을 자랑하는 전망대",
-          image: "https://via.placeholder.com/400x200",
-          rating: 4.6,
-          likes: 19936,
-          liked: false,
-        },
+      pageIndex: 1,
+      totalCount: 0,
+      recordCountPerPage: 3,
+      searchKeyword: "",
+      recommends: [], // 빈배열
+      carouselItems: [
+        // 캐러셀 아이템
       ],
     };
   },
-  computed: {
-    filteredPlaces() {
-      return this.places.filter((place) =>
-        place.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+  methods: {
+    async getrecommend() {
+      try {
+        let response = await RecommendService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.recommends = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    goToDetailPage(data) {
+      this.$router.push({
+        path: `/recommenddetail/${data.tdId}`, // 동적 경로에 데이터 삽입
+      });
     },
   },
-  methods: {
-    toggleLike(index) {
-      const place = this.places[index];
-      place.liked = !place.liked;
-      place.likes += place.liked ? 1 : -1;
-    },
+  mounted() {
+    this.getrecommend();
   },
 };
 </script>
 
-<style scoped>
-/* 카드 이미지 크기 설정 */
-.card-img-top {
+<style>
+/* 카드 디자인 */
+.custom-card {
+  border: 2px solid #ffc107; /* 노란색 테두리 */
+  background-color: #000; /* 검은색 배경 */
+  color: #ffc107; /* 텍스트 기본 색 노란색 */
+  border-radius: 10px;
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+  cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
+}
+
+.custom-card:hover {
+  transform: scale(1.05); /* 크기 확대 */
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.6); /* 입체적인 그림자 추가 */
+  border-color: #ff9800; /* 호버 시 테두리 색 약간 변경 */
+}
+
+.custom-card-img {
   height: 200px;
   object-fit: cover;
+  border-bottom: 2px solid #ffc107; /* 이미지 아래에 노란 테두리 */
 }
 
-/* 별점 아이콘 */
-.fas,
-.far {
-  cursor: pointer;
+.custom-card-body {
+  padding: 15px;
 }
 
-/* 좋아요 아이콘 */
-.fas.fa-heart {
-  color: red;
-}
-
-.far.fa-heart {
-  color: #ccc;
-}
-
-/* 배경 색상과 카드 스타일 */
-.container {
-  background-color: #fff9e6; /* 밝은 노란색 배경 */
-}
-
-.card {
-  background-color: #fff; /* 카드 배경은 흰색 */
-  border: 1px solid #f2c94c; /* 노란색 테두리 */
-  border-radius: 10px;
-}
-
-.card-body {
-  padding: 1.5rem;
-}
-
-/* 텍스트 색상 */
-.card-title {
-  color: #f39c12; /* 노란색 */
-}
-
+/* 텍스트 색상 조정 */
 .card-text {
-  color: #6c757d; /* 어두운 회색 */
+  color: #ffffff; /* 본문 텍스트 흰색 */
 }
 
-.card-body .btn-outline-warning {
-  color: #f39c12;
-  border-color: #f39c12;
+/* 수정 버튼 */
+.btn-dark {
+  background-color: #ffc107; /* 노란색 배경 */
+  color: #000; /* 버튼 텍스트 검정색 */
+  border: 1px solid #ffc107; /* 테두리 노란색 */
+  transition: all 0.3s ease;
 }
 
-.card-body .btn-outline-warning:hover {
-  background-color: #f39c12;
-  color: #fff;
+.btn-dark:hover {
+  background-color: #000; /* 호버 시 검은색 배경 */
+  color: #ffc107; /* 호버 시 노란색 텍스트 */
+  border: 1px solid #ffc107; /* 테두리 유지 */
 }
 
-input.form-control {
-  background-color: #f9e6a7;
-  border: 1px solid #f39c12;
-  color: #6c757d;
-  padding: 0.75rem 1rem;
+/* 추가 버튼 */
+.btn-warning {
+  background-color: white; /* 노란색 배경 */
+  color: #000; /* 텍스트 검정색 */
+  border: 1px solid #000; /* 검은색 테두리 */
 }
 
-input.form-control::placeholder {
-  color: #6c757d;
+.btn-warning:hover {
+  background-color: #000; /* 호버 시 검은색 배경 */
+  color: #ffc107; /* 호버 시 노란 텍스트 */
+  border: 1px solid #ffc107; /* 노란색 테두리 */
+}
+
+/* 페이지네이션 중앙 정렬 */
+.text-center {
+  text-align: center;
+}
+
+.d-flex.justify-content-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ml-3 {
+  margin-left: 1rem; /* 좌측 여백 추가 */
+}
+
+/* 캐러셀 디자인 */
+.carousel-inner img {
+  height: 400px; /* 캐러셀 이미지 크기 조정 */
+  object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* 화이트 컬러로 아이콘 */
+}
+
+.custom-pagination .page-link {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+
+#carouselExampleAutoplaying {
+  border: 3px solid #ffc107; /* 노란색 테두리 */
+  border-radius: 10px; /* 둥근 모서리 */
+  padding: 10px; /* 여백 추가 */
 }
 </style>

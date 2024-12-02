@@ -73,6 +73,21 @@ const routes = [
   },
 
   {
+    path: "/add-recommend",
+    component: () => import("../views/recommend/RecommendAdd.vue"),
+  },
+
+  {
+    path: "/recommendupdate/:tdId",
+    component: () => import("../views/recommend/RecommedUpdateView.vue"),
+  },
+
+  {
+    path: "/recommenddetail/:tdId",
+    component: () => import("../views/recommend/RecommendDetail.vue"),
+  },
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
@@ -83,6 +98,18 @@ const routes = [
   {
     path: "/admindb",
     component: () => import("../views/admin/AdminDbView.vue"),
+  },
+  {
+    path: "/addRoom/:tourId",
+    component: () => import("../views/room/AddRoomView.vue"),
+  },
+  {
+    path: "/editRoom/:roomId",
+    component: () => import("../views/room/UpdateRoomView.vue"),
+  },
+  {
+    path: "/addRoomPhoto/:roomId",
+    component: () => import("../views/room/addRoomPhoto.vue"),
   },
 ];
 const router = createRouter({
