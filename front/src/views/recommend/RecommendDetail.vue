@@ -125,7 +125,7 @@ export default {
         console.log("Fetched data:", data);
 
         // 메뉴 데이터 하드코딩
-        if (tdId == 7) {
+        if (tdId == 11) {
           // this.menuTitle = "대표 메뉴"; // tdId 7에 맞는 메뉴 제목
           // this.menuTitle2 = "찾아오시는 길";
           this.menuItems = [
@@ -162,7 +162,7 @@ export default {
                 `,
             },
           ];
-        } else if (tdId == 8) {
+        } else if (tdId == 12) {
           this.menuTitle = "병신의 가볼만한 곳";
           this.menuItems = [
             {
@@ -200,7 +200,7 @@ export default {
                 `,
             },
           ];
-        } else if (tdId == 9) {
+        } else if (tdId == 13) {
           // this.menuTitle = "ㅇㅇ";
           this.menuItems = [
             {
