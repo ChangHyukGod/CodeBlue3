@@ -43,6 +43,10 @@ const routes = [
     component: () => import("../views/faq/FaqQuestionList.vue"),
   },
   {
+    path: "/faq/talk",
+    component: () => import("../views/faq/FaqTalk.vue"),
+  }
+  ,{
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },

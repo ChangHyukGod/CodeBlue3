@@ -15,7 +15,7 @@
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
-        <b-button variant="outline-dark" class="custom-button">
+        <b-button variant="outline-dark" class="custom-button" href="/faq/talk">
           <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
         </b-button>
         <b-button variant="outline-dark" class="custom-button" href="/faq/list">
@@ -112,15 +112,12 @@
                   >
                     - {{ text.text }}
                   </p>
-                  <!-- @mouseenter="showPopover = true"
-                  @mouseleave="showPopover = false" -->
-
                   <hr />
                   <div v-if="showPopover" class="popover" :style="popoverStyle">
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
-                  <b-button variant="primary" class="card-button"
+                  <b-button variant="danger" class="card-button"
                     >자세히 보기</b-button
                   >
                 </b-card>
@@ -128,46 +125,6 @@
             </div>
           </div>
         </div>
-        <!-- 모달 -->
-        <!-- <div>
-          <div>
-            <div
-              v-for="modal in modals"
-              :key="modal.id"
-              class="modal fade"
-              :id="modal.id"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      <i :class="modal.icon"></i> {{ modal.title }}
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    {{ modal.body }}
-                  </div>
-                  <a
-                    :href="modal.link.url"
-                    class="btn btn-outline-success"
-                    id="card_button"
-                  >
-                    {{ modal.link.label }}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </form>
   </div>
@@ -288,16 +245,16 @@ export default {
               icon: "bi bi-shield",
               texts: [
                 {
-                  text: "여행자 보험은 필수로 가입하는 것을 권장합니다.",
+                  text: "여행자 보험을 꼭 가입해야 하나요?",
                   popbody:
                     "여행자 보험은 예기치 못한 상황에 대비하기 위해 필수적입니다.",
                 },
                 {
-                  text: "보험료는 여행일정에 따라 달라집니다.",
+                  text: "보험료가 여행 일정에 따라 변할수도 있나요?",
                   popbody: "보험료는 여행 기간 및 목적지에 따라 상이합니다.",
                 },
                 {
-                  text: "보장 내용을 꼭 확인하세요.",
+                  text: "보험의 정확한 내용을 확인하고 싶어요.",
                   popbody: "보장 항목과 제한 사항을 반드시 확인하세요.",
                 },
               ],
@@ -382,7 +339,7 @@ export default {
 <style scoped>
 .popover {
   background: white;
-  border: 1px solid #ccc;
+  border: 5px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   width: 200px;
@@ -390,7 +347,7 @@ export default {
   z-index: 1000;
 }
 .popover-title {
-  font-size: 16px;
+  font-size: 25px;
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -554,8 +511,9 @@ export default {
 }
 /* 카드 버튼 */
 .card-button {
-  align-self: flex-end !important;
-  margin-top: auto !important;
+  background-color: #ffeb33;
+  border: 1px solid black !important;
+  color: black;
 }
 
 .carousel-item {
