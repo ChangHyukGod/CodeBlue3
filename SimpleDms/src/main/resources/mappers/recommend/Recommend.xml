@@ -24,45 +24,41 @@
 
 
     <insert id="insert" parameterType="Recommend">
-
         INSERT INTO RECOMMEND (
-            TD_ID, TD_NAME, LOC, DESCRIPTION, IMAGE_URL, IMAGE_DATA, POPULARITY
+            TD_ID, TD_NAME, LOC, DESCRIPTION, IMAGE_URL, IMAGE_DATA
         ) VALUES (
-                     RECOMMEND_SEQ.NEXTVAL, -- 시퀀스를 사용하여 TD_ID 생성
-                     #{tdName},             -- 장소 이름
-                     #{loc},                -- 지역
-                     #{description},        -- 설명
-                     #{imageUrl},           -- 이미지 URL
-                     #{imageData, jdbcType=BLOB}, -- 이미지 데이터 (BLOB)
-                     #{popularity}          -- 인기 점수
+                     RECOMMEND_SEQ.NEXTVAL,
+                     #{tdName},
+                     #{loc},
+                     #{description},
+                     #{imageUrl},
+                     #{imageData}
                  )
-
     </insert>
 
 
 
 
-    <!-- URL 업데이트 : public int updateTourUrl(Tour tour); -->
     <update id="updatetdIdUrl" parameterType="Recommend">
         UPDATE RECOMMEND
         SET IMAGE_URL = #{imageUrl}
         WHERE TD_ID = #{tdId}
     </update>
 
-    <!-- 생성된 tourId를 조회 : public int selectGenerateTourId(); -->
+
     <select id="selectGenerateTdId" resultType="int">
         SELECT RECOMMEND_SEQ.CURRVAL FROM DUAL
     </select>
 
 
-    <!-- 상세조회  -->
+
     <select id="select" parameterType="int" resultType="Recommend">
         SELECT * FROM RECOMMEND
         WHERE TD_ID = #{tdId}
     </select>
 
 
-    <!-- 수정 : public int update(Tour tour); -->
+
     <update id="update" parameterType="Recommend">
         UPDATE RECOMMEND
         SET
@@ -70,12 +66,11 @@
             LOC = #{loc},
             DESCRIPTION = #{description},
             IMAGE_URL = #{imageUrl},
-            IMAGE_DATA = #{imageData},
-            POPULARITY = #{popularity}
+            IMAGE_DATA = #{imageData}
         WHERE TD_ID = #{tdId}
     </update>
 
-    <!-- 삭제 : public int delete(int tourId);-->
+
     <delete id="delete" parameterType="int">
         DELETE FROM RECOMMEND
         WHERE TD_ID = #{tdId}

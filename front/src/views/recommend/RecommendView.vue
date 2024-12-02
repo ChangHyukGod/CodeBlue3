@@ -1,8 +1,61 @@
-// views/advanced/fileDb/FileDbView.vue // vueInit
 <template>
   <div>
+    <!-- TODO: 캐러셀 -->
+    <div
+      id="carouselExampleAutoplaying"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="1500"
+    >
+      <div class="carousel-inner">
+        <!-- 슬라이드 1 -->
+        <div class="carousel-item active">
+          <img
+            :src="require('@/assets/images/re4.jpg')"
+            alt="Slide 1"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
+        <!-- 슬라이드 2 -->
+        <div class="carousel-item">
+          <img
+            :src="require('@/assets/images/re2.jpg')"
+            alt="Slide 2"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
+        <!-- 슬라이드 3 -->
+        <div class="carousel-item">
+          <img
+            :src="require('@/assets/images/re3.jpg')"
+            alt="Slide 3"
+            class="d-block w-100 img-fluid rounded shadow"
+          />
+        </div>
+      </div>
+      <!-- 캐러셀 컨트롤러 (좌우 버튼) -->
+      <!-- <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button> -->
+    </div>
+
     <!-- TODO: 검색어 입력상자 -->
-    <div class="input-group mb-3">
+    <div class="input-group mb-3 mt-3">
       <input
         type="text"
         class="form-control"
@@ -10,52 +63,68 @@
         v-model="searchKeyword"
       />
       <button
-        class="btn btn-outline-secondary"
+        class="btn btn-outline-warning"
         type="button"
         @click="getrecommend"
       >
         검색
       </button>
     </div>
+
     <!-- TODO: 카드 -->
     <div class="row">
-      <div v-for="(data, index) in recommends" :key="index" class="col-6">
-        <div class="card" style="width: 18rem">
-          <img :src="data.imageUrl" class="card-img-top" alt="카드" />
-          <div class="card-body">
-            <h5 class="card-title">{{ data.tdName }}</h5>
-            <p class="card-text">
+      <!-- 카드 반복 -->
+      <div v-for="(data, index) in recommends" :key="index" class="col-4 mb-4">
+        <div class="card custom-card">
+          <img
+            :src="data.imageUrl"
+            class="card-img-top custom-card-img"
+            alt="카드"
+            @click="goToDetailPage(data)"
+          />
+          <div class="card-body custom-card-body">
+            <h5 class="card-title text-warning">{{ data.tdName }}</h5>
+            <p class="card-text text-light">
               {{ data.loc }}
-              <br />
               <br />
               {{ data.description }}
             </p>
-
-            <router-link
-              :to="'/recommend/recommendadd' + data.tdId"
-              class="btn btn-primary"
-            >
-              수정
-            </router-link>
+            <!-- 수정 버튼 -->
+            <div class="d-flex justify-content-between">
+              <router-link
+                :to="'/recommendupdate/' + data.tdId"
+                class="btn btn-dark btn-sm"
+              >
+                수정
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지)  -->
-    <div class="mt-3">
-      <!-- TODO: v-model="뷰변수(현재페이지번호)"
-                 ,total-rows="전체개수"
-                 ,per-page="1페이지당화면에보일개수"
-                    -->
+
+    <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지) -->
+    <div
+      class="mt-3 text-center d-flex justify-content-between align-items-center"
+    >
+      <!-- 페이지네이션 -->
       <b-pagination
         v-model="pageIndex"
         :total-rows="totalCount"
         :per-page="recordCountPerPage"
         @click="getrecommend"
+        style="margin-left: 42%"
+        class="custom-pagination"
       ></b-pagination>
+
+      <!-- 추가 버튼 -->
+      <router-link to="/add-recommend" class="btn btn-warning btn-sm ml-3">
+        추가
+      </router-link>
     </div>
   </div>
 </template>
+
 <script>
 import RecommendService from "@/services/recommend/RecommendService";
 export default {
@@ -66,6 +135,9 @@ export default {
       recordCountPerPage: 3,
       searchKeyword: "",
       recommends: [], // 빈배열
+      carouselItems: [
+        // 캐러셀 아이템
+      ],
     };
   },
   methods: {
@@ -76,7 +148,6 @@ export default {
           this.pageIndex - 1,
           this.recordCountPerPage
         );
-        // TODO: 벡엔드 전송되는것: results(배열), totalCount(총개수)
         const { results, totalCount } = response.data;
         console.log(response.data); // 디버깅
         this.recommends = results;
@@ -85,10 +156,119 @@ export default {
         console.log(error);
       }
     },
+
+    goToDetailPage(data) {
+      this.$router.push({
+        path: `/recommenddetail/${data.tdId}`, // 동적 경로에 데이터 삽입
+      });
+    },
   },
   mounted() {
     this.getrecommend();
   },
 };
 </script>
-<style></style>
+
+<style>
+/* 카드 디자인 */
+.custom-card {
+  border: 2px solid #ffc107; /* 노란색 테두리 */
+  background-color: #000; /* 검은색 배경 */
+  color: #ffc107; /* 텍스트 기본 색 노란색 */
+  border-radius: 10px;
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+  cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
+}
+
+.custom-card:hover {
+  transform: scale(1.05); /* 크기 확대 */
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.6); /* 입체적인 그림자 추가 */
+  border-color: #ff9800; /* 호버 시 테두리 색 약간 변경 */
+}
+
+.custom-card-img {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #ffc107; /* 이미지 아래에 노란 테두리 */
+}
+
+.custom-card-body {
+  padding: 15px;
+}
+
+/* 텍스트 색상 조정 */
+.card-text {
+  color: #ffffff; /* 본문 텍스트 흰색 */
+}
+
+/* 수정 버튼 */
+.btn-dark {
+  background-color: #ffc107; /* 노란색 배경 */
+  color: #000; /* 버튼 텍스트 검정색 */
+  border: 1px solid #ffc107; /* 테두리 노란색 */
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #000; /* 호버 시 검은색 배경 */
+  color: #ffc107; /* 호버 시 노란색 텍스트 */
+  border: 1px solid #ffc107; /* 테두리 유지 */
+}
+
+/* 추가 버튼 */
+.btn-warning {
+  background-color: white; /* 노란색 배경 */
+  color: #000; /* 텍스트 검정색 */
+  border: 1px solid #000; /* 검은색 테두리 */
+}
+
+.btn-warning:hover {
+  background-color: #000; /* 호버 시 검은색 배경 */
+  color: #ffc107; /* 호버 시 노란 텍스트 */
+  border: 1px solid #ffc107; /* 노란색 테두리 */
+}
+
+/* 페이지네이션 중앙 정렬 */
+.text-center {
+  text-align: center;
+}
+
+.d-flex.justify-content-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ml-3 {
+  margin-left: 1rem; /* 좌측 여백 추가 */
+}
+
+/* 캐러셀 디자인 */
+.carousel-inner img {
+  height: 400px; /* 캐러셀 이미지 크기 조정 */
+  object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* 화이트 컬러로 아이콘 */
+}
+
+.custom-pagination .page-link {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+
+#carouselExampleAutoplaying {
+  border: 3px solid #ffc107; /* 노란색 테두리 */
+  border-radius: 10px; /* 둥근 모서리 */
+  padding: 10px; /* 여백 추가 */
+}
+</style>
