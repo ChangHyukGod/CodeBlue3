@@ -83,7 +83,7 @@ export default {
           this.tour
         );
         console.log(response.data);
-        alert("수정되었습니다.");
+        this.$router.push("/");
       } catch (error) {
         this.tour.image = undefined;
         console.log(error);
