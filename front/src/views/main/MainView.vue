@@ -25,7 +25,7 @@
     <div class="row row-cols-1 row-cols-md-4 g-3">
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/maintest_3.png`)" class="card-img-top" />
+          <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" />
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
             <p class="card-text">부산</p>
