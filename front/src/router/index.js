@@ -69,8 +69,18 @@ const routes = [
   },
 
   {
-    path: "/recommendadd",
-    component: () => import("../views/recommend/RecommedAddView.vue"),
+    path: "/add-recommend",
+    component: () => import("../views/recommend/RecommendAdd.vue"),
+  },
+
+  {
+    path: "/recommendupdate/:tdId",
+    component: () => import("../views/recommend/RecommedUpdateView.vue"),
+  },
+
+  {
+    path: "/recommenddetail/:tdId",
+    component: () => import("../views/recommend/RecommendDetail.vue"),
   },
 
   {
