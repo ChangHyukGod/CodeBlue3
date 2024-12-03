@@ -20,8 +20,10 @@
         <typeAlias type="com.simplecoding.simpledms.vo.main.Tour" alias="Tour"/>
         <typeAlias type="com.simplecoding.simpledms.vo.review.Review" alias="Review"/>
         <typeAlias type="com.simplecoding.simpledms.vo.room.Room" alias="Room"/>
+        <typeAlias type="com.simplecoding.simpledms.vo.faq.Announce" alias="Announce"/>
         <typeAlias type="com.simplecoding.simpledms.vo.comments.Comments" alias="Comments"/>
         <typeAlias type="com.simplecoding.simpledms.vo.faq.Faq" alias="Faq"/>
+
 
 
     </typeAliases>

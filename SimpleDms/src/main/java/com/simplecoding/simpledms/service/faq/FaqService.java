@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : KTE
@@ -29,5 +30,17 @@ public class FaqService {
 
     public void insertFaq(Faq faq) {
         faqMapper.insertFaq(faq);
+    }
+
+    public Optional<Faq> selectFaq(int fno) {
+        return faqMapper.selectFaq(fno);
+    }
+
+    public void updateFaq(Faq faq) {
+        faqMapper.updateFaq(faq);
+    }
+
+    public void deleteFaq(int fno) {
+        faqMapper.deleteFaq(fno);
     }
 }
