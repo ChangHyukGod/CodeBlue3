@@ -60,7 +60,7 @@ const routes = [
     component: () => import("../views/review/AddReview.vue"),
   },
   {
-    path: "/review/:uuid",
+    path: "/review/:reviewid",
     component: () => import("../views/review/ReviewDetail.vue"),
   },
   {

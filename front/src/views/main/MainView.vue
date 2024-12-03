@@ -249,6 +249,7 @@ export default {
       }
     }
   },
+
   mounted() {
     this.getMain();
     const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
