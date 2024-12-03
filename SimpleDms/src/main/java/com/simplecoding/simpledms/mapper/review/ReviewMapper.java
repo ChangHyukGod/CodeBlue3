@@ -17,15 +17,10 @@ import java.util.Optional;
 public interface ReviewMapper {
     public List<?> selectReviewList(Criteria searchVO);
     public int selectReviewListTotCnt(Criteria searchVO);
-<<<<<<< Updated upstream
     public int insert(Review review);
     public int updateReviewUrl(Review review);
     public int selectGenerateReviewId();
     public Optional<Review> selectReview(int reviewId);
     public int update(Review review);
     public int delete(int reviewId);
-    
-=======
-
->>>>>>> Stashed changes
 }
