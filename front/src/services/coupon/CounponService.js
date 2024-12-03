@@ -9,8 +9,16 @@ const insert = (data) => {
   return axios.post(baseURL + `/coupon/coupon`, data, { headers: token });
 };
 
+const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
+  return axios.get(
+    baseURL +
+      `/coupon/coupon?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
+  );
+};
+
 const CouponService = {
   insert,
+  getAll,
 };
 
 export default CouponService;

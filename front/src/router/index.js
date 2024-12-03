@@ -15,6 +15,10 @@ const routes = [
     component: () => import("../views/main/MainDetail.vue"),
   },
   {
+    path: "/mainupdate/:tourId",
+    component: () => import("../views/main/MainUpdate.vue"),
+  },
+  {
     path: "/register",
     component: () => import("../views/auth/RegisterView.vue"),
   },
@@ -31,6 +35,18 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
+    path: "/faq/payment",
+    component: () => import("../views/faq/FaqHowtoPay.vue"),
+  },
+  {
+    path: "/faq/list",
+    component: () => import("../views/faq/FaqQuestionList.vue"),
+  },
+  {
+    path: "/faq/talk",
+    component: () => import("../views/faq/FaqTalk.vue"),
+  }
+  ,{
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -47,17 +63,69 @@ const routes = [
     component: () => import("../views/coupon/CouponView.vue"),
   },
   {
+    path: "/mypage",
+    component: () => import("../views/mypage/MypageView.vue"),
+  },
+
+  {
+    path: "/recommend",
+    component: () => import("../views/recommend/RecommendView.vue"),
+  },
+
+  {
+    path: "/add-recommend",
+    component: () => import("../views/recommend/RecommendAdd.vue"),
+  },
+
+  {
+    path: "/recommendupdate/:tdId",
+    component: () => import("../views/recommend/RecommedUpdateView.vue"),
+  },
+
+  {
+    path: "/recommenddetail/:tdId",
+    component: () => import("../views/recommend/RecommendDetail.vue"),
+  },
+
+  {
+    path: "/recommendmap",
+    component: () => import("../views/recommend/RecommendMap.vue"),
+  },
+
+  {
+    path: "/recommendmap2",
+    component: () => import("../views/recommend/RecommendMap2.vue"),
+  },
+
+  {
+    path: "/recommendmap3",
+    component: () => import("../views/recommend/RecommendMap3.vue"),
+  },
+
+  {
     path: "/addadmin",
-    component: ()=> import("../views/admin/AddAdminDb.vue"),
+    component: () => import("../views/admin/AddAdminDb.vue"),
   },
   {
     path: "/adminlist",
-    component: () => import("../views/admin/AdminDbDetail.vue")
+    component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
     path: "/admindb",
-    component : () => import("../views/admin/AdminDbView.vue")
-  }
+    component: () => import("../views/admin/AdminDbView.vue"),
+  },
+  {
+    path: "/addRoom/:tourId",
+    component: () => import("../views/room/AddRoomView.vue"),
+  },
+  {
+    path: "/editRoom/:roomId",
+    component: () => import("../views/room/UpdateRoomView.vue"),
+  },
+  {
+    path: "/addRoomPhoto/:roomId",
+    component: () => import("../views/room/addRoomPhoto.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
