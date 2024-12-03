@@ -84,6 +84,21 @@ const routes = [
   },
 
   {
+    path: "/recommendmap",
+    component: () => import("../views/recommend/RecommendMap.vue"),
+  },
+
+  {
+    path: "/recommendmap2",
+    component: () => import("../views/recommend/RecommendMap2.vue"),
+  },
+
+  {
+    path: "/recommendmap3",
+    component: () => import("../views/recommend/RecommendMap3.vue"),
+  },
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },

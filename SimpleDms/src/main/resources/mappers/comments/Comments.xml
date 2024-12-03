@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.simplecoding.simpledms.mapper.comments.CommentsMapper">
+
+
+
+    <select id="selectCommentsList"
+            parameterType="Criteria"
+            resultType="Comments">
+        SELECT *
+        FROM COMMEN
+        WHERE COMMENT_TEXT LIKE '%' || #{searchKeyword} || '%'
+        OFFSET #{pageIndex} * #{recordCountPerPage} ROWS FETCH NEXT #{recordCountPerPage} ROWS ONLY
+    </select>
+
+
+    <select id="selectCommentsListTotCnt"
+            parameterType="Criteria"
+            resultType="int">
+        SELECT COUNT(*) FROM COMMEN
+        WHERE COMMENT_TEXT LIKE '%'|| #{searchKeyword} || '%'
+    </select>
+
+
+
+    <insert id="insert"
+            parameterType="Comments">
+        INSERT INTO COMMEN(COM_ID,
+                            COMMENT_TEXT,
+                            EMAIL, CREATED_AT)
+        VALUES (COMMEN_SEQ.NEXTVAL,
+                #{commentText},
+                #{email}, SYSTIMESTAMP)
+    </insert>
+
+
+
+
+
+
+
+
+</mapper>
