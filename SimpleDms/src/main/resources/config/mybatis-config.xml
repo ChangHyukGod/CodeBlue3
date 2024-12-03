@@ -18,6 +18,7 @@
         <typeAlias type="com.simplecoding.simpledms.vo.recommend.Recommend" alias="Recommend"/>
         <typeAlias type="com.simplecoding.simpledms.vo.common.Criteria" alias="Criteria"/>
         <typeAlias type="com.simplecoding.simpledms.vo.main.Tour" alias="Tour"/>
+        <typeAlias type="com.simplecoding.simpledms.vo.admin.Admin" alias="Admin"/>
         <typeAlias type="com.simplecoding.simpledms.vo.review.Review" alias="Review"/>
         <typeAlias type="com.simplecoding.simpledms.vo.room.Room" alias="Room"/>
         <typeAlias type="com.simplecoding.simpledms.vo.faq.Announce" alias="Announce"/>
