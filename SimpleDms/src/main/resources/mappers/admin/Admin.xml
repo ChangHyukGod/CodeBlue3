@@ -26,14 +26,14 @@
     <insert id="insert"
             parameterType="Admin">
         INSERT INTO FAQ (FNO, TITLE, QUESTION, ANSWER)
-        VALUES (SQ_FAQ.NEXTVAL, #{title}, #{question}, #{answer})
+        VALUES (SQ_FAQ.NEXTVAL, #{hashtag}, #{question}, #{answer})
     </insert>
 
     <!-- 게시물 조회 -->
     <select id="selectAdmin"
             parameterType="int"
             resultType="Admin">
-        SELECT FNO, TITLE, QUESTION, ANSWER
+        SELECT FNO, hashtag, QUESTION, ANSWER
         FROM FAQ
         WHERE FNO = #{fno}
     </select>
@@ -42,7 +42,7 @@
     <update id="update"
             parameterType="Admin">
         UPDATE FAQ
-        SET TITLE = #{title},
+        SET HASHTAG = #{hashtag},
             QUESTION = #{question},
             ANSWER = #{answer}
         WHERE FNO = #{fno}
