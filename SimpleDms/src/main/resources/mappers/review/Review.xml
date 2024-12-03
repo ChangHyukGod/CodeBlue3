@@ -18,32 +18,45 @@
         WHERE TITLE LIKE '%' || #{searchKeyword} || '%'
     </select>
 
-    <insert id="insert"
-            parameterType="Review">
+    <insert id="insert" parameterType="Review">
         INSERT INTO REVIEWS (
-            REVIEW_ID,
-            TITLE,
-            CONTENT,
-            RATING,
-            IMAGE_URL,
-            AUTHOR_EMAIL,
-            TARGET_ID,
-            CREATED_AT,
-            UPDATED_AT,
-            LOC
+        TITLE,
+        CONTENT,
+        RATING,
+        IMAGE_URL,
+        AUTHOR_EMAIL,
+        TARGET_ID,
+        CREATED_AT,
+        UPDATED_AT,
+        LOC
         ) VALUES (
-                     #{reviewId},
-                     #{title},
-                     #{content},
-                     #{rating},
-                     #{imageUrl},
-                     #{authorEmail},
-                     #{targetId},
-                     #{createdAt},
-                     #{updatedAt},
-                     #{loc}
-                 )
+        #{title},
+        #{content},
+        #{rating},
+        #{imageUrl},
+        #{authorEmail},
+        #{targetId},
+        #{createdAt},
+        #{updatedAt},
+        #{loc}
+        )
+        <selectKey keyProperty="reviewId" resultType="int" order="AFTER">
+            SELECT REVIEWS_SEQ.CURRVAL FROM DUAL
+        </selectKey>
     </insert>
+
+
+    <update id="updateReviewUrl"
+            parameterType="Review">
+        UPDATE REVIEWS
+        SET IMAGE_URL = #{imageUrl}
+        WHERE REVIEW_ID = #{reviewID}
+    </update>
+
+    <select id="selectGenerateReviewId"
+            resultType="int">
+        SELECT REVIEWS_SEQ CURRVAL FROM DUAL
+    </select>
 
     <select id="selectReview"
             parameterType="int"

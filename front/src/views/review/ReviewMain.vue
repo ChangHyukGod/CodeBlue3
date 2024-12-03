@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <!-- 지역 선택 -->
+    <!-- 지역 선택
     <div class="d-flex">
       <div class="btn-group">
         <button type="button" class="btn dropdown-toggle custom-dropdown mt-4"
@@ -43,7 +43,7 @@
           <li><a class="dropdown-item" href="#" @click="selectRegion('제주')">제주</a></li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
     <!-- 리뷰 목록 테이블 -->
     <div class="container mt-2">
@@ -51,20 +51,16 @@
         <thead>
           <tr>
             <th scope="col">번호</th>
-            <th scope="col">지역</th>
+
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
             <th scope="col">작성일</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(review, index) in filteredReviews" :key="review.reviewId">
-            <th scope="row">{{ index + 1 }}</th>
-            <td>
-              <button type="button" class="btn btn-outline-warning" disabled style="font-weight: bold; color: black;">
-                {{ review.loc }}
-              </button>
-            </td>
+          <tr v-for="(review, index) in reviews" :key="index">
+            <th>{{ review.reviewId }}</th>
+
             <td>{{ review.title }}</td>
             <td>{{ review.authorEmail }}</td>
             <td>{{ formatDate(review.createdAt) }}</td>
@@ -104,33 +100,39 @@ import ReviewService from "@/services/review/ReviewService"; // ReviewService를
 export default {
   data() {
     return {
-      selectedRegion: null, // 선택된 지역을 저장할 변수
+      pageIndex: 1, // 현재페이지번호
+      totalCount: 0, // 전체개수
+      recodeCountPerPage: 3, // 화면에보일개수
+      searchKeyword: "", // 검색어
       reviews: [], // 리뷰 목록
     };
   },
-  computed: {
-    // 선택된 지역에 따라 필터링된 리뷰 목록
-    filteredReviews() {
-      if (!this.selectedRegion || this.selectedRegion === '지역선택') {
-        return this.reviews;
-      }
-      return this.reviews.filter(review => review.loc === this.selectedRegion);
-    },
-  },
+  // computed: {
+  //   // 선택된 지역에 따라 필터링된 리뷰 목록
+  //   filteredReviews() {
+  //     if (!this.selectedRegion || this.selectedRegion === '지역선택') {
+  //       return this.reviews;
+  //     }
+  //     return this.reviews.filter(review => review.loc === this.selectedRegion);
+  //   },
+  // },
  methods: {
   // 리뷰 목록을 불러오는 메소드
-  async loadReviews() {
+  async getReview() {
     try {
-      const response = await ReviewService.getAll('', 0, 10); // 인증 없이 데이터 호출
-      this.reviews = response.data;
+      let response = await ReviewService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recodeCountPerPage
+        ); // 인증 없이 데이터 호출
+        const { results, totalCount} = response.data
+      this.reviews = results;
+      this.totalCount = totalCount;
     } catch (error) {
       console.error("리뷰 목록을 가져오는 중 오류가 발생했습니다:", error);
     }
   },
-  // 지역 선택 메소드
-  selectRegion(region) {
-    this.selectedRegion = region; // 선택된 지역을 변수에 저장
-  },
+
   // 글등록 버튼 클릭 시 이동
   goToAddReview() {
     this.$router.push('/add-review'); // '/add-review' 페이지로 이동
@@ -143,7 +145,7 @@ export default {
 },
 
 mounted() {
-  this.loadReviews(); // 페이지 로드 시 리뷰 목록을 불러옵니다.
+  this.getReview(); // 페이지 로드 시 리뷰 목록을 불러옵니다.
 },
 };
 </script>
@@ -151,4 +153,5 @@ mounted() {
 <style>
 
 </style>
+
 

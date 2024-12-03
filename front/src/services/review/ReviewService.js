@@ -1,16 +1,35 @@
 import axios from "axios";
 
 // 백엔드 주소 (SpringBoot API URL)
-const baseURL = "http://localhost:8000/api/review/review";
+const baseURL = "http://localhost:8000/api";
+
+
+
+let user = JSON.parse(localStorage.getItem("user"));
+// 조회용
+const token = { Authorization: "Bearer " + user?.accessToken };
+// insert/update 용
+// const token2 = {
+//   "Content-Type": "multipart/form-data",
+//   Authorization: "Bearer " + user?.accessToken,
+// };
+
+const token2 = {
+  "Content-Type": "multipart/form-data",
+  Authorization: "Bearer " + user?.accessToken,
+};
+
+
+
+
+
 
 // 전체 조회
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
-  return axios.get(baseURL + `/review?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`, {
-    headers: { 
-      // 인증 헤더를 추가하지 않음
-      'Content-Type': 'application/json', // 기본 JSON 형식 헤더
-    }
-  });
+  return axios.get(baseURL + `/review/review?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`,
+    { headers: token }
+
+);
 };
 
 // 이미지 업로드 및 폼 데이터 준비
@@ -32,41 +51,31 @@ const insertForm = (data) => {
 // 리뷰 추가 (업로드)
 const insert = (data) => {
   let form = insertForm(data);
-  return axios.post(baseURL + "/add", form, {
-    headers: {
-      "Content-Type": "multipart/form-data", // 파일 업로드를 위한 헤더
-      // 인증 헤더를 추가하지 않음
-    }
-  });
+  return axios.post(baseURL + "/review/add", form,
+    { headers: token2 }
+  );
 };
 
 // 상세조회
 const get = (reviewId) => {
-  return axios.get(baseURL + `/review/${reviewId}`, {
-    headers: { 
-      // 인증 헤더를 추가하지 않음
-    }
-  });
+  return axios.get(baseURL + `/review/${reviewId}`,
+    { headers: token }
+  );
 };
 
 // 리뷰 수정
 const update = (reviewId, data) => {
   let form = insertForm(data);
-  return axios.put(baseURL + `/update/${reviewId}`, form, {
-    headers: {
-      "Content-Type": "multipart/form-data", // 파일 업로드를 위한 헤더
-      // 인증 헤더를 추가하지 않음
-    }
-  });
+  return axios.put(baseURL + `/review/update/${reviewId}`, form,
+    { headers: token2 }
+  );
 };
 
 // 리뷰 삭제
 const remove = (reviewId) => {
-  return axios.delete(baseURL + `/deletion/${reviewId}`, {
-    headers: { 
-      // 인증 헤더를 추가하지 않음
-    }
-  });
+  return axios.delete(baseURL + `/review/deletion/${reviewId}`,
+    { headers: token2 }
+  );
 };
 
 const ReviewService = {
