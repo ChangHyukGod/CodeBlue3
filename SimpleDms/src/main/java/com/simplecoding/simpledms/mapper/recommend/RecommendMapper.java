@@ -21,6 +21,15 @@ public interface RecommendMapper {
 
     public List<?> selectRecommendList(Criteria searchVO);    // 전체조회
     public int selectRecommendListTotCnt(Criteria searchVO); // 총건수
+
+
+
+
+
+  //////////////////////////////////////////////////////////
+
+
+
     public int insert(Recommend recommend); // 생성
 
     ////////////////////////////////////////

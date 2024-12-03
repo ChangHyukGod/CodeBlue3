@@ -34,24 +34,24 @@
         </div>
       </div>
       <!-- 캐러셀 컨트롤러 (좌우 버튼) -->
-      <!-- <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleAutoplaying"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleAutoplaying"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button> -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleAutoplaying"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleAutoplaying"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
 
     <!-- TODO: 검색어 입력상자 -->
@@ -74,7 +74,7 @@
     <!-- TODO: 카드 -->
     <div class="row">
       <!-- 카드 반복 -->
-      <div v-for="(data, index) in recommends" :key="index" class="col-4 mb-4">
+      <div v-for="(data, index) in recommends" :key="index" class="col-3 mb-4">
         <div class="card custom-card">
           <img
             :src="data.imageUrl"
@@ -132,7 +132,7 @@ export default {
     return {
       pageIndex: 1,
       totalCount: 0,
-      recordCountPerPage: 3,
+      recordCountPerPage: 4,
       searchKeyword: "",
       recommends: [], // 빈배열
       carouselItems: [

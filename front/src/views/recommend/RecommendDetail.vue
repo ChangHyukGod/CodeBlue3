@@ -7,6 +7,7 @@
         <p class="text-description">{{ description }}</p>
         <p class="text-location">위치: {{ loc }}</p>
       </div>
+
       <!-- 이미지 영역 -->
       <div class="image-area">
         <img :src="imageUrl" alt="Detail Image" class="detail-image" />
@@ -47,6 +48,7 @@
         :src="require(`@/assets/images/${menu.MENU_MAP}`)"
         alt="Additional Detail"
         class="additional-image"
+        @click="navigateToRecommendMap(menu)"
       />
     </div>
     <div class="paragraph-wrapper" style="margin-bottom: 50px"></div>
@@ -80,6 +82,48 @@
               <pre>{{ menu.MENU_ID3 }}</pre>
             </ul>
           </div>
+        </div>
+      </div>
+
+      <div class="review-section">
+        <!-- 댓글 리스트 -->
+        <div class="review-list">
+          <!-- 댓글 항목 -->
+          <div class="review-item">
+            <div class="review-header">
+              <p class="review-user">피드백</p>
+              <span class="review-time">2024.12.03 10:30</span>
+            </div>
+            <div class="review-content">
+              <p class="review-text">
+                적당히 시끄럽고 적당히 분위기가 좋아서 여러모로 좋았네요 ~_~
+              </p>
+              <div class="review-actions">
+                <button class="action-btn">수정</button>
+                <button class="action-btn">삭제</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 추가적인 댓글 항목 -->
+          <div class="review-item">
+            <div class="review-header">
+              <p class="review-user">나의비밀</p>
+              <span class="review-time">2024.12.03 09:45</span>
+            </div>
+            <div class="review-content">
+              <p class="review-text">라이브 밴드도 있어서 분위기는 최고~</p>
+              <div class="review-actions">
+                <button class="action-btn">수정</button>
+                <button class="action-btn">삭제</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 댓글 쓰기 버튼 -->
+        <div class="review-write-button">
+          <a href="/comment-write" class="write-btn">댓글 쓰기</a>
         </div>
       </div>
     </div>
@@ -151,7 +195,7 @@ export default {
               MENU_IMAGE_URL: "메뉴첫번째4.png",
             },
           ];
-          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "맵1.jpg" }];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "맵함안.png" }];
           this.menuItems3 = [
             {
               MENU_ID3: `부산역에서 KTX 또는 SRT를 타고 진주역으로 가서, 거기서 버스나 택시로 함안군으로 이동하면 됩니다.
@@ -246,6 +290,51 @@ export default {
     },
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
+    },
+
+    navigateToRecommendMap(menu) {
+      const tdId = this.$route.params.tdId; // 구글 api 연동할tdId 값 가져오기
+      // tdId 값을 기준으로 경로 다르게 설정
+      if (tdId == 11) {
+        // tdId가 7일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 12) {
+        // tdId가 8일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap2",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap2",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 13) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap3",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap3",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      }
     },
   },
 };
@@ -597,5 +686,97 @@ export default {
 pre {
   white-space: pre-line; /* 여러 줄을 그대로 유지하고, 공백도 처리 */
   margin: 0; /* 불필요한 여백 제거 */
+}
+
+/* 이미지 오버 시 마우스 커서 모양 변경 */
+.additional-image:hover {
+  cursor: pointer; /* 마우스를 이미지 위에 올리면 손 모양 커서로 변경 */
+}
+
+.review-section {
+  font-family: Arial, sans-serif;
+  color: #333;
+  max-width: 800px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.review-item {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-user {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.review-time {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.review-content {
+  margin-top: 10px;
+}
+
+.review-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.review-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.action-btn:hover {
+  text-decoration: underline;
+}
+
+/* 댓글 쓰기 버튼 섹션 */
+.review-write-button {
+  text-align: right;
+}
+
+.write-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.write-btn:hover {
+  background-color: #0056b3;
 }
 </style>

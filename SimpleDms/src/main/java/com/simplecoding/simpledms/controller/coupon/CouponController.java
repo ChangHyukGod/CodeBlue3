@@ -1,4 +1,4 @@
-package com.simplecoding.simpledms.controller.Coupon;
+package com.simplecoding.simpledms.controller.coupon;
 
 import com.simplecoding.simpledms.service.coupon.CouponService;
 import com.simplecoding.simpledms.vo.common.Criteria;
