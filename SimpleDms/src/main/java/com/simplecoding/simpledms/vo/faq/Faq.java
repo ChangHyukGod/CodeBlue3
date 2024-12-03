@@ -20,5 +20,6 @@ public class Faq {
     private int fno;
     private String question;
     private String answer;
+    private String hashtag;
 
 }
