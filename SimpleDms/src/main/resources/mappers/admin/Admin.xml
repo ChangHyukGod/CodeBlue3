@@ -7,9 +7,9 @@
     <select id="selectAdminList"
             parameterType="Criteria"
             resultType="Admin">
-        SELECT *
-        FROM TB_FAQ
-        WHERE TITLE LIKE '%' || #{searchkeyword} || '%'f
+        SELECT FNO, TITLE, QUESTION, ANSWER
+        FROM FAQ
+        WHERE TITLE LIKE '%' || #{searchkeyword} || '%'
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
 
@@ -18,57 +18,40 @@
             parameterType="Criteria"
             resultType="int">
         SELECT COUNT(*)
-        FROM TB_FAQ
+        FROM FAQ
         WHERE TITLE LIKE '%' || #{searchkeyword} || '%'
     </select>
 
     <!-- 게시물 추가 -->
     <insert id="insert"
             parameterType="Admin">
-        INSERT INTO TB_FAQ(FNO,
-                           TITLE,
-                           QUESTION,
-                           ANSWER,
-                           INSERT_TIME,
-                           UPDATE_TIME,
-                           FAQ_DATA,
-                           FAQ_URL)
-        VALUES (SQ_ADMIN.NEXTVAL,
-                #{title},
-                #{question},
-                #{answer},
-                #{insertTime},
-                #{updateTime},
-                #{faqData},
-                #{faqUrl})
+        INSERT INTO FAQ (FNO, TITLE, QUESTION, ANSWER)
+        VALUES (SQ_FAQ.NEXTVAL, #{title}, #{question}, #{answer})
     </insert>
 
     <!-- 게시물 조회 -->
     <select id="selectAdmin"
             parameterType="int"
             resultType="Admin">
-        SELECT *
-        FROM TB_FAQ
-        WHERE FNO = #{fno}  <!-- Assuming FNO as the primary key -->
+        SELECT FNO, TITLE, QUESTION, ANSWER
+        FROM FAQ
+        WHERE FNO = #{fno}
     </select>
 
     <!-- 게시물 수정 -->
     <update id="update"
             parameterType="Admin">
-        UPDATE TB_FAQ
+        UPDATE FAQ
         SET TITLE = #{title},
-        QUESTION = #{question},
-        ANSWER = #{answer},
-        UPDATE_TIME = #{updateTime},
-        FAQ_DATA = #{faqData},
-        FAQ_URL = #{faqUrl}
+            QUESTION = #{question},
+            ANSWER = #{answer}
         WHERE FNO = #{fno}
     </update>
 
     <!-- 게시물 삭제 -->
     <delete id="delete"
             parameterType="int">
-        DELETE FROM TB_FAQ
+        DELETE FROM FAQ
         WHERE FNO = #{fno}
     </delete>
 

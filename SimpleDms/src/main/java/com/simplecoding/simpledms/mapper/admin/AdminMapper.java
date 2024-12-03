@@ -9,10 +9,17 @@ import java.util.Optional;
 
 @Mapper
 public interface AdminMapper {
-    public List<?> selectAdminList(Criteria searchVO);          // 전체조회
-    public int selectAdminListTotCnt(Criteria searchVO);        // 총건수구하기
-    public int insert(Admin admin);                             // 게시글 생성
-    public Optional<Admin> selectAdmin(int title);              // 상세조회
-    public int update(Admin admin);                             // 게시글 수정
-    public int delete(int title);                               // 게시글 삭제
+
+
+    List<Admin> selectAdminList(Criteria searchVO);
+
+    int selectAdminListTotCnt(Criteria searchVO);
+
+    int insert(Admin admin);
+
+    Optional<Admin> selectAdmin(int fno);
+
+    int update(Admin admin);
+
+    int delete(int fno);
 }
