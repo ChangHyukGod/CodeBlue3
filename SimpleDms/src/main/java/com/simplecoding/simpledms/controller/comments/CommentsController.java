@@ -8,12 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : KTE-149
@@ -46,17 +45,60 @@ public class CommentsController {
     }
 
 
-
     //    부서 생성
 
     @PostMapping("/api/comments/add")
     public ResponseEntity<?> insert(
-            @RequestBody Comments comments
+            @RequestBody Comments comments, Authentication authentication
     ) {
-       commentsService.insert(comments);
+        String email = authentication.getName();
+        comments.setEmail(email);
+
+        commentsService.insert(comments);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
+
+
+
+
+    //상세
+
+    @GetMapping("/api/comments/get/{comId}")
+    public ResponseEntity<?> selectComments(
+            @PathVariable int comId
+    ) {
+        Optional<Comments> comments = commentsService.selectComments(comId);
+
+        if (comments.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(comments.get(), HttpStatus.OK);
+    }
+
+
+    //수정
+    @PutMapping("/api/comments/update/{comId}")
+    public ResponseEntity<?> update(
+            @PathVariable int comId,
+            @RequestBody Comments comments
+    ) {
+        commentsService.update(comments);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    //    삭제
+    @DeleteMapping("/api/comments/deletion/{comId}")
+    public ResponseEntity<?> delete(@PathVariable int comId) {
+        commentsService.delete(comId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 

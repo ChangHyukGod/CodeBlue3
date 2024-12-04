@@ -50,8 +50,8 @@ const routes = [
   {
     path: "/faq/talk",
     component: () => import("../views/faq/FaqTalk.vue"),
-  }
-  ,{
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -105,6 +105,11 @@ const routes = [
   {
     path: "/recommendmap3",
     component: () => import("../views/recommend/RecommendMap3.vue"),
+  },
+
+  {
+    path: "/recommendcomadd",
+    component: () => import("../views/recommend/RecommendComAdd.vue"),
   },
 
   {
