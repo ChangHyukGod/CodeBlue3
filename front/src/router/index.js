@@ -113,6 +113,11 @@ const routes = [
   },
 
   {
+    path: "/recommendcomupdate/:comId",
+    component: () => import("../views/recommend/RecommendComUpdate.vue"),
+  },
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },

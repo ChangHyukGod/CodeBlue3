@@ -27,9 +27,32 @@ const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   );
 };
 
+const get = (comId) => {
+  return axios.get(baseURL + `/comments/get/${comId}`);
+};
+
+/* TODO: 수정(dno) */
+
+const update = (comId, data) => {
+  return axios.put(baseURL + `/comments/update/${comId}`, data, {
+    headers: token2,
+  });
+};
+
+/* TODO: 삭제(dno) */
+
+const remove = (comId) => {
+  return axios.delete(baseURL + `/comments/deletion/${comId}`, {
+    headers: token2,
+  });
+};
+
 const CommentsService = {
   insert,
   getAll,
+  get,
+  update,
+  remove,
 };
 
 export default CommentsService;
