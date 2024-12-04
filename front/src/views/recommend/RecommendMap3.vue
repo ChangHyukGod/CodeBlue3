@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- 지도 표시 영역 -->
-
     <div
       id="map"
       style="
@@ -11,10 +10,21 @@
         margin-bottom: 300px;
       "
     ></div>
+
+    <!-- 장소 검색 입력창 -->
+    <div style="margin-top: 20px; text-align: center;">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="장소를 검색하세요"
+        style="width: 300px; padding: 10px; font-size: 16px;"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+ /* global google */
 export default {
   name: "GoogleMapExample",
   mounted() {
@@ -22,6 +32,7 @@ export default {
   },
   methods: {
     initMap() {
+      // 기본 지도 좌표 (함안)
       const location = { lat: 34.6937, lng: 135.5023 }; // Osaka, Japan
 
       // 맵을 렌더링할 div 가져오기
@@ -33,11 +44,46 @@ export default {
         zoom: 14,
       });
 
-      // eslint-disable-next-line no-undef
-      new google.maps.Marker({
+      // 마커 설정
+      const marker = new google.maps.Marker({
         position: location,
         map: map,
-        title: "일본 오사카",
+        title: "오사카",
+      });
+
+      // 검색 기능 설정
+      const input = document.getElementById("search-input");
+
+      // 장소 검색을 위한 자동완성 기능
+      const autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo("bounds", map);
+
+      // 자동완성된 장소를 클릭했을 때
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+
+        if (!place.geometry) {
+          return;
+        }
+
+        // 지도 중심 변경
+        map.setCenter(place.geometry.location);
+        map.setZoom(14);
+
+        // 기존 마커 제거
+        marker.setMap(null);
+
+        // 새로운 마커 추가
+        const newMarker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name,
+        });
+
+        // 새로운 마커 클릭 시 해당 장소 정보 로그
+        newMarker.addListener("click", () => {
+          console.log("Clicked place: ", place);
+        });
       });
     },
   },
@@ -45,8 +91,6 @@ export default {
 </script>
 
 <style>
-/* 필요하면 추가적인 스타일을 적용하세요 */
-
 /* 구글 맵의 스타일을 개선 */
 #map {
   width: 100%;
