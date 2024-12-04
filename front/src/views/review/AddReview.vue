@@ -15,26 +15,13 @@
 
     <!-- 드롭다운 버튼과 작성자 정보 -->
     <div class="d-flex align-items-center" style="margin-bottom: 30px;">
-      <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle custom-dropdown mt-4"
-          style="border: 2px solid black; padding: 10px 50px;" data-bs-toggle="dropdown"
-          aria-expanded="false" data-bs-offset="10,10">
-          {{ selectedRegion || '지역선택' }}
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" @click="selectRegion('지역선택')">지역선택</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('서울')">서울</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('부산')">부산</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('제주')">제주</a></li>
-        </ul>
-      </div>
-
       <!-- 평점 매기기 -->
-      <div class="ms-auto d-flex align-items-center" style="padding-right: 500px; margin-top: 20px;">
+      <div class="d-flex align-items-center" style="margin-top: 20px;">
         <span style="font-weight: bold; margin-right: 10px;">평점:</span>
-        <div style="margin-right: 100px;">
+        <div>
           <span v-for="star in 5" :key="star" @click="setRating(star)" style="cursor: pointer;">
-            <i :class="['bi', star <= rating ? 'bi-star-fill' : 'bi-star']" style="font-size: 1.5rem; color: #FFD700;"></i>
+            <i :class="['bi', star <= rating ? 'bi-star-fill' : 'bi-star']"
+              style="font-size: 1.5rem; color: #FFD700;"></i>
           </span>
         </div>
       </div>
@@ -42,7 +29,7 @@
       <!-- 작성자 정보 -->
       <div class="ms-auto d-flex align-items-center">
         <h5 style="font-weight: bold; margin-bottom: 0; margin-right: 30px;">작성자</h5>
-        <p style="margin: 0; font-size: 1rem; margin-right: 60px;">최형표</p>
+        <p style="margin: 0; font-size: 1rem; margin-right: 60px;">{{ authorEmail }}</p>
       </div>
     </div>
     <hr>
@@ -57,23 +44,25 @@
     <!-- 내용 및 파일 첨부 섹션 -->
     <div class="mb-3">
       <label for="contentUpload" class="form-label" style="font-weight: bold;">내용</label>
-      <div
-        id="contentUpload"
-        contenteditable="true"
-        @input="updateContent"
-        class="form-control"
-        style="height: 400px; overflow-y: auto; border: 1px solid #ced4da;"
-      ></div>
+      <div id="contentUpload" contenteditable="true" @input="updateContent" class="form-control"
+        style="height: 400px; overflow-y: auto; border: 1px solid #ced4da;"></div>
       <input type="file" id="imageUpload" @change="insertImage" accept="image/*" class="form-control mt-2" />
     </div>
 
     <div class="d-flex justify-content-center" style="margin-top: 40px; margin-bottom: 40px;">
-      <button type="button" class="btn btn-warning" @click="goToAddReview" style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
+      <button type="button" class="btn btn-warning" @click="save"
+        style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         글등록
       </button>
-      <button type="button" class="btn btn-secondary ms-3" style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
+      <button type="button" class="btn btn-secondary ms-3"
+        style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         취소
       </button>
+    </div>
+
+    <!-- 알림 메시지 -->
+    <div v-if="message" class="alert" :class="alertClass" role="alert">
+      {{ message }}
     </div>
 
     <div class="card w-100 mt-5 mb-5">
@@ -95,48 +84,91 @@
 </template>
 
 <script>
+import ReviewService from "@/services/review/ReviewService";
+
 export default {
   data() {
     return {
-      selectedRegion: null, // 선택된 지역을 저장할 변수
-      rating: 0, // 평점을 저장할 변수
-      title: '', // 제목을 저장할 변수
-      content: '', // 내용을 저장할 변수
-      imageUrl: '', // 미리보기 이미지 URL (이제 사용되지 않음)
-      previewVisible: false, // 미리보기 표시 여부 (이제 사용되지 않음)
+      rating: 0,
+      title: "",
+      content: "",
+      authorEmail: "",
+      imageUrl: null, // 업로드한 이미지 파일
+      message: "", // 알림 메시지
+      alertClass: "", // 알림 스타일
     };
   },
+  computed: {
+    token2() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      return {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + (user?.accessToken || ""),
+      };
+    },
+  },
+  created() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    // 사용자 이메일을 가져와 authorEmail로 저장
+    this.authorEmail = user?.email || "알 수 없음"; // 사용자 이메일 표시
+  },
   methods: {
-    selectRegion(region) {
-      this.selectedRegion = region; // 선택된 지역을 변수에 저장
+    async save() {
+      // 내용이 없는 경우
+      if (!this.title || !this.content) {
+        this.message = "작성 미완료되었습니다";
+        this.alertClass = "alert-danger"; // 오류 메시지 스타일
+        return;
+      }
+
+      try {
+        // FormData로 전송할 데이터 준비
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("content", this.content);
+        formData.append("rating", this.rating);
+        formData.append("authorEmail", this.authorEmail);
+
+        if (this.imageUrl) {
+          formData.append("imageUrl", this.imageUrl); // 이미지 파일 추가
+        }
+
+        // 서버로 전송
+        let response = await ReviewService.insert(formData, this.token2);
+        console.log(response.data);
+        this.message = "글등록이 완료되었습니다!";
+        this.alertClass = "alert-success"; // 성공 메시지 스타일
+
+        // 일정 시간 후 리뷰 목록으로 리다이렉트
+        setTimeout(() => {
+          this.$router.push("/review");
+        }, 1500);
+      } catch (error) {
+        console.error("저장 실패", error);
+        this.message = "저장 실패. 다시 시도해주세요.";
+        this.alertClass = "alert-danger"; // 오류 메시지 스타일
+      }
     },
     setRating(star) {
-      this.rating = star; // 클릭한 별의 수를 평점으로 설정
+      this.rating = star; // 평점 설정
     },
     updateContent(event) {
-      this.content = event.target.innerHTML; // contenteditable div의 내용을 업데이트
+      this.content = event.target.innerHTML; // 내용 업데이트
     },
     insertImage(event) {
       const file = event.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.style.maxWidth = '100%'; // 이미지의 최대 너비를 설정
-          img.style.height = 'auto'; // 비율에 맞게 높이 조정
-          const contentDiv = document.getElementById('contentUpload');
-          contentDiv.appendChild(img); // 이미지를 내용에 추가
-        };
-        reader.readAsDataURL(file); // 파일을 URL로 읽기
+        this.imageUrl = file; // 선택된 이미지 파일을 저장
       }
     },
-    goToAddReview() {
-      this.$router.push('/add-review'); // '/add-review' 페이지로 이동
-    },
   },
-}
+};
 </script>
 
 <style>
+/* 메시지 알림 스타일 */
+.alert {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
 </style>

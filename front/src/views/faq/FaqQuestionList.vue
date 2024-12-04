@@ -1,7 +1,10 @@
 <template>
   <div class="bigbox">
     <div class="title">
-      <p>질문 게시판</p>
+      <p onclick="location.href='/faq/list'">질문 게시판</p>
+      <button type="button" class="btn btn-link" onclick="location.href='/faq'">
+        Link
+      </button>
     </div>
     <hr />
     <div class="announce_body_box">
@@ -11,7 +14,7 @@
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
-                v-model="searchValue"
+                v-model="searchKeyword"
                 class="input_text form-control"
               />
               <i class="bi bi-search search_glass_announce"></i>
@@ -33,7 +36,7 @@
                   type="button"
                   data-bs-toggle="collapse"
                   :data-bs-target="'#collapse-' + index"
-                  :aria-expanded="index === 0 ? 'true' : 'false'"
+                  :aria-expanded="false"
                   :aria-controls="'collapse-' + index"
                 >
                   {{ data.question }}
@@ -47,6 +50,14 @@
               >
                 <div class="accordion-body">
                   {{ data.answer }}
+                  <br />
+                  <button
+                    type="button"
+                    class="btn btn-link"
+                    @click="redirectToHashtag(data.hashtag)"
+                  >
+                    {{ data.hashtag }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -61,12 +72,12 @@
             <!-- 이전 버튼 -->
             <li
               class="page-arrow page-item"
-              :class="{ disabled: currentPage === 1 }"
+              :class="{ disabled: pageIndex === 1 }"
             >
               <a
                 class="page-link"
                 href="#"
-                @click.prevent="goToPage(currentPage - 1)"
+                @click.prevent="goToPage(pageIndex - 1)"
               >
                 &laquo;
               </a>
@@ -77,7 +88,7 @@
               v-for="page in totalPages"
               :key="page"
               class="page-item"
-              :class="{ active: page === currentPage }"
+              :class="{ active: page === pageIndex }"
             >
               <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
@@ -87,12 +98,12 @@
             <!-- 다음 버튼 -->
             <li
               class="page-arrow page-item"
-              :class="{ disabled: currentPage === totalPages }"
+              :class="{ disabled: pageIndex === totalPages }"
             >
               <a
                 class="page-link"
                 href="#"
-                @click.prevent="goToPage(currentPage + 1)"
+                @click.prevent="goToPage(pageIndex + 1)"
               >
                 &raquo;
               </a>
@@ -110,20 +121,19 @@ import FaqService from "@/services/faq/FaqService";
 export default {
   data() {
     return {
-      faqList: [], // FAQ 리스트
-      searchValue: "", // 검색어
-      currentPage: 1, // 현재 페이지
+      pageIndex: 1, // 현재 페이지
       totalPages: 1, // 전체 페이지 수
+      searchKeyword: "", // 검색어
+      faqList: [], // FAQ 데이터 리스트
     };
   },
   methods: {
-    // FAQ 데이터 가져오기
     async getFaq() {
       try {
         const response = await FaqService.getAll(
-          this.searchValue,
-          this.currentPage,
-          10 // 한 페이지 당 표시할 항목 수
+          this.searchKeyword,
+          this.pageIndex - 1,
+          10 // 한 페이지에 표시할 데이터 개수
         );
         const { results, totalCount } = response.data;
         this.faqList = results || [];
@@ -132,27 +142,52 @@ export default {
         console.error("FAQ 데이터를 가져오는 중 에러 발생:", error);
       }
     },
-
-    // 페이지 이동
     goToPage(page) {
       if (page > 0 && page <= this.totalPages) {
-        this.currentPage = page;
-        this.getFaq(); // 페이지 변경 시 데이터 갱신
+        this.pageIndex = page;
+        this.updateQuery();
+        this.getFaq();
       }
     },
-    // 검색
     searchFaq() {
-      this.currentPage = 1; // 검색 시 첫 페이지로 이동
+      this.pageIndex = 1;
+      this.updateQuery();
       this.getFaq();
     },
-  },
+    searchByHashtag(hashtag) {
+      this.searchKeyword = hashtag;
+      this.searchFaq();
+    },
+    updateQuery() {
+      this.$router.push({
+        path: "list",
+        query: { search: this.searchKeyword },
+      });
+    },
 
+    redirectToHashtag(hashtag) {
+      const sanitizedHashtag = hashtag.replace(/^#/, ""); // `#` 제거
+      this.searchKeyword = sanitizedHashtag;
+      this.pageIndex = 1; // 검색 시 첫 페이지로 초기화
+      this.updateQuery(); // URL 쿼리 업데이트
+      this.getFaq(); // 데이터 갱신
+    },
+  },
+  // watch: {
+  //   "$route.query.search"(newQuery) {
+  //     if (newQuery !== this.searchKeyword) {
+  //       this.searchKeyword = newQuery || "";
+  //       this.getFaq();
+  //     }
+  //   },
+  // },
   mounted() {
+    // 초기화 시 URL 쿼리값을 동기화
+    this.searchKeyword = this.$route.query.search || "";
     this.getFaq();
   },
 };
 </script>
-
 
 <style>
 /* 공지 전체 */

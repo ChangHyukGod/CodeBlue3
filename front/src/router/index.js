@@ -35,6 +35,11 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
+    path: "/announcement/:id",
+    component: () => import("../views/faq/FaqAnnouncementDetail.vue"),
+    props: true,
+  },
+  {
     path: "/faq/payment",
     component: () => import("../views/faq/FaqHowtoPay.vue"),
   },
@@ -55,7 +60,7 @@ const routes = [
     component: () => import("../views/review/AddReview.vue"),
   },
   {
-    path: "/review/:uuid",
+    path: "/review/:reviewid",
     component: () => import("../views/review/ReviewDetail.vue"),
   },
   {

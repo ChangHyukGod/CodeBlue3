@@ -5,6 +5,7 @@ import com.simplecoding.simpledms.vo.review.Review;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : KTE
@@ -16,5 +17,10 @@ import java.util.List;
 public interface ReviewMapper {
     public List<?> selectReviewList(Criteria searchVO);
     public int selectReviewListTotCnt(Criteria searchVO);
-    
+    public int insert(Review review);
+    public int updateReviewUrl(Review review);
+    public int selectGenerateReviewId();
+    public Optional<Review> selectReview(int reviewId);
+    public int update(Review review);
+    public int delete(int reviewId);
 }

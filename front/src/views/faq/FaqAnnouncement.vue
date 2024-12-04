@@ -1,56 +1,84 @@
 <template>
   <div class="bigbox">
     <div class="title">
-      <p class="lla">지조결</p>
-      &nbsp;서비스의&nbsp;
-      <p class="new">새로운 소식</p>
-      과&nbsp;
-      <p class="announce">공지사항</p>
-      을&nbsp;전달해드립니다.
+      <p @click="redirectToHome">공지사항</p>
+      <button type="button" class="btn btn-link" @click="redirectToFaq">
+        FAQ
+      </button>
     </div>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">
         <div class="notice_search">
-          <div class="notice_tab_area nav">
-            <div class="sub_tab_list" role="tablist"></div>
-          </div>
-          <!-- 검색창 -->
-          <form class="search_input">
+          <form class="search_input" @submit.prevent="searchAnnouncement">
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
-                name="searchValue"
+                v-model="searchKeyword"
                 class="input_text form-control"
-                value=""
-              /><i class="bi bi-search search_glass_announce"></i>
+              />
+              <i class="bi bi-search search_glass_announce"></i>
             </div>
           </form>
           <br />
         </div>
+
         <div class="notice_content">
-          <ul class="notice_table">
-            <li class="notice_item">
-              <a href="#" class="notice_title"
-                ><p class="NoticeTableItem_title__KrN-Y">
-                  <span
-                    >&nbsp;&nbsp;&nbsp;쇼핑투데이 내 '오늘의 팝업'판이
-                    출시됩니다!</span
-                  >
-                </p>
-                <span class="date">2024.09.20&nbsp;&nbsp;&nbsp;</span></a
+          <div class="accordion" id="announcementAccordion">
+            <div
+              class="accordion-item"
+              v-for="(data, index) in announcementList"
+              :key="index"
+            >
+              <h2 class="accordion-header" :id="'heading-' + index">
+                <router-link
+                  :to="`/announcement/${data.ano}`"
+                  class="accordion-button collapsed"
+                >
+                  {{ data.title }}
+                </router-link>
+                <!-- <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  :data-bs-target="'#collapse-' + index"
+                  :aria-expanded="false"
+                  :aria-controls="'collapse-' + index"
+                >
+                  {{ data.title }}
+                </button> -->
+              </h2>
+              <div
+                :id="'collapse-' + index"
+                class="accordion-collapse collapse"
+                :aria-labelledby="'heading-' + index"
+                data-bs-parent="#announcementAccordion"
               >
-              <hr class="notice_line" />
-            </li>
-          </ul>
+                <div class="accordion-body">
+                  {{ data.content }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <p v-if="announcementList.length === 0">
+            등록된 공지사항이 없습니다.
+          </p>
         </div>
         <br />
+
         <!-- 페이징 -->
         <div class="notice_paging">
           <ul class="paging pagination">
             <!-- 이전 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: currentPage === 1 }">
-              <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)">
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === 1 }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex - 1)"
+              >
                 &laquo;
               </a>
             </li>
@@ -60,7 +88,7 @@
               v-for="page in totalPages"
               :key="page"
               class="page-item"
-              :class="{ active: page === currentPage }"
+              :class="{ active: page === pageIndex }"
             >
               <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
@@ -68,8 +96,15 @@
             </li>
 
             <!-- 다음 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: currentPage === totalPages }">
-              <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)">
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === totalPages }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex + 1)"
+              >
                 &raquo;
               </a>
             </li>
@@ -81,20 +116,55 @@
 </template>
 
 <script>
+import AnnouncementService from "@/services/faq/AnnouncementService";
+
 export default {
   data() {
     return {
-      currentPage: 1, // 현재 페이지
-      totalPages: 5,  // 전체 페이지 수
+      pageIndex: 1, // 현재 페이지
+      totalPages: 1, // 전체 페이지 수
+      searchKeyword: "", // 검색어
+      announcementList: [], // 공지사항 데이터 리스트
     };
   },
   methods: {
-    goToPage(page) {
-      if (page > 0 && page <= this.totalPages) {
-        this.currentPage = page;
-        console.log(`이동할 페이지: ${page}`);
+    async getAnnouncements() {
+      try {
+        const response = await AnnouncementService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          10 // 한 페이지에 표시할 데이터 개수
+        );
+        const { results, totalCount } = response.data;
+        this.announcementList = results || [];
+        this.totalPages = Math.ceil(totalCount / 10);
+      } catch (error) {
+        console.error("공지사항 데이터를 가져오는 중 에러 발생:", error);
       }
     },
+    goToPage(page) {
+      if (page > 0 && page <= this.totalPages) {
+        this.pageIndex = page;
+        this.updateQuery();
+        this.getAnnouncements();
+      }
+    },
+    searchAnnouncement() {
+      this.pageIndex = 1;
+      this.updateQuery();
+      this.getAnnouncements();
+    },
+    updateQuery() {
+      this.$router.push({
+        path: "announcement",
+        query: { search: this.searchKeyword },
+      });
+    },
+  },
+  mounted() {
+    // 초기화 시 URL 쿼리값을 동기화
+    this.searchKeyword = this.$route.query.search || "";
+    this.getAnnouncements();
   },
 };
 </script>
@@ -142,22 +212,22 @@ export default {
 }
 /* 돋보기 아이콘 */
 .search_glass_announce {
-  position: absolute; 
+  position: absolute;
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.2rem; 
-  color: #ffeb33; 
+  font-size: 1.2rem;
+  color: #ffeb33;
   cursor: pointer;
 }
 /* 입력 필드 */
 .input_text {
   margin: 10px auto;
-  border-radius: 25px; /* 테두리 둥글게 */
-  border: 1.5px solid #ccc; /* 테두리 색상 */
-  padding: 5px 15px; 
-  position: relative; /* 자식 요소의 절대 위치 기준으로 설정 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 25px;
+  border: 1.5px solid #ccc;
+  padding: 5px 15px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
 }
 /* 공지사항 리스트 스타일 */
@@ -177,13 +247,6 @@ export default {
   font-weight: bold;
   display: flex;
   justify-content: space-between;
-}
-/* 날짜 */
-.date {
-  font-size: 0.9rem;
-  color: #666;
-  margin-left: auto;
-  margin-right: 10px;
 }
 /* 페이징 스타일 */
 .notice_paging .pagination {
@@ -207,10 +270,10 @@ export default {
 .page-link:hover {
   background-color: #f5f5f5;
   color: #333;
-  transform: scale(1.1); /* 살짝 확대 */
+  transform: scale(1.1);
 }
 .page-item.active .page-link {
-  background-color: #ffeb33; /* 강조 색상 */
+  background-color: #ffeb33;
   color: #000;
   border: 1px solid #ffeb33;
   font-size: 1rem;
