@@ -28,6 +28,9 @@
         <b-nav-item>|</b-nav-item>
         <!-- 메인화면 카드 데이터 추가(임시 위치) -->
         <b-nav-item href="/add-main">추가</b-nav-item>
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'">|</b-nav-item>
+        <!-- 메인화면 카드 데이터 추가(임시 위치) -->
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin">관리자 페이지</b-nav-item>
       </div>
     </b-nav>
   </div>

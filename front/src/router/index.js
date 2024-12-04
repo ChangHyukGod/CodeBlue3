@@ -35,9 +35,9 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
-    path: "/announcement/:id",
-    component: () => import("../views/faq/FaqAnnouncementDetail.vue"),
-    props: true,
+    path: "/announcement/:ano",
+    name: "AnnouncementDetail",
+    component: () => import("@/views/faq/FaqAnnouncementDetail.vue"),
   },
   {
     path: "/faq/payment",
@@ -126,8 +126,28 @@ const routes = [
     component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
-    path: "/admindb",
-    component: () => import("../views/admin/AdminDbView.vue"),
+    path: "/mainadmin",
+    component: () => import("../views/admin/MainAdmin.vue")
+  },
+    {
+    path: "/mainadmin1",
+    component: () => import("../views/admin/MainAdmin1.vue")
+  },
+    {
+    path: "/mainadmin2",
+    component: () => import("../views/admin/MainAdmin2.vue")
+  },
+    {
+    path: "/mainadmin3",
+    component: () => import("../views/admin/MainAdmin3.vue")
+  },
+      {
+    path: "/mainadmin4",
+    component: () => import("../views/admin/MainAdmin4.vue")
+  },
+        {
+    path: "/mainadmin5",
+    component: () => import("../views/admin/MainAdmin5.vue")
   },
   {
     path: "/addRoom/:tourId",

@@ -25,7 +25,7 @@
         UPDATE FAQ
         SET QUESTION = #{question},
             ANSWER   = #{answer},
-        HASHTAG = #{hashtag}
+            HASHTAG  = #{hashtag}
         WHERE FNO = #{FNO}
     </update>
     <delete id="deleteFaq" parameterType="int">
