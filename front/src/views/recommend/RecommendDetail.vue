@@ -88,31 +88,18 @@
       <div class="review-section">
         <!-- 댓글 리스트 -->
         <div class="review-list">
-          <!-- 댓글 항목 -->
-          <div class="review-item">
+          <!-- 반복문으로 댓글 항목 렌더링 -->
+          <div
+            v-for="(data, index) in comments"
+            :key="index"
+            class="review-item"
+          >
             <div class="review-header">
-              <p class="review-user">피드백</p>
-              <span class="review-time">2024.12.03 10:30</span>
+              <p class="review-user">{{ data.email }}</p>
+              <span class="review-time">{{ data.createdAt }}</span>
             </div>
             <div class="review-content">
-              <p class="review-text">
-                적당히 시끄럽고 적당히 분위기가 좋아서 여러모로 좋았네요 ~_~
-              </p>
-              <div class="review-actions">
-                <button class="action-btn">수정</button>
-                <button class="action-btn">삭제</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 추가적인 댓글 항목 -->
-          <div class="review-item">
-            <div class="review-header">
-              <p class="review-user">나의비밀</p>
-              <span class="review-time">2024.12.03 09:45</span>
-            </div>
-            <div class="review-content">
-              <p class="review-text">라이브 밴드도 있어서 분위기는 최고~</p>
+              <p class="review-text">{{ data.commentText }}</p>
               <div class="review-actions">
                 <button class="action-btn">수정</button>
                 <button class="action-btn">삭제</button>
@@ -120,10 +107,17 @@
             </div>
           </div>
         </div>
-
+        <!-- TODO:페이지 번호 : v-model="값",total-rows="전체건수",
+     TODO: per-page="1페이지당화면에보일개수"-->
+        <b-pagination
+          v-model="pageIndex"
+          :total-rows="totalCount"
+          :per-page="recordCountPerPage"
+          @click="getDept"
+        ></b-pagination>
         <!-- 댓글 쓰기 버튼 -->
         <div class="review-write-button">
-          <a href="/comment-write" class="write-btn">댓글 쓰기</a>
+          <a href="/recommendcomadd" class="write-btn">댓글 쓰기</a>
         </div>
       </div>
     </div>
@@ -131,6 +125,7 @@
 </template>
 
 <script>
+import CommentsService from "@/services/recommend/CommentsService";
 import RecommendService from "@/services/recommend/RecommendService";
 
 export default {
@@ -140,6 +135,14 @@ export default {
       imageUrl: "",
       description: "",
       loc: "",
+      commentText: "",
+      createdAt: "",
+      email: "",
+      comments: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 2, //화면에 보일개수
+      searchKeyword: "",
       menuItems: [],
       menuItems2: [],
       menuItems3: [],
@@ -153,6 +156,7 @@ export default {
     const tdId = this.$route.params.tdId;
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
+    this.getDept();
   },
 
   methods: {
@@ -290,6 +294,23 @@ export default {
     },
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
+    },
+
+    async getDept() {
+      try {
+        let response = await CommentsService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.comments = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     navigateToRecommendMap(menu) {
