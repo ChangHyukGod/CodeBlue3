@@ -35,9 +35,9 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
-    path: "/announcement/:id",
-    component: () => import("../views/faq/FaqAnnouncementDetail.vue"),
-    props: true,
+    path: "/announcement/:ano",
+    name: "AnnouncementDetail",
+    component: () => import("@/views/faq/FaqAnnouncementDetail.vue"),
   },
   {
     path: "/faq/payment",

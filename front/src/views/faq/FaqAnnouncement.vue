@@ -1,11 +1,6 @@
 <template>
   <div class="bigbox">
-    <div class="title">
-      <p @click="redirectToHome">공지사항</p>
-      <button type="button" class="btn btn-link" @click="redirectToFaq">
-        FAQ
-      </button>
-    </div>
+      <p class="title" onclick="location.href='/announcement'">공지사항</p>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">
@@ -24,40 +19,12 @@
         </div>
 
         <div class="notice_content">
-          <div class="accordion" id="announcementAccordion">
-            <div
-              class="accordion-item"
-              v-for="(data, index) in announcementList"
-              :key="index"
-            >
-              <h2 class="accordion-header" :id="'heading-' + index">
-                <router-link
-                  :to="`/announcement/${data.ano}`"
-                  class="accordion-button collapsed"
-                >
-                  {{ data.title }}
-                </router-link>
-                <!-- <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="'#collapse-' + index"
-                  :aria-expanded="false"
-                  :aria-controls="'collapse-' + index"
-                >
-                  {{ data.title }}
-                </button> -->
-              </h2>
-              <div
-                :id="'collapse-' + index"
-                class="accordion-collapse collapse"
-                :aria-labelledby="'heading-' + index"
-                data-bs-parent="#announcementAccordion"
-              >
-                <div class="accordion-body">
-                  {{ data.content }}
-                </div>
-              </div>
+          <div class="announcement-list">
+            <div v-for="(data, index) in announcementList" :key="index">
+              <router-link :to="'/announcement/' + data.ano" class="custom-link">
+                <h2 class="notice_title">&nbsp;&nbsp;{{ data.title }} {{ data.date }} {{ data.ano }}</h2>
+              </router-link>
+              <hr class="notice_line" />
             </div>
           </div>
           <p v-if="announcementList.length === 0">
@@ -160,11 +127,21 @@ export default {
         query: { search: this.searchKeyword },
       });
     },
+    async fetchAnnouncements() {
+      try {
+        const response = await AnnouncementService.getAll();
+        this.announcementList = response.data.results;
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
+      }
+    },
   },
+
   mounted() {
     // 초기화 시 URL 쿼리값을 동기화
     this.searchKeyword = this.$route.query.search || "";
     this.getAnnouncements();
+    this.fetchAnnouncements();
   },
 };
 </script>
@@ -187,10 +164,9 @@ export default {
 }
 /* 타이틀 */
 .title {
-  display: inline-flex;
-  top: 30px;
-  right: 16%;
-  position: relative;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
 }
 /* 전체 박스 */
 .announce_body_box {
@@ -242,11 +218,18 @@ export default {
   margin: 3px;
 }
 .notice_title {
+  font-size: 23px;
+  padding: 5px;
+}
+.custom-link {
   text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
+  color: inherit; /* 부모의 색상을 따릅니다 */
+}
+.custom-link:hover,
+.custom-link:visited,
+.custom-link:active {
+  text-decoration: none; /* 모든 상태에서 밑줄 제거 */
+  color: inherit;
 }
 /* 페이징 스타일 */
 .notice_paging .pagination {
