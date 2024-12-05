@@ -19,19 +19,19 @@
     <select id="selectFaq" parameterType="int" resultType="Faq">
         SELECT *
         FROM FAQ
-        WHERE FNO = #{FNO}
+        WHERE FNO = #{fno}
     </select>
     <update id="updateFaq" parameterType="Faq">
         UPDATE FAQ
         SET QUESTION = #{question},
             ANSWER   = #{answer},
             HASHTAG  = #{hashtag}
-        WHERE FNO = #{FNO}
+        WHERE FNO = #{fno}
     </update>
     <delete id="deleteFaq" parameterType="int">
         DELETE
         FROM FAQ
         WHERE FNO =
-              #{FNO}
+              #{fno}
     </delete>
 </mapper>

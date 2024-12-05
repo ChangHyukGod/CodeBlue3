@@ -52,7 +52,7 @@ public class FaqController {
         return new ResponseEntity<>(faq, HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/faq/{fno}")
+    @DeleteMapping("/api/faq/list/{fno}")
     public ResponseEntity<?> deleteFaq(@PathVariable int fno) {
         faqService.deleteFaq(fno);
         return new ResponseEntity<>(HttpStatus.OK);

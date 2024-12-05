@@ -1,15 +1,11 @@
 <template>
   <div class="bigbox">
-    <div class="title">
-      <p onclick="location.href='/faq/list'">질문 게시판</p>
-      <button type="button" class="btn btn-link" onclick="location.href='/faq'">
-        Link
-      </button>
-    </div>
+    <div class="title"></div>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">
         <div class="notice_search">
+          <p class="faq_top_title" onclick="window.location.href='/faq/list'">FAQ</p>
           <form class="search_input" @submit.prevent="searchFaq">
             <div class="input_box typing form-group search_bar_announce">
               <input
@@ -63,6 +59,11 @@
             </div>
           </div>
           <p v-if="faqList.length === 0">등록된 질문이 없습니다.</p>
+          <router-link :to="'/faq'">
+            <button type="button" class="btn btn-warning button">
+              <i class="bi bi-arrow-return-left"></i>
+            </button>
+          </router-link>
         </div>
         <br />
 
@@ -190,6 +191,20 @@ export default {
 </script>
 
 <style>
+.custom-link {
+  text-decoration: none;
+  color: inherit; /* 부모의 색상을 따릅니다 */
+}
+
+.custom-link:visited,
+.custom-link:active {
+  text-decoration: none; /* 모든 상태에서 밑줄 제거 */
+  color: inherit;
+}
+.custom-link:hover{
+  color: #ffeb33;
+  transition: 0.3s;
+}
 /* 공지 전체 */
 .bigbox {
   display: flex;
@@ -229,6 +244,12 @@ export default {
   background-color: white;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+.faq_top_title {
+  font-weight: bolder;
+  font-size: x-large;
+  position: absolute;
+  margin: 3px 0 0 30px;
 }
 /* 돋보기 아이콘 */
 .search_glass_announce {
@@ -303,4 +324,10 @@ export default {
   color: #ccc;
   cursor: not-allowed;
 }
+.button {
+  position: relative;
+  margin-top: 10px;
+  left: 94.5%;
+}
+
 </style>
