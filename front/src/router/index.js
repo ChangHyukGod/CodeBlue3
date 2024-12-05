@@ -161,6 +161,14 @@ const routes = [
     path: "/addRoomPhoto/:roomId",
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
+  {
+    path: "/payment/:roomId",
+    component: () => import("../views/payment/PaymentView.vue"),
+  },
+  {
+    path: "/cart",
+    component: () => import("../views/cart/CartView.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
