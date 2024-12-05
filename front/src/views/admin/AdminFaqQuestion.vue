@@ -45,6 +45,9 @@
                                             data-bs-toggle="collapse" :data-bs-target="'#collapse-' + index"
                                             :aria-expanded="false" :aria-controls="'collapse-' + index">
                                             {{ data.question }}
+                                            <button @click="sj(data.fno)">
+                                                수정/삭제
+                                            </button>
                                         </button>
                                     </h2>
                                     <div :id="'collapse-' + index" class="accordion-collapse collapse"
@@ -151,6 +154,10 @@ export default {
             this.pageIndex = 1; // 검색 시 첫 페이지로 초기화
             this.getFaq(); // 데이터 갱신
         },
+
+        sj(fno) {
+            this.$router.push(`/addadmin/${fno}`)
+        }
     },
     mounted() {
         // 초기화 시 URL 쿼리값을 동기화

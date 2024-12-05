@@ -107,10 +107,7 @@ const routes = [
     component: () => import("../views/recommend/RecommendMap3.vue"),
   },
 
-  {
-    path: "/addadmin",
-    component: () => import("../views/admin/AddAdminDb.vue"),
-  },
+  
   {
     path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue"),
@@ -151,6 +148,11 @@ const routes = [
     path: "/addRoomPhoto/:roomId",
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
+  {
+    path: "/addadmin/:fno",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
+
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

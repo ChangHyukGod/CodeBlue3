@@ -259,11 +259,13 @@ export default {
 .bigbox {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    /* 내용이 위쪽에 정렬되도록 설정 */
     align-items: center;
-    height: auto;
-    /* 높이를 자동으로 조정 */
-    flex-grow: 1
+    min-height: 100%;
+    /* 최소 높이를 100%로 설정 */
+    overflow: auto;
+    /* 내용이 넘칠 경우 스크롤이 생기도록 설정 */
 }
 
 /* 타이틀 */
