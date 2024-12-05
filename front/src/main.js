@@ -2,11 +2,14 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import { useKakao } from "vue3-kakao-maps/@utils";
 
+useKakao("appkey");
+createApp(App).mount("#app");
 
 // TODO: bootstrap import
-import 'bootstrap/dist/js/bootstrap.bundle'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/js/bootstrap.bundle";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // BootstrapVue3
 import BootstrapVue3 from "bootstrap-vue-3";

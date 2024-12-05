@@ -102,7 +102,7 @@
                   {{ data.email }}
                 </p>
                 <p class="review-location text-warning mb-0">
-                  [지역들어갈 곳] {{ data.location }}
+                  {{ data.commentLoc }}
                 </p>
               </div>
               <span class="review-time text-muted">{{ data.createdAt }}</span>
@@ -162,6 +162,7 @@ export default {
       loc: "",
       commentText: "",
       createdAt: "",
+      commentLoc: "",
       email: "",
       comments: [],
       pageIndex: 1, //현재페이지번호
@@ -383,30 +384,6 @@ export default {
       }
     },
   },
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 </script>
 
@@ -802,7 +779,7 @@ pre {
 
 .review-location {
   color: #fbc02d; /* 노란색 */
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   margin-top: 5px;
 }
 
@@ -818,7 +795,7 @@ pre {
 
 .review-text {
   color: #212121; /* 텍스트 기본 색상 */
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.5;
 }
 
