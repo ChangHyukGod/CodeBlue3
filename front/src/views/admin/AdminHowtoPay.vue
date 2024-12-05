@@ -195,10 +195,12 @@ export default {
     /* 상단 고정 */
     left: 0;
     /* 좌측 고정 */
-    overflow: hidden;
+    overflow: visible;
     /* 내용이 container 밖으로 나가지 않도록 설정 */
     padding: 20px;
-    /* 안쪽 여백 설정 */
+    padding-bottom: 20px
+        /* 안쪽 여백 설정 */
+
 }
 
 
@@ -259,6 +261,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: auto;
+    /* 높이를 자동으로 조정 */
+    flex-grow: 1
 }
 
 /* 타이틀 */
@@ -275,12 +280,12 @@ export default {
 
 /* 전체 박스 */
 .announce_body_box {
-    width: 100%;
+    width: 92%;
     border: 2.5px solid black;
     border-radius: 10px;
     padding: 15px;
     background-color: #f9f9f9;
-    margin-left: 40px;
+    margin-left: 42px;
 }
 
 /* 내용 섹션 */
@@ -307,4 +312,4 @@ export default {
     font-weight: bold;
     color: #333;
 }
-</style>s
+</style>
