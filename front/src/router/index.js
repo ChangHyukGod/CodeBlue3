@@ -35,6 +35,11 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
+    path: "/announcement/:ano",
+    name: "AnnouncementDetail",
+    component: () => import("@/views/faq/FaqAnnouncementDetail.vue"),
+  },
+  {
     path: "/faq/payment",
     component: () => import("../views/faq/FaqHowtoPay.vue"),
   },
@@ -45,8 +50,8 @@ const routes = [
   {
     path: "/faq/talk",
     component: () => import("../views/faq/FaqTalk.vue"),
-  }
-  ,{
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -55,7 +60,7 @@ const routes = [
     component: () => import("../views/review/AddReview.vue"),
   },
   {
-    path: "/review/:uuid",
+    path: "/review/:reviewid",
     component: () => import("../views/review/ReviewDetail.vue"),
   },
   {
@@ -103,6 +108,23 @@ const routes = [
   },
 
   {
+    path: "/recommendcomadd",
+    component: () => import("../views/recommend/RecommendComAdd.vue"),
+  },
+
+  {
+    path: "/recommendcomupdate/:comId",
+    component: () => import("../views/recommend/RecommendComUpdate.vue"),
+  },
+
+  {
+    path: "/googletest",
+    component: () => import("../views/recommend/GoogleTestView.vue"),
+  },
+
+
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
@@ -111,8 +133,28 @@ const routes = [
     component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
-    path: "/admindb",
-    component: () => import("../views/admin/AdminDbView.vue"),
+    path: "/mainadmin",
+    component: () => import("../views/admin/MainAdmin.vue")
+  },
+    {
+    path: "/mainadmin1",
+    component: () => import("../views/admin/MainAdmin1.vue")
+  },
+    {
+    path: "/mainadmin2",
+    component: () => import("../views/admin/MainAdmin2.vue")
+  },
+    {
+    path: "/mainadmin3",
+    component: () => import("../views/admin/MainAdmin3.vue")
+  },
+      {
+    path: "/mainadmin4",
+    component: () => import("../views/admin/MainAdmin4.vue")
+  },
+        {
+    path: "/mainadmin5",
+    component: () => import("../views/admin/MainAdmin5.vue")
   },
   {
     path: "/addRoom/:tourId",

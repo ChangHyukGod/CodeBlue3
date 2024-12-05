@@ -88,58 +88,86 @@
       <div class="review-section">
         <!-- 댓글 리스트 -->
         <div class="review-list">
-          <!-- 댓글 항목 -->
-          <div class="review-item">
-            <div class="review-header">
-              <p class="review-user">피드백</p>
-              <span class="review-time">2024.12.03 10:30</span>
-            </div>
-            <div class="review-content">
-              <p class="review-text">
-                적당히 시끄럽고 적당히 분위기가 좋아서 여러모로 좋았네요 ~_~
-              </p>
-              <div class="review-actions">
-                <button class="action-btn">수정</button>
-                <button class="action-btn">삭제</button>
+          <!-- 반복문으로 댓글 항목 렌더링 -->
+          <div
+            v-for="(data, index) in comments"
+            :key="index"
+            class="review-item border rounded shadow-sm p-3 mb-3"
+          >
+            <div
+              class="review-header d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <p class="review-user mb-1 text-primary fw-bold">
+                  {{ data.email }}
+                </p>
+                <p class="review-location text-warning mb-0">
+                  [지역들어갈 곳] {{ data.location }}
+                </p>
               </div>
+              <span class="review-time text-muted">{{ data.createdAt }}</span>
             </div>
-          </div>
-
-          <!-- 추가적인 댓글 항목 -->
-          <div class="review-item">
-            <div class="review-header">
-              <p class="review-user">나의비밀</p>
-              <span class="review-time">2024.12.03 09:45</span>
-            </div>
-            <div class="review-content">
-              <p class="review-text">라이브 밴드도 있어서 분위기는 최고~</p>
-              <div class="review-actions">
-                <button class="action-btn">수정</button>
-                <button class="action-btn">삭제</button>
+            <div class="review-content mt-2">
+              <p class="review-text text-dark">{{ data.commentText }}</p>
+              <div class="review-actions mt-2">
+                <router-link :to="'/recommendcomupdate/' + data.comId">
+                  <button class="action-btn btn btn-warning text-white">
+                    관리
+                  </button>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- 페이지네이션 -->
+        <b-pagination
+          v-model="pageIndex"
+          :total-rows="totalCount"
+          :per-page="recordCountPerPage"
+          @click="getDept"
+          class="mt-3"
+          style="
+            --bs-pagination-active-bg: #fdd835;
+            --bs-pagination-active-color: white;
+          "
+        ></b-pagination>
 
         <!-- 댓글 쓰기 버튼 -->
-        <div class="review-write-button">
-          <a href="/comment-write" class="write-btn">댓글 쓰기</a>
+        <div class="review-write-button text-end mt-3">
+          <a
+            href="/recommendcomadd"
+            class="write-btn btn btn-warning text-white"
+          >
+            댓글 쓰기
+          </a>
         </div>
       </div>
+
+      <!-- 여기까지 -->
     </div>
   </div>
 </template>
 
 <script>
+import CommentsService from "@/services/recommend/CommentsService";
 import RecommendService from "@/services/recommend/RecommendService";
-
 export default {
   data() {
     return {
+      comId: "",
       tdName: "",
       imageUrl: "",
       description: "",
       loc: "",
+      commentText: "",
+      createdAt: "",
+      email: "",
+      comments: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 10, //화면에 보일개수
+      searchKeyword: "",
       menuItems: [],
       menuItems2: [],
       menuItems3: [],
@@ -153,6 +181,7 @@ export default {
     const tdId = this.$route.params.tdId;
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
+    this.getDept();
   },
 
   methods: {
@@ -292,6 +321,23 @@ export default {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
     },
 
+    async getDept() {
+      try {
+        let response = await CommentsService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.comments = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     navigateToRecommendMap(menu) {
       const tdId = this.$route.params.tdId; // 구글 api 연동할tdId 값 가져오기
       // tdId 값을 기준으로 경로 다르게 설정
@@ -337,6 +383,30 @@ export default {
       }
     },
   },
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 </script>
 
@@ -693,30 +763,31 @@ pre {
   cursor: pointer; /* 마우스를 이미지 위에 올리면 손 모양 커서로 변경 */
 }
 
+/* 전체 댓글 섹션 스타일 */
 .review-section {
-  font-family: Arial, sans-serif;
-  color: #333;
-  max-width: 800px;
-  margin: 20px auto;
-  border: 1px solid #ddd;
+  background-color: #fffbea; /* 부드러운 노란색 배경 */
   padding: 20px;
   border-radius: 10px;
-  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 더 부드러운 그림자 효과 */
+  font-family: Arial, sans-serif; /* 깔끔한 폰트 */
 }
 
-.review-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
+/* 댓글 리스트 항목 스타일 */
 .review-item {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  background-color: #fff; /* 카드 배경 흰색 */
+  border: 1px solid #fdd835; /* 노란색 테두리 */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.review-item:hover {
+  transform: translateY(-5px); /* 살짝 올라가는 효과 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 강조 */
+}
+
+/* 댓글 헤더 (사용자 정보 및 시간) */
 .review-header {
   display: flex;
   justify-content: space-between;
@@ -724,59 +795,89 @@ pre {
 }
 
 .review-user {
-  font-size: 1rem;
+  color: #f57c00; /* 짙은 주황색으로 강조 */
   font-weight: bold;
+  margin: 0;
+}
+
+.review-location {
+  color: #fbc02d; /* 노란색 */
+  font-size: 0.9rem;
+  margin-top: 5px;
 }
 
 .review-time {
-  font-size: 0.9rem;
-  color: #888;
+  color: #9e9e9e; /* 회색으로 시간 표시 */
+  font-size: 0.85rem;
 }
 
+/* 댓글 내용 */
 .review-content {
   margin-top: 10px;
 }
 
 .review-text {
-  font-size: 0.95rem;
+  color: #212121; /* 텍스트 기본 색상 */
+  font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 10px;
 }
 
-.review-actions {
-  display: flex;
-  gap: 10px;
-}
-
+/* 버튼 스타일 */
 .action-btn {
+  background-color: #fdd835; /* 밝은 노란색 */
+  color: #000;
   border: none;
-  background-color: transparent;
+  padding: 8px 15px;
   font-size: 0.9rem;
-  cursor: pointer;
-  color: #007bff;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .action-btn:hover {
-  text-decoration: underline;
+  background-color: #f57f17; /* 진한 노란색 */
+  color: white;
 }
 
-/* 댓글 쓰기 버튼 섹션 */
+/* 댓글 쓰기 버튼 */
 .review-write-button {
   text-align: right;
+  margin-top: 20px;
 }
 
 .write-btn {
-  display: inline-block;
+  background-color: #fdd835;
+  color: #000;
+  border: none;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
   font-size: 1rem;
   font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .write-btn:hover {
-  background-color: #0056b3;
+  background-color: #f57f17;
+  color: white;
+}
+
+/* 페이지네이션 스타일 */
+.b-pagination {
+  margin-top: 20px;
+}
+
+.b-pagination .page-item.active .page-link {
+  background-color: #fdd835 !important;
+  color: white !important;
+  border-color: #fdd835 !important;
+}
+
+.b-pagination .page-link {
+  color: #f57c00 !important;
+  transition: background-color 0.3s ease;
+}
+
+.b-pagination .page-link:hover {
+  background-color: #fff59d !important; /* 호버 시 밝은 노란색 */
 }
 </style>

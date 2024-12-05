@@ -1,6 +1,6 @@
 <template>
   <!-- 최상단 메뉴 -->
-   
+
   <div>
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
@@ -21,12 +21,16 @@
         >
 
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
+
         <b-nav-item>예약확인</b-nav-item>
         <b-nav-item>|</b-nav-item>
         <b-nav-item href="/faq">고객센터</b-nav-item>
         <b-nav-item>|</b-nav-item>
         <!-- 메인화면 카드 데이터 추가(임시 위치) -->
         <b-nav-item href="/add-main">추가</b-nav-item>
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'">|</b-nav-item>
+        <!-- 메인화면 카드 데이터 추가(임시 위치) -->
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin">관리자 페이지</b-nav-item>
       </div>
     </b-nav>
   </div>

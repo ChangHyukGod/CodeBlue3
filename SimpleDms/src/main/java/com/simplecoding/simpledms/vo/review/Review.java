@@ -19,14 +19,26 @@ public class Review {
     private Timestamp updatedAt; // 수정일
     private String loc;          // 지역
 
-    // 모든 필드를 포함하는 생성자
-    public Review(int reviewId, String title, String content, double rating, String imageUrl,
-                  String authorEmail, String targetId, Timestamp createdAt, Timestamp updatedAt, String loc) {
+
+
+
+    public Review(int reviewId, String title, String content, double rating, String authorEmail, String targetId, Timestamp createdAt, Timestamp updatedAt, String loc) {
         this.reviewId = reviewId;
         this.title = title;
         this.content = content;
         this.rating = rating;
-        this.imageUrl = imageUrl;
+        this.authorEmail = authorEmail;
+        this.targetId = targetId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.loc = loc;
+    }
+
+
+    public Review(String title, String content, double rating, String authorEmail, String targetId, Timestamp createdAt, Timestamp updatedAt, String loc) {
+        this.title = title;
+        this.content = content;
+        this.rating = rating;
         this.authorEmail = authorEmail;
         this.targetId = targetId;
         this.createdAt = createdAt;

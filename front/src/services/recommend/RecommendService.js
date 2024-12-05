@@ -11,7 +11,7 @@ const token2 = {
   Authorization: "Bearer " + user?.accessToken,
 };
 
-// 전체조회
+// 전체조회다
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   return axios.get(
     baseURL +
