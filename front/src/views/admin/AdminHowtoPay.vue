@@ -186,17 +186,12 @@ export default {
 <style>
 .container {
     width: 100%;
-    /* 가로 크기 전체 */
-    height: 100vh;
-    /* 세로 크기를 화면 전체로 설정 */
     position: relative;
-    /* 고정된 위치를 위한 기준 설정 */
     top: 0;
     /* 상단 고정 */
     left: 0;
     /* 좌측 고정 */
     overflow: visible;
-    /* 내용이 container 밖으로 나가지 않도록 설정 */
     padding: 20px;
     padding-bottom: 20px
         /* 안쪽 여백 설정 */

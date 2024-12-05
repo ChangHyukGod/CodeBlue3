@@ -45,7 +45,7 @@
                                             data-bs-toggle="collapse" :data-bs-target="'#collapse-' + index"
                                             :aria-expanded="false" :aria-controls="'collapse-' + index">
                                             {{ data.question }}
-                                            <button @click="sj(data.fno)">
+                                            <button @click="upde(data.fno)">
                                                 수정/삭제
                                             </button>
                                         </button>
@@ -155,8 +155,8 @@ export default {
             this.getFaq(); // 데이터 갱신
         },
 
-        sj(fno) {
-            this.$router.push(`/addadmin/${fno}`)
+        upde(fno) {
+            this.$router.push(`addadmin/${fno}`)
         }
     },
     mounted() {
