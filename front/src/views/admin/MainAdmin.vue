@@ -122,7 +122,6 @@ export default {
 }
 
 
-
 .main-layout {
     display: flex;
     gap: 20px;
