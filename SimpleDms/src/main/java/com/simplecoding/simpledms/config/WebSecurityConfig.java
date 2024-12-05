@@ -74,6 +74,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()                // 이 url은 모두 접근 허용(로그인 관계없이)
                         .requestMatchers("/api/tour/**").permitAll()
                         .requestMatchers("/api/room/**").permitAll()
+                        .requestMatchers("/api/cart/**").permitAll()
                         .requestMatchers("/api/coupon/**").permitAll()
                         .requestMatchers("/api/comments/**").permitAll()
                         .requestMatchers("/api/review/**").permitAll()
