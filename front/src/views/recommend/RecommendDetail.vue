@@ -126,7 +126,7 @@
           v-model="pageIndex"
           :total-rows="totalCount"
           :per-page="recordCountPerPage"
-          @click="getDept"
+          @click="getComments"
           class="mt-3"
           style="
             --bs-pagination-active-bg: #fdd835;
@@ -142,6 +142,22 @@
           >
             댓글 쓰기
           </a>
+        </div>
+        <!-- TODO: 검색어 입력상자 -->
+        <div class="input-group mb-3 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="검색어"
+            v-model="searchKeyword"
+          />
+          <button
+            class="btn btn-outline-warning"
+            type="button"
+            @click="getComments"
+          >
+            검색
+          </button>
         </div>
       </div>
 
@@ -183,7 +199,7 @@ export default {
     const tdId = this.$route.params.tdId;
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
-    this.getDept();
+    this.getComments();
   },
 
   methods: {
@@ -323,7 +339,7 @@ export default {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
     },
 
-    async getDept() {
+    async getComments() {
       try {
         let response = await CommentsService.getAll(
           this.searchKeyword,

@@ -11,7 +11,7 @@
             resultType="Comments">
         SELECT *
         FROM COMMEN
-        WHERE COMMENT_TEXT LIKE '%' || #{searchKeyword} || '%'
+        WHERE COMMENT_LOC LIKE '%' || #{searchKeyword} || '%'
         ORDER BY COM_ID DESC
         /*순차배열 추가*/
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS FETCH NEXT #{recordCountPerPage} ROWS ONLY
@@ -22,7 +22,7 @@
             parameterType="Criteria"
             resultType="int">
         SELECT COUNT(*) FROM COMMEN
-        WHERE COMMENT_TEXT LIKE '%'|| #{searchKeyword} || '%'
+        WHERE COMMENT_LOC LIKE '%'|| #{searchKeyword} || '%'
     </select>
 
 
