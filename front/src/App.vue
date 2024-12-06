@@ -24,15 +24,15 @@ export default {
 <style>
 @import "@/assets/css/main.css";
 @font-face {
-  font-family: 'dohyeon';
-  src: url('/src/assets/font/BMDOHYEON_ttf.ttf') format('truetype');
+  font-family: "dohyeon";
+  src: url("/src/assets/font/BMDOHYEON_ttf.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'euljiro';
-  src:url('/src/assets/font/BMEULJIROTTF.ttf') format('truetype');
+  font-family: "euljiro";
+  src: url("/src/assets/font/BMEULJIROTTF.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'hanna';
-  src: url('/src/assets/font/BMHANNA_11yrs_ttf.ttf') format('truetype');
+  font-family: "hanna";
+  src: url("/src/assets/font/BMHANNA_11yrs_ttf.ttf") format("truetype");
 }
 </style>

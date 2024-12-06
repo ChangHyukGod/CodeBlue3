@@ -50,8 +50,8 @@ const routes = [
   {
     path: "/faq/talk",
     component: () => import("../views/faq/FaqTalk.vue"),
-  }
-  ,{
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -60,7 +60,7 @@ const routes = [
     component: () => import("../views/review/AddReview.vue"),
   },
   {
-    path: "/review/:uuid",
+    path: "/review/:reviewid",
     component: () => import("../views/review/ReviewDetail.vue"),
   },
   {
@@ -108,16 +108,60 @@ const routes = [
   },
 
   {
+    path: "/recommendcomadd",
+    component: () => import("../views/recommend/RecommendComAdd.vue"),
+  },
+
+  {
+    path: "/recommendcomupdate/:comId",
+    component: () => import("../views/recommend/RecommendComUpdate.vue"),
+  },
+
+  {
+    path: "/recommendgoogleview",
+    component: () => import("../views/recommend/RecommendGoogleView.vue"),
+  },
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
+
   {
     path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
-    path: "/admindb",
-    component: () => import("../views/admin/AdminDbView.vue"),
+    path: "/mainadmin",
+    component: () => import("../views/admin/MainAdmin.vue"),
+  },
+  {
+    path: "/mainadmin1",
+
+    component: () => import("../views/admin/AdminFaqTalk.vue")
+
+  },
+  {
+    path: "/mainadmin2",
+
+    component: () => import("../views/admin/AdminFaqQuestion.vue")
+
+  },
+  {
+    path: "/mainadmin3",
+
+    component: () => import("../views/admin/AdminHowtoPay.vue")
+
+  },
+  {
+    path: "/mainadmin4",
+    component: () => import("../views/admin/MainAdmin4.vue"),
+  },
+  {
+    path: "/mainadmin5",
+
+    component: () => import("../views/admin/AdminFaqAnnouncement.vue")
+
   },
   {
     path: "/addRoom/:tourId",
@@ -131,6 +175,16 @@ const routes = [
     path: "/addRoomPhoto/:roomId",
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
+  {
+
+    path: "/payment/:roomId",
+    component: () => import("../views/payment/PaymentView.vue"),
+  },
+  {
+    path: "/cart",
+    component: () => import("../views/cart/CartView.vue"),
+  },
+
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

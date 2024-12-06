@@ -8,11 +8,7 @@
           <p class="faq_top_title" onclick="window.location.href='/faq/list'">FAQ</p>
           <form class="search_input" @submit.prevent="searchFaq">
             <div class="input_box typing form-group search_bar_announce">
-              <input
-                placeholder="제목, 내용"
-                v-model="searchKeyword"
-                class="input_text form-control"
-              />
+              <input placeholder="제목, 내용" v-model="searchKeyword" class="input_text form-control" />
               <i class="bi bi-search search_glass_announce"></i>
             </div>
           </form>
@@ -21,37 +17,19 @@
 
         <div class="notice_content">
           <div class="accordion" id="faqAccordion">
-            <div
-              class="accordion-item"
-              v-for="(data, index) in faqList"
-              :key="index"
-            >
+            <div class="accordion-item" v-for="(data, index) in faqList" :key="index">
               <h2 class="accordion-header" :id="'heading-' + index">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="'#collapse-' + index"
-                  :aria-expanded="false"
-                  :aria-controls="'collapse-' + index"
-                >
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  :data-bs-target="'#collapse-' + index" :aria-expanded="false" :aria-controls="'collapse-' + index">
                   {{ data.question }}
                 </button>
               </h2>
-              <div
-                :id="'collapse-' + index"
-                class="accordion-collapse collapse"
-                :aria-labelledby="'heading-' + index"
-                data-bs-parent="#faqAccordion"
-              >
+              <div :id="'collapse-' + index" class="accordion-collapse collapse" :aria-labelledby="'heading-' + index"
+                data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
                   {{ data.answer }}
                   <br />
-                  <button
-                    type="button"
-                    class="btn btn-link"
-                    @click="redirectToHashtag(data.hashtag)"
-                  >
+                  <button type="button" class="btn btn-link" @click="redirectToHashtag(data.hashtag)">
                     {{ data.hashtag }}
                   </button>
                 </div>
@@ -71,41 +49,22 @@
         <div class="notice_paging">
           <ul class="paging pagination">
             <!-- 이전 버튼 -->
-            <li
-              class="page-arrow page-item"
-              :class="{ disabled: pageIndex === 1 }"
-            >
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="goToPage(pageIndex - 1)"
-              >
+            <li class="page-arrow page-item" :class="{ disabled: pageIndex === 1 }">
+              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex - 1)">
                 &laquo;
               </a>
             </li>
 
             <!-- 페이지 번호 -->
-            <li
-              v-for="page in totalPages"
-              :key="page"
-              class="page-item"
-              :class="{ active: page === pageIndex }"
-            >
+            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === pageIndex }">
               <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
             <!-- 다음 버튼 -->
-            <li
-              class="page-arrow page-item"
-              :class="{ disabled: pageIndex === totalPages }"
-            >
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="goToPage(pageIndex + 1)"
-              >
+            <li class="page-arrow page-item" :class="{ disabled: pageIndex === totalPages }">
+              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex + 1)">
                 &raquo;
               </a>
             </li>
@@ -122,10 +81,10 @@ import FaqService from "@/services/faq/FaqService";
 export default {
   data() {
     return {
-      pageIndex: 1, // 현재 페이지
-      totalPages: 1, // 전체 페이지 수
-      searchKeyword: "", // 검색어
-      faqList: [], // FAQ 데이터 리스트
+      pageIndex: 1,
+      totalPages: 1,
+      searchKeyword: "",
+      faqList: [],
     };
   },
   methods: {
@@ -134,7 +93,7 @@ export default {
         const response = await FaqService.getAll(
           this.searchKeyword,
           this.pageIndex - 1,
-          10 // 한 페이지에 표시할 데이터 개수
+          10
         );
         const { results, totalCount } = response.data;
         this.faqList = results || [];
@@ -191,6 +150,7 @@ export default {
 </script>
 
 <style>
+
 .custom-link {
   text-decoration: none;
   color: inherit; /* 부모의 색상을 따릅니다 */
@@ -206,12 +166,14 @@ export default {
   transition: 0.3s;
 }
 /* 공지 전체 */
+
 .bigbox {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .lla,
 .new,
 .announce {
@@ -220,6 +182,7 @@ export default {
   font-size: 16px;
   font-family: dohyeon;
 }
+
 /* 타이틀 */
 .title {
   display: inline-flex;
@@ -227,6 +190,7 @@ export default {
   right: 16%;
   position: relative;
 }
+
 /* 전체 박스 */
 .announce_body_box {
   width: 70%;
@@ -234,6 +198,7 @@ export default {
   border-radius: 10px;
   padding: 15px;
 }
+
 /* 검색창 */
 .search_bar_announce {
   width: 35%;
@@ -245,12 +210,14 @@ export default {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
 .faq_top_title {
   font-weight: bolder;
   font-size: x-large;
   position: absolute;
   margin: 3px 0 0 30px;
 }
+
 /* 돋보기 아이콘 */
 .search_glass_announce {
   position: absolute;
@@ -261,6 +228,7 @@ export default {
   color: #ffeb33;
   cursor: pointer;
 }
+
 /* 입력 필드 */
 .input_text {
   margin: 10px auto;
@@ -271,6 +239,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
 }
+
 /* 공지사항 리스트 스타일 */
 .notice_table {
   list-style: none;
@@ -279,9 +248,11 @@ export default {
   padding: 0;
   margin: 7px 0 0 10px;
 }
+
 .notice_line {
   margin: 3px;
 }
+
 .notice_title {
   text-decoration: none;
   color: #333;
@@ -289,6 +260,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 /* 페이징 스타일 */
 .notice_paging .pagination {
   display: flex;
@@ -296,9 +268,11 @@ export default {
   margin-top: 20px;
   padding: 10px;
 }
+
 .page-item {
   margin: 0 8px;
 }
+
 .page-link {
   color: #333;
   border: 1px solid #ccc;
@@ -308,11 +282,13 @@ export default {
   font-weight: bold;
   transition: all 0.3s ease;
 }
+
 .page-link:hover {
   background-color: #f5f5f5;
   color: #333;
   transform: scale(1.1);
 }
+
 .page-item.active .page-link {
   background-color: #ffeb33;
   color: #000;
@@ -320,6 +296,7 @@ export default {
   font-size: 1rem;
   font-weight: bold;
 }
+
 .page-item.disabled .page-link {
   color: #ccc;
   cursor: not-allowed;
