@@ -19,31 +19,49 @@ public class Criteria implements Serializable {
 
 	private static final long serialVersionUID = -858838578081269359L;
 
-	/** 검색조건 */
+	/**
+	 * 검색조건
+	 */
 	private String searchCondition = "";
 
-	/** 검색Keyword */
+	/**
+	 * 검색Keyword
+	 */
 	private String searchKeyword = "";
 
-	/** 검색사용여부 */
+	/**
+	 * 검색사용여부
+	 */
 	private String searchUseYn = "";
 
-	/** 현재페이지 */
+	/**
+	 * 현재페이지
+	 */
 	private int pageIndex = 0;
 
-	/** 페이지갯수 */
+	/**
+	 * 페이지갯수
+	 */
 	private int pageUnit = 10;
 
-	/** 페이지사이즈 */
+	/**
+	 * 페이지사이즈
+	 */
 	private int pageSize = 10;
 
-	/** firstIndex */
+	/**
+	 * firstIndex
+	 */
 	private int firstIndex = 1;
 
-	/** lastIndex */
+	/**
+	 * lastIndex
+	 */
 	private int lastIndex = 1;
 
-	/** recordCountPerPage */
+	/**
+	 * recordCountPerPage
+	 */
 	private int recordCountPerPage = 10; // 화면에 보일 갯수
 	private int totalItems = 0; // 총 건수
 
@@ -52,3 +70,4 @@ public class Criteria implements Serializable {
 	private String updateTime;
 
 }
+
