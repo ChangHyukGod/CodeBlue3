@@ -24,5 +24,6 @@ public class Comments {
     private Timestamp createdAt;  // CREATED_AT (TIMESTAMP)
 
 
-
+    public void setMemberEmail(String email) {
+    }
 }

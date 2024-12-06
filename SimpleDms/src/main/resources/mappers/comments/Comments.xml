@@ -36,10 +36,28 @@
     </insert>
 
 
+    <select id="selectComments"
+            parameterType="int"
+            resultType="Comments">
+        SELECT * FROM COMMEN
+        WHERE COM_ID = #{comId}
+    </select>
 
 
+    <update id="update"
+            parameterType="Comments">
+        UPDATE COMMEN
+        SET
+            COMMENT_TEXT=#{commentText}
+
+        WHERE COM_ID = #{comId}
+    </update>
 
 
+    <delete id="delete"
+            parameterType="int">
+        DELETE COMMEN WHERE COM_ID = #{comId}
+    </delete>
 
 
 </mapper>

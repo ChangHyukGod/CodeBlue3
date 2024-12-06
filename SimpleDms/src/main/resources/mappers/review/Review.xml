@@ -17,6 +17,75 @@
         FROM REVIEWS
         WHERE TITLE LIKE '%' || #{searchKeyword} || '%'
     </select>
+
+    <insert id="insert" parameterType="Review">
+        INSERT INTO REVIEWS (
+        TITLE,
+        CONTENT,
+        RATING,
+        IMAGE_URL,
+        AUTHOR_EMAIL,
+        TARGET_ID,
+        CREATED_AT,
+        UPDATED_AT,
+        LOC
+        ) VALUES (
+        #{title},
+        #{content},
+        #{rating},
+        #{imageUrl},
+        #{authorEmail},
+        #{targetId},
+        #{createdAt},
+        #{updatedAt},
+        #{loc}
+        )
+        <selectKey keyProperty="reviewId" resultType="int" order="AFTER">
+            SELECT REVIEWS_SEQ.CURRVAL FROM DUAL
+        </selectKey>
+    </insert>
+
+
+    <update id="updateReviewUrl"
+            parameterType="Review">
+        UPDATE REVIEWS
+        SET IMAGE_URL = #{imageUrl}
+        WHERE REVIEW_ID = #{reviewID}
+    </update>
+
+    <select id="selectGenerateReviewId"
+            resultType="int">
+        SELECT REVIEWS_SEQ CURRVAL FROM DUAL
+    </select>
+
+    <select id="selectReview"
+            parameterType="int"
+            resultType="Review">
+        SELECT *
+        FROM REVIEWS
+        WHERE REVIEW_ID = #{reviewId}
+    </select>
+
+    <!-- Update -->
+    <update id="update" parameterType="Review">
+        UPDATE REVIEWS
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            RATING = #{rating},
+            IMAGE_URL = #{imageUrl},
+            AUTHOR_EMAIL = #{authorEmail},
+            TARGET_ID = #{targetId},
+            UPDATED_AT = #{updatedAt},
+            LOC = #{loc}
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
+
+    <!-- Delete -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM REVIEWS
+        WHERE REVIEW_ID = #{reviewId}
+    </delete>
     
 
 

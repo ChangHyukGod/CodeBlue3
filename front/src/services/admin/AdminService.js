@@ -1,22 +1,37 @@
+
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/api";
+const baseURL = "http://localhost:8080/api"
 
-const AdminService = {
-    // 게시물 조회
-    getPostById(postId) {
-        return axios.get(`${baseURL}/posts/${postId}`);
-    },
 
-    // 게시물 생성
-    createPost(formData) {
-        return axios.post(`${baseURL}/posts`, formData);
-    },
-
-    // 게시물 수정
-    updatePost(postId, formData) {
-        return axios.put(`${baseURL}/posts/${postId}`, formData);
-    },
+const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
+    return axios
+       .get(baseURL+`/admin/admin?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
 };
 
+
+const insert = (data) => {
+    return axios.post(baseURL+"/admin/admin", data);
+}
+
+const get = (fno) => {
+    return axios.get(baseURL+`/admin/admin/${fno}`);
+}
+
+const update = (fno, data)=>{
+    return axios.put(baseURL+`/basic/admin/${fno}`,data);
+}
+
+
+const remove = (fno)=>{
+    return axios.delete(baseURL+`/admin/admin/deletion/${fno}`);
+}
+
+const AdminService = {
+    getAll,
+    insert,
+    get,
+    update,
+    remove
+}
 export default AdminService;
