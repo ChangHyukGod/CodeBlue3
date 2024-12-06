@@ -17,7 +17,7 @@
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
-
+        
         <div class="dates">
           <p>
             체크인 : {{ reservation.checkInDate }} {{ reservation.checkInTime }}
@@ -85,10 +85,10 @@ export default {
   },
   mounted() {
     // URL에서 roomId 파라미터 가져오기
-    const roomId = this.$route.params.roomId;
+    const cartId = this.$route.params.cartId;
 
     // 해당 roomId에 대한 예약 정보를 로컬 스토리지에서 가져오기
-    const reservationData = localStorage.getItem(`reservation_${roomId}`);
+    const reservationData = localStorage.getItem(`reservation_${cartId}`);
 
     if (reservationData) {
       this.reservation = JSON.parse(reservationData);
