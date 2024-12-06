@@ -20,7 +20,8 @@ public interface ReviewMapper {
     public int insert(Review review);
     public int updateReviewUrl(Review review);
     public int selectGenerateReviewId();
-    public Optional<Review> selectReview(int reviewId);
+    public Optional<Review> select(int reviewId);
     public int update(Review review);
     public int delete(int reviewId);
+
 }

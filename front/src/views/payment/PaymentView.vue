@@ -17,7 +17,7 @@
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
-        
+
         <div class="dates">
           <p>
             체크인 : {{ reservation.checkInDate }} {{ reservation.checkInTime }}

@@ -22,6 +22,7 @@ public class Comments {
     private String commentText;       // COMMENT (VARCHAR2)
     private String email;         // EMAIL (VARCHAR2)
     private Timestamp createdAt;  // CREATED_AT (TIMESTAMP)
+    private String commentLoc;
 
 
     public void setMemberEmail(String email) {

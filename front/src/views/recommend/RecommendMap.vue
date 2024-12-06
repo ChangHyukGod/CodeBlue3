@@ -1,30 +1,22 @@
 <template>
   <div>
     <!-- 지도 표시 영역 -->
-    <div
-      id="map"
-      style="
-        width: 100%;
-        height: 1000px;
-        margin-top: 300px;
-        margin-bottom: 300px;
-      "
-    ></div>
+    <div id="map" style="width: 100%; height: 400px"></div>
 
     <!-- 장소 검색 입력창 -->
-    <div style="margin-top: 20px; text-align: center;">
+    <div style="margin-top: 20px; text-align: center">
       <input
         id="search-input"
         type="text"
         placeholder="장소를 검색하세요"
-        style="width: 300px; padding: 10px; font-size: 30px;"
+        style="width: 300px; padding: 10px; font-size: 30px"
       />
     </div>
   </div>
 </template>
 
 <script>
- /* global google */
+/* global google */
 export default {
   name: "GoogleMapExample",
   mounted() {
@@ -99,10 +91,5 @@ export default {
   border: 4px solid #ffdd00; /* 노란색 외곽선 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
   transition: all 0.3s ease; /* 마우스 오버 시 부드러운 변화 */
-}
-
-#map:hover {
-  transform: scale(1.1); /* 마우스 오버 시 약간 확대 */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* 확대되면 그림자 더 강조 */
 }
 </style>

@@ -203,6 +203,7 @@
 
 <script>
 import MemberService from "@/services/auth/MemberService";
+import CartService from "@/services/cart/CartService";
 
 export default {
   data() {
@@ -232,12 +233,20 @@ export default {
         let response = await MemberService.login(this.user);
         this.$store.state.loggedIn = true;
         localStorage.setItem("user", JSON.stringify(response.data));
+
+        // 로컬스토리지에서 user 객체를 가져오고, 그것을 출력
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        let cartResponse = await CartService.countCartItems(user.email);
+
+        localStorage.setItem("cartCount", cartResponse.data || 0);
+
         this.errorMessage = ""; // 에러 메시지 초기화
         this.$router.push("/"); // 로그인 성공 후 홈으로 리다이렉트
       } catch (error) {
         this.$store.state.loggedIn = false;
         this.errorMessage = `로그인에 실패했습니다.<br />
-        아이디 또는 비밀번호를 맞게 입력해 주세요.`;
+    아이디 또는 비밀번호를 맞게 입력해 주세요.`;
         console.log(error);
       }
     },
