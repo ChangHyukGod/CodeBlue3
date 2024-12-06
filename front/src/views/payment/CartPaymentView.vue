@@ -17,7 +17,7 @@
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
-
+        
         <div class="dates">
           <p>
             체크인 : {{ reservation.checkInDate }} {{ reservation.checkInTime }}
@@ -76,34 +76,19 @@
 </template>
 
 <script>
-
-import PortOne from "@portone/browser-sdk/v2";
-
-
-
 export default {
   data() {
     return {
       reservation: {}, // 예약 정보 저장 객체
       selectedPaymentMethod: "", // 선택된 결제 수단
-      main: {
-        channelKey: "channel-key-79ccff33-9c28-4395-854d-a2c186f8d461",
-        payMethod: "EASY_PAY",
-        totalAmount: "60000",
-        orderName: "매운라면",
-        merchant_uid: "ORD20231030-000001",
-        storeId: "store-37adc342-491c-4a84-ae08-08fe128442bb",
-        paymentId: "758771037252287",
-        currency:"KRW",
-      },
     };
   },
   mounted() {
     // URL에서 roomId 파라미터 가져오기
-    const roomId = this.$route.params.roomId;
+    const cartId = this.$route.params.cartId;
 
     // 해당 roomId에 대한 예약 정보를 로컬 스토리지에서 가져오기
-    const reservationData = localStorage.getItem(`reservation_${roomId}`);
+    const reservationData = localStorage.getItem(`reservation_${cartId}`);
 
     if (reservationData) {
       this.reservation = JSON.parse(reservationData);
@@ -113,16 +98,9 @@ export default {
     }
   },
   methods: {
-    async processPayment() {
-      try{
-      // 쉼표를 제거하고 정수형으로 변환
-      const sanitizedPrice = parseInt(this.reservation.totalPrice.replace(/,/g, ""), 10);
-      this.main.totalAmount = sanitizedPrice; // 정수형으로 업데이트
-      PortOne.requestPayment(this.main);
-      
-      }catch(error){
-          console.log(error);
-      }
+    processPayment() {
+      // alert("결제 수단을 선택해주세요.");
+      // return;
     },
 
     returnPage() {

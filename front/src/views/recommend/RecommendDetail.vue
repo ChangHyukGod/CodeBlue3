@@ -49,6 +49,7 @@
         :src="require(`@/assets/images/${menu.MENU_MAP}`)"
         alt="Additional Detail"
         class="additional-image"
+        style="border: 3px solid yellow"
         @click="navigateToRecommendMap(menu)"
       />
     </div>
@@ -86,7 +87,7 @@
         </div>
       </div>
 
-      <div class="review-section">
+      <div class="review-section" style="border: 3px solid yellow">
         <!-- 댓글 리스트 -->
         <div class="review-list">
           <!-- 반복문으로 댓글 항목 렌더링 -->
@@ -150,6 +151,7 @@
             class="form-control"
             placeholder="검색어"
             v-model="searchKeyword"
+            style="border: 3px solid yellow"
           />
           <button
             class="btn btn-outline-warning"
@@ -769,7 +771,7 @@ pre {
 /* 댓글 리스트 항목 스타일 */
 .review-item {
   background-color: #fff; /* 카드 배경 흰색 */
-  border: 1px solid #fdd835; /* 노란색 테두리 */
+  border: 10px solid #fdd835; /* 노란색 테두리 */
   border-radius: 8px;
   margin-bottom: 15px;
   padding: 15px;
