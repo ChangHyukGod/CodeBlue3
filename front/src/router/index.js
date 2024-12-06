@@ -118,6 +118,11 @@ const routes = [
   },
 
   {
+    path: "/recommendgoogleview",
+    component: () => import("../views/recommend/RecommendGoogleView.vue"),
+  },
+
+  {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
