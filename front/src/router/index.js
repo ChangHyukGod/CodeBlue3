@@ -118,11 +118,9 @@ const routes = [
   },
 
   {
-    path: "/googletest",
-    component: () => import("../views/recommend/GoogleTestView.vue"),
+    path: "/recommendgoogleview",
+    component: () => import("../views/recommend/RecommendGoogleView.vue"),
   },
-
-
 
   {
     path: "/addadmin",
@@ -135,27 +133,35 @@ const routes = [
   },
   {
     path: "/mainadmin",
-    component: () => import("../views/admin/MainAdmin.vue")
+    component: () => import("../views/admin/MainAdmin.vue"),
   },
-    {
+  {
     path: "/mainadmin1",
+
     component: () => import("../views/admin/AdminFaqTalk.vue")
+
   },
-    {
+  {
     path: "/mainadmin2",
+
     component: () => import("../views/admin/AdminFaqQuestion.vue")
+
   },
-    {
+  {
     path: "/mainadmin3",
+
     component: () => import("../views/admin/AdminHowtoPay.vue")
+
   },
-      {
+  {
     path: "/mainadmin4",
-    component: () => import("../views/admin/MainAdmin4.vue")
+    component: () => import("../views/admin/MainAdmin4.vue"),
   },
-        {
+  {
     path: "/mainadmin5",
+
     component: () => import("../views/admin/AdminFaqAnnouncement.vue")
+
   },
   {
     path: "/addRoom/:tourId",

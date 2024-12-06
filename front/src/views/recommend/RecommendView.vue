@@ -54,21 +54,6 @@
       </button>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- TODO: 검색어 입력상자 -->
     <div class="input-group mb-3 mt-3">
       <input
@@ -149,15 +134,10 @@ export default {
       totalCount: 0,
       recordCountPerPage: 4,
       searchKeyword: "",
-      recommends: [], 
+      recommends: [],
       carouselItems: [],
-   
     };
   },
-
- 
-
-
 
   methods: {
     async getrecommend() {
@@ -183,26 +163,8 @@ export default {
     },
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   mounted() {
-
     this.getrecommend();
-
-
-  
-
   },
 };
 </script>
