@@ -128,6 +128,7 @@ const routes = [
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
+
   {
     path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue"),
@@ -138,15 +139,15 @@ const routes = [
   },
     {
     path: "/mainadmin1",
-    component: () => import("../views/admin/MainAdmin1.vue")
+    component: () => import("../views/admin/AdminFaqTalk.vue")
   },
     {
     path: "/mainadmin2",
-    component: () => import("../views/admin/MainAdmin2.vue")
+    component: () => import("../views/admin/AdminFaqQuestion.vue")
   },
     {
     path: "/mainadmin3",
-    component: () => import("../views/admin/MainAdmin3.vue")
+    component: () => import("../views/admin/AdminHowtoPay.vue")
   },
       {
     path: "/mainadmin4",
@@ -154,7 +155,7 @@ const routes = [
   },
         {
     path: "/mainadmin5",
-    component: () => import("../views/admin/MainAdmin5.vue")
+    component: () => import("../views/admin/AdminFaqAnnouncement.vue")
   },
   {
     path: "/addRoom/:tourId",
@@ -169,6 +170,7 @@ const routes = [
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
   {
+
     path: "/payment/:roomId",
     component: () => import("../views/payment/PaymentView.vue"),
   },
@@ -176,6 +178,7 @@ const routes = [
     path: "/cart",
     component: () => import("../views/cart/CartView.vue"),
   },
+
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
