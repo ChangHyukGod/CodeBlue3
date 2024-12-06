@@ -1,8 +1,5 @@
 <template>
   <div class="bigbox">
-    <div class="title">
-      <p>공지사항</p>
-    </div>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">

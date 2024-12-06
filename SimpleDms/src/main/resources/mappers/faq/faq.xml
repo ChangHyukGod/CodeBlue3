@@ -10,28 +10,28 @@
     <select id="selectFaqListTotCount" parameterType="Criteria" resultType="int">
         SELECT COUNT(*)
         FROM FAQ
-        WHERE question LIKE '%' || #{searchKeyword} || '%'
+        WHERE QUESTION LIKE '%' || #{searchKeyword} || '%'
     </select>
     <insert id="insertFaq" parameterType="Faq">
-        INSERT INTO FAQ (fno, question, answer, hashtag)
+        INSERT INTO FAQ (FNO, QUESTION, ANSWER, HASHTAG)
         VALUES (FAQ_SEQ.NEXTVAL, #{question}, #{answer}, #{hashtag})
     </insert>
     <select id="selectFaq" parameterType="int" resultType="Faq">
         SELECT *
         FROM FAQ
-        WHERE FNO = #{FNO}
+        WHERE FNO = #{fno}
     </select>
     <update id="updateFaq" parameterType="Faq">
         UPDATE FAQ
         SET QUESTION = #{question},
             ANSWER   = #{answer},
-            HASHTAG  = #{hashtag}
-        WHERE FNO = #{FNO}
+        HASHTAG = #{hashtag}
+        WHERE FNO = #{fno}
     </update>
     <delete id="deleteFaq" parameterType="int">
         DELETE
         FROM FAQ
         WHERE FNO =
-              #{FNO}
+              #{fno}
     </delete>
 </mapper>

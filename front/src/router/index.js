@@ -118,43 +118,50 @@ const routes = [
   },
 
   {
-    path: "/googletest",
-    component: () => import("../views/recommend/GoogleTestView.vue"),
+    path: "/recommendgoogleview",
+    component: () => import("../views/recommend/RecommendGoogleView.vue"),
   },
-
-
 
   {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
   },
+
   {
     path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue"),
   },
   {
     path: "/mainadmin",
-    component: () => import("../views/admin/MainAdmin.vue")
+    component: () => import("../views/admin/MainAdmin.vue"),
   },
-    {
+  {
     path: "/mainadmin1",
-    component: () => import("../views/admin/MainAdmin1.vue")
+
+    component: () => import("../views/admin/AdminFaqTalk.vue")
+
   },
-    {
+  {
     path: "/mainadmin2",
-    component: () => import("../views/admin/MainAdmin2.vue")
+
+    component: () => import("../views/admin/AdminFaqQuestion.vue")
+
   },
-    {
+  {
     path: "/mainadmin3",
-    component: () => import("../views/admin/MainAdmin3.vue")
+
+    component: () => import("../views/admin/AdminHowtoPay.vue")
+
   },
-      {
+  {
     path: "/mainadmin4",
-    component: () => import("../views/admin/MainAdmin4.vue")
+    component: () => import("../views/admin/MainAdmin4.vue"),
   },
-        {
+  {
     path: "/mainadmin5",
-    component: () => import("../views/admin/MainAdmin5.vue")
+
+    component: () => import("../views/admin/AdminFaqAnnouncement.vue")
+
   },
   {
     path: "/addRoom/:tourId",
@@ -169,6 +176,7 @@ const routes = [
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
   {
+
     path: "/payment/:roomId",
     component: () => import("../views/payment/PaymentView.vue"),
   },
@@ -176,10 +184,12 @@ const routes = [
     path: "/cart",
     component: () => import("../views/cart/CartView.vue"),
   },
+
   {
     path: "/cart/payment/:cartId",
     component: () => import("../views/payment/CartPaymentView.vue"),
   },
+
 
 ];
 const router = createRouter({

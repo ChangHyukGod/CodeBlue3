@@ -9,7 +9,9 @@
           <br />
         </div>
         <div class="notice_content">
-          <h1 class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;결제 방법 안내</h1>
+          <h1 class="pay_title">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;결제 방법 안내
+          </h1>
           <br />
           <div class="payment_section">
             <h2 class="second_title">&nbsp; 1. 신용/체크카드 결제</h2>
@@ -111,7 +113,7 @@
           <br />
           <div class="payment_section">
             <h2 class="second_title">&nbsp;5. 결제 후 주의사항</h2>
-            <hr>
+            <hr />
             <ul>
               <li>결제 완료 후 이메일로 발송된 영수증을 꼭 확인하세요.</li>
               <li>문제가 발생할 경우, 고객센터로 연락하여 지원을 받으세요.</li>
@@ -119,7 +121,11 @@
             </ul>
           </div>
         </div>
-        <br />
+        <router-link :to="'/faq'">
+          <button type="button" class="btn btn-warning button">
+            <i class="bi bi-arrow-return-left"></i>
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -130,6 +136,10 @@ export default {};
 </script>
 
 <style>
+.button {
+  position: relative;
+  left: 94.5%;
+}
 /* 공지 전체 */
 .bigbox {
   display: flex;
@@ -139,14 +149,14 @@ export default {};
 }
 
 /* 타이틀 */
-.title {
+.pay_title {
   font-size: 22px;
   font-weight: bold;
   color: #333;
 }
 .second_title {
-    margin: 5px 0;
-    font-size: 20px;
+  margin: 5px 0;
+  font-size: 20px;
 }
 
 /* 전체 박스 */

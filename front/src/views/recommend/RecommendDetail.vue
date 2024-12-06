@@ -1,4 +1,5 @@
 <template>
+  <!--완성 최종 커밋부탁 -->
   <div class="container mt-5">
     <div class="content-wrapper">
       <!-- 텍스트 영역 -->
@@ -102,7 +103,7 @@
                   {{ data.email }}
                 </p>
                 <p class="review-location text-warning mb-0">
-                  [지역들어갈 곳] {{ data.location }}
+                  {{ data.commentLoc }}
                 </p>
               </div>
               <span class="review-time text-muted">{{ data.createdAt }}</span>
@@ -125,7 +126,7 @@
           v-model="pageIndex"
           :total-rows="totalCount"
           :per-page="recordCountPerPage"
-          @click="getDept"
+          @click="getComments"
           class="mt-3"
           style="
             --bs-pagination-active-bg: #fdd835;
@@ -141,6 +142,22 @@
           >
             댓글 쓰기
           </a>
+        </div>
+        <!-- TODO: 검색어 입력상자 -->
+        <div class="input-group mb-3 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="검색어"
+            v-model="searchKeyword"
+          />
+          <button
+            class="btn btn-outline-warning"
+            type="button"
+            @click="getComments"
+          >
+            검색
+          </button>
         </div>
       </div>
 
@@ -162,6 +179,7 @@ export default {
       loc: "",
       commentText: "",
       createdAt: "",
+      commentLoc: "",
       email: "",
       comments: [],
       pageIndex: 1, //현재페이지번호
@@ -181,7 +199,7 @@ export default {
     const tdId = this.$route.params.tdId;
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
-    this.getDept();
+    this.getComments();
   },
 
   methods: {
@@ -321,7 +339,7 @@ export default {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
     },
 
-    async getDept() {
+    async getComments() {
       try {
         let response = await CommentsService.getAll(
           this.searchKeyword,
@@ -383,30 +401,6 @@ export default {
       }
     },
   },
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 </script>
 
@@ -802,7 +796,7 @@ pre {
 
 .review-location {
   color: #fbc02d; /* 노란색 */
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   margin-top: 5px;
 }
 
@@ -818,7 +812,7 @@ pre {
 
 .review-text {
   color: #212121; /* 텍스트 기본 색상 */
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.5;
 }
 
