@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- Bootstrap Popover 버튼 -->
-    <button
-      type="button"
-      class="btn btn-secondary"
-      data-bs-toggle="popover"
-      title="Popover 제목"
-      data-bs-content="Popover 내용입니다!"
-    >
-      Popover 테스트
-    </button>
   </div>
   <div class="container d-flex justify-content-center align-items-center">
     <!-- 버튼 그룹 박스 -->
@@ -32,12 +22,6 @@
             <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
           </b-button>
         </router-link>
-
-        <router-link :to="'/couponfaq'">
-          <b-button variant="outline-dark" class="custom-button">
-            <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-          </b-button></router-link
-        >
 
         <router-link :to="'/announcement'"
           ><b-button variant="outline-dark" class="custom-button">
@@ -67,7 +51,7 @@
   <hr />
   <br />
   <div class="one-line-box">
-    <h1 class="body-title">자주 찾는 질문</h1>
+    <h1 class="body-title">&nbsp;&nbsp;자주 찾는 질문</h1>
     <form name="oneLineHelp">
       <div
         id="carouselExampleControls"
@@ -125,7 +109,7 @@
                   </div>
                   <router-link :to="{ path: 'faq/list', query: { search: question.link } }"
                     ><b-button variant="danger" class="card-button"
-                      >더 많은 {{question.link}} 질문</b-button
+                      ><i class="bi bi-three-dots"></i> <i class="bi bi-info-circle"></i></b-button
                     ></router-link
                   >
                 </b-card>

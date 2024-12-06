@@ -23,6 +23,7 @@
         <typeAlias type="com.simplecoding.simpledms.vo.faq.Announce" alias="Announce"/>
         <typeAlias type="com.simplecoding.simpledms.vo.comments.Comments" alias="Comments"/>
         <typeAlias type="com.simplecoding.simpledms.vo.faq.Faq" alias="Faq"/>
+        <typeAlias type="com.simplecoding.simpledms.vo.faq.Talk" alias="Talk"/>
 
 
 

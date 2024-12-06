@@ -5,7 +5,7 @@
       <div class="notice_container">
         <div class="notice_search">
           <form class="search_input" @submit.prevent="searchAnnouncement">
-            <router-link :to="'/faq/list'" class="custom-link"><p class="ano_top_title">FAQ</p></router-link>
+            <router-link :to="'/faq/list'" class="custom-link"><p class="ano_top_title">공지사항</p></router-link>
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
@@ -25,7 +25,7 @@
                 :to="'/announcement/' + data.ano"
                 class="custom-link"
               >
-                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
+                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }} {{ data.ano }} {{ data.createDate }}</h2>
               </router-link>
               <hr class="notice_line" />
             </div>
