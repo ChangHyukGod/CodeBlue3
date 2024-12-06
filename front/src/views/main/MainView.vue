@@ -11,8 +11,10 @@
       <div class="carousel-item active">
         <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
         <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+          <a href="/maindetail/104">
+            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
+          </a>
+          <p>광안대교 야경 보면서 따뜻한 연말갬성 챙기자구요~</p>
         </div>
       </div>
       <div class="carousel-item">
