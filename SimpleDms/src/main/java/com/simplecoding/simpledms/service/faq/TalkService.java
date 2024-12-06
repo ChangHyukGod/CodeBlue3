@@ -29,12 +29,13 @@ public class TalkService {
         return page;
     }
 
-//    public void insertTalk(Talk talk) {
+    public void insertTalk(Talk talk) {
 //        String uuid = UUID.randomUUID().toString();
 //        String url = generateDownloadUrl(uuid);
 //        talk.
-//        talkMapper.insertTalk(talk);
-//    }
+        talkMapper.insertTalk(talk);
+
+    }
 //
 //    public String generateDownloadUrl(String uuid) {
 //        return ServletUriComponentsBuilder
