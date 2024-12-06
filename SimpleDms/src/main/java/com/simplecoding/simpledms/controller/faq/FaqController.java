@@ -46,13 +46,14 @@ public class FaqController {
         return new ResponseEntity<>(faq.get(), HttpStatus.OK);
     }
 
-    @PutMapping("/api/faq/list/{fno}")
+    @PutMapping("/api/faq/list/update/{fno}")
     public ResponseEntity<?> updateFaq(@PathVariable int fno, @RequestBody Faq faq) {
         faqService.updateFaq(faq);
         return new ResponseEntity<>(faq, HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/faq/{fno}")
+    @DeleteMapping("/api/faq/list/delete/{fno}")
+
     public ResponseEntity<?> deleteFaq(@PathVariable int fno) {
         faqService.deleteFaq(fno);
         return new ResponseEntity<>(HttpStatus.OK);

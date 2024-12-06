@@ -17,5 +17,5 @@ public class Announce {
     private int ano;
     private String title;
     private String content;
-    private String date;
+    private String create_date;
 }

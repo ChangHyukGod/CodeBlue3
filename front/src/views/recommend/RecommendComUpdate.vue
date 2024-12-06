@@ -12,6 +12,22 @@
       <label for="dname">commentText</label>
     </div>
 
+    <!-- Dropdown for Location -->
+    <div class="form-floating mb-3">
+      <select class="form-select" id="commentLoc" v-model="comments.commentLoc">
+        <option value="" disabled selected>Choose a location</option>
+        <option value="경상남도 함안">경상남도</option>
+        <option value="충북 제천지">충북</option>
+        <option value="오사카">오사카</option>
+        <option value="오타루">오타루</option>
+        <option value="호놀룰루">호놀룰루</option>
+        <option value="가오슝">가오슝</option>
+        <option value="아유타야">아유타야</option>
+        <option value="뉴욕">뉴욕</option>
+      </select>
+      <label for="commentLoc">Location</label>
+    </div>
+
     <!-- 수정버튼 -->
     <button type="button" class="btn btn-warning" @click="update">수정</button>
     <!-- 삭제버튼 -->
@@ -33,6 +49,7 @@ export default {
       comments: {
         comId: "",
         commentText: "",
+        commentLoc: "",
       },
     };
   },

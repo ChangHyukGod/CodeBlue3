@@ -11,7 +11,9 @@
             resultType="Comments">
         SELECT *
         FROM COMMEN
-        WHERE COMMENT_TEXT LIKE '%' || #{searchKeyword} || '%'
+        WHERE COMMENT_LOC LIKE '%' || #{searchKeyword} || '%'
+        ORDER BY COM_ID DESC
+        /*순차배열 추가*/
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
 
@@ -20,7 +22,7 @@
             parameterType="Criteria"
             resultType="int">
         SELECT COUNT(*) FROM COMMEN
-        WHERE COMMENT_TEXT LIKE '%'|| #{searchKeyword} || '%'
+        WHERE COMMENT_LOC LIKE '%'|| #{searchKeyword} || '%'
     </select>
 
 
@@ -29,10 +31,10 @@
             parameterType="Comments">
         INSERT INTO COMMEN(COM_ID,
                             COMMENT_TEXT,
-                            EMAIL, CREATED_AT)
+                            EMAIL, CREATED_AT, COMMENT_LOC)
         VALUES (COMMEN_SEQ.NEXTVAL,
                 #{commentText},
-                #{email}, SYSTIMESTAMP)
+                #{email}, SYSTIMESTAMP, #{commentLoc})
     </insert>
 
 
@@ -48,7 +50,8 @@
             parameterType="Comments">
         UPDATE COMMEN
         SET
-            COMMENT_TEXT=#{commentText}
+            COMMENT_TEXT=#{commentText},
+            COMMENT_LOC = #{commentLoc}
 
         WHERE COM_ID = #{comId}
     </update>
