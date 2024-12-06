@@ -93,12 +93,13 @@
         class="form-control"
         placeholder="검색어"
         v-model="searchKeyword"
-        style="border: 3px solid yellow"
+        style="border: 3px solid #0288d1"
       />
       <button
-        class="btn btn-outline-warning"
+        class="btn btn-outline-primary"
         type="button"
         @click="getrecommend"
+        style="color: #0288d1"
       >
         검색
       </button>
@@ -173,9 +174,9 @@ export default {
 <style>
 /* 카드 디자인 */
 .custom-card {
-  border: 2px solid #ffc107; /* 노란색 테두리 */
+  /* border: 5px solid #0288d1; 노란색 테두리 */
   background-color: #000; /* 검은색 배경 */
-  color: #ffc107; /* 텍스트 기본 색 노란색 */
+  color: #0288d1; /* 텍스트 기본 색 노란색 */
   border-radius: 10px;
   transition: all 0.3s ease; /* 부드러운 전환 효과 */
   cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
@@ -183,14 +184,14 @@ export default {
 
 .custom-card:hover {
   transform: scale(1.05); /* 크기 확대 */
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.6); /* 입체적인 그림자 추가 */
-  border-color: #ff9800; /* 호버 시 테두리 색 약간 변경 */
+  box-shadow: 0 4px 8px rgba(7, 94, 255, 0.6); /* 입체적인 그림자 추가 */
+  border-color: #0288d1; /* 호버 시 테두리 색 약간 변경 */
 }
 
 .custom-card-img {
   height: 200px;
   object-fit: cover;
-  border-bottom: 2px solid #ffc107; /* 이미지 아래에 노란 테두리 */
+  border-bottom: 2px solid #0288d1; /* 이미지 아래에 노란 테두리 */
 }
 
 .custom-card-body {
@@ -204,16 +205,16 @@ export default {
 
 /* 수정 버튼 */
 .btn-dark {
-  background-color: #ffc107; /* 노란색 배경 */
+  background-color: #0288d1; /* 노란색 배경 */
   color: #000; /* 버튼 텍스트 검정색 */
-  border: 1px solid #ffc107; /* 테두리 노란색 */
+  border: 1px solid #0288d1; /* 테두리 노란색 */
   transition: all 0.3s ease;
 }
 
 .btn-dark:hover {
-  background-color: #000; /* 호버 시 검은색 배경 */
-  color: #ffc107; /* 호버 시 노란색 텍스트 */
-  border: 1px solid #ffc107; /* 테두리 유지 */
+  background-color: white; /* 호버 시 검은색 배경 */
+  color: #0288d1; /* 호버 시 노란색 텍스트 */
+  border: 1px solid #0288d1; /* 테두리 유지 */
 }
 
 /* 추가 버튼 */
@@ -258,18 +259,19 @@ export default {
 .custom-pagination .page-link {
   background-color: white;
   color: black;
-  border-color: white;
+  border-color: #0288d1;
 }
 
 .custom-pagination .page-item.active .page-link {
   background-color: white;
-  color: black;
-  border-color: black;
+  color: #0288d1;
+  border-color: #0288d1;
 }
 
 #carouselExampleAutoplaying {
-  border: 3px solid #ffc107; /* 노란색 테두리 */
+  /* border: 1px solid #0288d1; 노란색 테두리 */
   border-radius: 10px; /* 둥근 모서리 */
   padding: 10px; /* 여백 추가 */
+  margin-bottom: 20px;
 }
 </style>
