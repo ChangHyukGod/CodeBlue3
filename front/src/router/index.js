@@ -35,9 +35,9 @@ const routes = [
     component: () => import("../views/faq/FaqAnnouncement.vue"),
   },
   {
-    path: "/announcement/:id",
-    component: () => import("../views/faq/FaqAnnouncementDetail.vue"),
-    props: true,
+    path: "/announcement/:ano",
+    name: "AnnouncementDetail",
+    component: () => import("@/views/faq/FaqAnnouncementDetail.vue"),
   },
   {
     path: "/faq/payment",
@@ -50,8 +50,8 @@ const routes = [
   {
     path: "/faq/talk",
     component: () => import("../views/faq/FaqTalk.vue"),
-  }
-  ,{
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -107,7 +107,28 @@ const routes = [
     component: () => import("../views/recommend/RecommendMap3.vue"),
   },
 
-  
+  {
+    path: "/recommendcomadd",
+    component: () => import("../views/recommend/RecommendComAdd.vue"),
+  },
+
+  {
+    path: "/recommendcomupdate/:comId",
+    component: () => import("../views/recommend/RecommendComUpdate.vue"),
+  },
+
+  {
+    path: "/googletest",
+    component: () => import("../views/recommend/GoogleTestView.vue"),
+  },
+
+
+
+  {
+    path: "/addadmin",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
+
   {
     path: "/adminlist",
     component: () => import("../views/admin/AdminDbDetail.vue"),
@@ -149,8 +170,13 @@ const routes = [
     component: () => import("../views/room/addRoomPhoto.vue"),
   },
   {
-    path: "/addadmin/:fno",
-    component: () => import("../views/admin/AddAdminDb.vue"),
+
+    path: "/payment/:roomId",
+    component: () => import("../views/payment/PaymentView.vue"),
+  },
+  {
+    path: "/cart",
+    component: () => import("../views/cart/CartView.vue"),
   },
 
 ];

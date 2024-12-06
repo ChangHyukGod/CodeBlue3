@@ -1,7 +1,25 @@
 <template>
-  <div v-for="(data, index) in announcementList" :key="index">
-    <h1>{{ data.title }}</h1>
-    <p>{{ data.content }}</p>
+  <div class="bigbox">
+    <div class="title">
+      <p>공지사항</p>
+    </div>
+    <hr />
+    <div class="announce_body_box">
+      <div class="notice_container">
+        <div class="notice_content">
+          <br /><br />
+          <p class="title">{{ title }}</p>
+          <hr />
+          <p class="content">{{ content }}</p>
+        </div>
+        <router-link :to="'/announcement'">
+          <button type="button" class="btn btn-warning button">
+            <i class="bi bi-arrow-return-left"></i>
+          </button>
+        </router-link>
+        <br />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,32 +29,58 @@ import AnnouncementService from "@/services/faq/AnnouncementService";
 export default {
   data() {
     return {
-      pageIndex: 1, // 현재 페이지
-      totalPages: 1, // 전체 페이지 수
-      searchKeyword: "", // 검색어
-      announcementList: [], // 공지사항 데이터 리스트
+      ano: "",
+      title: "",
+      content: "",
     };
   },
   methods: {
-    async getAnnouncements() {
+    async getDetail(ano) {
       try {
-        const response = await AnnouncementService.getAll(
-          this.searchKeyword,
-          this.pageIndex - 1,
-          10 // 한 페이지에 표시할 데이터 개수
-        );
-        const { results, totalCount } = response.data;
-        this.announcementList = results || [];
-        this.totalPages = Math.ceil(totalCount / 10);
+        let response = await AnnouncementService.get(ano);
+        this.title = response.data.title;
+        this.content = response.data.content;
       } catch (error) {
-        console.error("공지사항 데이터를 가져오는 중 에러 발생:", error);
+        console.error("공지사항 데이터 로드 중 에러:", error);
       }
     },
   },
   mounted() {
-    // 초기화 시 URL 쿼리값을 동기화
-    this.searchKeyword = this.$route.query.search || "";
-    this.getAnnouncements();
+    const ano = this.$route.params.ano;
+    if (ano) {
+      this.getDetail(ano);
+    } else {
+      console.error("URL에 'ano' 파라미터가 누락되었습니다.");
+    }
   },
 };
 </script>
+
+<style>
+/* 공지 전체 */
+.bigbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* 전체 박스 */
+.announce_body_box {
+  width: 70%;
+  border: 2.5px solid black;
+  border-radius: 10px;
+  padding: 15px;
+}
+.title {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
+}
+.content {
+  padding: 5px 5px 5px 10px;
+}
+.button {
+  position: relative;
+  left: 94.5%;
+}
+</style>

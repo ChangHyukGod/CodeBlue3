@@ -8,8 +8,13 @@ const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   );
 };
 
+const get = (ano) => {
+  return axios.get(`${baseURL}/announcement/${ano}`);
+}
+
 const AnnouncementService = {
   getAll,
+  get,
 };
 
 export default AnnouncementService;
