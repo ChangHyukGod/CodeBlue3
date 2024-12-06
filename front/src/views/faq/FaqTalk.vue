@@ -14,6 +14,7 @@
           <br />
           <form class="">
             <div class="title_category_box">
+              <!-- 제목 -->
               <div class="form-floating talk_title">
                 <input
                   type="text"
@@ -21,16 +22,19 @@
                   id="validationDefault01"
                   placeholder="제목"
                   required
+                  v-model="talk.title"
                 />
                 <label for="validationDefault01">제목</label>
               </div>
               <br />
+              <!-- 카테고리 -->
               <div class="form-floating talk_category">
                 <select
                   class="form-select"
                   id="validationDefault04"
                   placeholder="카테고리"
                   required
+                  v-model="talk.category"
                 >
                   <option selected disabled value="">
                     카테고리를 선택하세요
@@ -45,6 +49,7 @@
               </div>
             </div>
             <br />
+            <!-- 내용 -->
             <div class="form-floating talk_content">
               <textarea
                 type="text"
@@ -53,19 +58,22 @@
                 placeholder="내용"
                 required
                 style="height: 250px"
-              />
+                v-model="talk.content"
+              ></textarea>
               <label for="validationDefault02">내용</label>
             </div>
             <br />
+            <!-- 사진 -->
             <div class="talk_picture">
               <input
                 type="file"
                 class="form-control"
                 id="photoUpload"
-                required
+                
               />
             </div>
             <br />
+            <!-- 체크 -->
             <div class="form-check talk_round">
               <input
                 class="form-check-input"
@@ -80,12 +88,12 @@
             </div>
             <br />
             <div class="talk_button">
-              <button class="btn btn-primary" type="submit">제출</button>
+              <button class="btn btn-primary" type="submit" @click="save">제출</button>
               <router-link :to="'/faq'">
-              <button type="button" class="btn btn-warning goto_button">
-                <i class="bi bi-arrow-return-left"></i>
-              </button>
-            </router-link>
+                <button type="button" class="btn btn-warning goto_button">
+                  <i class="bi bi-arrow-return-left"></i>
+                </button>
+              </router-link>
             </div>
           </form>
         </div>
@@ -94,13 +102,32 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
+import TalkService from '@/services/faq/TalkService';
+
+
 export default {
   data() {
-    return {};
+    return {
+      talk:{
+        title: "",
+        content: "",
+        category: "",
+      }
+    };
   },
-  methods: {},
+  methods: {
+    async save(){
+      try {
+        let response = await TalkService.insert(this.talk);
+        console.log(response.data);
+        // this.$router.push("/faq/talk");
+      } catch (error) {
+        console.log("저장 실패",error);
+      }
+    },
+  }
 };
 </script>
 
@@ -160,10 +187,10 @@ export default {
 .talk_button {
   margin-left: 14%;
 }
-.talk_button{
+.talk_button {
   display: flex;
 }
-.goto_button{
+.goto_button {
   margin-left: 1265%;
 }
 .talk_big_title {
@@ -171,5 +198,4 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-
 </style>
