@@ -9,7 +9,12 @@
         id="search-input"
         type="text"
         placeholder="장소를 검색하세요"
-        style="width: 300px; padding: 10px; font-size: 30px"
+        style="
+          width: 300px;
+          padding: 10px;
+          font-size: 30px;
+          border: 3px solid yellow;
+        "
       />
     </div>
   </div>

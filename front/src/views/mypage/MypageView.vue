@@ -1,24 +1,18 @@
 <template>
   <div class="container mt-5">
-    <h1 class="text-center text-warning">My Page</h1>
-
     <!-- 사용자 정보 -->
     <div class="card mb-4">
       <div class="card-header bg-warning text-white">
         <h4>User Profile</h4>
       </div>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item">
-            <strong>Email:</strong> {{ profile.email }}
-          </li>
-          <li class="list-group-item">
-            <strong>Name:</strong> {{ profile.name }}
-          </li>
-          <li class="list-group-item">
-            <strong>Membership:</strong> {{ profile.codeName }}
-          </li>
-        </ul>
+      <div v-for="(data, index) in mypages" :key="index">
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ data.email }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -35,6 +29,19 @@
           aria-selected="true"
         >
           예약
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="coupons-tab"
+          data-bs-toggle="tab"
+          href="#coupons"
+          role="tab"
+          aria-controls="coupons"
+          aria-selected="false"
+        >
+          문의
         </a>
       </li>
       <li class="nav-item">
@@ -71,7 +78,6 @@
           </thead>
           <tbody>
             <tr v-for="(reservation, index) in reservations" :key="index">
-              <td>{{ index + 1 }}</td>
               <td>{{ reservation.date }}</td>
               <td>{{ reservation.details }}</td>
             </tr>
@@ -111,50 +117,40 @@
 </template>
 
 <script>
+import MypageService from "@/services/mypage/MypageService";
+
 export default {
   data() {
     return {
-      profile: {
-        email: "",
-        name: "",
-        codeName: "",
-      },
-      reservations: [],
-      coupons: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 1, //화면에 보일개수
+      searchKeyword: "",
+      mypages: [], // 빈배열(json)
     };
   },
 
   methods: {
-    async getUserProfile() {
+    async getMypage() {
       try {
-        const response = // 사용자 정보 조회
-          (this.profile = response.data);
-        this.getReservations(); // 예약 데이터 조회
-        this.getCoupons(); // 쿠폰 데이터 조회
+        let response = await MypageService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.mypages = results;
+        this.totalCount = totalCount;
       } catch (error) {
-        console.error("Error loading user profile:", error);
+        console.log(error);
       }
-    },
-
-    async getReservations() {
-      // 예약 데이터 조회 (예시 데이터 사용)
-      this.reservations = [
-        { date: "2024-12-01", details: "VIP Movie Ticket" },
-        { date: "2024-12-10", details: "Concert Ticket" },
-      ];
-    },
-
-    async getCoupons() {
-      // 쿠폰 데이터 조회 (예시 데이터 사용)
-      this.coupons = [
-        { name: "Discount Coupon", discount: 20, validUntil: "2024-12-31" },
-        { name: "Bonus Coupon", discount: 10, validUntil: "2024-11-30" },
-      ];
     },
   },
 
   mounted() {
-    this.getUserProfile();
+    this.getMypage();
   },
 };
 </script>
