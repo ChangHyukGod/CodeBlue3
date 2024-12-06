@@ -41,7 +41,7 @@ public class RecommendService {
 //      생성된 tourId를 tour객체에 저장\
         recommend.setTdId(tdId);
 //      URL생성
-        String url = GenerateTdIdUrl(recommend.getTdId());
+        String url = generateRecommendUrl(recommend.getTdId());
         recommend.setImageUrl(url);
 //      URL 업데이트
         recommendMapper.updatetdIdUrl(recommend);
@@ -49,10 +49,10 @@ public class RecommendService {
 
 
     //  generateTourUrl 매서드 정의
-    public String GenerateTdIdUrl(int tdId) {
+    public String generateRecommendUrl(int tdId) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()        // spring 기본주소 : http://localhost:8000
-                .path("/api/recommend/recommend")              // 추가 경로 넣기 : /api/tour/
+                .path("/api/recommend/")              // 추가 경로 넣기 : /api/tour/
                 .path(String.valueOf(tdId))
                 .toUriString();                  // 합치기 : http://localhost:8000/api/tour/xxxxxx
     }
@@ -68,7 +68,7 @@ public class RecommendService {
     //  수정
     public void update(Recommend recommend){
         int tdId = recommend.getTdId();
-        String url = GenerateTdIdUrl(tdId);
+        String url = generateRecommendUrl(tdId);
         recommend.setTdId(tdId);
         recommend.setImageUrl(url);
         recommendMapper.update(recommend);
@@ -78,6 +78,17 @@ public class RecommendService {
     public void delete(int tdId){
         recommendMapper.delete(tdId);
     }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

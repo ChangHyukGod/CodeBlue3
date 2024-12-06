@@ -3,11 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-
-
 // TODO: bootstrap import
-import 'bootstrap/dist/js/bootstrap.bundle'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/js/bootstrap.bundle";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // BootstrapVue3
 import BootstrapVue3 from "bootstrap-vue-3";
@@ -21,4 +19,3 @@ app.use(router);
 app.use(store);
 app.use(BootstrapVue3);
 app.mount("#app");
-

@@ -33,7 +33,7 @@ public class RecommendController {
 
     //    전체 조회
 
-    @GetMapping("/api/recommend/recommend")
+    @GetMapping("/api/recommend")
     public ResponseEntity<?> selectRecommendList(Criteria searchVO) {
         List<?> recommends = recommendService.selectRecommendList(searchVO);
         ResultDto resultDto
@@ -42,16 +42,23 @@ public class RecommendController {
     }
 
 
-    @PostMapping("/api/recommend/recommendadd")
+    //인서트
+
+    @PostMapping("/api/recommend/add")
     public ResponseEntity<?> insert(@RequestParam(defaultValue = "")String tdName,
                                     @RequestParam(defaultValue = "")String loc,
                                     @RequestParam(defaultValue = "")String description,
-                                    @RequestParam(defaultValue = "")String popularity,
                                     @RequestParam(required = false) MultipartFile image) throws Exception {
-        Recommend recommend = new Recommend(tdName, loc, description, popularity, image.getBytes());
+
+
+
+
+        Recommend recommend = new Recommend(tdName, loc, description, image.getBytes());
         recommendService.insert(recommend);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
     //  이미지 다운로드 함수
     @GetMapping("/api/recommend/{tdId}")
@@ -80,26 +87,28 @@ public class RecommendController {
     }
 
 
-    //    수정
-    @PutMapping("/api/recommend/update/{tdId}")
-    public ResponseEntity<?> update(@PathVariable int tdId,
-                                    @RequestParam(defaultValue = "")String tdName,
-                                    @RequestParam(defaultValue = "")String loc,
-                                    @RequestParam(defaultValue = "")String description,
-                                    @RequestParam(defaultValue = "")String popularity,
-                                    @RequestParam MultipartFile image) throws Exception {
-        Recommend recommend = new Recommend(tdId, tdName, loc, description, popularity, image.getBytes());
-        recommendService.update(recommend);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+
 
     //    삭제
-    @DeleteMapping("/api/recommend/deletion/{tourId}")
+    @DeleteMapping("/api/recommend/deletion/{tdId}")
     public ResponseEntity<?> delete(@PathVariable int tdId) {
         recommendService.delete(tdId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+
+    //수정
+    @PutMapping("/api/recommend/update/{tdId}")
+    public ResponseEntity<?> update(@PathVariable int tdId,
+                                    @RequestParam(defaultValue = "")String tdName,
+                                    @RequestParam(defaultValue = "")String loc,
+                                    @RequestParam(defaultValue = "")String description,
+                                    @RequestParam MultipartFile image) throws Exception {
+        Recommend recommend = new Recommend(tdId, tdName, loc, description, image.getBytes());
+        recommendService.update(recommend);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 

@@ -15,38 +15,44 @@
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
-        <b-button variant="outline-dark" class="custom-button">
-          <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
-        </b-button>
-        <b-button variant="outline-dark" class="custom-button" href="/faq/list">
-          <i class="bi bi-receipt-cutoff custom-icon"></i><br />질문 게시판
-        </b-button>
-        <b-button
-          variant="outline-dark"
-          class="custom-button"
-          href="/faq/payment"
+        <router-link :to="'/faq/talk'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
+          </b-button></router-link
         >
-          <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
-        </b-button>
-        <b-button variant="outline-dark" class="custom-button">
-          <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-        </b-button>
-        <b-button
-          variant="outline-dark"
-          class="custom-button"
-          href="/announcement"
+
+        <router-link :to="'/faq/list'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-receipt-cutoff custom-icon"></i><br />질문 게시판
+          </b-button></router-link
         >
-          <i class="bi bi-megaphone custom-icon"></i><br />공지사항
-        </b-button>
+
+        <router-link :to="'/faq/payment'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
+          </b-button>
+        </router-link>
+
+        <router-link :to="'/couponfaq'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
+          </b-button></router-link
+        >
+
+        <router-link :to="'/announcement'"
+          ><b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-megaphone custom-icon"></i><br />공지사항
+          </b-button></router-link
+        >
       </b-button-group>
     </div>
   </div>
   <!-- 검색창 박스 -->
   <div class="search_box">
-    <form class="d-flex search_bar" method="get" action="/faqlogin">
+    <form class="d-flex search_bar" method="get" action="/faq/list">
       <input
         class="form-control me-2 search_text_main"
-        name="searchKeyword"
+        name="search"
         type="search"
         placeholder="궁금한 것을 물어보세요"
         aria-label="Search"
@@ -105,7 +111,6 @@
                   <!-- 질문 -->
                   <p
                     v-for="(text, tIndex) in question.texts"
-
                     :key="`text-${question.id}-${tIndex}`"
                     class="card-body"
                     data-bs-toggle="popover"
@@ -113,71 +118,27 @@
                   >
                     - {{ text.text }}
                   </p>
-                  <!-- @mouseenter="showPopover = true"
-                  @mouseleave="showPopover = false" -->
-
                   <hr />
                   <div v-if="showPopover" class="popover" :style="popoverStyle">
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
-
-                  <b-button variant="primary" class="card-button"
-                    >자세히 보기</b-button
+                  <router-link :to="{ path: 'faq/list', query: { search: question.link } }"
+                    ><b-button variant="danger" class="card-button"
+                      >더 많은 {{question.link}} 질문</b-button
+                    ></router-link
                   >
                 </b-card>
               </div>
             </div>
           </div>
-
         </div>
-        <!-- 모달 -->
-        <!-- <div>
-          <div>
-            <div
-              v-for="modal in modals"
-              :key="modal.id"
-              class="modal fade"
-              :id="modal.id"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      <i :class="modal.icon"></i> {{ modal.title }}
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    {{ modal.body }}
-                  </div>
-                  <a
-                    :href="modal.link.url"
-                    class="btn btn-outline-success"
-                    id="card_button"
-                  >
-                    {{ modal.link.label }}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </form>
   </div>
 </template>
 
 <script>
-
 import * as bootstrap from "bootstrap";
 export default {
   // 팝오버
@@ -196,7 +157,6 @@ export default {
     });
   },
 
-
   data() {
     return {
       cards: [
@@ -208,8 +168,8 @@ export default {
             {
               title: "예약 변경",
               icon: "bi bi-journal-richtext",
+              link: "예약",
               texts: [
-
                 {
                   text: "예약 변경은 출발 3일 전까지 가능합니다.",
                   popbody:
@@ -223,14 +183,13 @@ export default {
                   text: "같은 날짜 다발성 예약은 불가합니다.",
                   popbody: "같은 날짜에 여러 예약은 불가능합니다.",
                 },
-
               ],
             },
             {
               title: "취소 규정",
               icon: "bi bi-clipboard-check",
+              link: "취소",
               texts: [
-
                 {
                   text: "취소는 출발 5일 전까지 가능합니다.",
                   popbody:
@@ -244,14 +203,13 @@ export default {
                   text: "수수료가 부과될 수 있습니다.",
                   popbody: "취소 시 수수료가 부과될 수 있습니다.",
                 },
-
               ],
             },
             {
               title: "예약 확인 방법",
               icon: "bi bi-eye",
+              link: "예약",
               texts: [
-
                 {
                   text: "예약 확인은 이메일로 안내됩니다.",
                   popbody: "이메일을 통해 예약 정보를 확인하세요.",
@@ -265,7 +223,6 @@ export default {
                   text: "문의 시 예약번호를 준비해주세요.",
                   popbody: "고객센터 문의 시 예약번호를 반드시 준비해주세요.",
                 },
-
               ],
             },
           ],
@@ -278,8 +235,8 @@ export default {
             {
               title: "비자 발급",
               icon: "bi bi-flag",
+              link: "비자",
               texts: [
-
                 {
                   text: "비자 발급 조건은 국가별로 다릅니다.",
                   popbody: "각국의 비자 발급 조건을 확인하세요.",
@@ -293,28 +250,26 @@ export default {
                   popbody:
                     "비자 발급에 필요한 서류 목록은 담당 기관에 문의하세요.",
                 },
-
               ],
             },
             {
               title: "여행자 보험",
               icon: "bi bi-shield",
+              link: "보험",
               texts: [
-
                 {
-                  text: "여행자 보험은 필수로 가입하는 것을 권장합니다.",
+                  text: "여행자 보험을 꼭 가입해야 하나요?",
                   popbody:
                     "여행자 보험은 예기치 못한 상황에 대비하기 위해 필수적입니다.",
                 },
                 {
-                  text: "보험료는 여행일정에 따라 달라집니다.",
+                  text: "보험료가 여행 일정에 따라 변할수도 있나요?",
                   popbody: "보험료는 여행 기간 및 목적지에 따라 상이합니다.",
                 },
                 {
-                  text: "보장 내용을 꼭 확인하세요.",
+                  text: "보험의 정확한 내용을 확인하고 싶어요.",
                   popbody: "보장 항목과 제한 사항을 반드시 확인하세요.",
                 },
-
               ],
             },
           ],
@@ -327,8 +282,8 @@ export default {
             {
               title: "결제 수단",
               icon: "bi bi-wallet",
+              link: "결제",
               texts: [
-
                 {
                   text: "어떤 결제 수단을 사용할 수 있나요?",
                   popbody: "지원되는 결제 수단: 카드, 계좌이체, 간편결제 등.",
@@ -342,14 +297,13 @@ export default {
                   popbody:
                     "해외 결제는 지원되며, 환율 변동에 따라 금액이 달라질 수 있습니다.",
                 },
-
               ],
             },
             {
               title: "환불 요청",
               icon: "bi bi-arrow-return-left",
+              link: "환불",
               texts: [
-
                 {
                   text: "환불 요청은 어떻게 하나요?",
                   popbody: "환불 요청은 고객센터나 마이페이지에서 가능합니다.",
@@ -362,7 +316,6 @@ export default {
                   text: "부분 환불은 가능한가요?",
                   popbody: "부분 환불은 결제 수단에 따라 다를 수 있습니다.",
                 },
-
               ],
             },
           ],
@@ -373,9 +326,9 @@ export default {
           icon: "bi bi-person",
           questions: [
             {
-
               title: "비밀번호 재설정",
               icon: "bi bi-shield-lock",
+              link: "계정",
               texts: [
                 {
                   text: "비밀번호를 잊었을 때 어떻게 하나요?",
@@ -394,7 +347,6 @@ export default {
           ],
         },
       ],
-
     };
   },
 };
@@ -403,7 +355,7 @@ export default {
 <style scoped>
 .popover {
   background: white;
-  border: 1px solid #ccc;
+  border: 5px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   width: 200px;
@@ -411,7 +363,7 @@ export default {
   z-index: 1000;
 }
 .popover-title {
-  font-size: 16px;
+  font-size: 25px;
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -438,9 +390,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
+/* 자주 찾는 질문 */
+.body-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 15px;
+}
 /* 버튼 간격 설정 */
 .custom-button-group .btn {
-  margin: 0 20px;
+  margin: 0 10px;
   margin-bottom: 20px;
   width: 150px;
   height: 150px;
@@ -575,8 +533,9 @@ export default {
 }
 /* 카드 버튼 */
 .card-button {
-  align-self: flex-end !important;
-  margin-top: auto !important;
+  background-color: #ffeb33;
+  border: 1px solid black !important;
+  color: black;
 }
 
 .carousel-item {

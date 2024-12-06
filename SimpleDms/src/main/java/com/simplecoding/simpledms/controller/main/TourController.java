@@ -29,7 +29,7 @@ import java.util.Optional;
 public class TourController {
     private final TourService tourService;
 
-//  전체조회
+    //  전체조회
     @GetMapping("/api/tour")
     public ResponseEntity<?> selectTour(Criteria searchVO) {
         List<?> tours = tourService.selectTour(searchVO);
@@ -38,18 +38,26 @@ public class TourController {
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
 
-//  추가, 업로드
+    // 추가, 업로드
     @PostMapping("/api/tour/add")
-    public ResponseEntity<?> insert(@RequestParam(defaultValue = "")String name,
-                                    @RequestParam(defaultValue = "")String location,
-                                    @RequestParam(defaultValue = "")String description,
-                                    @RequestParam(defaultValue = "")String price,
+    public ResponseEntity<?> insert(@RequestParam(defaultValue = "") String name,
+                                    @RequestParam(defaultValue = "") String location,
+                                    @RequestParam(defaultValue = "") String description,
+                                    @RequestParam(defaultValue = "") String price,
                                     @RequestParam(required = false) MultipartFile image) throws Exception {
-        Tour tour = new Tour(name, location, description, price, image.getBytes());
+        byte[] imageData = null;
+        // 이미지가 있으면 byte 배열로 변환
+        if (image != null && !image.isEmpty()) {
+            imageData = image.getBytes();
+        }
+
+        // Tour 객체 생성
+        Tour tour = new Tour(name, location, description, price, imageData);
         tourService.insert(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//  이미지 다운로드 함수
+
+    //  이미지 다운로드 함수
     @GetMapping("/api/tour/{tourId}")
     public ResponseEntity<byte[]> findDownload(@PathVariable int tourId) throws Exception {
 //      상세조회 : 객체받기(첨부파일)
@@ -62,7 +70,7 @@ public class TourController {
         return new ResponseEntity<byte[]>(tour.getTourData(), headers, HttpStatus.OK);
     }
 
-//  상세조회
+    //  상세조회
     @GetMapping("/api/tour/get/{tourId}")
     public ResponseEntity<?> select(@PathVariable int tourId) {
         Optional<Tour> tour = tourService.select(tourId);
@@ -73,20 +81,27 @@ public class TourController {
         return new ResponseEntity<>(tour.get(), HttpStatus.OK);
     }
 
-//    수정
+    // 수정
     @PutMapping("/api/tour/update/{tourId}")
     public ResponseEntity<?> update(@PathVariable int tourId,
-                                    @RequestParam(defaultValue = "")String name,
-                                    @RequestParam(defaultValue = "")String location,
-                                    @RequestParam(defaultValue = "")String description,
-                                    @RequestParam(defaultValue = "")String price,
-                                    @RequestParam MultipartFile image) throws Exception {
-        Tour tour = new Tour(tourId, name, location, description, price, image.getBytes());
+                                    @RequestParam(defaultValue = "") String name,
+                                    @RequestParam(defaultValue = "") String location,
+                                    @RequestParam(defaultValue = "") String description,
+                                    @RequestParam(defaultValue = "") String price,
+                                    @RequestParam(required = false) MultipartFile image) throws Exception {
+        byte[] imageData = null;
+        // 이미지가 있으면 byte 배열로 변환
+        if (image != null && !image.isEmpty()) {
+            imageData = image.getBytes();
+        }
+
+        // Tour 객체 생성 (이미지가 없으면 null 값 처리)
+        Tour tour = new Tour(tourId, name, location, description, price, imageData);
         tourService.update(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    삭제
+    //    삭제
     @DeleteMapping("/api/tour/deletion/{tourId}")
     public ResponseEntity<?> delete(@PathVariable int tourId) {
         tourService.delete(tourId);

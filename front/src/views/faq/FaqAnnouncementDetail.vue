@@ -1,0 +1,83 @@
+<template>
+  <div class="bigbox">
+    <hr />
+    <div class="announce_body_box">
+      <div class="notice_container">
+        <div class="notice_content">
+          <br /><br />
+          <p class="title">{{ title }}</p>
+          <hr />
+          <p class="content">{{ content }}</p>
+        </div>
+        <router-link :to="'/announcement'">
+          <button type="button" class="btn btn-warning button">
+            <i class="bi bi-arrow-return-left"></i>
+          </button>
+        </router-link>
+        <br />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import AnnouncementService from "@/services/faq/AnnouncementService";
+
+export default {
+  data() {
+    return {
+      ano: "",
+      title: "",
+      content: "",
+    };
+  },
+  methods: {
+    async getDetail(ano) {
+      try {
+        let response = await AnnouncementService.get(ano);
+        this.title = response.data.title;
+        this.content = response.data.content;
+      } catch (error) {
+        console.error("공지사항 데이터 로드 중 에러:", error);
+      }
+    },
+  },
+  mounted() {
+    const ano = this.$route.params.ano;
+    if (ano) {
+      this.getDetail(ano);
+    } else {
+      console.error("URL에 'ano' 파라미터가 누락되었습니다.");
+    }
+  },
+};
+</script>
+
+<style>
+/* 공지 전체 */
+.bigbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* 전체 박스 */
+.announce_body_box {
+  width: 70%;
+  border: 2.5px solid black;
+  border-radius: 10px;
+  padding: 15px;
+}
+.title {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
+}
+.content {
+  padding: 5px 5px 5px 10px;
+}
+.button {
+  position: relative;
+  left: 94.5%;
+}
+</style>
