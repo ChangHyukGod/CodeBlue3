@@ -185,6 +185,12 @@ const routes = [
     component: () => import("../views/cart/CartView.vue"),
   },
 
+  {
+    path: "/cart/payment/:cartId",
+    component: () => import("../views/payment/CartPaymentView.vue"),
+  },
+
+
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

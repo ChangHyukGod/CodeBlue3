@@ -30,9 +30,14 @@
         <b-nav-item href="/add-main">추가</b-nav-item>
         <b-nav-item v-if="userRole === 'ROLE_ADMIN'">|</b-nav-item>
         <b-nav-item>|</b-nav-item>
-        <b-nav-item href="/cart">장바구니</b-nav-item>
+        <b-nav-item href="/cart">
+          <i class="bi bi-cart"></i>
+          <span class="badge bg-danger cart-count">{{ cartCount }}</span>
+        </b-nav-item>
         <!-- 메인화면 카드 데이터 추가(임시 위치) -->
-        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin">관리자 페이지</b-nav-item>
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin"
+          >관리자 페이지</b-nav-item
+        >
       </div>
     </b-nav>
   </div>
@@ -97,6 +102,12 @@
 <script>
 import MemberService from "@/services/auth/MemberService";
 export default {
+  data() {
+    return {
+      cartCount: 0,
+    };
+  },
+
   methods: {
     logout() {
       MemberService.logout();
@@ -104,9 +115,32 @@ export default {
       // 공유변수
       this.$store.state.loggedIn = false;
 
-      // 로그인 페이지 강제이동
-      this.$router.push("/login");
+      localStorage.removeItem("cartCount"); // 로컬스토리지에서 cartCount 삭제
+
+      // 로그인 페이지로 이동
+      window.location.href = "/login"; // 페이지 강제 이동 (새로고침 포함) => **라우터로 하면 로그인 페이지로 잘 안 넘어갈 때가 있음**
     },
+  },
+  mounted() {
+    // 로컬스토리지에서 cartCount 값을 가져와 초기화
+    // parseInt로 문자열을 숫자로 변환하고, 값이 없으면 기본값으로 0을 설정
+    this.cartCount = parseInt(localStorage.getItem("cartCount")) || 0;
+
+    // 0.5초마다 로컬스토리지의 cartCount 값을 확인하는 setInterval 설정
+    this.intervalId = setInterval(() => {
+      // 로컬스토리지에서 현재 장바구니 개수를 다시 가져옴
+      const updatedCount = parseInt(localStorage.getItem("cartCount")) || 0;
+
+      // 현재 데이터 (this.cartCount)와 로컬스토리지 값 (updatedCount)을 비교
+      if (this.cartCount !== updatedCount) {
+        // 두 값이 다르면 로컬스토리지 값을 업데이트하여 UI 반영
+        this.cartCount = updatedCount;
+      }
+    }, 200); // 200ms (0.2초) 간격으로 반복 실행
+  },
+  beforeUnmount() {
+    // 이 Vue 컴포넌트가 화면에서 제거될 때, 불필요한 interval을 정리하여 메모리 누수 방지
+    clearInterval(this.intervalId);
   },
 };
 </script>
@@ -178,5 +212,13 @@ export default {
   font-size: 40px;
   color: black;
   margin-right: 18%;
+}
+
+.badge {
+  font-size: 1rem; /* 글자 크기 */
+  padding: 0.4rem; /* 여백 */
+}
+.cart-count {
+  font-size: 0.9rem;
 }
 </style>

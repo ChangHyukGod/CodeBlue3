@@ -16,23 +16,25 @@
         <!-- 정보 섹션 -->
         <div class="cart-item-details">
           <h2 class="cart-item-title">{{ data.tourName }}</h2>
-          <p class="cart-item-room">🛏 {{ data.roomName }}</p>
+          <p class="cart-item-room">{{ data.roomName }}</p>
           <p class="cart-item-duration">
-            📅 숙박 일수 : {{ data.stayDuration }}박
+            숙박 일수 : {{ data.stayDuration }}박
           </p>
           <p class="cart-item-checkin">
-            🕒 체크인 : {{ data.checkInDate }} {{ data.checkInTime }}
+            체크인 : {{ data.checkInDate }} {{ data.checkInTime }}
           </p>
           <p class="cart-item-checkin">
-            🕒 체크아웃 : {{ data.checkOutDate }} {{ data.checkOutTime }}
+            체크아웃 : {{ data.checkOutDate }} {{ data.checkOutTime }}
           </p>
 
-          <p class="cart-item-capacity">
-            👥 인원(기준) : {{ data.capacity }}명
+          <p class="cart-item-capacity">인원(기준) : {{ data.capacity }}명</p>
+          <p class="cart-item-price" style="font-weight: 900; color: #e74c3c">
+            총 결제 금액 : {{ data.totalPrice }}
           </p>
-          <p class="cart-item-price">💰 총 결제 금액 : {{ data.totalPrice }}</p>
           <div class="cart-item-buttons">
-            <button class="cart-item-buy">예약하기</button>
+            <button class="cart-item-buy" @click="makeReservation(data)">
+              결제하기
+            </button>
             <button
               class="cart-item-remove"
               @click="deleteFromCartId(data.cartId)"
@@ -60,6 +62,20 @@ export default {
       cart: [],
 
       cartCount: 0, // 장바구니 개수 세기 변수
+
+      reservation: {
+        totalPrice: "", // 총 금액(1박 금액 * 숙박 일수)
+        userEmail: "", // 유저 이메일
+        stayDuration: 0, // 숙박 일수
+        tourFileUrl: "", // 숙소 이미지
+        tourName: "", // 숙소 명
+        roomName: "", // 방 이름
+        capacity: 0, // 수용 기준 인원
+        checkInDate: "", // 체크인 날짜
+        checkOutDate: "", // 체크아웃 날짜
+        checkInTime: "", // 체크인 시간
+        checkOutTime: "", // 체크아웃 날짜
+      },
     };
   },
   methods: {
@@ -107,9 +123,34 @@ export default {
         // 서버에서 삭제 요청
         const response = await CartService.countCartItems(userEmail);
         this.cartCount = response.data;
+        localStorage.setItem("cartCount", this.cartCount.toString());
+        // **객체나 배열 같은 복잡한 데이터는 JSON.stringify()를 사용하고, 숫자나 문자열 같은 단순한 데이터는 toString()을 사용해도 됨**
       } catch (error) {
         console.error("Error clearing cart:", error);
       }
+    },
+
+    makeReservation(data) {
+      this.reservation.totalPrice = data.totalPrice;
+      this.reservation.userEmail = data.userEmail;
+      this.reservation.stayDuration = data.stayDuration;
+      this.reservation.tourFileUrl = data.tourFileUrl;
+      this.reservation.tourName = data.tourName;
+      this.reservation.roomName = data.roomName;
+      this.reservation.capacity = data.capacity;
+      this.reservation.checkInTime = data.checkInTime;
+      this.reservation.checkOutTime = data.checkOutTime;
+      this.reservation.checkInDate = data.checkInDate;
+      this.reservation.checkOutDate = data.checkOutDate;
+
+      // 각 방에 대해 독립적인 예약할 정보 저장
+      localStorage.setItem(
+        `reservation_${data.cartId}`,
+        JSON.stringify(this.reservation)
+      );
+
+      // 예약 페이지로 이동
+      this.$router.push(`/cart/payment/${data.cartId}`);
     },
   },
   mounted() {
@@ -129,16 +170,38 @@ export default {
 
 <style scoped>
 .cart-container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cart-title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 20px;
-  font-weight: bold;
+  color: #333;
+}
+
+.clear-all-button {
+  padding: 12px 24px; /* 적당히 큰 버튼 */
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 25px; /* 둥글게 */
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: auto;
+  margin: 0 auto 20px;
+  display: block;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.clear-all-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05); /* 호버 시 크기 약간 증가 */
 }
 
 .cart-items {
@@ -149,127 +212,93 @@ export default {
 
 .cart-item {
   display: flex;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cart-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 15px;
+  border-radius: 12px; /* 둥근 모서리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cart-item-image-container {
-  flex: 1;
-  display: flex;
-  align-items: stretch; /* 이미지가 카드의 전체 높이를 채우도록 설정 */
-  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
+  width: 70%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .cart-item-image {
-  width: 100%; /* 너비를 컨테이너에 맞게 설정 */
-  height: 100%; /* 높이를 컨테이너에 딱 맞게 설정 */
-  object-fit: cover; /* 비율을 유지하면서 이미지를 꽉 채움 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cart-item-details {
-  flex: 1;
-  padding: 15px;
+  width: 45%;
+  padding-left: 15px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: auto;
 }
 
 .cart-item-title {
   font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 10px;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .cart-item-room,
 .cart-item-duration,
 .cart-item-checkin,
-.cart-item-capacity,
+.cart-item-checkout,
 .cart-item-price {
-  margin: 5px 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #666;
+  margin: 5px 0;
 }
 
-.cart-item-price {
-  font-weight: bold;
-  color: #000;
-}
 .cart-item-buttons {
-  display: flex; /* 가로로 배치 */
-  gap: 10px; /* 버튼 사이 간격 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-  margin-top: 10px; /* 버튼들 위에 여백 */
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: flex-start;
 }
 
 .cart-item-buy,
 .cart-item-remove {
-  padding: 10px 20px; /* 버튼 크기 */
-  font-size: 1rem; /* 글씨 크기 */
-  border-radius: 5px; /* 버튼 둥근 모서리 */
-  cursor: pointer; /* 마우스 커서 변경 */
-  transition: background-color 0.3s ease; /* 버튼 배경 색상 변화 */
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 25px; /* 둥글고 귀여운 버튼 */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
 }
 
 .cart-item-buy {
-  background-color: #4caf50; /* 예약하기 버튼 색상 */
+  background-color: #2ecc71;
   color: white;
-  border: none;
 }
 
 .cart-item-buy:hover {
-  background-color: #45a049; /* 호버 시 색상 변화 */
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
 .cart-item-remove {
-  background-color: #ff4d4d; /* 삭제 버튼 색상 */
+  background-color: #e74c3c;
   color: white;
-  border: none;
 }
 
 .cart-item-remove:hover {
-  background-color: #ff1a1a; /* 호버 시 색상 변화 */
+  background-color: #c0392b;
+  transform: scale(1.05);
 }
 
 .cart-empty {
   text-align: center;
-  font-size: 1.2rem;
   color: #999;
-}
-
-/* 전체 삭제 버튼 스타일 */
-.clear-all-button {
-  padding: 15px 30px; /* 버튼 크기 조정 */
-  font-size: 15px; /* 글씨 크기 */
-  font-weight: bold; /* 글씨 두껍게 */
-  color: white; /* 글씨 색상 */
-  background-color: #f44336; /* 버튼 배경 빨간색 */
-  border: none; /* 테두리 없애기 */
-  border-radius: 30px; /* 버튼 둥근 모서리 */
-  cursor: pointer; /* 마우스 커서 변경 */
-  transition: all 0.3s ease; /* 부드러운 변환 효과 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
-  width: 100%; /* 버튼 넓이를 100%로 */
-  max-width: 150px; /* 최대 너비 제한 */
-  margin: 20px auto; /* 버튼을 화면 중앙에 정렬 */
-}
-
-.clear-all-button:hover {
-  background-color: #d32f2f; /* 호버 시 배경색 진해지기 */
-  transform: translateY(-2px); /* 버튼 살짝 위로 뜨는 효과 */
-}
-
-.clear-all-button:active {
-  background-color: #c62828; /* 클릭 시 더 진한 빨간색 */
-  transform: translateY(2px); /* 클릭할 때 눌리는 효과 */
+  font-size: 1.2rem;
 }
 </style>

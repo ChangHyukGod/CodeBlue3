@@ -512,8 +512,17 @@ export default {
       this.cartItem.checkOutTime = room.checkOut;
 
       try {
+        // 서버에 장바구니 추가 요청
         const response = await CartService.addToCart(this.cartItem);
         console.log(response.data);
+
+        // 로컬스토리지에서 기존 장바구니 개수 가져오기
+        let cartCount = parseInt(localStorage.getItem("cartCount")) || 0;
+
+        // 장바구니 개수 증가
+        cartCount++;
+        localStorage.setItem("cartCount", cartCount);
+
         // confirm 대화상자 사용
         const userConfirmed = confirm(
           "장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?"
