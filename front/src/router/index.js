@@ -73,11 +73,7 @@ const routes = [
   },
 
 
-  {
-    path: "/couponpay",
-    component: () => import("../views/coupon/CouponPay.vue"),
-  },
-
+ 
 
   {
     path: "/mypage",

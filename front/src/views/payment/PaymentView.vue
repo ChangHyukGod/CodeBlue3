@@ -199,7 +199,7 @@ export default {
       this.reservation.originalPrice = parseInt(this.reservation.totalPrice.replace(/,/g, ""), 10);
     }
 
-    const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
+    const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2 도균 쿠폰 데이터베이스에 벨류값이 20이라 할인율 20퍼임)
     const discountedPrice = this.reservation.originalPrice * (1 - discountRate);
     this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
 
