@@ -5,16 +5,19 @@
       <div class="card-header bg-warning text-white">
         <h4>User Profile</h4>
       </div>
-      <div v-for="(data, index) in mypages" :key="index">
+
         <div class="card-body">
           <ul class="list-group">
             <li class="list-group-item">
-              <strong>Email:</strong> {{ data.email }}
+              <strong>Email:</strong> {{ email }}
             </li>
           </ul>
         </div>
       </div>
-    </div>
+
+      
+  
+
 
     <!-- 탭 네비게이션 -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -78,7 +81,7 @@
           </thead>
           <tbody>
             <tr v-for="(reservation, index) in reservations" :key="index">
-              <td>{{ reservation.date }}</td>
+              <td>{{ reservation.reviewId }}</td>
               <td>{{ reservation.details }}</td>
             </tr>
           </tbody>
@@ -119,9 +122,11 @@
 <script>
 import MypageService from "@/services/mypage/MypageService";
 
+
 export default {
   data() {
     return {
+      email:null ,
       pageIndex: 1, //현재페이지번호
       totalCount: 0, // 전체개수
       recordCountPerPage: 1, //화면에 보일개수
@@ -129,6 +134,10 @@ export default {
       mypages: [], // 빈배열(json)
     };
   },
+
+
+
+  
 
   methods: {
     async getMypage() {
@@ -151,6 +160,7 @@ export default {
 
   mounted() {
     this.getMypage();
+    this.email = localStorage.getItem("userEmail");
   },
 };
 </script>

@@ -66,7 +66,7 @@
             @click="goToDetailPage(data)"
           />
           <div class="card-body custom-card-body">
-            <h5 class="card-title text-warning">{{ data.tdName }}</h5>
+            <h5 class="card-title" style="color: black; font-weight: 1000">{{ data.tdName }}</h5>
             <p class="card-text text-light">
               {{ data.loc }}
               <br />
@@ -172,36 +172,35 @@ export default {
 </script>
 
 <style>
+
 /* 카드 디자인 */
 .custom-card {
-  /* border: 5px solid #0288d1; 노란색 테두리 */
-  background-color: #000; /* 검은색 배경 */
+   border: 3px solid #0288d1; 
+  background-color:  #0288d1; 
   color: #0288d1; /* 텍스트 기본 색 노란색 */
   border-radius: 10px;
   transition: all 0.3s ease; /* 부드러운 전환 효과 */
   cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
 }
 
+
 .custom-card:hover {
   transform: scale(1.05); /* 크기 확대 */
   box-shadow: 0 4px 8px rgba(7, 94, 255, 0.6); /* 입체적인 그림자 추가 */
-  border-color: #0288d1; /* 호버 시 테두리 색 약간 변경 */
+
 }
 
 .custom-card-img {
   height: 200px;
   object-fit: cover;
-  border-bottom: 2px solid #0288d1; /* 이미지 아래에 노란 테두리 */
+  
 }
 
 .custom-card-body {
   padding: 15px;
 }
 
-/* 텍스트 색상 조정 */
-.card-text {
-  color: #ffffff; /* 본문 텍스트 흰색 */
-}
+
 
 /* 수정 버튼 */
 .btn-dark {
@@ -259,7 +258,7 @@ export default {
 .custom-pagination .page-link {
   background-color: white;
   color: black;
-  border-color: #0288d1;
+  border-color: white
 }
 
 .custom-pagination .page-item.active .page-link {
@@ -269,9 +268,10 @@ export default {
 }
 
 #carouselExampleAutoplaying {
-  /* border: 1px solid #0288d1; 노란색 테두리 */
+ 
   border-radius: 10px; /* 둥근 모서리 */
-  padding: 10px; /* 여백 추가 */
+ 
   margin-bottom: 20px;
+  border: 3px solid #0288d1; /* 테두리 색상 추가 */
 }
 </style>

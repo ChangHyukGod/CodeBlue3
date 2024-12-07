@@ -1,14 +1,6 @@
 <template>
   <div class="container mt-5">
-    <!-- 상단 배너 -->
-    <div class="banner text-center mb-4">
-      <img
-        :src="require('@/assets/images/coupon3.png')"
-        alt="쿠폰 배너"
-        class="img-fluid rounded shadow"
-      />
-    </div>
-
+ 
     <!-- 대표 호텔 쿠폰 섹션 -->
     <div class="row justify-content-center my-4">
       <div class="col-md-6">
