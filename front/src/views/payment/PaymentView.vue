@@ -78,7 +78,7 @@
           :key="coupon.id" 
           class="list-group-item d-flex justify-content-between align-items-center"
         >
-          <span>{{ coupon.name }} ({{ coupon.value }}%)</span>
+          <span>{{ coupon.name }} </span>
           <button class="btn btn-primary btn-sm" @click="selectCoupon(coupon)">
             선택
           </button>
@@ -87,8 +87,8 @@
     </div>
 
     <!-- 선택된 쿠폰 표시 -->
-    <div v-if="selectedCoupon" class="mt-3 alert alert-success">
-      선택된 쿠폰: {{ selectedCoupon.name }} ({{ selectedCoupon.value }}%)
+    <div v-if="selectedCoupon" class="mt-3 alert alert-primary">
+      선택된 쿠폰: {{ selectedCoupon.name }}
     </div>
   
 
@@ -117,7 +117,7 @@
 <script>
 
 import PortOne from "@portone/browser-sdk/v2";
-import CouponService from "@/services/coupon/CounponService";
+import CouponService from "@/services/coupon/CounponService";  //쿠폰 조회 서비스
 
 
 
@@ -126,18 +126,14 @@ export default {
     return {
       reservation: {}, // 예약 정보 저장 객체
       selectedPaymentMethod: "", // 선택된 결제 수단
-
       showCouponForm: false, // 쿠폰 폼 표시 여부
-      coupons: [],
-      pageIndex: 1, //현재페이지번호
-        totalCount: 0, // 전체개수
-        recordCountPerPage: 1, //화면에 보일개수
+      pageIndex: 1, // 쿠폰조회
+        totalCount: 0, // 쿠폰조회
+        recordCountPerPage: 1, // 쿠폰조회
         searchKeyword: "",
       selectedCoupon: null, // 선택된 쿠폰
-      value: 20.0,
-      name: "",
-      id:"",
-
+    
+  
 
 
       main: {
@@ -166,7 +162,9 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
-    this.getCoupon();
+
+
+    this.getCoupon(); //쿠폰조회 마운티드
   },
   methods: {
     async processPayment() {
@@ -187,7 +185,7 @@ export default {
     },
 
     toggleCouponForm() {
-      this.showCouponForm = !this.showCouponForm;
+      this.showCouponForm = !this.showCouponForm; //쿠폰 폼
     },
 
     selectCoupon(coupon) {
@@ -215,7 +213,7 @@ export default {
 
 
 
-
+  //쿠폰 전체조회
     async getCoupon() {
         try {
           let response = await CouponService.getAll(
