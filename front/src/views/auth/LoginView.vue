@@ -231,6 +231,16 @@ export default {
     async login() {
       try {
         let response = await MemberService.login(this.user);
+
+
+
+        const { email, accessToken, tokenType } = response.data; // 서버에서 받은 데이터 구조 분해
+
+// 이메일과 토큰을 Local Storage에 저장
+localStorage.setItem("userEmail", email);
+localStorage.setItem("authToken", `${tokenType} ${accessToken}`);
+
+
         this.$store.state.loggedIn = true;
         localStorage.setItem("user", JSON.stringify(response.data));
 
