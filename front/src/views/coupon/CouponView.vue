@@ -112,27 +112,7 @@ export default {
         alert("쿠폰 발급 실패");
       }
     },
-    // async getWinterCoupon() {
-    //   try {
-    //     const response = await fetch("/api/coupon/claim", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ couponType: "winter-season" }),
-    //     });
 
-    //     const result = await response.json();
-    //     if (result.success) {
-    //       alert("겨울 시즌 쿠폰이 발급되었습니다!");
-    //     } else {
-    //       alert(`오류 발생: ${result.message}`);
-    //     }
-    //   } catch (error) {
-    //     console.error("쿠폰 발급 중 오류 발생:", error);
-    //     alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
-    //   }
-    // },
   },
 };
 </script>

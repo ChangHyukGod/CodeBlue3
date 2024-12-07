@@ -63,26 +63,26 @@
     </ul>
 
     <div class="tab-content mt-3" id="myTabContent">
-      <!-- 예약 탭 -->
+      <!-- 리뷰 탭 -->
       <div
         class="tab-pane fade show active"
         id="reservations"
         role="tabpanel"
         aria-labelledby="reservations-tab"
       >
-        <h5 class="text-warning">My Reservations</h5>
+        <h5 class="text-warning">나의 리뷰</h5>
         <table class="table table-striped">
           <thead class="bg-warning text-white">
             <tr>
               <th>#</th>
-              <th>Reservation Date</th>
-              <th>Details</th>
+              <th>리뷰 날짜</th>
+              <th>리뷰</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(reservation, index) in reservations" :key="index">
-              <td>{{ reservation.reviewId }}</td>
-              <td>{{ reservation.details }}</td>
+            <tr v-for="(review, index) in review" :key="index">
+              <td>{{ review.title }}</td>
+              <td>{{ review.authorEmail }}</td>
             </tr>
           </tbody>
         </table>

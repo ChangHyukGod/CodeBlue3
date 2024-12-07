@@ -71,6 +71,14 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
+
+
+  {
+    path: "/couponpay",
+    component: () => import("../views/coupon/CouponPay.vue"),
+  },
+
+
   {
     path: "/mypage",
     component: () => import("../views/mypage/MypageView.vue"),
