@@ -36,29 +36,68 @@
         </div>
       </div>
     </div>
-
-    <!-- 결제 수단 섹션 추가 -->
     <div class="payment-method">
-      <h3>결제 수단</h3>
-      <div class="payment-options">
-        <label>
-          <input type="radio" name="paymentMethod" value="kakaoPay" />
-          카카오페이
-        </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="tossPay" />
-          토스페이
-        </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="naverPay" />
-          네이버페이
-        </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="phonePay" />
-          휴대폰
-        </label>
-      </div>
+    <h3>결제 수단</h3>
+    <div class="payment-options">
+      <!-- 카카오페이 -->
+      <label>
+        <input type="radio" name="paymentMethod" value="kakaoPay" />
+        카카오페이
+      </label>
+      <!-- 토스페이 -->
+      <label>
+        <input type="radio" name="paymentMethod" value="tossPay" />
+        토스페이
+      </label>
+      <!-- 네이버페이 -->
+      <label>
+        <input type="radio" name="paymentMethod" value="naverPay" />
+        네이버페이
+      </label>
+      <!-- 휴대폰 -->
+      <label>
+        <input type="radio" name="paymentMethod" value="phonePay" />
+        휴대폰
+      </label>
     </div>
+
+  <!-- 쿠폰등록하기 버튼 -->
+<div class="mt-3">
+  <button class="btn btn-primary" @click="toggleCouponForm">
+    쿠폰등록하기
+  </button>
+</div>
+
+
+ <!-- 쿠폰 선택 폼 -->
+ <div v-if="showCouponForm" class="mt-3 p-3 bg-light border rounded">
+      <h5>쿠폰 선택</h5>
+      <ul class="list-group">
+        <li 
+          v-for="coupon in coupons" 
+          :key="coupon.id" 
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span>{{ coupon.name }} </span>
+          <button class="btn btn-primary btn-sm" @click="selectCoupon(coupon)">
+            선택
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 선택된 쿠폰 표시 -->
+    <div v-if="selectedCoupon" class="mt-3 alert alert-primary">
+      선택된 쿠폰: {{ selectedCoupon.name }}
+    </div>
+  
+
+
+
+
+
+
+  </div>
 
     <div class="payment-section">
       <button class="payment-button" @click="processPayment">
@@ -78,6 +117,7 @@
 <script>
 
 import PortOne from "@portone/browser-sdk/v2";
+import CouponService from "@/services/coupon/CounponService";  //쿠폰 조회 서비스
 
 
 
@@ -86,6 +126,16 @@ export default {
     return {
       reservation: {}, // 예약 정보 저장 객체
       selectedPaymentMethod: "", // 선택된 결제 수단
+      showCouponForm: false, // 쿠폰 폼 표시 여부
+      pageIndex: 1, // 쿠폰조회
+        totalCount: 0, // 쿠폰조회
+        recordCountPerPage: 1, // 쿠폰조회
+        searchKeyword: "",
+      selectedCoupon: null, // 선택된 쿠폰
+    
+  
+
+
       main: {
         channelKey: "channel-key-79ccff33-9c28-4395-854d-a2c186f8d461",
         payMethod: "EASY_PAY",
@@ -95,6 +145,7 @@ export default {
         storeId: "store-37adc342-491c-4a84-ae08-08fe128442bb",
         paymentId: "758771037252287",
         currency:"KRW",
+      
       },
     };
   },
@@ -111,6 +162,9 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
+
+
+    this.getCoupon(); //쿠폰조회 마운티드
   },
   methods: {
     async processPayment() {
@@ -129,7 +183,67 @@ export default {
       // 이전 페이지로 이동
       this.$router.go(-1);
     },
+
+    toggleCouponForm() {
+      this.showCouponForm = !this.showCouponForm; //쿠폰 폼
+    },
+
+    selectCoupon(coupon) {
+    // 선택된 쿠폰 저장
+    this.selectedCoupon = coupon;
+
+    // 원래 금액에서 할인 적용
+    if (this.reservation.originalPrice === undefined) {
+      this.reservation.originalPrice = parseInt(this.reservation.totalPrice.replace(/,/g, ""), 10);
+    }
+
+    const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2 도균 쿠폰 데이터베이스에 벨류값이 20이라 할인율 20퍼임)
+    const discountedPrice = this.reservation.originalPrice * (1 - discountRate);
+    this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
+
+    this.showCouponForm = false; // 폼 닫기
+    console.log("선택된 쿠폰:", coupon);
+    console.log("할인된 금액:", discountedPrice);
   },
+
+
+
+
+
+
+
+
+  //쿠폰 전체조회
+    async getCoupon() {
+        try {
+          let response = await CouponService.getAll(
+            this.searchKeyword,
+            this.pageIndex - 1,
+            this.recordCountPerPage
+          );
+          // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+          const { results, totalCount } = response.data;
+          console.log(response.data); // 디버깅
+          this.coupons = results;
+          this.totalCount = totalCount;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+
+
+
+
+
+
+  },
+
+
+
+
+
+
 };
 </script>
 
