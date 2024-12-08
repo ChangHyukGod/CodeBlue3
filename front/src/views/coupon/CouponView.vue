@@ -1,14 +1,6 @@
 <template>
   <div class="container mt-5">
-    <!-- 상단 배너 -->
-    <div class="banner text-center mb-4">
-      <img
-        :src="require('@/assets/images/coupon3.png')"
-        alt="쿠폰 배너"
-        class="img-fluid rounded shadow"
-      />
-    </div>
-
+ 
     <!-- 대표 호텔 쿠폰 섹션 -->
     <div class="row justify-content-center my-4">
       <div class="col-md-6">
@@ -120,27 +112,7 @@ export default {
         alert("쿠폰 발급 실패");
       }
     },
-    // async getWinterCoupon() {
-    //   try {
-    //     const response = await fetch("/api/coupon/claim", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ couponType: "winter-season" }),
-    //     });
 
-    //     const result = await response.json();
-    //     if (result.success) {
-    //       alert("겨울 시즌 쿠폰이 발급되었습니다!");
-    //     } else {
-    //       alert(`오류 발생: ${result.message}`);
-    //     }
-    //   } catch (error) {
-    //     console.error("쿠폰 발급 중 오류 발생:", error);
-    //     alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
-    //   }
-    // },
   },
 };
 </script>
