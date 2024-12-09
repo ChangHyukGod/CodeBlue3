@@ -21,39 +21,39 @@ import java.util.Optional;
  */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/announcement")
 public class AnnounceController {
 
     private final AnnounceService announceService;
 
-    @GetMapping("/api/announcement")
+    @GetMapping
     public ResponseEntity<?> selectAnouncement(Criteria searchVO) {
         List<?> announces = announceService.selectAnoList(searchVO);
         ResultDto resultDto = new ResultDto(announces, searchVO.getTotalItems());
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
 
-    @PostMapping("/api/announcement")
+    @PostMapping
     public ResponseEntity<?> insertAnouncement(@RequestBody Announce announce) {
         announceService.insertAno(announce);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/api/announcement/{ano}")
+    @GetMapping("/{ano}")
     public ResponseEntity<?> selectAno(@PathVariable int ano) {
-        Optional<Announce> announce=announceService.selectAnoById(ano);
-        if (announce.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(announce.get(), HttpStatus.OK);
+        Optional<Announce> announce = announceService.selectAnoById(ano);
+        return announce.isEmpty() ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(announce.get(), HttpStatus.OK);
     }
 
-    @PutMapping("/api/announcement")
+    @PutMapping("/fix/{ano}")
     public ResponseEntity<?> updateAnouncement(@PathVariable int ano, @RequestBody Announce announce) {
         announceService.updateAno(announce);
         return new ResponseEntity<>(announce, HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/announcement/{ano}")
+    @DeleteMapping("/fix/{ano}")
     public ResponseEntity<?> deleteAno(@PathVariable int ano) {
         announceService.deleteAno(ano);
         return new ResponseEntity<>(HttpStatus.OK);

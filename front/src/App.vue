@@ -1,13 +1,16 @@
 <template>
-  <!-- 머리말 : HeaderCom -->
-  <HeaderCom />
+  <div>
+    <!-- 머리말 : HeaderCom -->
+    <HeaderCom />
 
-  <!-- 본문 -->
-  <div class="container mt-3">
-    <router-view />
+    <!-- 본문 -->
+    <div class="container mt-3">
+      <router-view />
+    </div>
+
+    <!-- CartView 페이지에서만 FooterCom을 숨기기 위한 조건부 렌더링 -->
+    <FooterCom v-if="showFooter" />
   </div>
-
-  <FooterCom />
 </template>
 
 <script>
@@ -17,6 +20,14 @@ export default {
   components: {
     HeaderCom,
     FooterCom,
+  },
+  computed: {
+    // 현재 경로가 '/cart' 또는 '/TotalPayment'와 일치하면 Footer를 숨기기
+    showFooter() {
+      return (
+        this.$route.path !== "/cart" && this.$route.path !== "/TotalPayment"
+      ); // Cart와 TotalPayment 페이지에서 footer 숨기기
+    },
   },
 };
 </script>

@@ -18,6 +18,8 @@ const insertForm = (data) => {
     formData.append("location", data.location);
     formData.append("description", data.description);
     formData.append("price", data.price);
+    formData.append("view", data.view);
+    formData.append("category", data.category);
     
     // 이미지가 있을 경우만 추가
     if (data.image) {

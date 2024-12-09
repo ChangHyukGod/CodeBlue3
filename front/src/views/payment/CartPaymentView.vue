@@ -13,11 +13,11 @@
 
       <div class="details-container">
         <h3 style="font-weight: 900">{{ reservation.tourName }}</h3>
-        <p class="room-name" style="font-weight: 900">
+        <p class="room-name">
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
-        
+
         <div class="dates">
           <p>
             체크인 : {{ reservation.checkInDate }} {{ reservation.checkInTime }}
@@ -29,7 +29,7 @@
         </div>
 
         <div class="pricing">
-          <p>숙박 일수 : {{ reservation.stayDuration }}일</p>
+          <p>숙박 일수 : {{ reservation.stayDuration }}박</p>
           <p class="total-price">
             총 결제 금액 : {{ reservation.totalPrice }}원
           </p>
@@ -41,38 +41,98 @@
     <div class="payment-method">
       <h3>결제 수단</h3>
       <div class="payment-options">
-        <label>
-          <input type="radio" name="paymentMethod" value="kakaoPay" />
-          카카오페이
+        <!-- 카카오페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="kakaoPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img
+            src="@/assets/images/PaymentMethod/ㅋㅋㅇㅍㅇ 아이콘.png"
+            alt="카카오페이"
+          />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="tossPay" />
-          토스페이
+        <!-- 토스페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="tossPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img
+            src="@/assets/images/PaymentMethod/ㅌㅅ 아이콘.png"
+            alt="토스페이"
+          />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="naverPay" />
-          네이버페이
+        <!-- 네이버페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="naverPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img
+            src="@/assets/images/PaymentMethod/ㄴㅇㅂㅍㅇ 아이컨.png"
+            alt="네이버페이"
+          />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="phonePay" />
-          휴대폰
+        <!-- 휴대폰 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="phonePay"
+            v-model="selectedPaymentMethod"
+          />
+          <img
+            src="@/assets/images/PaymentMethod/ㅎㄷㅍ 아이콘.png"
+            alt="휴대폰"
+          />
         </label>
       </div>
 
-      
+      <!-- 쿠폰등록하기 버튼 -->
+      <div class="mt-3">
+        <button class="btn btn-warning" @click="toggleCouponForm">
+          쿠폰등록하기
+        </button>
+      </div>
 
+      <!-- 쿠폰 선택 폼 -->
+      <div v-if="showCouponForm" class="mt-3 p-3 bg-light border rounded">
+        <h5>쿠폰 선택</h5>
+        <ul class="list-group">
+          <li
+            v-for="coupon in coupons"
+            :key="coupon.id"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span>{{ coupon.name }} ({{ coupon.value }}%)</span>
+            <button
+              class="btn btn-primary btn-sm"
+              @click="selectCoupon(coupon)"
+            >
+              선택
+            </button>
+          </li>
+        </ul>
+      </div>
 
+      <!-- 선택된 쿠폰 표시 -->
+      <div v-if="selectedCoupon" class="mt-3 alert alert-success">
+        선택된 쿠폰: {{ selectedCoupon.name }} ({{ selectedCoupon.value }}%)
+      </div>
     </div>
 
     <div class="payment-section">
-      <button class="payment-button" @click="processPayment">
+      <button class="payment-button primary-button" @click="processPayment">
         {{ reservation.totalPrice }}원 결제하기
       </button>
-      <button
-        class="payment-button"
-        @click="returnPage"
-        style="margin-left: 10px; width: 150px"
-      >
+      <button class="payment-button secondary-button" @click="returnPage">
         뒤로가기
       </button>
     </div>
@@ -80,11 +140,24 @@
 </template>
 
 <script>
+import CouponService from "@/services/coupon/CounponService";
 export default {
   data() {
     return {
       reservation: {}, // 예약 정보 저장 객체
+
       selectedPaymentMethod: "", // 선택된 결제 수단
+
+      showCouponForm: false, // 쿠폰 폼 표시 여부
+      coupons: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 1, //화면에 보일개수
+      searchKeyword: "",
+      selectedCoupon: null, // 선택된 쿠폰
+      value: 20.0,
+      name: "",
+      id: "",
     };
   },
   mounted() {
@@ -100,16 +173,62 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
+    this.getCoupon();
   },
   methods: {
     processPayment() {
-      // alert("결제 수단을 선택해주세요.");
-      // return;
+      if (!this.selectedPaymentMethod) {
+        alert("결제 수단을 선택해주세요."); // 결제 수단 미선택 시 경고
+        return;
+      }
     },
 
     returnPage() {
       // 이전 페이지로 이동
       this.$router.go(-1);
+    },
+
+    toggleCouponForm() {
+      this.showCouponForm = !this.showCouponForm;
+    },
+
+    selectCoupon(coupon) {
+      // 선택된 쿠폰 저장
+      this.selectedCoupon = coupon;
+
+      // 원래 금액에서 할인 적용
+      if (this.reservation.originalPrice === undefined) {
+        this.reservation.originalPrice = parseInt(
+          this.reservation.totalPrice.replace(/,/g, ""),
+          10
+        );
+      }
+
+      const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
+      const discountedPrice =
+        this.reservation.originalPrice * (1 - discountRate);
+      this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
+
+      this.showCouponForm = false; // 폼 닫기
+      console.log("선택된 쿠폰:", coupon);
+      console.log("할인된 금액:", discountedPrice);
+    },
+
+    async getCoupon() {
+      try {
+        let response = await CouponService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.coupons = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -121,7 +240,7 @@ export default {
   font-family: Arial, sans-serif;
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center; /* 모든 텍스트를 가운데 정렬 */
+  text-align: center;
 }
 
 h2 {
@@ -130,20 +249,22 @@ h2 {
 
 .reservation-details {
   display: flex;
-  justify-content: center; /* 이미지와 예약 정보를 가로로 가운데 정렬 */
-  align-items: flex-start; /* 세로로 상단 정렬 */
-  gap: 10px; /* 간격을 10px로 줄였습니다 */
-  margin-bottom: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: left;
 }
 
 .image-container {
   flex: 1;
-  max-width: 300px; /* 이미지 최대 너비 설정 */
-  text-align: center; /* 이미지 가운데 정렬 */
+  max-width: 300px;
+  text-align: center;
 }
 
 .tour-image {
-  width: 450px;
+  width: 300px;
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
@@ -151,7 +272,7 @@ h2 {
 
 .details-container {
   flex: 2;
-  max-width: 600px;
+  max-width: 300px;
 }
 
 h3 {
@@ -159,19 +280,8 @@ h3 {
   margin-bottom: 10px;
 }
 
-.room-name {
-  font-size: 1.4em;
-  margin-bottom: 10px;
-}
-
 .capacity {
   margin-bottom: 10px;
-}
-
-.dates {
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: 700;
 }
 
 .pricing {
@@ -184,40 +294,94 @@ h3 {
 }
 
 .payment-method {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .payment-options {
   display: flex;
   justify-content: center;
-  gap: 20px; /* 결제 수단 사이에 여백 추가 */
-  margin-top: 20px;
+  gap: 20px;
+  margin-top: 10px;
 }
 
-.payment-options label {
-  font-size: 1.2em;
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
+}
+
+.payment-option input {
+  display: none;
+}
+
+.payment-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.payment-option input:checked + img {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 8px rgba(255, 75, 43, 0.5);
+}
+
+.payment-option img:hover {
+  transform: scale(1.1);
 }
 
 .payment-section {
-  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .payment-button {
-  background-color: #2ecc71;
-  color: white;
-  padding: 12px 24px;
-  font-size: 1.5em;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto; /* 버튼을 가운데 정렬 */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .payment-button:hover {
-  background-color: #27ae60;
+  transform: scale(1.05);
+}
+
+.payment-button:active {
+  transform: scale(0.95);
+}
+
+/* 구매하기 버튼 스타일 */
+.primary-button {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  color: white;
+}
+
+.primary-button:hover {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  box-shadow: 0 6px 8px rgba(255, 75, 43, 0.4);
+}
+
+.primary-button:active {
+  box-shadow: 0 3px 5px rgba(255, 75, 43, 0.3);
+}
+
+/* 뒤로가기 버튼 스타일 */
+.secondary-button {
+  background: linear-gradient(90deg, #434343, #000000);
+  color: white;
+}
+
+.secondary-button:hover {
+  background: linear-gradient(90deg, #000000, #434343);
 }
 </style>

@@ -8,12 +8,19 @@
           <p class="title">{{ title }}</p>
           <hr />
           <p class="content">{{ content }}</p>
+          <p>{{ createDate }}</p>
         </div>
-        <router-link :to="'/announcement'">
-          <button type="button" class="btn btn-warning button">
-            <i class="bi bi-arrow-return-left"></i>
-          </button>
-        </router-link>
+        <!-- ano 값을 동적으로 설정 -->
+        <div class="button-group">
+          <router-link :to="`/announcement/fix/${ano}`" >
+            <button type="button" class="btn btn-warning me-2">수정</button>
+          </router-link>
+          <router-link to="/announcement">
+            <button type="button" class="btn btn-warning button">
+              <i class="bi bi-arrow-return-left"></i>
+            </button>
+          </router-link>
+        </div>
         <br />
       </div>
     </div>
@@ -29,12 +36,14 @@ export default {
       ano: "",
       title: "",
       content: "",
+      createDate: "",
     };
   },
   methods: {
     async getDetail(ano) {
       try {
         let response = await AnnouncementService.get(ano);
+        this.ano = response.data.ano;
         this.title = response.data.title;
         this.content = response.data.content;
       } catch (error) {
@@ -76,8 +85,10 @@ export default {
 .content {
   padding: 5px 5px 5px 10px;
 }
-.button {
-  position: relative;
-  left: 94.5%;
+
+.button-group {
+  display: flex;
+  padding: 5px;
+  justify-content: end;
 }
 </style>
