@@ -14,8 +14,6 @@ import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 // Bootstrap Icons
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-
-
 const app = createApp(App);
 app.use(router);
 app.use(store);
