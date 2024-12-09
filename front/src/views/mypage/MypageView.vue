@@ -5,16 +5,19 @@
       <div class="card-header bg-warning text-white">
         <h4>User Profile</h4>
       </div>
-      <div v-for="(data, index) in mypages" :key="index">
+
         <div class="card-body">
           <ul class="list-group">
             <li class="list-group-item">
-              <strong>Email:</strong> {{ data.email }}
+              <strong>Email:</strong> {{ email }}
             </li>
           </ul>
         </div>
       </div>
-    </div>
+
+      
+  
+
 
     <!-- 탭 네비게이션 -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -60,26 +63,26 @@
     </ul>
 
     <div class="tab-content mt-3" id="myTabContent">
-      <!-- 예약 탭 -->
+      <!-- 리뷰 탭 -->
       <div
         class="tab-pane fade show active"
         id="reservations"
         role="tabpanel"
         aria-labelledby="reservations-tab"
       >
-        <h5 class="text-warning">My Reservations</h5>
+        <h5 class="text-warning">나의 리뷰</h5>
         <table class="table table-striped">
           <thead class="bg-warning text-white">
             <tr>
               <th>#</th>
-              <th>Reservation Date</th>
-              <th>Details</th>
+              <th>리뷰 날짜</th>
+              <th>리뷰</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(reservation, index) in reservations" :key="index">
-              <td>{{ reservation.date }}</td>
-              <td>{{ reservation.details }}</td>
+            <tr v-for="(review, index) in review" :key="index">
+              <td>{{ review.title }}</td>
+              <td>{{ review.authorEmail }}</td>
             </tr>
           </tbody>
         </table>
@@ -119,9 +122,11 @@
 <script>
 import MypageService from "@/services/mypage/MypageService";
 
+
 export default {
   data() {
     return {
+      email:null ,
       pageIndex: 1, //현재페이지번호
       totalCount: 0, // 전체개수
       recordCountPerPage: 1, //화면에 보일개수
@@ -129,6 +134,10 @@ export default {
       mypages: [], // 빈배열(json)
     };
   },
+
+
+
+  
 
   methods: {
     async getMypage() {
@@ -151,6 +160,7 @@ export default {
 
   mounted() {
     this.getMypage();
+    this.email = localStorage.getItem("userEmail");
   },
 };
 </script>
