@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -69,18 +68,6 @@ public class CartController {
         return new ResponseEntity<>(itemCount, HttpStatus.OK);
     }
 
-    // cartId로 상세조회
-    @GetMapping("/api/cart/detail/item/{cartId}")
-    public ResponseEntity<?> getCartFromCartId(@PathVariable int cartId) {
-        // cartId로 장바구니 항목 조회
-        Optional<Cart> cartItem = cartService.getCartFromCartId(cartId);
 
-        // 결과를 ResponseEntity에 담아 반환
-        if (cartItem.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 데이터가 없으면 204 반환
-        }
-
-        return new ResponseEntity<>(cartItem, HttpStatus.OK); // 정상 데이터 반환
-    }
 
 }

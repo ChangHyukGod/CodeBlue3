@@ -11,10 +11,10 @@ const token = { Authorization: "Bearer " + user?.accessToken };
 //   Authorization: "Bearer " + user?.accessToken,
 // };
 
-const getAll = (searchKeyword, pageIndex, recordCountPerPage,) => {
+const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   return axios.get(
     baseURL +
-      `/mypage?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`, 
+      `/mypage?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`,
     {
       headers: token,
     }

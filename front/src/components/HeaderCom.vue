@@ -192,12 +192,12 @@ export default {
 .search_bar .search_text {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  border: 2.5px solid #0288D1;
+  border: 2.5px solid #ffeb33;
 }
 .search_bar .search_glass {
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  border: 2.5px solid #0288D1 ;
+  border: 2.5px solid #ffeb33;
 }
 /* 배너 옆 메뉴 */
 .second-menu {
