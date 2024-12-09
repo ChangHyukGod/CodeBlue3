@@ -45,9 +45,7 @@
                                             data-bs-toggle="collapse" :data-bs-target="'#collapse-' + index"
                                             :aria-expanded="false" :aria-controls="'collapse-' + index">
                                             {{ data.question }}
-                                            <button @click="upde(data.fno)">
                                                 수정/삭제
-                                            </button>
                                         </button>
                                     </h2>
                                     <div :id="'collapse-' + index" class="accordion-collapse collapse"

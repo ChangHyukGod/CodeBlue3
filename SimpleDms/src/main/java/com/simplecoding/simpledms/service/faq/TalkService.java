@@ -29,18 +29,9 @@ public class TalkService {
         return page;
     }
 
-//    public void insertTalk(Talk talk) {
-//        String uuid = UUID.randomUUID().toString();
-//        String url = generateDownloadUrl(uuid);
-//        talk.
-//        talkMapper.insertTalk(talk);
-//    }
-//
-//    public String generateDownloadUrl(String uuid) {
-//        return ServletUriComponentsBuilder
-//                .fromCurrentContextPath()
-//                .path("/api/faq/talk").path(uuid).toUriString();
-//    }
+    public void insertTalk(Talk talk) {
+        talkMapper.insertTalk(talk);
+    }
 
     public Optional<Talk> selectTalk(int tno) {
         return talkMapper.selectTalk(tno);

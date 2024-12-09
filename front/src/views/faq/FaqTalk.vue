@@ -63,16 +63,6 @@
               <label for="validationDefault02">내용</label>
             </div>
             <br />
-            <!-- 사진 -->
-            <div class="talk_picture">
-              <input
-                type="file"
-                class="form-control"
-                id="photoUpload"
-                
-              />
-            </div>
-            <br />
             <!-- 체크 -->
             <div class="form-check talk_round">
               <input
