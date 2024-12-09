@@ -49,7 +49,7 @@
             parameterType="Review">
         UPDATE REVIEWS
         SET IMAGE_URL = #{imageUrl}
-        WHERE REVIEW_ID = #{reviewID}
+        WHERE REVIEW_ID = #{reviewId}
     </update>
 
     <select id="selectGenerateReviewId"
@@ -85,7 +85,14 @@
         DELETE FROM REVIEWS
         WHERE REVIEW_ID = #{reviewId}
     </delete>
-    
+
+    <select id="getTourId"
+            resultType="Integer">
+        SELECT TOUR_ID FROM TOUR
+
+    </select>
+
+
 
 
 

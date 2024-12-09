@@ -23,5 +23,7 @@ public interface ReviewMapper {
     public Optional<Review> select(int reviewId);
     public int update(Review review);
     public int delete(int reviewId);
+    public List<Integer> getTourId();
+
 
 }

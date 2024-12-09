@@ -70,4 +70,8 @@ public class TourService {
     public void delete(int tourId){
         tourMapper.delete(tourId);
     }
+
+    public String ListName(int tourId){
+        return tourMapper.getTourName(tourId);
+    }
 }

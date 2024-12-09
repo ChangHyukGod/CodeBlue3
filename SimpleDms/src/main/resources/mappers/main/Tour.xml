@@ -53,4 +53,11 @@
         DELETE FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </delete>
+
+    <select id="getTourName"
+            parameterType="int"
+            resultType="String">
+        SELECT NAME FROM TOUR
+        WHERE TOUR_ID = #{tourId}
+    </select>
 </mapper>

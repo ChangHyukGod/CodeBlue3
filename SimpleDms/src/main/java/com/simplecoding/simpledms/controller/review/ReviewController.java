@@ -111,4 +111,10 @@ public class ReviewController {
         reviewService.delete(reviewId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
     }
+
+    @GetMapping("/api/review/tourId")
+    public ResponseEntity<?> selectTourList() {
+        List<Integer> list = reviewService.getTourId();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

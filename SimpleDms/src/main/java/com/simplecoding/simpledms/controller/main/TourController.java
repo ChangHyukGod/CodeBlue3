@@ -107,4 +107,10 @@ public class TourController {
         tourService.delete(tourId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("api/tour/tourname/{tourId}")
+    public ResponseEntity<?> tourname(@PathVariable int tourId) {
+        String name= tourService.ListName(tourId);
+        return new ResponseEntity<>(name, HttpStatus.OK);
+    }
 }

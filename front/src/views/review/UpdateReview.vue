@@ -41,31 +41,32 @@
     <!-- targetId 입력 -->
     <div class="input-group">
       <span class="input-group-text" style="font-weight: bold;">상품명</span>
-      <select v-model="review.targetId" class="form-select">
-        <option value="" disabled>상품 선택</option>
-        <option v-for="product in tourNames" :key="product" :value="product">
-          {{ product }}
-        </option>
-      </select>
+      <input type="number" v-model="review.targetId" class="form-control" />
     </div>
-
-
-
+    <hr>
 
     <!-- 내용 입력 섹션 -->
     <div class="mb-3">
       <label for="content" class="form-label" style="font-weight: bold;">내용</label>
-      <textarea v-model="review.content" id="content" class="form-control" rows="10"
-        placeholder="후기 내용을 입력하세요."></textarea>
+      <textarea v-model="review.content" id="content" class="form-control" rows="10" placeholder="후기 내용을 입력하세요."></textarea>
       <input type="file" id="imageUpload" ref="file" @change="select" accept="image/*" class="form-control mt-2" />
     </div>
 
+    <div class="mb-3">
+      <img
+        :src="review.imageUrl"
+        class="card-img-top"
+        alt="이미지"
+        style="width: 50%"
+      />
+    </div>
+
     <div class="d-flex justify-content-center" style="margin-top: 40px; margin-bottom: 40px;">
-      <button type="button" class="btn btn-warning" @click="save"
+      <button type="button" class="btn btn-warning" @click="update"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         글등록
       </button>
-      <button type="button" class="btn btn-secondary ms-3" @click="goToReview"
+      <button type="button" class="btn btn-secondary ms-3"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         취소
       </button>
@@ -90,27 +91,21 @@
 </template>
 
 <script>
-import MainService from "@/services/main/MainService";
 import ReviewService from "@/services/review/ReviewService";
+
 
 export default {
   data() {
     return {
-      review: {
+      review: {      
         rating: 0,
         title: "",
-        content: "",
+        content: "", 
         authorEmail: "",
-        targetId: null,
+        targetId: null, 
         imageUrl: "",
         image: undefined
       },
-      products: [ // 상품 목록 예시
-      ],
-      tourList: [
-      ],
-      tourNames: [],
-
     }
   },
   created() {
@@ -119,87 +114,72 @@ export default {
   },
   methods: {
     select() {
-
-
-      this.review.image = this.$refs.file.files[0];
-
+      //   this.fileDb.image = this.$refs.file.files[0];
+      const file = this.$refs.file.files[0];
+      if (file) {
+        this.review.image = file;
+        this.review.imageUrl = URL.createObjectURL(file); // 이미지 미리보기
+      }
     },
-
+    
     setRating(star) {
       this.review.rating = star; // 평점 설정
     },
-    goToReview() {
-      this.$router.push("/review"); // /review로 이동
-    },
 
-    async save() {
-      if (!this.review.title) {
-        alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
-        return;
-      }
-
+    async getDetail(reviewId) {
       try {
-        let response = await ReviewService.insert(this.review);
+        let response = await ReviewService.get(reviewId);
         console.log(response.data);
-        this.$router.push("/review");
+        this.review = response.data;
       } catch (error) {
-        console.error(error.response ? error.response.data : error.message);
+        console.log(error);
       }
     },
+    
+    async update() {
 
-    async getTourIds() {
       try {
-        // MainService.getTourId()를 함수처럼 호출합니다.
-        const response = await MainService.getTourId();
+        let response = await ReviewService.update(
+          this.review.reviewId,
+          this.review
+        );
+        console.log(response.data);
 
-        // tourList를 업데이트
-        this.tourList = response.data;
-      } catch (error) {
-        console.error("Error fetching rooms:", error);
-      }
-    },
-
-    async getTourNames() {
-      try {
-        // tourList가 비어있으면 로컬 스토리지에서 불러옵니다.
-        if (!this.tourList || this.tourList.length === 0) {
-          const savedTourList = localStorage.getItem("tourList");
-          if (savedTourList) {
-            this.tourList = JSON.parse(savedTourList);
-          } else {
-            console.error("No tourList found in localStorage.");
-            return;
-          }
-        }
-
-        // Promise.all로 모든 tourId에 대해 이름을 병렬로 가져옵니다.
-        const namePromises = this.tourList.map(async (tourId) => {
-          const response = await MainService.getName(tourId);
-          return response.data; // 이름만 반환
+        this.$router.push("/review").then(() => {
+          window.location.reload(); // 자동 새로고침
         });
 
-        // 이름 배열 생성
-        const tourNames = await Promise.all(namePromises);
-
-        // 이름 배열 확인
-        console.log("Tour Names:", tourNames);
-
-        // 필요하면 다른 속성으로 저장 가능
-        this.tourNames = tourNames;
-
+        alert("데이터 수정됨");
       } catch (error) {
-        console.error("Error fetching tour names:", error);
+        this.review.image = undefined;
+        console.log(error);
       }
-    },
+
+  if (!this.review.title) {
+    alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
+    return;
+  }
+
+  try {
+        let response = await ReviewService.update(
+          this.review.reviewId,
+          this.review
+        );
+        console.log(response.data);
+
+        this.$router.push("/review").then(() => {
+          window.location.reload(); // 자동 새로고침
+        });
+
+        alert("데이터 수정됨");
+      } catch (error) {
+        this.review.image = undefined;
+        console.log(error);
+      }
+}
   },
   mounted() {
-    this.getTourIds().then(() => {
-      // tourList를 로컬 스토리지에 저장
-      localStorage.setItem("tourList", JSON.stringify(this.tourList));
-
-      // getTourNames를 호출하여 products 배열을 업데이트
-      this.getTourNames();
-    });
+    this.getDetail(this.$route.params.reviewId);
   },
 }
 </script>

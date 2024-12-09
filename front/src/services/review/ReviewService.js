@@ -75,7 +75,7 @@ const insert = (data) => {
 
 // 상세조회
 const get = (reviewId) => {
-  return axios.get(baseURL + `/review/${reviewId}`,
+  return axios.get(baseURL + `/review/get/${reviewId}`,
     { headers: token }
   );
 };
@@ -90,9 +90,7 @@ const update = (reviewId, data) => {
 
 // 리뷰 삭제
 const remove = (reviewId) => {
-  return axios.delete(baseURL + `/review/deletion/${reviewId}`,
-    { headers: token2 }
-  );
+  return axios.delete(baseURL + `/review/deletion/${reviewId}`);
 };
 
 const ReviewService = {

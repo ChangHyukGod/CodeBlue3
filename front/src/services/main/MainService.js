@@ -53,13 +53,24 @@ const remove = (tourId) => {
     return axios.delete(baseURL+`/tour/deletion/${tourId}`);
 };
 
+// 기본키 가져오기
+const getTourId = () => {
+    return axios.get(baseURL+`/review/tourId`)
+}
+
+const getName = (tourId) => {
+    return axios.get(baseURL+`/tour/tourname/${tourId}`)
+}
+
 const MainService = {
     getAll,
     insert,
     get,
     update,
     remove,
-    getALLnp
+    getALLnp,
+    getTourId,
+    getName
 };
 
 export default MainService;

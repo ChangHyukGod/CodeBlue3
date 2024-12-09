@@ -15,9 +15,11 @@ public class Review {
     private String imageUrl;     // 첨부 이미지 URL
     private String authorEmail;  // 작성자 이메일
     private int targetId;     // 대상 ID
+//    private String targetName; // 숙소 이름
     private Timestamp createdAt; // 생성일
     private Timestamp updatedAt; // 수정일
     private byte[] imageData;
+
 
 //    Review(title, content, rating, authorEmail, targetId, imageData);
 
