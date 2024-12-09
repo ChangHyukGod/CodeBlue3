@@ -108,6 +108,38 @@
         </label>
       </div>
 
+      <!-- 쿠폰등록하기 버튼 -->
+      <div class="mt-3">
+        <button class="btn btn-warning" @click="toggleCouponForm">
+          쿠폰등록하기
+        </button>
+      </div>
+
+      <!-- 쿠폰 선택 폼 -->
+      <div v-if="showCouponForm" class="mt-3 p-3 bg-light border rounded">
+        <h5>쿠폰 선택</h5>
+        <ul class="list-group">
+          <li
+            v-for="coupon in coupons"
+            :key="coupon.id"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span>{{ coupon.name }} ({{ coupon.value }}%)</span>
+            <button
+              class="btn btn-primary btn-sm"
+              @click="selectCoupon(coupon)"
+            >
+              선택
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 선택된 쿠폰 표시 -->
+      <div v-if="selectedCoupon" class="mt-3 alert alert-success">
+        선택된 쿠폰: {{ selectedCoupon.name }} ({{ selectedCoupon.value }}%)
+      </div>
+
       <button
         class="sticky-box-button"
         style="
@@ -132,12 +164,28 @@
 </template>
 
 <script>
+import CouponService from "@/services/coupon/CounponService";
+
 export default {
   data() {
     return {
       selectedItems: [], // 로컬스토리지에서 가져온 데이터
       totalPrice: 0, // 총 결제 금액
-      sselectedPaymentMethod: null, // 선택된 결제 수단
+      selectedPaymentMethod: null, // 선택된 결제 수단
+
+      showCouponForm: false, // 쿠폰 폼 표시 여부
+      coupons: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 1, //화면에 보일개수
+      searchKeyword: "",
+      selectedCoupon: null, // 선택된 쿠폰
+      value: 20.0,
+      name: "",
+
+      originalPrice: "",
+
+      id: "",
     };
   },
   mounted() {
@@ -146,6 +194,7 @@ export default {
       JSON.parse(localStorage.getItem("selectedItems")) || [];
     // 총 결제 금액 계산
     this.calculateTotalPrice();
+    this.getCoupon();
   },
   methods: {
     // 총 결제 금액 계산
@@ -174,6 +223,49 @@ export default {
       if (!this.selectedPaymentMethod) {
         alert("결제 수단을 선택해주세요."); // 결제 수단 미선택 시 경고
         return;
+      }
+    },
+
+    toggleCouponForm() {
+      this.showCouponForm = !this.showCouponForm;
+    },
+
+    selectCoupon(coupon) {
+      // 선택된 쿠폰 저장
+      this.selectedCoupon = coupon;
+
+      // 원래 금액을 숫자로 보장
+      if (!this.originalPrice) {
+        this.originalPrice = this.selectedItems.reduce((sum, item) => {
+          return sum + Number(item.totalPrice.replace(/,/g, ""));
+        }, 0);
+      }
+
+      const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
+      const discountedPrice = this.originalPrice * (1 - discountRate);
+
+      // 할인된 가격을 숫자로 반영
+      this.totalPrice = Math.max(0, discountedPrice); // 최소 0으로 설정
+      this.showCouponForm = false; // 폼 닫기
+
+      console.log("선택된 쿠폰:", coupon);
+      console.log("할인된 금액:", this.totalPrice);
+    },
+
+    async getCoupon() {
+      try {
+        let response = await CouponService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.coupons = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
       }
     },
   },
