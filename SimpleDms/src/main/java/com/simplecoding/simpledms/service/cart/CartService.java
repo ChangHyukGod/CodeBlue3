@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,11 @@ public class CartService {
     // 장바구니에 담긴 개수 세기
     public int countCartItems(String userEmail) {
         return cartMapper.countCartItems(userEmail);
+    }
+
+    // cartId로 상세조회한 객체 가져오기
+    public Optional<Cart> getCartFromCartId(int cartId) {
+        return cartMapper.getCartFromCartId(cartId);
     }
 
 
