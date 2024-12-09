@@ -197,6 +197,10 @@ const routes = [
     path: "/cart/payment/:cartId",
     component: () => import("../views/payment/CartPaymentView.vue"),
   },
+  {
+    path: "/TotalPayment",
+    component: () => import("../views/payment/TotalPayment.vue"),
+  },
 
 
 ];

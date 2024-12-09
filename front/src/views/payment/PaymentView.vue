@@ -13,7 +13,7 @@
 
       <div class="details-container">
         <h3 style="font-weight: 900">{{ reservation.tourName }}</h3>
-        <p class="room-name" style="font-weight: 900">
+        <p class="room-name">
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="pricing">
-          <p>숙박 일수 : {{ reservation.stayDuration }}일</p>
+          <p>숙박 일수 : {{ reservation.stayDuration }}박</p>
           <p class="total-price">
             총 결제 금액 : {{ reservation.totalPrice }}원
           </p>
@@ -37,28 +37,46 @@
       </div>
     </div>
     <div class="payment-method">
-    <h3>결제 수단</h3>
-    <div class="payment-options">
-      <!-- 카카오페이 -->
-      <label>
-        <input type="radio" name="paymentMethod" value="kakaoPay" />
-        카카오페이
-      </label>
-      <!-- 토스페이 -->
-      <label>
-        <input type="radio" name="paymentMethod" value="tossPay" />
-        토스페이
-      </label>
-      <!-- 네이버페이 -->
-      <label>
-        <input type="radio" name="paymentMethod" value="naverPay" />
-        네이버페이
-      </label>
-      <!-- 휴대폰 -->
-      <label>
-        <input type="radio" name="paymentMethod" value="phonePay" />
-        휴대폰
-      </label>
+      <h3>결제 수단</h3>
+      <div class="payment-options">
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="kakaoPay"
+            v-model="selectedPaymentMethod"
+          />
+          카카오페이
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="tossPay"
+            v-model="selectedPaymentMethod"
+          />
+          토스페이
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="naverPay"
+            v-model="selectedPaymentMethod"
+          />
+          네이버페이
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="phonePay"
+            v-model="selectedPaymentMethod"
+          />
+          휴대폰
+        </label>
+      </div>
+
     </div>
 
   <!-- 쿠폰등록하기 버튼 -->
@@ -147,6 +165,7 @@ export default {
         currency:"KRW",
       
       },
+
     };
   },
   mounted() {
@@ -262,10 +281,12 @@ h2 {
 
 .reservation-details {
   display: flex;
-  justify-content: center; /* 이미지와 예약 정보를 가로로 가운데 정렬 */
+  justify-content: center; /* 이미지와 텍스트를 가로로 중앙 정렬 */
   align-items: flex-start; /* 세로로 상단 정렬 */
-  gap: 10px; /* 간격을 10px로 줄였습니다 */
-  margin-bottom: 30px;
+  gap: 180px; /* 이미지와 텍스트 간의 간격 */
+  margin: 0 auto; /* 전체 박스를 중앙 정렬 */
+  max-width: 900px; /* 중앙 정렬을 위한 최대 너비 지정 */
+  text-align: left;
 }
 
 .image-container {
@@ -291,19 +312,8 @@ h3 {
   margin-bottom: 10px;
 }
 
-.room-name {
-  font-size: 1.4em;
-  margin-bottom: 10px;
-}
-
 .capacity {
   margin-bottom: 10px;
-}
-
-.dates {
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: 700;
 }
 
 .pricing {
