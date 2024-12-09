@@ -13,7 +13,7 @@
 
       <div class="details-container">
         <h3 style="font-weight: 900">{{ reservation.tourName }}</h3>
-        <p class="room-name" style="font-weight: 900">
+        <p class="room-name">
           {{ reservation.roomName }}
         </p>
         <p class="capacity">인원(기준) : {{ reservation.capacity }}명</p>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="pricing">
-          <p>숙박 일수 : {{ reservation.stayDuration }}일</p>
+          <p>숙박 일수 : {{ reservation.stayDuration }}박</p>
           <p class="total-price">
             총 결제 금액 : {{ reservation.totalPrice }}원
           </p>
@@ -41,34 +41,54 @@
     <div class="payment-method">
       <h3>결제 수단</h3>
       <div class="payment-options">
-        <label>
-          <input type="radio" name="paymentMethod" value="kakaoPay" />
-          카카오페이
+        <!-- 카카오페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="kakaoPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img src="@/assets/images/PaymentMethod/ㅋㅋㅇㅍㅇ 아이콘.png" alt="카카오페이" />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="tossPay" />
-          토스페이
+        <!-- 토스페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="tossPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img src="@/assets/images/PaymentMethod/ㅌㅅ 아이콘.png" alt="토스페이" />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="naverPay" />
-          네이버페이
+        <!-- 네이버페이 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="naverPay"
+            v-model="selectedPaymentMethod"
+          />
+          <img src="@/assets/images/PaymentMethod/ㄴㅇㅂㅍㅇ 아이컨.png" alt="네이버페이" />
         </label>
-        <label>
-          <input type="radio" name="paymentMethod" value="phonePay" />
-          휴대폰
+        <!-- 휴대폰 -->
+        <label class="payment-option">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="phonePay"
+            v-model="selectedPaymentMethod"
+          />
+          <img src="@/assets/images/PaymentMethod/ㅎㄷㅍ 아이콘.png" alt="휴대폰" />
         </label>
       </div>
     </div>
 
     <div class="payment-section">
-      <button class="payment-button" @click="processPayment">
+      <button class="payment-button primary-button" @click="processPayment">
         {{ reservation.totalPrice }}원 결제하기
       </button>
-      <button
-        class="payment-button"
-        @click="returnPage"
-        style="margin-left: 10px; width: 150px"
-      >
+      <button class="payment-button secondary-button" @click="returnPage">
         뒤로가기
       </button>
     </div>
@@ -76,26 +96,12 @@
 </template>
 
 <script>
-
-import PortOne from "@portone/browser-sdk/v2";
-
-
-
 export default {
   data() {
     return {
       reservation: {}, // 예약 정보 저장 객체
-      selectedPaymentMethod: "", // 선택된 결제 수단
-      main: {
-        channelKey: "channel-key-79ccff33-9c28-4395-854d-a2c186f8d461",
-        payMethod: "EASY_PAY",
-        totalAmount: "60000",
-        orderName: "매운라면",
-        merchant_uid: "ORD20231030-000001",
-        storeId: "store-37adc342-491c-4a84-ae08-08fe128442bb",
-        paymentId: "758771037252287",
-        currency:"KRW",
-      },
+
+      sselectedPaymentMethod: null, // 선택된 결제 수단
     };
   },
   mounted() {
@@ -113,15 +119,10 @@ export default {
     }
   },
   methods: {
-    async processPayment() {
-      try{
-      // 쉼표를 제거하고 정수형으로 변환
-      const sanitizedPrice = parseInt(this.reservation.totalPrice.replace(/,/g, ""), 10);
-      this.main.totalAmount = sanitizedPrice; // 정수형으로 업데이트
-      PortOne.requestPayment(this.main);
-      
-      }catch(error){
-          console.log(error);
+    processPayment() {
+      if (!this.selectedPaymentMethod) {
+        alert("결제 수단을 선택해주세요."); // 결제 수단 미선택 시 경고
+        return;
       }
     },
 
@@ -139,7 +140,7 @@ export default {
   font-family: Arial, sans-serif;
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center; /* 모든 텍스트를 가운데 정렬 */
+  text-align: center;
 }
 
 h2 {
@@ -148,20 +149,22 @@ h2 {
 
 .reservation-details {
   display: flex;
-  justify-content: center; /* 이미지와 예약 정보를 가로로 가운데 정렬 */
-  align-items: flex-start; /* 세로로 상단 정렬 */
-  gap: 10px; /* 간격을 10px로 줄였습니다 */
-  margin-bottom: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: left;
 }
 
 .image-container {
   flex: 1;
-  max-width: 300px; /* 이미지 최대 너비 설정 */
-  text-align: center; /* 이미지 가운데 정렬 */
+  max-width: 300px;
+  text-align: center;
 }
 
 .tour-image {
-  width: 450px;
+  width: 300px;
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
@@ -169,7 +172,7 @@ h2 {
 
 .details-container {
   flex: 2;
-  max-width: 600px;
+  max-width: 300px;
 }
 
 h3 {
@@ -177,19 +180,8 @@ h3 {
   margin-bottom: 10px;
 }
 
-.room-name {
-  font-size: 1.4em;
-  margin-bottom: 10px;
-}
-
 .capacity {
   margin-bottom: 10px;
-}
-
-.dates {
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: 700;
 }
 
 .pricing {
@@ -202,40 +194,94 @@ h3 {
 }
 
 .payment-method {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .payment-options {
   display: flex;
   justify-content: center;
-  gap: 20px; /* 결제 수단 사이에 여백 추가 */
-  margin-top: 20px;
+  gap: 20px;
+  margin-top: 10px;
 }
 
-.payment-options label {
-  font-size: 1.2em;
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
+}
+
+.payment-option input {
+  display: none;
+}
+
+.payment-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.payment-option input:checked + img {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 8px rgba(255, 75, 43, 0.5);
+}
+
+.payment-option img:hover {
+  transform: scale(1.1);
 }
 
 .payment-section {
-  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .payment-button {
-  background-color: #2ecc71;
-  color: white;
-  padding: 12px 24px;
-  font-size: 1.5em;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto; /* 버튼을 가운데 정렬 */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .payment-button:hover {
-  background-color: #27ae60;
+  transform: scale(1.05);
+}
+
+.payment-button:active {
+  transform: scale(0.95);
+}
+
+/* 구매하기 버튼 스타일 */
+.primary-button {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  color: white;
+}
+
+.primary-button:hover {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  box-shadow: 0 6px 8px rgba(255, 75, 43, 0.4);
+}
+
+.primary-button:active {
+  box-shadow: 0 3px 5px rgba(255, 75, 43, 0.3);
+}
+
+/* 뒤로가기 버튼 스타일 */
+.secondary-button {
+  background: linear-gradient(90deg, #434343, #000000);
+  color: white;
+}
+
+.secondary-button:hover {
+  background: linear-gradient(90deg, #000000, #434343);
 }
 </style>

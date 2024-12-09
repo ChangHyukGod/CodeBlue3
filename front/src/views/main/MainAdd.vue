@@ -24,6 +24,18 @@
         <label for="loc">price</label>
     </div>
 
+    <!-- view -->
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="view" placeholder="view" v-model="main.view" />
+        <label for="view">view</label>
+    </div>
+
+    <!-- category -->
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="category" placeholder="category" v-model="main.category" />
+        <label for="category">category</label>
+    </div>
+
     <!-- image -->
     <div class="input-group">
       <input type="file" class="form-control" ref="file" @change="select"/>
@@ -47,6 +59,8 @@ export default {
                 description:"",
                 price:"",
                 tourFileUrl: "",
+                view: "",
+                category: "",
                 image: undefined
             }
         }

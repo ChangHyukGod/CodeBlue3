@@ -33,6 +33,7 @@ public class TalkService {
         talkMapper.insertTalk(talk);
     }
 
+
     public Optional<Talk> selectTalk(int tno) {
         return talkMapper.selectTalk(tno);
     }
