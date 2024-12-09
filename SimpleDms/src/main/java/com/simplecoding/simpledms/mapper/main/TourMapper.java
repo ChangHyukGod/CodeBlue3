@@ -24,6 +24,7 @@ public interface TourMapper {
     public int selectGenerateTourId();  // tourId 생성 후 가져오는 매서드
 
     public Optional<Tour> select(int tourId);  //상세조회
+
     public int update(Tour tour);  //수정
     public int delete(int tourId);  //삭제
 }
