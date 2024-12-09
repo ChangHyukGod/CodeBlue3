@@ -62,8 +62,9 @@
               type="search"
               placeholder="여행의 모든 것"
               aria-label="Search"
+              v-model="searchKeyword"
             />
-            <button class="btn btn-outline-warning search_glass" type="submit">
+            <button class="btn btn-outline-warning search_glass" type="submit" @click="getAll">
               <i class="bi bi-search"></i>
             </button>
           </form>

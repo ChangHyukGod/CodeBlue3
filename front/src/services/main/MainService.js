@@ -7,8 +7,8 @@ const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
     return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
 };
 
-const getALLnp = () => {
-    return axios.get(baseURL+`/tour`);
+const getALLnp = (searchKeyword, category,view) => {
+    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&category=${category}&view=${view}`);
 };
 
 // 이미지 업로드 및 FormData 생성
