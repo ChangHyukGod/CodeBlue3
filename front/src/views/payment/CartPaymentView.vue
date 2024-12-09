@@ -94,6 +94,38 @@
           />
         </label>
       </div>
+
+      <!-- 쿠폰등록하기 버튼 -->
+      <div class="mt-3">
+        <button class="btn btn-warning" @click="toggleCouponForm">
+          쿠폰등록하기
+        </button>
+      </div>
+
+      <!-- 쿠폰 선택 폼 -->
+      <div v-if="showCouponForm" class="mt-3 p-3 bg-light border rounded">
+        <h5>쿠폰 선택</h5>
+        <ul class="list-group">
+          <li
+            v-for="coupon in coupons"
+            :key="coupon.id"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span>{{ coupon.name }} ({{ coupon.value }}%)</span>
+            <button
+              class="btn btn-primary btn-sm"
+              @click="selectCoupon(coupon)"
+            >
+              선택
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 선택된 쿠폰 표시 -->
+      <div v-if="selectedCoupon" class="mt-3 alert alert-success">
+        선택된 쿠폰: {{ selectedCoupon.name }} ({{ selectedCoupon.value }}%)
+      </div>
     </div>
 
     <div class="payment-section">
@@ -108,12 +140,24 @@
 </template>
 
 <script>
+import CouponService from "@/services/coupon/CounponService";
 export default {
   data() {
     return {
       reservation: {}, // 예약 정보 저장 객체
 
       selectedPaymentMethod: "", // 선택된 결제 수단
+
+      showCouponForm: false, // 쿠폰 폼 표시 여부
+      coupons: [],
+      pageIndex: 1, //현재페이지번호
+      totalCount: 0, // 전체개수
+      recordCountPerPage: 1, //화면에 보일개수
+      searchKeyword: "",
+      selectedCoupon: null, // 선택된 쿠폰
+      value: 20.0,
+      name: "",
+      id: "",
     };
   },
   mounted() {
@@ -129,6 +173,7 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
+    this.getCoupon();
   },
   methods: {
     processPayment() {
@@ -141,6 +186,49 @@ export default {
     returnPage() {
       // 이전 페이지로 이동
       this.$router.go(-1);
+    },
+
+    toggleCouponForm() {
+      this.showCouponForm = !this.showCouponForm;
+    },
+
+    selectCoupon(coupon) {
+      // 선택된 쿠폰 저장
+      this.selectedCoupon = coupon;
+
+      // 원래 금액에서 할인 적용
+      if (this.reservation.originalPrice === undefined) {
+        this.reservation.originalPrice = parseInt(
+          this.reservation.totalPrice.replace(/,/g, ""),
+          10
+        );
+      }
+
+      const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
+      const discountedPrice =
+        this.reservation.originalPrice * (1 - discountRate);
+      this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
+
+      this.showCouponForm = false; // 폼 닫기
+      console.log("선택된 쿠폰:", coupon);
+      console.log("할인된 금액:", discountedPrice);
+    },
+
+    async getCoupon() {
+      try {
+        let response = await CouponService.getAll(
+          this.searchKeyword,
+          this.pageIndex - 1,
+          this.recordCountPerPage
+        );
+        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
+        const { results, totalCount } = response.data;
+        console.log(response.data); // 디버깅
+        this.coupons = results;
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
