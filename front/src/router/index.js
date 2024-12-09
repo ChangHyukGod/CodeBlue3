@@ -52,6 +52,10 @@ const routes = [
     component: () => import("../views/faq/FaqTalk.vue"),
   },
   {
+    path: "/faq/talk/:tno",
+    component: () => import("../views/faq/FaqTalkTest.vue"),
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -67,6 +71,10 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
+
+
+ 
+
   {
     path: "/mypage",
     component: () => import("../views/mypage/MypageView.vue"),

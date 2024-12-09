@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- 지도 표시 영역 -->
-    <div ref="mapRef" style="width: 100%; height: 400px"></div>
+    <div
+      ref="mapRef"
+      style="width: 100%; height: 400px; border: 3px solid #0288D1; border-radius: 10px"
+    ></div>
 
     <!-- 장소 검색 입력창 -->
     <div style="margin-top: 20px; text-align: center">
@@ -9,7 +12,13 @@
         ref="searchInputRef"
         type="text"
         placeholder="장소를 검색하세요"
-        style="width: 300px; padding: 10px; font-size: 30px"
+        style="
+          width: 300px;
+          padding: 10px;
+          font-size: 30px;
+          border: 3px solid #0288D1;
+          border-radius: 10px;
+        "
       />
     </div>
 
@@ -38,7 +47,7 @@
               </p>
               <a
                 :href="place.mapUrl"
-                class="btn btn-primary"
+                class="btn btn-primary custom-btn"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -178,6 +187,7 @@ export default {
 .card {
   border-radius: 10px;
   transition: transform 0.3s ease;
+  border: 3px solid #0288D1; /* 노란색 테두리 */
 }
 
 .card:hover {
@@ -188,5 +198,16 @@ export default {
 .card-title {
   font-size: 1.25rem;
   font-weight: bold;
+}
+
+.custom-btn {
+  background-color: #0288D1; /* 배경색 노란색 */
+  color: black; /* 텍스트 색상 검은색 */
+  border: none; /* 필요에 따라 버튼의 테두리 스타일 변경 */
+}
+
+.custom-btn:hover {
+  background-color: #0288D1; /* 호버 시 살짝 어두운 노란색 */
+  color: black; /* 호버 시에도 텍스트 색상 유지 */
 }
 </style>

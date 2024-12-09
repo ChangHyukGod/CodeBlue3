@@ -9,7 +9,12 @@
         id="search-input"
         type="text"
         placeholder="장소를 검색하세요"
-        style="width: 300px; padding: 10px; font-size: 30px"
+        style="
+          width: 300px;
+          padding: 10px;
+          font-size: 30px;
+          border: 3px solid cornflowerblue;
+        "
       />
     </div>
   </div>
@@ -88,7 +93,7 @@ export default {
   width: 100%;
   height: 400px;
   border-radius: 10px; /* 둥근 모서리 */
-  border: 4px solid #ffdd00; /* 노란색 외곽선 */
+  border: 4px solid cornflowerblue; /* 노란색 외곽선 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
   transition: all 0.3s ease; /* 마우스 오버 시 부드러운 변화 */
 }
