@@ -33,10 +33,10 @@
               작성일 : {{ talk.createDate }}
             </div>
             <router-link :to="'/faq/talk'">
-                <button type="button" class="btn btn-warning goto_button">
-                  <i class="bi bi-arrow-return-left"></i>
-                </button>
-              </router-link>
+              <button type="button" class="btn btn-warning goto_button">
+                <i class="bi bi-arrow-return-left"></i>
+              </button>
+            </router-link>
           </div>
         </div>
         <br />
@@ -145,7 +145,8 @@ export default {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-}.talk_item{
-    text-align: center;
+}
+.talk_item {
+  text-align: center;
 }
 </style>

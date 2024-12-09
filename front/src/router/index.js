@@ -40,12 +40,20 @@ const routes = [
     component: () => import("@/views/faq/FaqAnnouncementDetail.vue"),
   },
   {
+    path: "/announcement/fix/:ano",
+    component: () => import("../views/faq/FaqAnnounceFix.vue"),
+  },
+  {
     path: "/faq/payment",
     component: () => import("../views/faq/FaqHowtoPay.vue"),
   },
   {
     path: "/faq/list",
     component: () => import("../views/faq/FaqQuestionList.vue"),
+  },
+  {
+    path: "/faq/list/:fno",
+    component: () => import("../views/faq/FaqLIstFix.vue"),
   },
   {
     path: "/faq/talk",

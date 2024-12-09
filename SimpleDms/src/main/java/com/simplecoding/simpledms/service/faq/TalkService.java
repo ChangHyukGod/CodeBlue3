@@ -30,18 +30,9 @@ public class TalkService {
     }
 
     public void insertTalk(Talk talk) {
-//        String uuid = UUID.randomUUID().toString();
-//        String url = generateDownloadUrl(uuid);
-//        talk.
         talkMapper.insertTalk(talk);
-
     }
-//
-//    public String generateDownloadUrl(String uuid) {
-//        return ServletUriComponentsBuilder
-//                .fromCurrentContextPath()
-//                .path("/api/faq/talk").path(uuid).toUriString();
-//    }
+
 
     public Optional<Talk> selectTalk(int tno) {
         return talkMapper.selectTalk(tno);

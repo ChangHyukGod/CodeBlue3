@@ -5,7 +5,9 @@
       <div class="notice_container">
         <div class="notice_search">
           <form class="search_input" @submit.prevent="searchAnnouncement">
-            <router-link :to="'/faq/list'" class="custom-link"><p class="ano_top_title">공지사항</p></router-link>
+            <router-link :to="'/faq/list'" class="custom-link"
+              ><p class="ano_top_title">공지사항</p></router-link
+            >
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
@@ -25,7 +27,8 @@
                 :to="'/announcement/' + data.ano"
                 class="custom-link"
               >
-                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }} {{ data.ano }} {{ data.createDate }}</h2>
+                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
+                <p class="ano_date">{{ data.createDate }}</p>
               </router-link>
               <hr class="notice_line" />
             </div>
@@ -155,6 +158,7 @@ export default {
 </script>
 
 <style>
+
 .ano_top_title {
   font-weight: bolder;
   font-size: x-large;
@@ -235,8 +239,7 @@ export default {
   font-size: 23px;
   padding: 5px;
 }
-.ano_title:hover{
-  
+.ano_title:hover {
   transform: scale(1.01);
   transition: 0.2s;
 }
@@ -249,7 +252,7 @@ export default {
   text-decoration: none; /* 모든 상태에서 밑줄 제거 */
   color: inherit;
 }
-.custom-link:hover{
+.custom-link:hover {
   transition: 0.3s;
 }
 /* 페이징 스타일 */
@@ -291,5 +294,10 @@ export default {
   position: relative;
   margin-top: 10px;
   left: 94.5%;
+}
+.ano_date {
+  position: absolute;
+  margin: -37.5px 0 0 780px;
+  font-size: 13px;
 }
 </style>
