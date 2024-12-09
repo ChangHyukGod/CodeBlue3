@@ -54,23 +54,6 @@
       </button>
     </div>
 
-    <!-- TODO: 검색어 입력상자 -->
-    <div class="input-group mb-3 mt-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="검색어"
-        v-model="searchKeyword"
-      />
-      <button
-        class="btn btn-outline-warning"
-        type="button"
-        @click="getrecommend"
-      >
-        검색
-      </button>
-    </div>
-
     <!-- TODO: 카드 -->
     <div class="row">
       <!-- 카드 반복 -->
@@ -83,7 +66,7 @@
             @click="goToDetailPage(data)"
           />
           <div class="card-body custom-card-body">
-            <h5 class="card-title text-warning">{{ data.tdName }}</h5>
+            <h5 class="card-title" style="color: black; font-weight: 1000">{{ data.tdName }}</h5>
             <p class="card-text text-light">
               {{ data.loc }}
               <br />
@@ -101,6 +84,25 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- TODO: 검색어 입력상자 -->
+    <div class="input-group mb-3 mt-3" style="width: 300px; margin: 0 auto">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="검색어"
+        v-model="searchKeyword"
+        style="border: 3px solid #0288d1"
+      />
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        @click="getrecommend"
+        style="color: #0288d1"
+      >
+        검색
+      </button>
     </div>
 
     <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지) -->
@@ -170,49 +172,48 @@ export default {
 </script>
 
 <style>
+
 /* 카드 디자인 */
 .custom-card {
-  border: 2px solid #ffc107; /* 노란색 테두리 */
-  background-color: #000; /* 검은색 배경 */
-  color: #ffc107; /* 텍스트 기본 색 노란색 */
+   border: 3px solid #0288d1; 
+  background-color:  #0288d1; 
+  color: #0288d1; /* 텍스트 기본 색 노란색 */
   border-radius: 10px;
   transition: all 0.3s ease; /* 부드러운 전환 효과 */
   cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
 }
 
+
 .custom-card:hover {
   transform: scale(1.05); /* 크기 확대 */
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.6); /* 입체적인 그림자 추가 */
-  border-color: #ff9800; /* 호버 시 테두리 색 약간 변경 */
+  box-shadow: 0 4px 8px rgba(7, 94, 255, 0.6); /* 입체적인 그림자 추가 */
+
 }
 
 .custom-card-img {
   height: 200px;
   object-fit: cover;
-  border-bottom: 2px solid #ffc107; /* 이미지 아래에 노란 테두리 */
+  
 }
 
 .custom-card-body {
   padding: 15px;
 }
 
-/* 텍스트 색상 조정 */
-.card-text {
-  color: #ffffff; /* 본문 텍스트 흰색 */
-}
+
 
 /* 수정 버튼 */
 .btn-dark {
-  background-color: #ffc107; /* 노란색 배경 */
+  background-color: #0288d1; /* 노란색 배경 */
   color: #000; /* 버튼 텍스트 검정색 */
-  border: 1px solid #ffc107; /* 테두리 노란색 */
+  border: 1px solid #0288d1; /* 테두리 노란색 */
   transition: all 0.3s ease;
 }
 
 .btn-dark:hover {
-  background-color: #000; /* 호버 시 검은색 배경 */
-  color: #ffc107; /* 호버 시 노란색 텍스트 */
-  border: 1px solid #ffc107; /* 테두리 유지 */
+  background-color: white; /* 호버 시 검은색 배경 */
+  color: #0288d1; /* 호버 시 노란색 텍스트 */
+  border: 1px solid #0288d1; /* 테두리 유지 */
 }
 
 /* 추가 버튼 */
@@ -257,18 +258,20 @@ export default {
 .custom-pagination .page-link {
   background-color: white;
   color: black;
-  border-color: white;
+  border-color: white
 }
 
 .custom-pagination .page-item.active .page-link {
   background-color: white;
-  color: black;
-  border-color: black;
+  color: #0288d1;
+  border-color: #0288d1;
 }
 
 #carouselExampleAutoplaying {
-  border: 3px solid #ffc107; /* 노란색 테두리 */
+ 
   border-radius: 10px; /* 둥근 모서리 */
-  padding: 10px; /* 여백 추가 */
+ 
+  margin-bottom: 20px;
+  border: 3px solid #0288d1; /* 테두리 색상 추가 */
 }
 </style>
