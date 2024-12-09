@@ -10,8 +10,8 @@
     </insert>
 -->
       <insert id="insert" parameterType="Coupon">
-       INSERT INTO COUPONS (ID, VALUE, NAME, MEMBER_EMAIL)
-       VALUES (COUPONS_SEQ.NEXTVAL , #{value}, '신규 회원 20%할인',#{memberEmail})
+       INSERT INTO COUPONS (VALUE, NAME, MEMBER_EMAIL)
+       VALUES (#{value}, '신규 회원 20%할인',#{memberEmail})
    </insert>
 
 

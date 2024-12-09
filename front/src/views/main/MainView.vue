@@ -6,13 +6,10 @@
       <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="3" aria-label="Slide 4"></button>
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="/maindetail/104">
-          <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
-        </a>
+        <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
         <div class="carousel-caption d-none d-md-block">
           <a href="/maindetail/104">
             <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
@@ -21,37 +18,10 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="/maindetail/85">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="d-block w-100" width="800" height="600" />
-        </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/85">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">속초, 바다 앞 고급호텔!</button>
-          </a>
-          <p>속초 라마다 호텔 예약을 여기로~</p>
-        </div>
+        <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="d-block w-100" width="800" height="600" />
       </div>
       <div class="carousel-item">
-        <a href="/coupon">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="d-block w-100" width="800" height="600" />
-        </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/coupon">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">신규회원 쿠폰 받아가세요!</button>
-          </a>
-          <p>신규회원 대상, 20% 할인 쿠폰 발급 이벤트 중~</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <a href="/recommenddetail/14">
-          <img :src="require(`@/assets/images/메뉴5.jpg`)" class="d-block w-100" width="800" height="600" />
-        </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/recommenddetail/14">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">겨울여행 추천!</button>
-          </a>
-          <p>겨울맞이 이런 곳은 어떠신가요? 추천페이지에서 둘러보아요~</p>
-        </div>
+        <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="d-block w-100" width="800" height="600" />
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

@@ -41,11 +41,4 @@
         WHERE EMAIL = #{userEmail}
     </select>
 
-    <!-- cartId 상세조회해서 장바구니 출력: 객체1개 -->
-    <select id="getCartFromCartId" parameterType="int" resultType="Cart">
-        SELECT *
-        FROM CART
-        WHERE CART_ID = #{cartId}
-    </select>
-
 </mapper>
