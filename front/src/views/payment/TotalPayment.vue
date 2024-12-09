@@ -50,44 +50,61 @@
     </div>
 
     <!-- 결제 수단 섹션 추가 -->
+    <!-- 결제 수단 섹션 추가 -->
     <div class="payment-method">
       <h3>결제 수단</h3>
       <div class="payment-options">
-        <label>
+        <!-- 카카오페이 -->
+        <label class="payment-option">
           <input
             type="radio"
             name="paymentMethod"
             value="kakaoPay"
             v-model="selectedPaymentMethod"
           />
-          카카오페이
+          <img
+            src="@/assets/images/PaymentMethod/ㅋㅋㅇㅍㅇ 아이콘.png"
+            alt="카카오페이"
+          />
         </label>
-        <label>
+        <!-- 토스페이 -->
+        <label class="payment-option">
           <input
             type="radio"
             name="paymentMethod"
             value="tossPay"
             v-model="selectedPaymentMethod"
           />
-          토스페이
+          <img
+            src="@/assets/images/PaymentMethod/ㅌㅅ 아이콘.png"
+            alt="토스페이"
+          />
         </label>
-        <label>
+        <!-- 네이버페이 -->
+        <label class="payment-option">
           <input
             type="radio"
             name="paymentMethod"
             value="naverPay"
             v-model="selectedPaymentMethod"
           />
-          네이버페이
+          <img
+            src="@/assets/images/PaymentMethod/ㄴㅇㅂㅍㅇ 아이컨.png"
+            alt="네이버페이"
+          />
         </label>
-        <label>
+        <!-- 휴대폰 -->
+        <label class="payment-option">
           <input
             type="radio"
             name="paymentMethod"
             value="phonePay"
             v-model="selectedPaymentMethod"
           />
-          휴대폰
+          <img
+            src="@/assets/images/PaymentMethod/ㅎㄷㅍ 아이콘.png"
+            alt="휴대폰"
+          />
         </label>
       </div>
 
@@ -220,9 +237,13 @@ export default {
   width: 100%;
 }
 
+.cart-item-image,
+.cart-item-details {
+  min-height: 220px; /* 최소 높이 설정 */
+}
+
 .cart-item-image {
   width: 60%; /* 이미지 비율을 6에 맞게 설정 */
-  min-height: 220px; /* 최소 높이 설정 */
   margin-right: 20px;
 }
 
@@ -236,7 +257,6 @@ export default {
 .cart-item-details {
   flex: 1;
   width: 40%; /* 텍스트 비율을 4에 맞게 설정 */
-  min-height: 220px; /* 최소 높이 설정 */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -268,13 +288,44 @@ export default {
 }
 
 .payment-method {
-  margin-top: 30px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .payment-options {
   display: flex;
-  gap: 15px;
   justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.payment-option input {
+  display: none; /* 라디오 버튼 숨기기 */
+}
+
+.payment-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.payment-option input:checked + img {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 8px rgba(255, 75, 43, 0.5);
+}
+
+.payment-option img:hover {
+  transform: scale(1.1);
 }
 
 .payment-options label {
@@ -287,30 +338,29 @@ export default {
   margin-bottom: 20px;
 }
 
-/* 상단으로 스크롤 이동하는 버튼 */
 .scroll-to-top {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #333, #555); /* 그라데이션 추가 */
+  background: linear-gradient(135deg, #333, #555);
   color: white;
   border: none;
-  border-radius: 15%; /* 둥근 모서리 */
-  width: 40px; /* 약간 더 커진 버튼 */
+  border-radius: 15%;
+  width: 40px;
   height: 40px;
-  font-size: 24px; /* 텍스트 크기 조정 */
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* 그림자 조정 */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   z-index: 100;
-  transition: all 0.3s ease; /* 부드러운 애니메이션 추가 */
+  transition: all 0.3s ease;
 }
 
 .scroll-to-top:hover {
-  transform: scale(1.1); /* 호버 시 살짝 확대 */
-  background: linear-gradient(135deg, #555, #777); /* 호버 시 색상 변화 */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* 그림자 강화 */
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #555, #777);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 </style>
