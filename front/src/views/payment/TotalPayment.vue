@@ -12,9 +12,6 @@
       </div>
     </div>
 
-
-
-
     <!-- 선택된 아이템이 있을 때 -->
     <div v-if="selectedItems.length" class="cart-items">
       <div
