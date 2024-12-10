@@ -48,13 +48,13 @@ public class TalkController {
         return new ResponseEntity<>(talk.get(), HttpStatus.OK);
     }
 
-    @PutMapping("/api/faq/talk/{tno}")
+    @PutMapping("/api/faq/talkanswer/{tno}")
     public ResponseEntity<?> updateTalk(@PathVariable int tno, @RequestBody Talk talk) {
         talkService.updateTalk(talk);
         return new ResponseEntity<>(talk, HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/faq/talk/{tno}")
+    @DeleteMapping("/api/faq/talkanswer/{tno}")
     public ResponseEntity<?> deleteTalk(@PathVariable int tno) {
         talkService.deleteTalk(tno);
         return new ResponseEntity<>(HttpStatus.OK);

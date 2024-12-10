@@ -12,7 +12,7 @@
         <div class="notice_content">
           <p class="talk_big_title">문의 등록</p>
           <br />
-          <form class="">
+          <form @submit.prevent="validateAndSave">
             <div class="title_category_box">
               <!-- 제목 -->
               <div class="form-floating talk_title">
@@ -70,17 +70,29 @@
                 type="checkbox"
                 value=""
                 id="invalidCheck2"
+                v-model="isChecked"
                 required
               />
               <label class="form-check-label" for="invalidCheck2">
-                제출전에 작성한 내용이 맞는지 확인
+                제출 전에 작성한 내용이 맞는지 확인
               </label>
             </div>
             <br />
             <div class="talk_button">
-              <button class="btn btn-primary" type="submit" @click="save">제출</button>
+              <button
+                class="btn btn-primary"
+                type="button"
+                @click="validateAndSave"
+              >
+                제출
+              </button>
+              <router-link :to="'/faq/talklist'">
+                <button type="button" class="btn btn-success back_button">
+                  문의목록
+                </button>
+              </router-link>
               <router-link :to="'/faq'">
-                <button type="button" class="btn btn-warning goto_button">
+                <button type="button" class="btn btn-warning back_button">
                   <i class="bi bi-arrow-return-left"></i>
                 </button>
               </router-link>
@@ -92,35 +104,42 @@
     </div>
   </div>
 </template>
- 
-<script>
-import TalkService from '@/services/faq/TalkService';
 
+<script>
+import TalkService from "@/services/faq/TalkService";
 
 export default {
   data() {
     return {
-      talk:{
+      isChecked: false, // 최상위 데이터에 선언
+      talk: {
         title: "",
         content: "",
         category: "",
-      }
+      },
     };
   },
   methods: {
-    async save(){
+    async save() {
       try {
         let response = await TalkService.insert(this.talk);
-        console.log(response.data);
-        // this.$router.push("/faq/talk");
+        console.log("저장 성공:", response.data);
+        alert("저장되었습니다.");
+        this.$router.push("/faq/talklist");
       } catch (error) {
-        console.log("저장 실패",error);
+        console.error("저장 실패:", error);
       }
     },
-  }
+    validateAndSave() {
+      if (!this.isChecked) {
+        alert("작성한 내용이 맞는지 체크해주세요.");
+        return;
+      }
+      this.save();
+    },
+  },
 };
 </script>
-
 <style>
 /* 공지 전체 */
 .bigbox {
@@ -179,9 +198,8 @@ export default {
 }
 .talk_button {
   display: flex;
-}
-.goto_button {
-  margin-left: 1265%;
+  justify-content: space-between;
+  width: 72%;
 }
 .talk_big_title {
   font-size: 24px;

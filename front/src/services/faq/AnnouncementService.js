@@ -29,6 +29,7 @@ const remove = (ano) => {
   return axios.delete(`${baseURL}/fix/${ano}`);
 };
 
+
 // 서비스 객체
 const AnnouncementService = {
   getAll,
