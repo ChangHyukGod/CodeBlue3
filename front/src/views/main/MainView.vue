@@ -131,41 +131,30 @@
 
     <!-- 필터 -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-    <div class="d-flex  mb-4">
-      <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
-      <button class="btn btn-outline-secondary mx-2" @click="getAll('국내','')">국내숙소</button>
-      <button class="btn btn-outline-secondary mx-2" @click="getAll('해외','')">해외숙소</button>
-      <button class="btn btn-outline-secondary mx-2" @click="getAll('','바다')">바다뷰</button>
-      <button class="btn btn-outline-secondary mx-2" @click="getAll('','산')">산뷰</button>    
-    </div>
-    <div class="d-flex mb-2">    
-      <button
-    class="btn btn-outline-secondary dropdown-toggle form-control me-2"
-    type="button"
-    id="dropdownMenuButton"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-  >
-    {{ searchKeyword || "여행의 모든 것" }}
-  </button>
-  <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
-    <li>
-      <button class="dropdown-item"
-        v-for="keyword in keywords"
-        :key="keyword"
-        @click="selectKeyword(keyword)"
-      >
-        {{ keyword }}
-      </button>
-    </li>
-  </ul>
-  <button class="btn btn-outline-warning search_glass" type="button"
-    @click="getAll()"
-  >
-    <i class="bi bi-search"></i>
-  </button>
-            </div>
+      <div class="d-flex  mb-4">
+        <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('국내','')">국내숙소</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('해외','')">해외숙소</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('','바다')">바다뷰</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('','산')">산뷰</button>    
       </div>
+      <div class="d-flex mb-2">    
+        <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
+        <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
+          <li>
+            <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">
+            {{ keyword }}</button>
+          </li>
+        </ul>
+        <button class="btn btn-outline-warning search_glass" type="button" @click="getAll()">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
 
 
     <!-- 상품 카드 2 -->
@@ -186,7 +175,7 @@
                 <button class="btn btn-primary">보러가기</button>
               </router-link>
               <router-link :to="'/mainupdate/' + data.tourId">
-                <button class="btn btn-primary">수정/삭제</button>
+                <button class="btn btn-primary" v-if="userRole === 'ROLE_ADMIN'">수정/삭제</button>
               </router-link>
             </div>
           </div>
@@ -254,7 +243,7 @@ export default {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
       keywords: ["서울", "부산", "제주", "강원"], //드롭다운 항목
-      
+      userRole: "", // 유저 권한
     };
   },
   methods: {
@@ -286,6 +275,14 @@ export default {
   },
   mounted() {
     this.getAll();
+    // 로컬스토리지에서 토큰 정보 가져오기
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 };
 </script>

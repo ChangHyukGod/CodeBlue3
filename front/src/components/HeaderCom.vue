@@ -1,46 +1,37 @@
 <template>
   <!-- 최상단 메뉴 -->
-
   <div>
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
-        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login"
-          >로그인
-        </b-nav-item>
-
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login">로그인</b-nav-item>
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
 
-        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register"
-          >회원가입</b-nav-item
-        >
-
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register">회원가입</b-nav-item>
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
 
-        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
-          >로그아웃</b-nav-item
-        >
-
+        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout">로그아웃</b-nav-item>
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
 
         <b-nav-item>예약확인</b-nav-item>
         <b-nav-item>|</b-nav-item>
+
         <b-nav-item href="/faq">고객센터</b-nav-item>
         <b-nav-item>|</b-nav-item>
-        <!-- 메인화면 카드 데이터 추가(임시 위치) -->
-        <b-nav-item href="/add-main">추가</b-nav-item>
-        <b-nav-item v-if="userRole === 'ROLE_ADMIN'">|</b-nav-item>
+
+        <!-- 메인화면 카드 데이터 추가(관리자 로그인시 보임) -->
+        <b-nav-item href="/add-main" v-if="userRole === 'ROLE_ADMIN'">추가</b-nav-item>
         <b-nav-item>|</b-nav-item>
+
         <b-nav-item href="/cart">
           <i class="bi bi-cart"></i>
           <span class="badge bg-danger cart-count">{{ cartCount }}</span>
         </b-nav-item>
         <!-- 메인화면 카드 데이터 추가(임시 위치) -->
-        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin"
-          >관리자 페이지</b-nav-item
-        >
+        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin">관리자 페이지</b-nav-item>
       </div>
     </b-nav>
   </div>
+
   <div class="full-head">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
@@ -91,11 +82,11 @@
             <a class="nav-link" aria-current="page">쿠폰</a>
           </router-link>
           &nbsp;|&nbsp;
-          <router-link to="/recommend" class="nav-menu">
-            <a class="nav-link" aria-current="page">추천여행지</a> </router-link
+          <router-link to="/recommendgoogleview" class="nav-menu">
+            <a class="nav-link" aria-current="page">여행지검색</a> </router-link
           >&nbsp;|&nbsp;
           <router-link to="/review" class="nav-menu">
-            <a class="nav-link" aria-current="page">리뷰</a> </router-link
+            <a class="nav-link" aria-current="page">리뷰게시판</a> </router-link
           >&nbsp;|&nbsp;
           <router-link to="/mypage" class="nav-menu">
             <a class="nav-link" aria-current="page">
@@ -115,6 +106,7 @@ export default {
   data() {
     return {
       cartCount: 0,
+      userRole: "", // 유저 권한
     };
   },
 
@@ -147,6 +139,14 @@ export default {
         this.cartCount = updatedCount;
       }
     }, 200); // 200ms (0.2초) 간격으로 반복 실행
+    // 관리자 권한 : 로컬스토리지에서 토큰 정보 가져오기
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
   beforeUnmount() {
     // 이 Vue 컴포넌트가 화면에서 제거될 때, 불필요한 interval을 정리하여 메모리 누수 방지
