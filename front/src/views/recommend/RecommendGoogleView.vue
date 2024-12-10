@@ -124,7 +124,7 @@ export default {
     const fetchNearbyPlaces = (location) => {
       const request = {
         location,
-        radius: 20000, // 반경 20km
+        radius: 10000, // 반경 10km
         type: "tourist_attraction", // 관광지
       };
 

@@ -39,7 +39,7 @@ export default {
       const marker = new google.maps.Marker({
         position: location,
         map: map,
-        title: "Sobetsu Park Plum Garden",
+        title: "소베츠 플럼 가든",
       });
 
       // 검색 기능 설정
