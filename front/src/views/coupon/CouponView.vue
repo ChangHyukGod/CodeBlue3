@@ -1,7 +1,5 @@
 <template>
   <div class="container mt-5">
-  
-
     <!-- 대표 호텔 쿠폰 섹션 -->
     <div class="row justify-content-center my-4">
       <div class="col-md-6">
@@ -86,6 +84,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import CouponService from "@/services/coupon/CounponService";
 
 export default {
@@ -106,34 +105,19 @@ export default {
         console.log(response.data);
         // 성공하면 강제이동
 
-        alert("쿠폰이 발급되었습니다. 결제창에서 사용해주세요");
+        Swal.fire({
+          title: "쿠폰 발급 성공!",
+          text: "결제창에서 쿠폰을 사용하세요.",
+          icon: "success",
+          confirmButtonText: "확인",
+        });
+
         this.$router.push("/");
       } catch (error) {
         console.error("쿠폰 발급 중 오류 발생:", error);
         alert("쿠폰 발급 실패");
       }
     },
-    // async getWinterCoupon() {
-    //   try {
-    //     const response = await fetch("/api/coupon/claim", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ couponType: "winter-season" }),
-    //     });
-
-    //     const result = await response.json();
-    //     if (result.success) {
-    //       alert("겨울 시즌 쿠폰이 발급되었습니다!");
-    //     } else {
-    //       alert(`오류 발생: ${result.message}`);
-    //     }
-    //   } catch (error) {
-    //     console.error("쿠폰 발급 중 오류 발생:", error);
-    //     alert("쿠폰 발급에 실패했습니다. 다시 시도해주세요.");
-    //   }
-    // },
   },
 };
 </script>
