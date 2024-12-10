@@ -4,6 +4,7 @@ const baseURL = "http://localhost:8000/api/announcement";
 
 // 공지 전체 목록 조회
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
+
   return axios.get(
     `${baseURL}?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
   );
