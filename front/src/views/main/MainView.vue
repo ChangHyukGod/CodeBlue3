@@ -210,10 +210,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/recommend">
-            <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>숙소 근처 관광지, 인스타 핫플 췍~!</p>
             <a href="/recommend"><button class="btn btn-primary">추천페이지 보러가기</button></a>
           </div>
         </div>
@@ -221,10 +220,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/coupon">
-            <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/쿠폰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>쏠쏠한 혜택, 쿠폰/이벤트 췍~!</p>
             <a href="/coupon"><button class="btn btn-primary">쿠폰/이벤트 보러가기</button></a>
           </div>
         </div>
@@ -243,10 +241,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/faq">
-            <img :src="require(`@/assets/images/main/QnA.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/FAQ.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>기타문의 사항은 여기로!</p>
             <a href="/faq"><button class="btn btn-primary">고객센터 보러가기</button></a>
           </div>
         </div>
