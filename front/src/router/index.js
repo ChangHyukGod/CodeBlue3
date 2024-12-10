@@ -207,6 +207,7 @@ const routes = [
   {
     path: "/TotalPayment",
     component: () => import("../views/payment/TotalPayment.vue"),
+
   },
 ];
 const router = createRouter({

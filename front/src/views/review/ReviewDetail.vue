@@ -36,7 +36,7 @@
 
       <br>
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-primary" @click="goToUpdateReview(review.reviewId)" style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;  margin-right: 20px;">
+        <button type="button" class="btn btn-secondary" @click="goToUpdateReview(review.reviewId)" style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;  margin-right: 20px;">
           수정
         </button>
 

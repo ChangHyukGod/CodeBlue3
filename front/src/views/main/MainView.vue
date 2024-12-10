@@ -10,48 +10,24 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="/maindetail/104">
-          <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/164">
+          <img :src="require(`@/assets/images/main/배너제주.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/104">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
-          </a>
-          <p>광안대교 야경 보면서 따뜻한 연말갬성 챙기자구요~</p>
-        </div>
       </div>
       <div class="carousel-item">
-        <a href="/maindetail/85">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/104">
+          <img :src="require(`@/assets/images/main/배너광안.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/85">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">속초, 바다 앞 고급호텔!</button>
-          </a>
-          <p>속초 라마다 호텔 예약을 여기로~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/coupon">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="d-block w-100" width="800" height="600" />
+          <img :src="require(`@/assets/images/main/배너쿠폰.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/coupon">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">신규회원 쿠폰 받아가세요!</button>
-          </a>
-          <p>신규회원 대상, 20% 할인 쿠폰 발급 이벤트 중~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/recommenddetail/14">
-          <img :src="require(`@/assets/images/메뉴5.jpg`)" class="d-block w-100" width="800" height="600" />
+          <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/recommenddetail/14">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">겨울여행 추천!</button>
-          </a>
-          <p>겨울맞이 이런 곳은 어떠신가요? 추천페이지에서 둘러보아요~</p>
-        </div>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -76,14 +52,13 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/104">
-            <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천광안.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
             <p class="card-text">부산</p>
             <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
-              <!-- 상세페이지 주소창 하드코딩 예정 -->
+            <p class="text-primary fw-bold">70,000원</p>
               <div style="display: flex; justify-content: space-between">
                 <a href="/maindetail/104"><button class="btn btn-primary">보러가기</button></a>
               </div>
@@ -93,15 +68,17 @@
       <!-- 추천 카드 2 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/164">
+            <img :src="require(`@/assets/images/main/추천제주.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">올 겨울, 제주 어때~?</h5>
+            <p class="card-text">제주</p>
+            <p class="card-text">시골갬성 가득, 한옥숙소</p>
+            <p class="text-primary fw-bold">185,400원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/164"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
@@ -109,15 +86,17 @@
       <!-- 추천 카드 3 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/165">
+            <img :src="require(`@/assets/images/main/추천프랑스.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">유럽의 문화 중심지, 프랑스에서 하루</h5>
+            <p class="card-text">프랑스</p>
+            <p class="card-text">프랑스에서 즐기는 지중해 바다</p>
+            <p class="text-primary fw-bold">211,040원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/165"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
@@ -125,15 +104,17 @@
       <!-- 추천 카드 4 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/169">
+            <img :src="require(`@/assets/images/main/추천훗카이도.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">겨울왕국, 스키타고 즐기는 훗카이도</h5>
+            <p class="card-text">훗카이도</p>
+            <p class="card-text">유명한 스키리조트 윈저스노우 빌리지에서 15분 거리</p>
+            <p class="text-primary fw-bold">152,800원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/169"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
@@ -184,7 +165,9 @@
     <i class="bi bi-search"></i>
   </button>
             </div>
+
       </div>
+    </div>
 
 
     <!-- 상품 카드 2 -->
@@ -205,7 +188,7 @@
                 <button class="btn btn-primary">보러가기</button>
               </router-link>
               <router-link :to="'/mainupdate/' + data.tourId">
-                <button class="btn btn-primary">수정/삭제</button>
+                <button class="btn btn-primary" v-if="userRole === 'ROLE_ADMIN'">수정/삭제</button>
               </router-link>
             </div>
           </div>
@@ -244,10 +227,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/review">
-            <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/리뷰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>다른 사람들의 후기도 궁금해!</p>
             <a href="/review"><button class="btn btn-primary">리뷰게시판 보러가기</button></a>
           </div>
         </div>
@@ -273,8 +255,10 @@ export default {
     return {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
+
       keywords: ["국내","해외"], //드롭다운 항목
       
+
     };
   },
   methods: {
@@ -305,6 +289,14 @@ export default {
   },
   mounted() {
     this.getAll();
+    // 로컬스토리지에서 토큰 정보 가져오기
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 };
 </script>
