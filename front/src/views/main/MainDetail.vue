@@ -152,7 +152,7 @@
         </div>
 
         <!-- 우측 박스: 방 정보 -->
-        <div class="info-box d-flex flex-column justify-content-between">
+        <div class="info-box d-flex flex-column justify-content-between" style="border: 1px solid #d3d3d3; border-radius: 8px;">
           <div>
             <strong style="color: dark">숙박</strong>
             <h5 class="card-title mt-3">{{ room.roomName }}</h5>
