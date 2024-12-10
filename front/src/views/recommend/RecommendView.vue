@@ -6,6 +6,7 @@
       class="carousel slide"
       data-bs-ride="carousel"
       data-bs-interval="1500"
+      style="margin-bottom: 20px"
     >
       <div class="carousel-inner">
         <!-- 슬라이드 1 -->
@@ -93,15 +94,8 @@
         class="form-control"
         placeholder="검색어"
         v-model="searchKeyword"
-        style="border: 3px solid yellow"
       />
-      <button
-        class="btn btn-outline-warning"
-        type="button"
-        @click="getrecommend"
-      >
-        검색
-      </button>
+      <button class="btn btn" type="button" @click="getrecommend">검색</button>
     </div>
 
     <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지) -->
@@ -133,7 +127,7 @@ export default {
     return {
       pageIndex: 1,
       totalCount: 0,
-      recordCountPerPage: 4,
+      recordCountPerPage: 8,
       searchKeyword: "",
       recommends: [],
       carouselItems: [],
@@ -173,7 +167,6 @@ export default {
 <style>
 /* 카드 디자인 */
 .custom-card {
-  border: 2px solid #ffc107; /* 노란색 테두리 */
   background-color: #000; /* 검은색 배경 */
   color: #ffc107; /* 텍스트 기본 색 노란색 */
   border-radius: 10px;
@@ -183,14 +176,11 @@ export default {
 
 .custom-card:hover {
   transform: scale(1.05); /* 크기 확대 */
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.6); /* 입체적인 그림자 추가 */
-  border-color: #ff9800; /* 호버 시 테두리 색 약간 변경 */
 }
 
 .custom-card-img {
   height: 200px;
   object-fit: cover;
-  border-bottom: 2px solid #ffc107; /* 이미지 아래에 노란 테두리 */
 }
 
 .custom-card-body {
@@ -213,7 +203,6 @@ export default {
 .btn-dark:hover {
   background-color: #000; /* 호버 시 검은색 배경 */
   color: #ffc107; /* 호버 시 노란색 텍스트 */
-  border: 1px solid #ffc107; /* 테두리 유지 */
 }
 
 /* 추가 버튼 */
@@ -268,7 +257,6 @@ export default {
 }
 
 #carouselExampleAutoplaying {
-  border: 3px solid #ffc107; /* 노란색 테두리 */
   border-radius: 10px; /* 둥근 모서리 */
   padding: 10px; /* 여백 추가 */
 }
