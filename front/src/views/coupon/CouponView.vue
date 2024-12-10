@@ -1,13 +1,6 @@
 <template>
   <div class="container mt-5">
-    <!-- 상단 배너 -->
-    <div class="banner text-center mb-4">
-      <img
-        :src="require('@/assets/images/coupon3.png')"
-        alt="쿠폰 배너"
-        class="img-fluid rounded shadow"
-      />
-    </div>
+  
 
     <!-- 대표 호텔 쿠폰 섹션 -->
     <div class="row justify-content-center my-4">
@@ -113,8 +106,8 @@ export default {
         console.log(response.data);
         // 성공하면 강제이동
 
-        alert("쿠폰이 발급되었습니다. 마이페이지에서 확인하세요.");
-        this.$router.push("/coupon");
+        alert("쿠폰이 발급되었습니다. 결제창에서 사용해주세요");
+        this.$router.push("/");
       } catch (error) {
         console.error("쿠폰 발급 중 오류 발생:", error);
         alert("쿠폰 발급 실패");
