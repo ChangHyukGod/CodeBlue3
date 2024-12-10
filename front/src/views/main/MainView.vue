@@ -10,15 +10,9 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="/maindetail/104">
-          <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/164">
+          <img :src="require(`@/assets/images/main/배너제주.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/104">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
-          </a>
-          <p>광안대교 야경 보면서 따뜻한 연말갬성 챙기자구요~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/maindetail/85">
@@ -33,25 +27,13 @@
       </div>
       <div class="carousel-item">
         <a href="/coupon">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="d-block w-100" width="800" height="600" />
+          <img :src="require(`@/assets/images/main/배너쿠폰.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/coupon">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">신규회원 쿠폰 받아가세요!</button>
-          </a>
-          <p>신규회원 대상, 20% 할인 쿠폰 발급 이벤트 중~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/recommenddetail/14">
-          <img :src="require(`@/assets/images/메뉴5.jpg`)" class="d-block w-100" width="800" height="600" />
+          <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/recommenddetail/14">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">겨울여행 추천!</button>
-          </a>
-          <p>겨울맞이 이런 곳은 어떠신가요? 추천페이지에서 둘러보아요~</p>
-        </div>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -244,10 +226,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/review">
-            <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/리뷰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>다른 사람들의 후기도 궁금해!</p>
             <a href="/review"><button class="btn btn-primary">리뷰게시판 보러가기</button></a>
           </div>
         </div>
