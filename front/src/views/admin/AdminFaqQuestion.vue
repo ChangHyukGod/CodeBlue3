@@ -45,8 +45,13 @@
                                             data-bs-toggle="collapse" :data-bs-target="'#collapse-' + index"
                                             :aria-expanded="false" :aria-controls="'collapse-' + index">
                                             {{ data.question }}
-                                                수정/삭제
+                                            <div class="upde">
+                                                <button class="updede" @click="upde(data.ano)">
+                                                    수정/삭제
+                                                </button>
+                                            </div>
                                         </button>
+
                                     </h2>
                                     <div :id="'collapse-' + index" class="accordion-collapse collapse"
                                         :aria-labelledby="'heading-' + index" data-bs-parent="#faqAccordion">
@@ -366,5 +371,41 @@ export default {
 .page-item.disabled .page-link {
     color: #ccc;
     cursor: not-allowed;
+}
+
+.upde {
+    display: inline-block;
+    padding: 6px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffeb33;
+    /* 노란색 배경 */
+    color: #000;
+    border: 2px solid #ffeb33;
+    /* 노란색 테두리 */
+    border-radius: 25px;
+    /* 둥근 모서리 */
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 살짝 그림자 효과 */
+}
+
+.upde:hover {
+    background-color: #ffd700;
+    /* 호버 시 밝은 노란색으로 변경 */
+    color: white;
+    border-color: #ffd700;
+    /* 테두리 색상도 변경 */
+    transform: scale(1.05);
+    /* 살짝 커지는 효과 */
+}
+
+.upde:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 235, 51, 0.6);
+    /* 포커스 시 황금색 테두리 */
 }
 </style>
