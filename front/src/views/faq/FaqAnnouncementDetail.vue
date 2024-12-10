@@ -5,8 +5,9 @@
       <div class="notice_container">
         <div class="notice_content">
           <br /><br />
-          <p class="title">{{ title }}</p>
+          <p class="title">{{ x.title }}</p>
           <hr />
+
           <p class="content">{{ content }}</p>
           <p>{{ createDate }}</p>
         </div>
@@ -33,6 +34,8 @@ import AnnouncementService from "@/services/faq/AnnouncementService";
 export default {
   data() {
     return {
+      x: {},
+
       ano: "",
       title: "",
       content: "",
@@ -42,6 +45,7 @@ export default {
   methods: {
     async getDetail(ano) {
       try {
+
         let response = await AnnouncementService.get(ano);
         this.ano = response.data.ano;
         this.title = response.data.title;
@@ -70,6 +74,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 /* 전체 박스 */
 .announce_body_box {
   width: 70%;
@@ -77,11 +82,13 @@ export default {
   border-radius: 10px;
   padding: 15px;
 }
+
 .title {
   text-align: center;
   font-weight: bolder;
   font-size: 25px;
 }
+
 .content {
   padding: 5px 5px 5px 10px;
 }
