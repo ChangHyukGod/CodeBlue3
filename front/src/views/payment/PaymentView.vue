@@ -157,7 +157,6 @@ export default {
       value: 20.0,
       name: "",
       id: "",
-
       toss:{
         // Store ID 설정
         storeId: "store-37adc342-491c-4a84-ae08-08fe128442bb",
