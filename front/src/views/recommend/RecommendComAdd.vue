@@ -16,9 +16,9 @@
     <div class="form-floating mb-3">
       <select class="form-select" id="commentLoc" v-model="comments.commentLoc">
         <option value="" disabled selected>Choose a location</option>
-        <option value="경남 함안">경남 함안</option>
-        <option value="충북 제청">충북 제천</option>
-        <option value="일본 오사카">일본 오사카</option>
+        <option value="홋카이도 소베츠 수조원">홋카이도 소베츠 수조원</option>
+        <option value="니스 성 니콜라스 성당">니스 성 니콜라스 성당</option>
+        <option value="해운대구 해마루">해운대구 해마루</option>
       </select>
       <label for="commentLoc">Location</label>
     </div>

@@ -9,12 +9,7 @@
         id="search-input"
         type="text"
         placeholder="장소를 검색하세요"
-        style="
-          width: 300px;
-          padding: 10px;
-          font-size: 30px;
-          border: 3px solid yellow;
-        "
+        style="width: 300px; padding: 10px; font-size: 15px"
       />
     </div>
   </div>
@@ -29,7 +24,7 @@ export default {
   },
   methods: {
     initMap() {
-      const location = { lat: 37.1436, lng: 128.2023 };
+      const location = { lat: 43.6971, lng: 7.2753 };
 
       // 맵을 렌더링할 div 가져오기
       const mapElement = document.getElementById("map");
@@ -44,7 +39,7 @@ export default {
       const marker = new google.maps.Marker({
         position: location,
         map: map,
-        title: "의림지",
+        title: "성 니콜라스 정교회 성당",
       });
 
       // 검색 기능 설정
@@ -92,7 +87,6 @@ export default {
   width: 100%;
   height: 400px;
   border-radius: 10px; /* 둥근 모서리 */
-  border: 4px solid #ffdd00; /* 노란색 외곽선 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
   transition: all 0.3s ease; /* 마우스 오버 시 부드러운 변화 */
 }
