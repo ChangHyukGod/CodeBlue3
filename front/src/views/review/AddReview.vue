@@ -41,16 +41,13 @@
     <!-- targetId 입력 -->
     <div class="input-group">
       <span class="input-group-text" style="font-weight: bold;">상품명</span>
-      <select v-model="review.targetId" class="form-select">
+      <select v-model="review.targetId" @change="setTargetId" class="form-select">
         <option value="" disabled>상품 선택</option>
-        <option v-for="product in tourNames" :key="product" :value="product">
-          {{ product }}
+        <option v-for="product in tourNames" :key="product.id" :value="product.id">
+          {{ product.name }}
         </option>
       </select>
     </div>
-
-
-
 
     <!-- 내용 입력 섹션 -->
     <div class="mb-3">
@@ -105,11 +102,6 @@ export default {
         imageUrl: "",
         image: undefined
       },
-      products: [ // 상품 목록 예시
-      ],
-      tourList: [
-      ],
-      tourNames: [],
 
     }
   },
@@ -119,17 +111,22 @@ export default {
   },
   methods: {
     select() {
-
-
       this.review.image = this.$refs.file.files[0];
-
     },
 
     setRating(star) {
       this.review.rating = star; // 평점 설정
     },
+
     goToReview() {
       this.$router.push("/review"); // /review로 이동
+    },
+
+    setTargetId() {
+      const selectedProduct = this.tourNames.find(product => product.id === this.review.targetId);
+      if (selectedProduct) {
+        this.review.targetId = Number(selectedProduct.id); // 정수형으로 변환
+      }
     },
 
     async save() {
@@ -139,29 +136,29 @@ export default {
       }
 
       try {
+        // TARGET_ID를 정수형으로 변환
+        this.review.targetId = Number(this.review.targetId);
+
         let response = await ReviewService.insert(this.review);
         console.log(response.data);
         this.$router.push("/review");
       } catch (error) {
-        console.error(error.response ? error.response.data : error.message);
+        console.error('Error saving review:', error.response ? error.response.data : error.message);
+        alert('후기 저장 중 오류가 발생했습니다. 다시 시도해 주세요.');
       }
     },
 
     async getTourIds() {
       try {
-        // MainService.getTourId()를 함수처럼 호출합니다.
         const response = await MainService.getTourId();
-
-        // tourList를 업데이트
         this.tourList = response.data;
       } catch (error) {
-        console.error("Error fetching rooms:", error);
+        console.error("Error fetching tour IDs:", error);
       }
     },
 
     async getTourNames() {
       try {
-        // tourList가 비어있으면 로컬 스토리지에서 불러옵니다.
         if (!this.tourList || this.tourList.length === 0) {
           const savedTourList = localStorage.getItem("tourList");
           if (savedTourList) {
@@ -172,20 +169,13 @@ export default {
           }
         }
 
-        // Promise.all로 모든 tourId에 대해 이름을 병렬로 가져옵니다.
         const namePromises = this.tourList.map(async (tourId) => {
           const response = await MainService.getName(tourId);
-          return response.data; // 이름만 반환
+          return { id: tourId, name: response.data }; // id와 이름을 함께 반환
         });
 
-        // 이름 배열 생성
-        const tourNames = await Promise.all(namePromises);
-
-        // 이름 배열 확인
-        console.log("Tour Names:", tourNames);
-
-        // 필요하면 다른 속성으로 저장 가능
-        this.tourNames = tourNames;
+        this.tourNames = await Promise.all(namePromises);
+        console.log("Tour Names:", this.tourNames);
 
       } catch (error) {
         console.error("Error fetching tour names:", error);
@@ -194,10 +184,7 @@ export default {
   },
   mounted() {
     this.getTourIds().then(() => {
-      // tourList를 로컬 스토리지에 저장
       localStorage.setItem("tourList", JSON.stringify(this.tourList));
-
-      // getTourNames를 호출하여 products 배열을 업데이트
       this.getTourNames();
     });
   },
