@@ -269,28 +269,28 @@ export default {
           this.menuItems = [
             {
               MENU_ID: 3,
-              MENU_NAME: "청풍문화재단지",
-              MENU_DETAIL:
-                "조선 시대의 건축물과 생활상을 엿볼 수 있는 역사적인 장소",
+              // MENU_NAME: "청풍문화재단지",
+              // MENU_DETAIL:
+              //   "조선 시대의 건축물과 생활상을 엿볼 수 있는 역사적인 장소",
               // MENU_PRICE: "3,500짯(640ml)",
-              MENU_IMAGE_URL: "메뉴두번째2.jpg",
+              MENU_IMAGE_URL: "니스2.png",
             },
             {
               MENU_ID: 4,
-              MENU_NAME: "제천 청풍호반 케이블카",
-              MENU_DETAIL: "청풍호를 한눈에 볼 수 있는 케이블카",
+              // MENU_NAME: "제천 청풍호반 케이블카",
+              // MENU_DETAIL: "청풍호를 한눈에 볼 수 있는 케이블카",
               // MENU_PRICE: "15,000짯",
-              MENU_IMAGE_URL: "메뉴두번째3.jpg",
+              MENU_IMAGE_URL: "니스3.jpg",
             },
             {
               MENU_ID: 2,
-              MENU_NAME: "의림지솔밭공원",
-              MENU_DETAIL: "의림지 주변에 조성된 솔밭공원에",
+              // MENU_NAME: "의림지솔밭공원",
+              // MENU_DETAIL: "의림지 주변에 조성된 솔밭공원에",
               // MENU_PRICE: "3,000짯(330ml)",
-              MENU_IMAGE_URL: "메뉴두번째4.jpg",
+              MENU_IMAGE_URL: "니스4.jpg",
             },
           ];
-          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "맵2.png" }];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "니스5.jpg" }];
 
           this.menuItems3 = [
             {
@@ -307,28 +307,28 @@ export default {
           this.menuItems = [
             {
               MENU_ID: 5,
-              MENU_NAME: "유니버설 스튜디오 재팬",
-              MENU_DETAIL:
-                "남녀노소 누구나 즐길 수 있는 오사카 최고의 테마파크",
+              // MENU_NAME: "유니버설 스튜디오 재팬",
+              // MENU_DETAIL:
+              //   "남녀노소 누구나 즐길 수 있는 오사카 최고의 테마파크",
               // MENU_PRICE: "12,000짯",
-              MENU_IMAGE_URL: "세번째메뉴2.jpg",
+              MENU_IMAGE_URL: "광안리2.jpg",
             },
             {
               MENU_ID: 6,
-              MENU_NAME: "오사카 성",
-              MENU_DETAIL: "오사카 여행 필수 명소",
+              // MENU_NAME: "오사카 성",
+              // MENU_DETAIL: "오사카 여행 필수 명소",
               // MENU_PRICE: "4,000짯(500ml)",
-              MENU_IMAGE_URL: "세번째메뉴3.jpg",
+              MENU_IMAGE_URL: "광안리3.jpeg",
             },
             {
               MENU_ID: 6,
-              MENU_NAME: "가이유칸 수족관",
-              MENU_DETAIL: "세계 최대 규모의 수족관",
+              // MENU_NAME: "가이유칸 수족관",
+              // MENU_DETAIL: "세계 최대 규모의 수족관",
               // MENU_PRICE: "4,000짯(500ml)",
-              MENU_IMAGE_URL: "세번째메뉴4.jpg",
+              MENU_IMAGE_URL: "광안리1.jpg",
             },
           ];
-          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "맵3.png" }];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "광안리5.jpg" }];
 
           this.menuItems3 = [
             {
