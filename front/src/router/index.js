@@ -122,8 +122,6 @@ const routes = [
     component: () => import("../views/recommend/GoogleTestView.vue"),
   },
 
-
-
   {
     path: "/addadmin",
     component: () => import("../views/admin/AddAdminDb.vue"),
@@ -178,7 +176,14 @@ const routes = [
     path: "/cart",
     component: () => import("../views/cart/CartView.vue"),
   },
-
+    {
+    path: "/addadmin/:fno",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
+{
+    path: "/addadmin/:ano",
+    component: () => import("../views/admin/AddAdminDb.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

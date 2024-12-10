@@ -28,7 +28,7 @@
     <select id="selectAnnounceById" parameterType="int" resultType="Announce">
         SELECT *
         FROM ANNOUNCE
-        WHERE ANO = #{ANO}
+        WHERE ANO = #{ano}
     </select>
 
     <update id="updateAnnounce" parameterType="Announce">
@@ -36,12 +36,12 @@
         SET TITLE  =#{title},
             ANSWER = #{answer},
             DATE   = #{date}
-        WHERE ANO = #{ANO}
+        WHERE ANO = #{ano}
     </update>
 
     <delete id="deleteAnnounceById" parameterType="int">
         DELETE
         FROM ANNOUNCE
-        WHERE ANO = #{ANO}
+        WHERE ANO = #{ano}
     </delete>
 </mapper>

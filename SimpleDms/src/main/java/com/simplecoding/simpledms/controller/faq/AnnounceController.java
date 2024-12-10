@@ -38,7 +38,7 @@ public class AnnounceController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/api/announcement/{ano}")
+    @GetMapping("/api/announcement/detail/{ano}")
     public ResponseEntity<?> selectAno(@PathVariable int ano) {
         Optional<Announce> announce=announceService.selectAnoById(ano);
         if (announce.isEmpty()) {
