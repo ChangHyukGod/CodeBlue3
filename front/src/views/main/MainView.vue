@@ -149,13 +149,29 @@
     </div>
 
     <!-- 필터 -->
-    <div class="d-flex mb-4">
-      <button class="btn btn-outline-secondary mx-2">전체보기</button>
-      <button class="btn btn-outline-secondary mx-2">국내숙소</button>
-      <button class="btn btn-outline-secondary mx-2">해외숙소</button>
-      <button class="btn btn-outline-secondary mx-2">바다뷰</button>
-      <button class="btn btn-outline-secondary mx-2">산뷰</button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex  mb-4">
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('','')">전체보기</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('국내','')">국내숙소</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('해외','')">해외숙소</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('','바다')">바다뷰</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('','산')">산뷰</button>    
     </div>
+    <div class="d-flex mb-2">    
+      <input
+            class="form-control me-2 search_text"
+             name="searchKeyword"
+              type="search"
+              placeholder="여행의 모든 것"
+              aria-label="Search"
+              v-model="searchKeyword"
+            />
+      <button class="btn btn-outline-warning search_glass" type="submit" @click="getAll()">
+              <i class="bi bi-search"></i>
+              </button>
+            </div>
+            </div>
+
 
     <!-- 상품 카드 2 -->
     <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -245,12 +261,19 @@ export default {
   data() {
     return {
       mains: [], //빈배열(json)
+      searchKeyword:"", // 검색어
+      
     };
   },
   methods: {
-    async getAll(){
+    async getAll(category = "", view = ""){
+      this.category = category;
+      this.view = view;
+      console.log(this.category);
+      console.log(this.view);
+      console.log(this.searchKeyword);
       try {
-        let response = await MainService.getALLnp();
+        let response = await MainService.getALLnp(this.searchKeyword,this.category,this.view);
         const { results, totalCount } = response.data;
         console.log(response.data);
         this.mains = results;
@@ -258,6 +281,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.searchKeyword = "";
     }
   },
   mounted() {
