@@ -138,7 +138,7 @@
 
 <script>
 import CouponService from "@/services/coupon/CounponService";
-import Swal from "sweetalert2";
+import PortOne from "@portone/browser-sdk/v2";
 
 export default {
   data() {
@@ -157,6 +157,18 @@ export default {
       value: 20.0,
       name: "",
       id: "",
+      toss:{
+        // Store ID 설정
+        storeId: "store-37adc342-491c-4a84-ae08-08fe128442bb",
+        // 채널 키 설정
+        channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
+        paymentId: `payment-${crypto.randomUUID()}`,
+        orderName: "나이키 와플 트레이너 2 SD",
+        totalAmount: 1000,
+        currency: "CURRENCY_KRW",
+        payMethod: "CARD",
+      },
+      
     };
   },
   mounted() {
@@ -176,15 +188,16 @@ export default {
   },
   methods: {
     processPayment() {
-      if (!this.selectedPaymentMethod) {
-        // 결제 수단 미선택 시 경고
-        Swal.fire({
-          icon: "warning",
-          title: "결제 수단 미선택",
-          text: "결제 수단을 선택해주세요.",
-          confirmButtonText: "확인",
-        });
-        return;
+      try {
+        // 쉼표를 제거하고 정수형으로 변환
+        const sanitizedPrice = parseInt(
+          this.reservation.totalPrice.replace(/,/g, ""),
+          10
+        );
+        this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
+        PortOne.requestPayment(this.toss);
+      } catch (error) {
+        console.log(error);
       }
     },
 
@@ -211,7 +224,7 @@ export default {
 
       const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
       const discountedPrice =
-        this.reservation.originalPrice * (1 - discountRate);
+      this.reservation.originalPrice * (1 - discountRate);
       this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
 
       this.showCouponForm = false; // 폼 닫기

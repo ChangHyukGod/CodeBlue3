@@ -245,8 +245,6 @@
         </div>
       </div>
     </div>
-
-  </div>
 </template>
 <script>
 import MainService from "@/services/main/MainService";
