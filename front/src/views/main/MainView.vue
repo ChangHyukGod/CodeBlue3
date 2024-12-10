@@ -151,7 +151,7 @@
     <!-- 필터 -->
     <div class="d-flex justify-content-between align-items-center mb-4">
     <div class="d-flex  mb-4">
-      <button class="btn btn-outline-secondary mx-2" @click="getAll('','')">전체보기</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
       <button class="btn btn-outline-secondary mx-2" @click="getAll('국내','')">국내숙소</button>
       <button class="btn btn-outline-secondary mx-2" @click="getAll('해외','')">해외숙소</button>
       <button class="btn btn-outline-secondary mx-2" @click="getAll('','바다')">바다뷰</button>
@@ -169,8 +169,7 @@
   </button>
   <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
     <li>
-      <button
-        class="dropdown-item"
+      <button class="dropdown-item"
         v-for="keyword in keywords"
         :key="keyword"
         @click="selectKeyword(keyword)"
@@ -179,9 +178,7 @@
       </button>
     </li>
   </ul>
-  <button
-    class="btn btn-outline-warning search_glass"
-    type="button"
+  <button class="btn btn-outline-warning search_glass" type="button"
     @click="getAll()"
   >
     <i class="bi bi-search"></i>
@@ -300,7 +297,12 @@ export default {
 
     selectKeyword(keyword){
       this.searchKeyword = keyword;
-    }
+    },
+
+    getreset(){
+      this.searchKeyword = "";
+      this.getAll();
+    },
   },
   mounted() {
     this.getAll();
