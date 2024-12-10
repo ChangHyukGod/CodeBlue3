@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-3" v-for="review in topReviews" :key="review.reviewId">
           <div class="card" style="width: 15rem; border: none;">
-            <img :src="review.imageUrl || '/images/\uCE68\uB300.jfif'" class="card-img-top" alt="...">
+            <img :src="review.imageUrl || '@/assets/images/침대.jpg'" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">
                 <span>
@@ -26,7 +26,7 @@
                       style="color: #FFD700;"></i>
                   </template>
                 </span><br>
-                <span style="font-weight: bold; font-size: 1.1rem; cursor: pointer;"
+                <span class="review-title" style="font-weight: bold; font-size: 1.1rem; cursor: pointer;"
                   @click="goToReviewDetail(review.reviewId)">
                   {{ review.title }}
                 </span><br>
@@ -42,28 +42,29 @@
       <table class="table table-hover table-with-top-border">
         <thead>
           <tr>
-            <th scope="col" style="width: 10%;">번호</th>
-            <th scope="col" style="width: 15%;">평점</th>
-            <th scope="col" style="width: 50%;">제목</th>
-            <th scope="col" style="width: 10%;">작성자</th>
-            <th scope="col" style="width: 15%;">작성일</th>
+            <th scope="col" style="width: 10%; padding-bottom: 20px; padding-top: 20px; text-align: center;">번호</th>
+            <th scope="col" style="width: 15%; padding-bottom: 20px; padding-top: 20px; text-align: center;">평점</th>
+            <th scope="col" style="width: 50%; padding-bottom: 20px; padding-top: 20px; text-align: center;">제목</th>
+            <th scope="col" style="width: 15%; padding-bottom: 20px; padding-top: 20px; text-align: center;">작성자</th>
+            <th scope="col" style="width: 10%; padding-bottom: 20px; padding-top: 20px; text-align: center;">작성일</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(review, index) in reviews" :key="index">
-            <th>{{ totalCount - (pageIndex - 1) * recodeCountPerPage - index }}</th>
-            <td>
+            <th style="text-align: center;">{{ totalCount - (pageIndex - 1) * recodeCountPerPage - index }}</th>
+            <td style="text-align: center;">
               <template v-for="star in 5" :key="star">
                 <i class="bi" :class="star <= review.rating ? 'bi-star-fill' : 'bi-star'" style="color: #FFD700;"></i>
               </template>
             </td>
             <td style="cursor: pointer;" @click="goToReviewDetail(review.reviewId)">
-              {{ review.title }}
-              <!-- 최근 작성된 글이면 N 아이콘 표시 -->
-              <span v-if="isNew(review.createdAt)" class="new-icon">N</span>
+              <span class="review-title">
+                {{ review.title }}
+                <span v-if="isNew(review.createdAt)" class="new-icon">N</span>
+              </span>
             </td>
-            <td>{{ review.authorEmail }}</td>
-            <td>{{ formatDate(review.createdAt) }}</td>
+            <td style="text-align: center;">{{ review.authorEmail }}</td>
+            <td style="text-align: center;">{{ formatDate(review.createdAt) }}</td>
           </tr>
         </tbody>
       </table>
@@ -133,7 +134,7 @@ export default {
       try {
         let response = await ReviewService.getAll(
           this.searchKeyword,
-          this.pageIndex -1,
+          this.pageIndex - 1,
           this.recodeCountPerPage
         );
         const { results, totalCount } = response.data;
@@ -169,7 +170,7 @@ export default {
 
 <style>
 .new-icon {
-  background-color: red; /* 노란색 배경 */
+  background-color: red; /* 배경색 */
   color: white; /* 흰색 글자 */
   font-size: 0.6rem; /* 글자 크기 */
   font-weight: bold; /* 글자 굵기 */
@@ -177,6 +178,15 @@ export default {
   margin-left: 6px; /* 제목과의 간격 */
   border-radius: 20px; /* 둥근 모서리 */
 }
+
+.review-title {
+  text-decoration: none; /* 기본 텍스트 장식 제거 */
+}
+
+.review-title:hover {
+  text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
+
 .pagination {
   display: flex;
   justify-content: center; /* 중앙 정렬 */
@@ -204,9 +214,8 @@ export default {
   color: tan; /* 마우스 오버 링크 색상 */
 }
 
-
-
 .table {
   border-top: 4px solid bisque; /* 테이블 상단 테두리 색상 */
 }
+
 </style>

@@ -3,8 +3,8 @@
     <!-- 상단 텍스트와 이미지 컨테이너 -->
     <div class="d-flex align-items-center justify-content-between">
       <div>
-        <h2 style="margin-bottom: 20px; font-weight: bold;">숙박업소후기</h2>
-        <h5 style="margin-bottom: 20px;">숙박업소를 다녀온 고객분들의 솔직한 후기</h5>
+        <h2 style="margin-bottom: 20px; font-weight: bold;">숙박업소후기 수정</h2>
+        <h5 style="margin-bottom: 20px;">숙박업소를 다녀온 고객분들의 솔직한 후기 수정</h5>
       </div>
       <div class="image-container" style="margin-right: 20px">
         <img src="/images/icon-7680929_1920.png" alt="따봉"
@@ -38,7 +38,7 @@
     </div>
     <hr>
 
-    <!-- targetId 입력 -->
+    <!-- 상품명 입력 -->
     <div class="input-group">
       <span class="input-group-text" style="font-weight: bold;">상품명</span>
       <input type="number" v-model="review.targetId" class="form-control" />
@@ -52,21 +52,17 @@
       <input type="file" id="imageUpload" ref="file" @change="select" accept="image/*" class="form-control mt-2" />
     </div>
 
+    <!-- 이미지 미리보기 -->
     <div class="mb-3">
-      <img
-        :src="review.imageUrl"
-        class="card-img-top"
-        alt="이미지"
-        style="width: 50%"
-      />
+      <img :src="review.imageUrl" class="card-img-top" alt="이미지 미리보기" style="width: 50%;" />
     </div>
 
     <div class="d-flex justify-content-center" style="margin-top: 40px; margin-bottom: 40px;">
       <button type="button" class="btn btn-warning" @click="update"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
-        글등록
+        수정 완료
       </button>
-      <button type="button" class="btn btn-secondary ms-3"
+      <button type="button" class="btn btn-secondary ms-3" @click="goToReview"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         취소
       </button>
@@ -93,7 +89,6 @@
 <script>
 import ReviewService from "@/services/review/ReviewService";
 
-
 export default {
   data() {
     return {
@@ -114,7 +109,6 @@ export default {
   },
   methods: {
     select() {
-      //   this.fileDb.image = this.$refs.file.files[0];
       const file = this.$refs.file.files[0];
       if (file) {
         this.review.image = file;
@@ -124,6 +118,9 @@ export default {
     
     setRating(star) {
       this.review.rating = star; // 평점 설정
+    },
+    goToReview() {
+      this.$router.push('/review');
     },
 
     async getDetail(reviewId) {
@@ -136,46 +133,33 @@ export default {
       }
     },
     
-    async update() {
-
-      try {
-        let response = await ReviewService.update(
-          this.review.reviewId,
-          this.review
-        );
-        console.log(response.data);
-
-        this.$router.push("/review").then(() => {
-          window.location.reload(); // 자동 새로고침
-        });
-
-        alert("데이터 수정됨");
-      } catch (error) {
-        this.review.image = undefined;
-        console.log(error);
-      }
-
+async update() {
   if (!this.review.title) {
     alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
     return;
   }
 
   try {
-        let response = await ReviewService.update(
-          this.review.reviewId,
-          this.review
-        );
-        console.log(response.data);
+    // review.image가 존재할 경우에만 이미지 데이터를 포함하도록 수정
+    const payload = {
+      ...this.review,
+      image: this.review.image ? this.review.image : null // 이미지가 없으면 null로 설정
+    };
 
-        this.$router.push("/review").then(() => {
-          window.location.reload(); // 자동 새로고침
-        });
+    let response = await ReviewService.update(
+      this.review.reviewId,
+      payload
+    );
+    console.log(response.data);
 
-        alert("데이터 수정됨");
-      } catch (error) {
-        this.review.image = undefined;
-        console.log(error);
-      }
+    this.$router.push("/review").then(() => {
+      window.location.reload(); // 자동 새로고침
+    });
+
+    alert("수정 완료되었습니다");
+  } catch (error) {
+    console.log(error);
+  }
 }
   },
   mounted() {
