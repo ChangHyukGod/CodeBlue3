@@ -131,28 +131,41 @@
 
     <!-- 필터 -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <div class="d-flex  mb-4">
-        <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('국내','')">국내숙소</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('해외','')">해외숙소</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('','바다')">바다뷰</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('','산')">산뷰</button>    
-      </div>
-      <div class="d-flex mb-2">    
-        <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
-        type="button"
-        id="dropdownMenuButton"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
-        <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
-          <li>
-            <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">
-            {{ keyword }}</button>
-          </li>
-        </ul>
-        <button class="btn btn-outline-warning search_glass" type="button" @click="getAll()">
-          <i class="bi bi-search"></i>
-        </button>
+    <div class="d-flex  mb-4">
+      <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('해변가근처')"> 해변가근처</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
+      <button class="btn btn-outline-secondary mx-2" @click="getAll('자연친화적')">자연친화적</button>    
+    </div>
+    <div class="d-flex mb-2">    
+      <button
+    class="btn btn-outline-secondary dropdown-toggle form-control me-2"
+    type="button"
+    id="dropdownMenuButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    {{ searchKeyword || "여행의 모든 것" }}
+  </button>
+  <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
+    <li>
+      <button class="dropdown-item"
+        v-for="keyword in keywords"
+        :key="keyword"
+        @click="selectKeyword(keyword)"
+      >
+        {{ keyword }}
+      </button>
+    </li>
+  </ul>
+  <button class="btn btn-outline-warning search_glass" type="button"
+    @click="getAll()"
+  >
+    <i class="bi bi-search"></i>
+  </button>
+            </div>
+
       </div>
     </div>
 
@@ -242,19 +255,20 @@ export default {
     return {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
-      keywords: ["서울", "부산", "제주", "강원"], //드롭다운 항목
-      userRole: "", // 유저 권한
+
+      keywords: ["국내","해외"], //드롭다운 항목
+      
+
     };
   },
   methods: {
-    async getAll(category = "", view = ""){
-      this.category = category;
+    async getAll(view = ""){
       this.view = view;
       console.log(this.category);
       console.log(this.view);
       console.log(this.searchKeyword);
       try {
-        let response = await MainService.getALLnp(this.searchKeyword,this.category,this.view);
+        let response = await MainService.getALLnp(this.searchKeyword,this.view);
         const { results, totalCount } = response.data;
         console.log(response.data);
         this.mains = results;
