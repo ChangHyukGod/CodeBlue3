@@ -148,14 +148,14 @@
         <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">자연친화적</button>    
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">고즈넉한</button>    
       </div>
       <div class="d-flex mb-2">    
         <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
         type="button"
         id="dropdownMenuButton"
         data-bs-toggle="dropdown"
-        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
+        aria-expanded="false">{{ searchKeyword || "국내외 구분" }}</button>
         <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
           <li>
             <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">{{ keyword }}</button>
@@ -210,10 +210,8 @@
           <a href="/recommend">
             <img :src="require(`@/assets/images/main/추천.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
-          <div class="card-body" style="display: flex; gap: 20px; width: 300px;">
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <a href="/recommend"><button class="btn btn-primary">추천페이지</button></a>
-            <p style="font-size: 20px; font-style: bold;">/</p>
-            <a href="/recommendgoogleview"><button class="btn btn-primary">여행지검색</button></a>
           </div>
         </div>
       </div>
