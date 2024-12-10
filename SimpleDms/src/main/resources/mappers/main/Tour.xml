@@ -7,11 +7,9 @@
         SELECT *
         FROM TOUR
         WHERE
-            (#{category} IS NULL OR CATEGORY LIKE '%'||#{category}||'%')
-          AND
             (#{view} IS NULL OR "VIEW" LIKE '%'||#{view}||'%')
           AND
-            (LOCATION LIKE '%'||#{searchKeyword}||'%')
+            (CATEGORY LIKE '%'||#{searchKeyword}||'%')
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
             FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
