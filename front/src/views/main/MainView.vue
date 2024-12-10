@@ -15,15 +15,9 @@
         </a>
       </div>
       <div class="carousel-item">
-        <a href="/maindetail/85">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/104">
+          <img :src="require(`@/assets/images/main/배너광안.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/85">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">속초, 바다 앞 고급호텔!</button>
-          </a>
-          <p>속초 라마다 호텔 예약을 여기로~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/coupon">
@@ -58,14 +52,13 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/104">
-            <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천광안.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
             <p class="card-text">부산</p>
             <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
-              <!-- 상세페이지 주소창 하드코딩 예정 -->
+            <p class="text-primary fw-bold">70,000원</p>
               <div style="display: flex; justify-content: space-between">
                 <a href="/maindetail/104"><button class="btn btn-primary">보러가기</button></a>
               </div>
@@ -75,15 +68,17 @@
       <!-- 추천 카드 2 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/164">
+            <img :src="require(`@/assets/images/main/추천제주.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">올 겨울, 제주 어때~?</h5>
+            <p class="card-text">제주</p>
+            <p class="card-text">시골갬성 가득, 한옥숙소</p>
+            <p class="text-primary fw-bold">185,400원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/164"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
@@ -91,15 +86,17 @@
       <!-- 추천 카드 3 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/165">
+            <img :src="require(`@/assets/images/main/추천프랑스.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">유럽의 문화 중심지, 프랑스에서 하루</h5>
+            <p class="card-text">프랑스</p>
+            <p class="card-text">프랑스에서 즐기는 지중해 바다</p>
+            <p class="text-primary fw-bold">211,040원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/165"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
@@ -107,15 +104,17 @@
       <!-- 추천 카드 4 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/169">
+            <img :src="require(`@/assets/images/main/추천훗카이도.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">겨울왕국, 스키타고 즐기는 훗카이도</h5>
+            <p class="card-text">훗카이도</p>
+            <p class="card-text">유명한 스키리조트 윈저스노우 빌리지에서 15분 거리</p>
+            <p class="text-primary fw-bold">152,800원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/169"><button class="btn btn-primary">보러가기</button></a>
               </div>
           </div>
         </div>
