@@ -38,9 +38,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
-  </div>
-  
+  </div>  
   <br/>
 
     <!-- 메뉴 1 : 연말특가 -->
