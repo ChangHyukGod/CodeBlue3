@@ -74,5 +74,9 @@ public class Criteria implements Serializable {
 
 	private String view;     // 뷰 추가
 
+
+
+
+
 }
 

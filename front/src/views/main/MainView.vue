@@ -39,6 +39,8 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+  </div>
+  
   <br/>
 
     <!-- 메뉴 1 : 연말특가 -->

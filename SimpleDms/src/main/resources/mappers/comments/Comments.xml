@@ -31,10 +31,10 @@
             parameterType="Comments">
         INSERT INTO COMMEN(COM_ID,
                             COMMENT_TEXT,
-                            EMAIL, CREATED_AT, COMMENT_LOC)
+                            EMAIL, CREATED_AT, COMMENT_LOC, RATING)
         VALUES (COMMEN_SEQ.NEXTVAL,
                 #{commentText},
-                #{email}, SYSTIMESTAMP, #{commentLoc})
+                #{email}, SYSTIMESTAMP, #{commentLoc},#{rating})
     </insert>
 
 
@@ -51,7 +51,9 @@
         UPDATE COMMEN
         SET
             COMMENT_TEXT=#{commentText},
-            COMMENT_LOC = #{commentLoc}
+            COMMENT_LOC = #{commentLoc},
+            RATING = #{rating}
+        
 
         WHERE COM_ID = #{comId}
     </update>

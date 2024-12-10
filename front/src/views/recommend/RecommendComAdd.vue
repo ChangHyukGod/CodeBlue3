@@ -23,6 +23,23 @@
       <label for="commentLoc">Location</label>
     </div>
 
+       <!-- Star Rating -->
+       <div class="mb-3">
+      <label for="rating" class="form-label">별점</label>
+      <div class="star-rating" id="rating">
+        <span
+          v-for="n in 5"
+          :key="n"
+          class="star"
+          :class="{ 'text-warning': n <= comments.rating, 'text-muted': n > comments.rating }"
+          style="font-size: 1.5rem; cursor: pointer;"
+          @click="setRating(n)"
+        >
+          ★
+        </span>
+      </div>
+    </div>
+
     <!-- 버튼 -->
     <button type="button" class="btn btn-primary" @click="save">저장</button>
   </div>
@@ -35,6 +52,7 @@ export default {
       comments: {
         commentText: "",
         commentLoc: "",
+        rating: 1, // 기본값
       },
     };
   },
@@ -48,6 +66,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    setRating(rating) {
+      this.comments.rating = rating;
     },
   },
 };
