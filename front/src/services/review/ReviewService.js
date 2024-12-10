@@ -16,7 +16,7 @@ const token = { Authorization: "Bearer " + user?.accessToken };
 
 const token2 = {
   "Content-Type": "multipart/form-data",
-  Authorization: "Bearer " + user?.accessToken,
+  Authorization: user?.accessToken ? "Bearer " + user.accessToken : "",
 };
 
 
@@ -38,27 +38,44 @@ const insertForm = (data) => {
   formData.append("title", data.title);
   formData.append("content", data.content);
   formData.append("rating", data.rating);
-  formData.append("imageUrl", data.imageUrl);
+  formData.append("image", data.image);
   formData.append("authorEmail", data.authorEmail);
   formData.append("targetId", data.targetId);
-  formData.append("loc", data.loc);
   formData.append("createdAt", data.createdAt);
   formData.append("updatedAt", data.updatedAt);
+
+    // 이미지가 선택되지 않았을 경우
+    if (data.image) {
+      formData.append("image", data.image);
+    } else {
+      console.log("Image is missing"); // 확인용 로그
+    }
+  
+    // 확인용 로그
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
   return formData;
 };
 
 // 리뷰 추가 (업로드)
 const insert = (data) => {
+  console.log(data);
   let form = insertForm(data);
-  return axios.post(baseURL + "/review/add", form,
-    { headers: token2 }
-  );
+  return axios.post(baseURL + "/review/add", form, { headers: token2 })
+    .then(response => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error adding review:", error.response ? error.response.data : error.message);
+    });
 };
 
 // 상세조회
 const get = (reviewId) => {
-  return axios.get(baseURL + `/review/${reviewId}`,
+  return axios.get(baseURL + `/review/get/${reviewId}`,
     { headers: token }
   );
 };
@@ -73,9 +90,7 @@ const update = (reviewId, data) => {
 
 // 리뷰 삭제
 const remove = (reviewId) => {
-  return axios.delete(baseURL + `/review/deletion/${reviewId}`,
-    { headers: token2 }
-  );
+  return axios.delete(baseURL + `/review/deletion/${reviewId}`);
 };
 
 const ReviewService = {

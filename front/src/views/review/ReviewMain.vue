@@ -11,15 +11,25 @@
           style="width: 200px; height: 200px; object-fit: contain; margin-right: 40px;" />
       </div>
     </div>
-    <h5 style="margin-bottom: 40px; font-weight: bold;">이달의 추천 숙박업소</h5>
-    <div class="container">
+    
+    <h5 style="margin-top: 50px; font-weight: bold;">최근 베스트 여행후기</h5>
+    <div class="container mt-5">
       <div class="row">
-        <div class="col-md-3" v-for="review in reviews" :key="review.reviewId">
+        <div class="col-md-3" v-for="review in topReviews" :key="review.reviewId">
           <div class="card" style="width: 15rem; border: none;">
-            <img :src="review.imageUrl || '/images/침대.jfif'" class="card-img-top" alt="...">
+            <img :src="review.imageUrl || '/images/\uCE68\uB300.jfif'" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">
-                {{ review.title }}<br><br>
+                <span>
+                  <template v-for="star in 5" :key="star">
+                    <i class="bi" :class="star <= review.rating ? 'bi-star-fill' : 'bi-star'"
+                      style="color: #FFD700;"></i>
+                  </template>
+                </span><br>
+                <span style="font-weight: bold; font-size: 1.1rem; cursor: pointer;"
+                  @click="goToReviewDetail(review.reviewId)">
+                  {{ review.title }}
+                </span><br>
                 {{ review.authorEmail }} / {{ formatDate(review.createdAt) }}
               </p>
             </div>
@@ -27,47 +37,50 @@
         </div>
       </div>
     </div>
-
-    <!-- 지역 선택
-    <div class="d-flex">
-      <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle custom-dropdown mt-4"
-          style="border: 1px solid gold; padding: 5px 20px;" data-bs-toggle="dropdown"
-          aria-expanded="false" data-bs-offset="10,10">
-          {{ selectedRegion || '지역선택' }}
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" @click="selectRegion('지역선택')">지역선택</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('서울')">서울</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('부산')">부산</a></li>
-          <li><a class="dropdown-item" href="#" @click="selectRegion('제주')">제주</a></li>
-        </ul>
-      </div>
-    </div> -->
-
-    <!-- 리뷰 목록 테이블 -->
-    <div class="container mt-2">
+    
+    <div class="container mt-5">
       <table class="table table-hover table-with-top-border">
         <thead>
           <tr>
-            <th scope="col">번호</th>
-
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
+            <th scope="col" style="width: 10%;">번호</th>
+            <th scope="col" style="width: 15%;">평점</th>
+            <th scope="col" style="width: 50%;">제목</th>
+            <th scope="col" style="width: 10%;">작성자</th>
+            <th scope="col" style="width: 15%;">작성일</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(review, index) in reviews" :key="index">
-            <th>{{ review.reviewId }}</th>
-
-            <td>{{ review.title }}</td>
+            <th>{{ totalCount - (pageIndex - 1) * recodeCountPerPage - index }}</th>
+            <td>
+              <template v-for="star in 5" :key="star">
+                <i class="bi" :class="star <= review.rating ? 'bi-star-fill' : 'bi-star'" style="color: #FFD700;"></i>
+              </template>
+            </td>
+            <td style="cursor: pointer;" @click="goToReviewDetail(review.reviewId)">
+              {{ review.title }}
+              <!-- 최근 작성된 글이면 N 아이콘 표시 -->
+              <span v-if="isNew(review.createdAt)" class="new-icon">N</span>
+            </td>
             <td>{{ review.authorEmail }}</td>
             <td>{{ formatDate(review.createdAt) }}</td>
           </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">
+
+      <!-- 페이지네이션 추가 -->
+      <div class="d-flex justify-content-center mt-3">
+        <b-pagination
+          v-model="pageIndex"
+          :total-rows="totalCount"
+          :per-page="recodeCountPerPage"
+          @click="getReview"
+          class="pagination"
+        ></b-pagination>
+      </div>
+
+      <!-- 글등록 버튼 추가 -->
+      <div class="d-flex justify-content-end mt-3">
         <button type="button" class="btn btn-warning" @click="goToAddReview"
           style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
           글등록
@@ -75,12 +88,12 @@
       </div>
     </div>
 
-    <!-- 주의사항 카드 -->
+    <!-- 하단 코드 (예: 주의사항 카드) -->
     <div class="card w-100 mt-5 mb-5">
       <div class="card-body">
         <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
         <hr>
-        <p class="card-text mt-4" style="font-size: 14px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
+        <p class="card-text mt-4" style="font-size: 14px; padding: 20px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
           예) 주민등록번호, 전화번호, 여권번호, 신용카드번호, 계좌번호, 주소 등
           <br>
           - 해당 게시판과 글의 성격이 맞지 않을 경우, 관리자에 의해 게시글이 이동될 수 있습니다.
@@ -95,63 +108,105 @@
 </template>
 
 <script>
-import ReviewService from "@/services/review/ReviewService"; // ReviewService를 import
+import ReviewService from "@/services/review/ReviewService";
 
 export default {
   data() {
     return {
-      pageIndex: 1, // 현재페이지번호
-      totalCount: 0, // 전체개수
-      recodeCountPerPage: 3, // 화면에보일개수
-      searchKeyword: "", // 검색어
-      reviews: [], // 리뷰 목록
+      pageIndex: 1,
+      totalCount: 0,
+      recodeCountPerPage: 10,
+      searchKeyword: "",
+      reviews: [],
     };
   },
-  // computed: {
-  //   // 선택된 지역에 따라 필터링된 리뷰 목록
-  //   filteredReviews() {
-  //     if (!this.selectedRegion || this.selectedRegion === '지역선택') {
-  //       return this.reviews;
-  //     }
-  //     return this.reviews.filter(review => review.loc === this.selectedRegion);
-  //   },
-  // },
- methods: {
-  // 리뷰 목록을 불러오는 메소드
-  async getReview() {
-    try {
-      let response = await ReviewService.getAll(
+  computed: {
+    topReviews() {
+      return this.reviews
+        .slice()
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 4);
+    },
+  },
+  methods: {
+    async getReview() {
+      try {
+        let response = await ReviewService.getAll(
           this.searchKeyword,
-          this.pageIndex - 1,
+          this.pageIndex -1,
           this.recodeCountPerPage
-        ); // 인증 없이 데이터 호출
-        const { results, totalCount} = response.data
-      this.reviews = results;
-      this.totalCount = totalCount;
-    } catch (error) {
-      console.error("리뷰 목록을 가져오는 중 오류가 발생했습니다:", error);
-    }
+        );
+        const { results, totalCount } = response.data;
+        this.reviews = results.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 작성일 기준으로 정렬
+        this.totalCount = totalCount;
+      } catch (error) {
+        console.error("리뷰 목록을 가져오는 중 오류가 발생했습니다:", error);
+      }
+    },
+    goToAddReview() {
+      this.$router.push('/add-review');
+    },
+    formatDate(date) {
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return new Date(date).toLocaleDateString('ko-KR', options);
+    },
+    goToReviewDetail(reviewId) {
+      this.$router.push(`/review/${reviewId}`);
+    },
+    // 최근 작성된 글인지 확인하는 메서드
+    isNew(createdAt) {
+      const today = new Date();
+      const createdDate = new Date(createdAt);
+      const diffDays = Math.floor((today - createdDate) / (1000 * 60 * 60 * 24));
+      return diffDays <= 7; // 작성일이 7일 이내라면 true 반환
+    },
   },
-
-  // 글등록 버튼 클릭 시 이동
-  goToAddReview() {
-    this.$router.push('/add-review'); // '/add-review' 페이지로 이동
+  mounted() {
+    this.getReview();
   },
-  // 날짜 포맷팅
-  formatDate(date) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(date).toLocaleDateString('ko-KR', options);
-  },
-},
-
-mounted() {
-  this.getReview(); // 페이지 로드 시 리뷰 목록을 불러옵니다.
-},
 };
 </script>
 
 <style>
+.new-icon {
+  background-color: red; /* 노란색 배경 */
+  color: white; /* 흰색 글자 */
+  font-size: 0.6rem; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  padding: 2px 4px; /* 안쪽 여백 */
+  margin-left: 6px; /* 제목과의 간격 */
+  border-radius: 20px; /* 둥근 모서리 */
+}
+.pagination {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 20px 0; /* 위 아래 여백 */
+}
 
+.pagination .page-item {
+  margin: 0 5px; /* 페이지 아이템 간격 */
+}
+
+.pagination .page-item .page-link {
+  border: none; /* 테두리 제거 */
+  background-color: transparent; /* 배경 색상 제거 */
+  color: black; /* 링크 색상 */
+  padding: 10px 15px; /* 여백 */
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ffc107; /* 활성화된 페이지 링크 색상 */
+  border-color: #ffc107; /* 활성화된 링크 테두리 색상 */
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef; /* 마우스 오버 색상 */
+  color: tan; /* 마우스 오버 링크 색상 */
+}
+
+
+
+.table {
+  border-top: 4px solid bisque; /* 테이블 상단 테두리 색상 */
+}
 </style>
-
-

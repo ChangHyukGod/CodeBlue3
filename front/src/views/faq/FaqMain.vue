@@ -1,52 +1,42 @@
 <template>
   <div>
-    <!-- Bootstrap Popover 버튼 -->
-    <button
-      type="button"
-      class="btn btn-secondary"
-      data-bs-toggle="popover"
-      title="Popover 제목"
-      data-bs-content="Popover 내용입니다!"
-    >
-      Popover 테스트
-    </button>
   </div>
   <div class="container d-flex justify-content-center align-items-center">
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
-        <b-button variant="outline-dark" class="custom-button" href="/faq/talk">
-          <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
-        </b-button>
-        <b-button variant="outline-dark" class="custom-button" href="/faq/list">
-          <i class="bi bi-receipt-cutoff custom-icon"></i><br />질문 게시판
-        </b-button>
-        <b-button
-          variant="outline-dark"
-          class="custom-button"
-          href="/faq/payment"
+        <router-link :to="'/faq/talk'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
+          </b-button></router-link
         >
-          <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
-        </b-button>
-        <b-button variant="outline-dark" class="custom-button">
-          <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-        </b-button>
-        <b-button
-          variant="outline-dark"
-          class="custom-button"
-          href="/announcement"
+
+        <router-link :to="'/faq/list'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-receipt-cutoff custom-icon"></i><br />질문 게시판
+          </b-button></router-link
         >
-          <i class="bi bi-megaphone custom-icon"></i><br />공지사항
-        </b-button>
+
+        <router-link :to="'/faq/payment'">
+          <b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
+          </b-button>
+        </router-link>
+
+        <router-link :to="'/announcement'"
+          ><b-button variant="outline-dark" class="custom-button">
+            <i class="bi bi-megaphone custom-icon"></i><br />공지사항
+          </b-button></router-link
+        >
       </b-button-group>
     </div>
   </div>
   <!-- 검색창 박스 -->
   <div class="search_box">
-    <form class="d-flex search_bar" method="get" action="/faqlogin">
+    <form class="d-flex search_bar" method="get" action="/faq/list">
       <input
         class="form-control me-2 search_text_main"
-        name="searchKeyword"
+        name="search"
         type="search"
         placeholder="궁금한 것을 물어보세요"
         aria-label="Search"
@@ -61,7 +51,7 @@
   <hr />
   <br />
   <div class="one-line-box">
-    <h1 class="body-title">자주 찾는 질문</h1>
+    <h1 class="body-title">&nbsp;&nbsp;자주 찾는 질문</h1>
     <form name="oneLineHelp">
       <div
         id="carouselExampleControls"
@@ -117,8 +107,10 @@
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
-                  <b-button variant="danger" class="card-button"
-                    >자세히 보기</b-button
+                  <router-link :to="{ path: 'faq/list', query: { search: question.link } }"
+                    ><b-button variant="danger" class="card-button"
+                      ><i class="bi bi-three-dots"></i> <i class="bi bi-info-circle"></i></b-button
+                    ></router-link
                   >
                 </b-card>
               </div>
@@ -160,6 +152,7 @@ export default {
             {
               title: "예약 변경",
               icon: "bi bi-journal-richtext",
+              link: "예약",
               texts: [
                 {
                   text: "예약 변경은 출발 3일 전까지 가능합니다.",
@@ -179,6 +172,7 @@ export default {
             {
               title: "취소 규정",
               icon: "bi bi-clipboard-check",
+              link: "취소",
               texts: [
                 {
                   text: "취소는 출발 5일 전까지 가능합니다.",
@@ -198,6 +192,7 @@ export default {
             {
               title: "예약 확인 방법",
               icon: "bi bi-eye",
+              link: "예약",
               texts: [
                 {
                   text: "예약 확인은 이메일로 안내됩니다.",
@@ -224,6 +219,7 @@ export default {
             {
               title: "비자 발급",
               icon: "bi bi-flag",
+              link: "비자",
               texts: [
                 {
                   text: "비자 발급 조건은 국가별로 다릅니다.",
@@ -243,6 +239,7 @@ export default {
             {
               title: "여행자 보험",
               icon: "bi bi-shield",
+              link: "보험",
               texts: [
                 {
                   text: "여행자 보험을 꼭 가입해야 하나요?",
@@ -269,6 +266,7 @@ export default {
             {
               title: "결제 수단",
               icon: "bi bi-wallet",
+              link: "결제",
               texts: [
                 {
                   text: "어떤 결제 수단을 사용할 수 있나요?",
@@ -288,6 +286,7 @@ export default {
             {
               title: "환불 요청",
               icon: "bi bi-arrow-return-left",
+              link: "환불",
               texts: [
                 {
                   text: "환불 요청은 어떻게 하나요?",
@@ -313,6 +312,7 @@ export default {
             {
               title: "비밀번호 재설정",
               icon: "bi bi-shield-lock",
+              link: "계정",
               texts: [
                 {
                   text: "비밀번호를 잊었을 때 어떻게 하나요?",
@@ -374,9 +374,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
+/* 자주 찾는 질문 */
+.body-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 15px;
+}
 /* 버튼 간격 설정 */
 .custom-button-group .btn {
-  margin: 0 20px;
+  margin: 0 10px;
   margin-bottom: 20px;
   width: 150px;
   height: 150px;

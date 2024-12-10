@@ -21,6 +21,8 @@ public class Tour {
 //    PRICE	VARCHAR2(100 BYTE)
 //    TOUR_DATA	BLOB
 //    TOUR_FILE_URL	VARCHAR2(1000 BYTE)
+//    VIEW	VARCHAR2(100 BYTE)
+//    CATEGORY	VARCHAR2(100 BYTE)
     private int tourId;  //기본키
     private String name;
     private String location;
@@ -28,22 +30,28 @@ public class Tour {
     private String price;
     private byte[] tourData;
     private String tourFileUrl;
+    private String view;
+    private String category;
 
 //  생성자
-    public Tour(int tourId, String name, String location, String description, String price, byte[] tourData) {
+    public Tour(int tourId, String name, String location, String description, String price, byte[] tourData, String view, String category) {
         this.tourId = tourId;
         this.name = name;
         this.location = location;
         this.description = description;
         this.price = price;
         this.tourData = tourData;
+        this.view = view;
+        this.category = category;
     }
 
-    public Tour(String name, String location, String description, String price, byte[] tourData) {
+    public Tour(String name, String location, String description, String price, byte[] tourData, String view, String category) {
         this.name = name;
         this.location = location;
         this.description = description;
         this.price = price;
         this.tourData = tourData;
+        this.view = view;
+        this.category = category;
     }
 }

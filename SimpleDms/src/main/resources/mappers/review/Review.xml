@@ -20,6 +20,7 @@
 
     <insert id="insert" parameterType="Review">
         INSERT INTO REVIEWS (
+        REVIEW_ID,
         TITLE,
         CONTENT,
         RATING,
@@ -28,21 +29,19 @@
         TARGET_ID,
         CREATED_AT,
         UPDATED_AT,
-        LOC
+        IMAGE_DATA
         ) VALUES (
+        INT_SEQ.NEXTVAL,
         #{title},
         #{content},
         #{rating},
         #{imageUrl},
         #{authorEmail},
         #{targetId},
-        #{createdAt},
-        #{updatedAt},
-        #{loc}
+        SYSDATE,
+        SYSDATE,
+        #{imageData}
         )
-        <selectKey keyProperty="reviewId" resultType="int" order="AFTER">
-            SELECT REVIEWS_SEQ.CURRVAL FROM DUAL
-        </selectKey>
     </insert>
 
 
@@ -50,15 +49,15 @@
             parameterType="Review">
         UPDATE REVIEWS
         SET IMAGE_URL = #{imageUrl}
-        WHERE REVIEW_ID = #{reviewID}
+        WHERE REVIEW_ID = #{reviewId}
     </update>
 
     <select id="selectGenerateReviewId"
             resultType="int">
-        SELECT REVIEWS_SEQ CURRVAL FROM DUAL
+        SELECT INT_SEQ.CURRVAL FROM DUAL
     </select>
 
-    <select id="selectReview"
+    <select id="select"
             parameterType="int"
             resultType="Review">
         SELECT *
@@ -76,8 +75,8 @@
             IMAGE_URL = #{imageUrl},
             AUTHOR_EMAIL = #{authorEmail},
             TARGET_ID = #{targetId},
-            UPDATED_AT = #{updatedAt},
-            LOC = #{loc}
+            UPDATED_AT = SYSDATE,
+            IMAGE_DATA = #{imageData}
         WHERE REVIEW_ID = #{reviewId}
     </update>
 
@@ -86,7 +85,14 @@
         DELETE FROM REVIEWS
         WHERE REVIEW_ID = #{reviewId}
     </delete>
-    
+
+    <select id="getTourId"
+            resultType="Integer">
+        SELECT TOUR_ID FROM TOUR
+
+    </select>
+
+
 
 
 

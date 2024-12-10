@@ -1,30 +1,27 @@
 <template>
   <div>
     <!-- 지도 표시 영역 -->
-    <div
-      id="map"
-      style="
-        width: 100%;
-        height: 1000px;
-        margin-top: 300px;
-        margin-bottom: 300px;
-      "
-    ></div>
+    <div id="map" style="width: 100%; height: 400px"></div>
 
     <!-- 장소 검색 입력창 -->
-    <div style="margin-top: 20px; text-align: center;">
+    <div style="margin-top: 20px; text-align: center">
       <input
         id="search-input"
         type="text"
         placeholder="장소를 검색하세요"
-        style="width: 300px; padding: 10px; font-size: 16px;"
+        style="
+          width: 300px;
+          padding: 10px;
+          font-size: 30px;
+          border: 3px solid yellow;
+        "
       />
     </div>
   </div>
 </template>
 
 <script>
- /* global google */
+/* global google */
 export default {
   name: "GoogleMapExample",
   mounted() {
@@ -32,7 +29,6 @@ export default {
   },
   methods: {
     initMap() {
-    
       const location = { lat: 37.1436, lng: 128.2023 };
 
       // 맵을 렌더링할 div 가져오기

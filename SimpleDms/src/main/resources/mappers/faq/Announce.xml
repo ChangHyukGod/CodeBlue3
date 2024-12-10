@@ -21,8 +21,8 @@
     </select>
 
     <insert id="insertAnnounce" parameterType="Announce">
-        INSERT INTO ANNOUNCE (ano, title, content, date)
-        VALUES (INT_SEQ.NEXTVAL, #{title} #{content}, #{date})
+        INSERT INTO ANNOUNCE (ano, title, content, create_date)
+        VALUES (INT_SEQ.NEXTVAL, #{title} #{content}, #{createDate})
     </insert>
 
     <select id="selectAnnounceById" parameterType="int" resultType="Announce">
@@ -34,8 +34,9 @@
     <update id="updateAnnounce" parameterType="Announce">
         UPDATE ANNOUNCE
         SET TITLE  =#{title},
-            ANSWER = #{answer},
-            DATE   = #{date}
+
+            CONTENT = #{content},
+            CREATE_DATE   = #{createDate}
         WHERE ANO = #{ano}
     </update>
 

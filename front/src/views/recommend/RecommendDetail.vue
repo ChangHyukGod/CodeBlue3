@@ -1,4 +1,5 @@
 <template>
+  <!--완성 최종 커밋부탁 -->
   <div class="container mt-5">
     <div class="content-wrapper">
       <!-- 텍스트 영역 -->
@@ -48,6 +49,7 @@
         :src="require(`@/assets/images/${menu.MENU_MAP}`)"
         alt="Additional Detail"
         class="additional-image"
+        style="border: 3px solid yellow"
         @click="navigateToRecommendMap(menu)"
       />
     </div>
@@ -85,7 +87,7 @@
         </div>
       </div>
 
-      <div class="review-section">
+      <div class="review-section" style="border: 3px solid yellow">
         <!-- 댓글 리스트 -->
         <div class="review-list">
           <!-- 반복문으로 댓글 항목 렌더링 -->
@@ -102,7 +104,7 @@
                   {{ data.email }}
                 </p>
                 <p class="review-location text-warning mb-0">
-                  [지역들어갈 곳] {{ data.location }}
+                  {{ data.commentLoc }}
                 </p>
               </div>
               <span class="review-time text-muted">{{ data.createdAt }}</span>
@@ -125,7 +127,7 @@
           v-model="pageIndex"
           :total-rows="totalCount"
           :per-page="recordCountPerPage"
-          @click="getDept"
+          @click="getComments"
           class="mt-3"
           style="
             --bs-pagination-active-bg: #fdd835;
@@ -141,6 +143,23 @@
           >
             댓글 쓰기
           </a>
+        </div>
+        <!-- TODO: 검색어 입력상자 -->
+        <div class="input-group mb-3 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="검색어"
+            v-model="searchKeyword"
+            style="border: 3px solid yellow"
+          />
+          <button
+            class="btn btn-outline-warning"
+            type="button"
+            @click="getComments"
+          >
+            검색
+          </button>
         </div>
       </div>
 
@@ -162,6 +181,7 @@ export default {
       loc: "",
       commentText: "",
       createdAt: "",
+      commentLoc: "",
       email: "",
       comments: [],
       pageIndex: 1, //현재페이지번호
@@ -181,7 +201,7 @@ export default {
     const tdId = this.$route.params.tdId;
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
-    this.getDept();
+    this.getComments();
   },
 
   methods: {
@@ -321,7 +341,7 @@ export default {
       this.isCollapsed = !this.isCollapsed; // 상태 토글
     },
 
-    async getDept() {
+    async getComments() {
       try {
         let response = await CommentsService.getAll(
           this.searchKeyword,
@@ -383,30 +403,6 @@ export default {
       }
     },
   },
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 </script>
 
@@ -775,7 +771,7 @@ pre {
 /* 댓글 리스트 항목 스타일 */
 .review-item {
   background-color: #fff; /* 카드 배경 흰색 */
-  border: 1px solid #fdd835; /* 노란색 테두리 */
+  border: 10px solid #fdd835; /* 노란색 테두리 */
   border-radius: 8px;
   margin-bottom: 15px;
   padding: 15px;
@@ -802,7 +798,7 @@ pre {
 
 .review-location {
   color: #fbc02d; /* 노란색 */
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   margin-top: 5px;
 }
 
@@ -818,7 +814,7 @@ pre {
 
 .review-text {
   color: #212121; /* 텍스트 기본 색상 */
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.5;
 }
 

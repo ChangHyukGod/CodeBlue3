@@ -24,6 +24,18 @@
       <label for="price">price</label>
     </div>
 
+    <!-- view -->
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="view" placeholder="view" v-model="tour.view"/>
+      <label for="view">view</label>
+    </div>
+
+    <!-- category -->
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="category" placeholder="category" v-model="tour.category"/>
+      <label for="category">category</label>
+    </div>
+
     <!-- TODO: 현재 이미지 보기 -->
     <div class="mb-3">
       <img :src="tour.tourFileUrl" alt="이미지" class="img-fluid rounded" style="max-height: 400px; object-fit: cover"/>
@@ -54,6 +66,8 @@ export default {
             description:"",
             price:"",
             tourFileUrl: "",
+            view: "",
+            category: "",
             image: undefined
         }
       }

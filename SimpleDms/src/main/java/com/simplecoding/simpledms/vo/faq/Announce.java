@@ -1,6 +1,9 @@
 package com.simplecoding.simpledms.vo.faq;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.util.Date;
 
 /**
  * @author : KTE
@@ -17,5 +20,6 @@ public class Announce {
     private int ano;
     private String title;
     private String content;
-    private String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date createDate;
 }

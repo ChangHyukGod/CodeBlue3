@@ -1,32 +1,40 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/api";
+const baseURL = "http://localhost:8000/api/announcement";
 
+// 공지 전체 목록 조회
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
-    return axios.get(
-    `${baseURL}/announcement?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
-);
+
+  return axios.get(
+    `${baseURL}?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
+  );
 };
 
-const getDetail = (ano) => {
-    return axios.get(baseURL+`/announcement/detail/${ano}`);
-}
+// 특정 공지 상세 조회
+const get = (ano) => {
+  return axios.get(`${baseURL}/${ano}`);
+};
 
-const getUpdate = (ano, data) => {
-    return axios.put(baseURL+`/announcement/list/update/${ano}`,data);
-}
+// 공지 수정
+const update = (ano, data) => {
+  return axios.put(`${baseURL}/fix/${ano}`, data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const getDelete = (ano) => {
-    return axios.delete(baseURL+`/announcement/list/delete/${ano}`);
-}
+// 공지 삭제
+const remove = (ano) => {
+  return axios.delete(`${baseURL}/fix/${ano}`);
+};
 
-
+// 서비스 객체
 const AnnouncementService = {
-    getAll,
-    getDetail,
-    getUpdate,
-    getDelete,
-
+  getAll,
+  get,
+  update,
+  remove,
 };
 
 export default AnnouncementService;

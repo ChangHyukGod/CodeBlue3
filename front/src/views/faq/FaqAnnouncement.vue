@@ -1,11 +1,13 @@
 <template>
   <div class="bigbox">
-      <p class="title" onclick="location.href='/announcement'">공지사항</p>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">
         <div class="notice_search">
           <form class="search_input" @submit.prevent="searchAnnouncement">
+            <router-link :to="'/faq/list'" class="custom-link"
+              ><p class="ano_top_title">공지사항</p></router-link
+            >
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
@@ -21,8 +23,12 @@
         <div class="notice_content">
           <div class="announcement-list">
             <div v-for="(data, index) in announcementList" :key="index">
-              <router-link :to="'/announcement/' + data.ano" class="custom-link">
-                <h2 class="notice_title">&nbsp;&nbsp;{{ data.title }} {{ data.date }} {{ data.ano }}</h2>
+              <router-link
+                :to="'/announcement/' + data.ano"
+                class="custom-link"
+              >
+                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
+                <p class="ano_date">{{ data.createDate }}</p>
               </router-link>
               <hr class="notice_line" />
             </div>
@@ -30,6 +36,11 @@
           <p v-if="announcementList.length === 0">
             등록된 공지사항이 없습니다.
           </p>
+          <router-link :to="'/faq'">
+            <button type="button" class="btn btn-warning button">
+              <i class="bi bi-arrow-return-left"></i>
+            </button>
+          </router-link>
         </div>
         <br />
 
@@ -89,7 +100,7 @@ export default {
   data() {
     return {
       pageIndex: 1, // 현재 페이지
-      totalPages: 1, // 전체 페이지 수
+      totalPages: 5, // 전체 페이지 수
       searchKeyword: "", // 검색어
       announcementList: [], // 공지사항 데이터 리스트
     };
@@ -147,6 +158,13 @@ export default {
 </script>
 
 <style>
+
+.ano_top_title {
+  font-weight: bolder;
+  font-size: x-large;
+  position: absolute;
+  margin: 3px 0 0 30px;
+}
 /* 공지 전체 */
 .bigbox {
   display: flex;
@@ -217,19 +235,25 @@ export default {
 .notice_line {
   margin: 3px;
 }
-.notice_title {
+.ano_title {
   font-size: 23px;
   padding: 5px;
+}
+.ano_title:hover {
+  transform: scale(1.01);
+  transition: 0.2s;
 }
 .custom-link {
   text-decoration: none;
   color: inherit; /* 부모의 색상을 따릅니다 */
 }
-.custom-link:hover,
 .custom-link:visited,
 .custom-link:active {
   text-decoration: none; /* 모든 상태에서 밑줄 제거 */
   color: inherit;
+}
+.custom-link:hover {
+  transition: 0.3s;
 }
 /* 페이징 스타일 */
 .notice_paging .pagination {
@@ -265,5 +289,15 @@ export default {
 .page-item.disabled .page-link {
   color: #ccc;
   cursor: not-allowed;
+}
+.button {
+  position: relative;
+  margin-top: 10px;
+  left: 94.5%;
+}
+.ano_date {
+  position: absolute;
+  margin: -37.5px 0 0 780px;
+  font-size: 13px;
 }
 </style>

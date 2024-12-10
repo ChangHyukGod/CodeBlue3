@@ -54,38 +54,6 @@
       </button>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- TODO: 검색어 입력상자 -->
-    <div class="input-group mb-3 mt-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="검색어"
-        v-model="searchKeyword"
-      />
-      <button
-        class="btn btn-outline-warning"
-        type="button"
-        @click="getrecommend"
-      >
-        검색
-      </button>
-    </div>
-
     <!-- TODO: 카드 -->
     <div class="row">
       <!-- 카드 반복 -->
@@ -116,6 +84,24 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- TODO: 검색어 입력상자 -->
+    <div class="input-group mb-3 mt-3" style="width: 300px; margin: 0 auto">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="검색어"
+        v-model="searchKeyword"
+        style="border: 3px solid yellow"
+      />
+      <button
+        class="btn btn-outline-warning"
+        type="button"
+        @click="getrecommend"
+      >
+        검색
+      </button>
     </div>
 
     <!-- TODO: 페이지 번호 : 부트스트랩뷰(페이지) -->
@@ -149,15 +135,10 @@ export default {
       totalCount: 0,
       recordCountPerPage: 4,
       searchKeyword: "",
-      recommends: [], 
+      recommends: [],
       carouselItems: [],
-   
     };
   },
-
- 
-
-
 
   methods: {
     async getrecommend() {
@@ -183,26 +164,8 @@ export default {
     },
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   mounted() {
-
     this.getrecommend();
-
-
-  
-
   },
 };
 </script>

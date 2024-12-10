@@ -1,18 +1,20 @@
 <template>
   <div class="bigbox">
-    <div class="title">
-      <p onclick="location.href='/faq/list'">질문 게시판</p>
-      <button type="button" class="btn btn-link" onclick="location.href='/faq'">
-        Link
-      </button>
-    </div>
+    <div class="title"></div>
     <hr />
     <div class="announce_body_box">
       <div class="notice_container">
         <div class="notice_search">
+          <p class="faq_top_title" onclick="window.location.href='/faq/list'">
+            FAQ
+          </p>
           <form class="search_input" @submit.prevent="searchFaq">
             <div class="input_box typing form-group search_bar_announce">
-              <input placeholder="제목, 내용" v-model="searchKeyword" class="input_text form-control" />
+              <input
+                placeholder="제목, 내용"
+                v-model="searchKeyword"
+                class="input_text form-control"
+              />
               <i class="bi bi-search search_glass_announce"></i>
             </div>
           </form>
@@ -21,26 +23,54 @@
 
         <div class="notice_content">
           <div class="accordion" id="faqAccordion">
-            <div class="accordion-item" v-for="(data, index) in faqList" :key="index">
+            <div
+              class="accordion-item"
+              v-for="(data, index) in faqList"
+              :key="index"
+            >
               <h2 class="accordion-header" :id="'heading-' + index">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  :data-bs-target="'#collapse-' + index" :aria-expanded="false" :aria-controls="'collapse-' + index">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  :data-bs-target="'#collapse-' + index"
+                  :aria-expanded="false"
+                  :aria-controls="'collapse-' + index"
+                >
                   {{ data.question }}
                 </button>
               </h2>
-              <div :id="'collapse-' + index" class="accordion-collapse collapse" :aria-labelledby="'heading-' + index"
-                data-bs-parent="#faqAccordion">
+              <div
+                :id="'collapse-' + index"
+                class="accordion-collapse collapse"
+                :aria-labelledby="'heading-' + index"
+                data-bs-parent="#faqAccordion"
+              >
                 <div class="accordion-body">
                   {{ data.answer }}
                   <br />
-                  <button type="button" class="btn btn-link" @click="redirectToHashtag(data.hashtag)">
+                  <button
+                    type="button"
+                    class="btn btn-link"
+                    @click="redirectToHashtag(data.hashtag)"
+                  >
                     {{ data.hashtag }}
                   </button>
+                  <router-link :to="`/faq/list/${data.fno}`">
+                    <button type="button" class="btn btn-warning me-2">
+                      수정
+                    </button>
+                  </router-link>
                 </div>
               </div>
             </div>
           </div>
           <p v-if="faqList.length === 0">등록된 질문이 없습니다.</p>
+          <router-link :to="'/faq'">
+            <button type="button" class="btn btn-warning button">
+              <i class="bi bi-arrow-return-left"></i>
+            </button>
+          </router-link>
         </div>
         <br />
 
@@ -48,22 +78,41 @@
         <div class="notice_paging">
           <ul class="paging pagination">
             <!-- 이전 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: pageIndex === 1 }">
-              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex - 1)">
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === 1 }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex - 1)"
+              >
                 &laquo;
               </a>
             </li>
 
             <!-- 페이지 번호 -->
-            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === pageIndex }">
+            <li
+              v-for="page in totalPages"
+              :key="page"
+              class="page-item"
+              :class="{ active: page === pageIndex }"
+            >
               <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
             <!-- 다음 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: pageIndex === totalPages }">
-              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex + 1)">
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === totalPages }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex + 1)"
+              >
                 &raquo;
               </a>
             </li>
@@ -149,6 +198,22 @@ export default {
 </script>
 
 <style>
+.custom-link {
+  text-decoration: none;
+  color: inherit; /* 부모의 색상을 따릅니다 */
+}
+
+.custom-link:visited,
+.custom-link:active {
+  text-decoration: none; /* 모든 상태에서 밑줄 제거 */
+  color: inherit;
+}
+.custom-link:hover {
+  color: #ffeb33;
+  transition: 0.3s;
+}
+/* 공지 전체 */
+
 .bigbox {
   display: flex;
   flex-direction: column;
@@ -191,6 +256,13 @@ export default {
   background-color: white;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.faq_top_title {
+  font-weight: bolder;
+  font-size: x-large;
+  position: absolute;
+  margin: 3px 0 0 30px;
 }
 
 /* 돋보기 아이콘 */
@@ -275,5 +347,10 @@ export default {
 .page-item.disabled .page-link {
   color: #ccc;
   cursor: not-allowed;
+}
+.button {
+  position: relative;
+  margin-top: 10px;
+  left: 94.5%;
 }
 </style>

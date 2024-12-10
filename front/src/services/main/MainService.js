@@ -7,8 +7,8 @@ const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
     return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
 };
 
-const getALLnp = () => {
-    return axios.get(baseURL+`/tour`);
+const getALLnp = (searchKeyword, category,view) => {
+    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&category=${category}&view=${view}`);
 };
 
 // 이미지 업로드 및 FormData 생성
@@ -18,6 +18,8 @@ const insertForm = (data) => {
     formData.append("location", data.location);
     formData.append("description", data.description);
     formData.append("price", data.price);
+    formData.append("view", data.view);
+    formData.append("category", data.category);
     
     // 이미지가 있을 경우만 추가
     if (data.image) {
@@ -53,13 +55,24 @@ const remove = (tourId) => {
     return axios.delete(baseURL+`/tour/deletion/${tourId}`);
 };
 
+// 기본키 가져오기
+const getTourId = () => {
+    return axios.get(baseURL+`/review/tourId`)
+}
+
+const getName = (tourId) => {
+    return axios.get(baseURL+`/tour/tourname/${tourId}`)
+}
+
 const MainService = {
     getAll,
     insert,
     get,
     update,
     remove,
-    getALLnp
+    getALLnp,
+    getTourId,
+    getName
 };
 
 export default MainService;

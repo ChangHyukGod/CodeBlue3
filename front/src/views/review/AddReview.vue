@@ -13,23 +13,20 @@
     </div>
     <hr>
 
-    <!-- 드롭다운 버튼과 작성자 정보 -->
     <div class="d-flex align-items-center" style="margin-bottom: 30px;">
-      <!-- 평점 매기기 -->
       <div class="d-flex align-items-center" style="margin-top: 20px;">
         <span style="font-weight: bold; margin-right: 10px;">평점:</span>
         <div>
           <span v-for="star in 5" :key="star" @click="setRating(star)" style="cursor: pointer;">
-            <i :class="['bi', star <= rating ? 'bi-star-fill' : 'bi-star']"
+            <i :class="['bi', star <= review.rating ? 'bi-star-fill' : 'bi-star']"
               style="font-size: 1.5rem; color: #FFD700;"></i>
           </span>
         </div>
       </div>
 
-      <!-- 작성자 정보 -->
       <div class="ms-auto d-flex align-items-center">
         <h5 style="font-weight: bold; margin-bottom: 0; margin-right: 30px;">작성자</h5>
-        <p style="margin: 0; font-size: 1rem; margin-right: 60px;">{{ authorEmail }}</p>
+        <p style="margin: 0; font-size: 1rem; margin-right: 60px;">{{ review.authorEmail }}</p>
       </div>
     </div>
     <hr>
@@ -37,16 +34,30 @@
     <!-- 제목 입력 -->
     <div class="input-group">
       <span class="input-group-text" style="font-weight: bold;">제목</span>
-      <textarea v-model="title" class="form-control" aria-label="With textarea" style="height: 30px;"></textarea>
+      <textarea v-model="review.title" class="form-control" aria-label="With textarea" style="height: 30px;"></textarea>
     </div>
     <hr>
 
-    <!-- 내용 및 파일 첨부 섹션 -->
+    <!-- targetId 입력 -->
+    <div class="input-group">
+      <span class="input-group-text" style="font-weight: bold;">상품명</span>
+      <select v-model="review.targetId" class="form-select">
+        <option value="" disabled>상품 선택</option>
+        <option v-for="product in tourNames" :key="product" :value="product">
+          {{ product }}
+        </option>
+      </select>
+    </div>
+
+
+
+
+    <!-- 내용 입력 섹션 -->
     <div class="mb-3">
-      <label for="contentUpload" class="form-label" style="font-weight: bold;">내용</label>
-      <div id="contentUpload" contenteditable="true" @input="updateContent" class="form-control"
-        style="height: 400px; overflow-y: auto; border: 1px solid #ced4da;"></div>
-      <input type="file" id="imageUpload" @change="insertImage" accept="image/*" class="form-control mt-2" />
+      <label for="content" class="form-label" style="font-weight: bold;">내용</label>
+      <textarea v-model="review.content" id="content" class="form-control" rows="10"
+        placeholder="후기 내용을 입력하세요."></textarea>
+      <input type="file" id="imageUpload" ref="file" @change="select" accept="image/*" class="form-control mt-2" />
     </div>
 
     <div class="d-flex justify-content-center" style="margin-top: 40px; margin-bottom: 40px;">
@@ -54,20 +65,15 @@
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         글등록
       </button>
-      <button type="button" class="btn btn-secondary ms-3"
+      <button type="button" class="btn btn-secondary ms-3" @click="goToReview"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         취소
       </button>
     </div>
 
-    <!-- 알림 메시지 -->
-    <div v-if="message" class="alert" :class="alertClass" role="alert">
-      {{ message }}
-    </div>
-
     <div class="card w-100 mt-5 mb-5">
       <div class="card-body">
-        <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
+        <h5 class="card-title"><i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
         <hr>
         <p class="card-text mt-4" style="font-size: 14px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
           예) 주민등록번호, 전화번호, 여권번호, 신용카드번호, 계좌번호, 주소 등
@@ -84,91 +90,120 @@
 </template>
 
 <script>
+import MainService from "@/services/main/MainService";
 import ReviewService from "@/services/review/ReviewService";
 
 export default {
   data() {
     return {
-      rating: 0,
-      title: "",
-      content: "",
-      authorEmail: "",
-      imageUrl: null, // 업로드한 이미지 파일
-      message: "", // 알림 메시지
-      alertClass: "", // 알림 스타일
-    };
-  },
-  computed: {
-    token2() {
-      const user = JSON.parse(localStorage.getItem("user"));
-      return {
-        "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + (user?.accessToken || ""),
-      };
-    },
+      review: {
+        rating: 0,
+        title: "",
+        content: "",
+        authorEmail: "",
+        targetId: null,
+        imageUrl: "",
+        image: undefined
+      },
+      products: [ // 상품 목록 예시
+      ],
+      tourList: [
+      ],
+      tourNames: [],
+
+    }
   },
   created() {
     const user = JSON.parse(localStorage.getItem("user"));
-    // 사용자 이메일을 가져와 authorEmail로 저장
-    this.authorEmail = user?.email || "알 수 없음"; // 사용자 이메일 표시
+    this.review.authorEmail = user?.email || "알 수 없음"; // 사용자 이메일 표시
   },
   methods: {
+    select() {
+
+
+      this.review.image = this.$refs.file.files[0];
+
+    },
+
+    setRating(star) {
+      this.review.rating = star; // 평점 설정
+    },
+    goToReview() {
+      this.$router.push("/review"); // /review로 이동
+    },
+
     async save() {
-      // 내용이 없는 경우
-      if (!this.title || !this.content) {
-        this.message = "작성 미완료되었습니다";
-        this.alertClass = "alert-danger"; // 오류 메시지 스타일
+      if (!this.review.title) {
+        alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
         return;
       }
 
       try {
-        // FormData로 전송할 데이터 준비
-        const formData = new FormData();
-        formData.append("title", this.title);
-        formData.append("content", this.content);
-        formData.append("rating", this.rating);
-        formData.append("authorEmail", this.authorEmail);
-
-        if (this.imageUrl) {
-          formData.append("imageUrl", this.imageUrl); // 이미지 파일 추가
-        }
-
-        // 서버로 전송
-        let response = await ReviewService.insert(formData, this.token2);
+        let response = await ReviewService.insert(this.review);
         console.log(response.data);
-        this.message = "글등록이 완료되었습니다!";
-        this.alertClass = "alert-success"; // 성공 메시지 스타일
-
-        // 일정 시간 후 리뷰 목록으로 리다이렉트
-        setTimeout(() => {
-          this.$router.push("/review");
-        }, 1500);
+        this.$router.push("/review");
       } catch (error) {
-        console.error("저장 실패", error);
-        this.message = "저장 실패. 다시 시도해주세요.";
-        this.alertClass = "alert-danger"; // 오류 메시지 스타일
+        console.error(error.response ? error.response.data : error.message);
       }
     },
-    setRating(star) {
-      this.rating = star; // 평점 설정
+
+    async getTourIds() {
+      try {
+        // MainService.getTourId()를 함수처럼 호출합니다.
+        const response = await MainService.getTourId();
+
+        // tourList를 업데이트
+        this.tourList = response.data;
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      }
     },
-    updateContent(event) {
-      this.content = event.target.innerHTML; // 내용 업데이트
-    },
-    insertImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.imageUrl = file; // 선택된 이미지 파일을 저장
+
+    async getTourNames() {
+      try {
+        // tourList가 비어있으면 로컬 스토리지에서 불러옵니다.
+        if (!this.tourList || this.tourList.length === 0) {
+          const savedTourList = localStorage.getItem("tourList");
+          if (savedTourList) {
+            this.tourList = JSON.parse(savedTourList);
+          } else {
+            console.error("No tourList found in localStorage.");
+            return;
+          }
+        }
+
+        // Promise.all로 모든 tourId에 대해 이름을 병렬로 가져옵니다.
+        const namePromises = this.tourList.map(async (tourId) => {
+          const response = await MainService.getName(tourId);
+          return response.data; // 이름만 반환
+        });
+
+        // 이름 배열 생성
+        const tourNames = await Promise.all(namePromises);
+
+        // 이름 배열 확인
+        console.log("Tour Names:", tourNames);
+
+        // 필요하면 다른 속성으로 저장 가능
+        this.tourNames = tourNames;
+
+      } catch (error) {
+        console.error("Error fetching tour names:", error);
       }
     },
   },
-};
+  mounted() {
+    this.getTourIds().then(() => {
+      // tourList를 로컬 스토리지에 저장
+      localStorage.setItem("tourList", JSON.stringify(this.tourList));
+
+      // getTourNames를 호출하여 products 배열을 업데이트
+      this.getTourNames();
+    });
+  },
+}
 </script>
 
 <style>
-/* 메시지 알림 스타일 */
-.alert {
-  font-size: 1.2rem;
-  margin-top: 20px;
-}
+/* 스타일 추가 필요 시 여기에 작성 */
 </style>

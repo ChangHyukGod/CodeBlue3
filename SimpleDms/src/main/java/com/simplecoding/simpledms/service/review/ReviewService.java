@@ -2,9 +2,11 @@ package com.simplecoding.simpledms.service.review;
 
 import com.simplecoding.simpledms.mapper.review.ReviewMapper;
 import com.simplecoding.simpledms.vo.common.Criteria;
+import com.simplecoding.simpledms.vo.main.Tour;
 import com.simplecoding.simpledms.vo.review.Review;
 import jakarta.servlet.Servlet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
  * @since : 24. 11. 27.
  * description :
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -33,17 +36,22 @@ public class ReviewService {
 
     //    리뷰추가
     public void insert(Review review) {
+        log.debug("service : "+review);
+        // 리뷰 데이터 삽입
         reviewMapper.insert(review);
 
+        // 생성된 리뷰 ID 가져오기
         int reviewId = reviewMapper.selectGenerateReviewId();
         review.setReviewId(reviewId);
-        String url = generateImageUrl(review.getReviewId());
-        review.setImageUrl(url);
-        reviewMapper.updateReviewUrl(review);
 
+        //      URL생성
+        String url = generateReviewUrl(review.getReviewId());
+        review.setImageUrl(url);
+//      URL 업데이트
+        reviewMapper.updateReviewUrl(review);
     }
 
-    public String generateImageUrl(int reviewId) {
+    public String generateReviewUrl(int reviewId) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/api/review/")
@@ -52,10 +60,14 @@ public class ReviewService {
     }
 
     //    상세조회
-    public Optional<Review> selectReview(int reviewId ) {return reviewMapper.selectReview(reviewId); }
+    public Optional<Review> select(int reviewId ) {return reviewMapper.select(reviewId); }
 
     //    리뷰수정
     public void update(Review review) {
+        int reviewId = review.getReviewId();
+        String url = generateReviewUrl(reviewId);
+        review.setReviewId(reviewId);
+        review.setImageUrl(url);
         reviewMapper.update(review);
     }
 
@@ -63,5 +75,12 @@ public class ReviewService {
     public void delete(int reviewId) {
         reviewMapper.delete(reviewId);
     }
+
+    public List<Integer> getTourId() {
+        return reviewMapper.getTourId();
+    }
+
+
+
 
 }

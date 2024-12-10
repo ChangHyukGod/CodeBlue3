@@ -14,35 +14,23 @@ public class Review {
     private double rating;       // 평점
     private String imageUrl;     // 첨부 이미지 URL
     private String authorEmail;  // 작성자 이메일
-    private String targetId;     // 대상 ID
+    private int targetId;     // 대상 ID
+//    private String targetName; // 숙소 이름
     private Timestamp createdAt; // 생성일
     private Timestamp updatedAt; // 수정일
-    private String loc;          // 지역
+    private byte[] imageData;
 
 
+//    Review(title, content, rating, authorEmail, targetId, imageData);
 
-
-    public Review(int reviewId, String title, String content, double rating, String authorEmail, String targetId, Timestamp createdAt, Timestamp updatedAt, String loc) {
-        this.reviewId = reviewId;
+    public Review(String title, String content, double rating, String authorEmail, int targetId, byte[] imageData) {
         this.title = title;
         this.content = content;
         this.rating = rating;
         this.authorEmail = authorEmail;
         this.targetId = targetId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.loc = loc;
+        this.imageData = imageData;
     }
+//    (title, content, rating, authorEmail, targetId, image.getBytes())
 
-
-    public Review(String title, String content, double rating, String authorEmail, String targetId, Timestamp createdAt, Timestamp updatedAt, String loc) {
-        this.title = title;
-        this.content = content;
-        this.rating = rating;
-        this.authorEmail = authorEmail;
-        this.targetId = targetId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.loc = loc;
-    }
 }
