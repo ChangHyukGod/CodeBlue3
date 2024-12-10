@@ -184,8 +184,12 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
+
+    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드
+  
     this.getCoupon();
   },
+
   methods: {
     processPayment() {
       try {
@@ -233,12 +237,25 @@ export default {
       console.log("할인된 금액:", discountedPrice);
     },
 
+
+
+    
+
+
+
     async getCoupon() {
       try {
+
+          // 로그인한 회원 정보 가져오기 (localStorage에 저장된 경우)
+
+      
+       
         let response = await CouponService.getAll(
+        
           this.searchKeyword,
           this.pageIndex - 1,
-          this.recordCountPerPage
+          this.recordCountPerPage,
+      
         );
         // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
         const { results, totalCount } = response.data;
@@ -249,8 +266,18 @@ export default {
         console.log(error);
       }
     },
+  
+  
+
+
+
+
+
+
+
   },
 };
+
 </script>
 
 <style scoped>

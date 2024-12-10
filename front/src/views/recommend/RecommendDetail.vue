@@ -28,11 +28,7 @@
           :alt="menu.MENU_NAME"
           class="menu-image"
         />
-        <div class="menu-description">
-          <h3 class="menu-name">{{ menu.MENU_NAME }}</h3>
-          <p class="menu-detail">{{ menu.MENU_DETAIL }}</p>
-          <p class="menu-price">{{ menu.MENU_PRICE }}</p>
-        </div>
+     
       </div>
     </div>
     <br />
@@ -55,74 +51,106 @@
       />
     </div>
 
-    <div class="paragraph-wrapper" style="margin-bottom: 50px"></div>
+    <hr>
+
     <h3 style="font-weight: bold; margin-right: 500px; margin-bottom: 20px">
       댓글 리뷰
     </h3>
+   <div class="review-list">
+  <!-- 반복문으로 댓글 항목 렌더링 -->
+  <div
+    v-for="(data, index) in comments"
+    :key="index"
+    class="review-item mb-4"
+    style="
+      border-bottom: 1px solid #ddd;
+      padding: 16px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    "
+  >
     <div
-      class="review-section"
-      style="border: 1px solid #ddd; padding: 16px; width: 70%; margin: 0 auto"
+      class="review-header"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      "
     >
-      <!-- 댓글 리스트 -->
-      <div class="review-list">
-        <!-- 반복문으로 댓글 항목 렌더링 -->
-        <div
-          v-for="(data, index) in comments"
-          :key="index"
-          class="review-item mb-3"
-          style="border-bottom: 1px solid #ccc; padding: 8px 0"
+      <div>
+        <p
+          class="review-user"
+          style="
+            margin: 0;
+            font-weight: bold;
+            color: #ffc107;
+            font-size: 1.1em;
+            text-transform: capitalize;
+          "
         >
-          <div
-            class="review-header"
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
+          {{ data.email }}
+        </p>
+        <p
+          class="review-location"
+          style="
+            margin: 4px 0 0;
+            font-size: 1em;
+            color: #333;
+            font-weight: bold;
+          "
+        >
+          {{ data.commentLoc }}
+        </p>
+
+        <!-- 별점 디자인 추가 -->
+        <div class="star-rating" style="margin-top: 8px;">
+          <span
+            v-for="n in 5"
+            :key="n"
+            class="star"
+            :style="{ color: n <= data.rating ? '#ffc107' : '#ddd' }"
+            
           >
-            <div>
-              <p
-                class="review-user"
-                style="margin: 0; font-weight: bold; color: #ffc107"
-              >
-                {{ data.email }}
-              </p>
-              <p
-                class="review-location"
-                style="
-                  margin: 0;
-                  font-size: 1.2em;
-                  color: black;
-                  font-weight: bold;
-                "
-              >
-                {{ data.commentLoc }}
-              </p>
-            </div>
-            <span
-              class="review-time"
-              style="font-size: 0.8em; color: #777; margin-right: 20px"
-              >{{ formatDate(data.createdAt) }}</span
-            >
-          </div>
-          <div class="review-content" style="margin-top: 8px">
-            <p
-              class="review-text"
-              style="margin-right: 270px; color: #333; font-size: 15px"
-            >
-              {{ data.commentText }}
-            </p>
-            <div
-              class="review-actions"
-              style="margin-top: 8px; text-align: right; margin-right: 10px"
-            >
-              <router-link :to="'/recommendcomupdate/' + data.comId">
-                <button class="btn btn-secondary btn-sm">관리</button>
-              </router-link>
-            </div>
-          </div>
+            ★
+          </span>
         </div>
       </div>
+
+      <span
+        class="review-time"
+        style="font-size: 0.85em; color: #777; align-self: flex-start"
+      >
+        {{ formatDate(data.createdAt) }}
+      </span>
+    </div>
+
+    <div
+      class="review-content"
+      style="margin-top: 16px; padding-top: 8px; border-top: 1px solid #ddd;"
+    >
+      <p
+        class="review-text"
+        style="
+          color: #333;
+          font-size: 1em;
+          line-height: 1.6;
+          margin: 0;
+        "
+      >
+        {{ data.commentText }}
+      </p>
+
+      <div
+        class="review-actions"
+        style="margin-top: 16px; text-align: right"
+      >
+        <router-link :to="'/recommendcomupdate/' + data.comId">
+          <button class="btn btn-outline-primary btn-sm">관리</button>
+        </router-link>
+      </div>
+    </div>
+  </div>
+
 
       <!-- 페이지네이션 -->
       <div class="d-flex justify-content-center mt-3">
@@ -210,6 +238,11 @@ export default {
   },
 
   methods: {
+   
+
+  
+
+
     formatDate(date) {
       const options = { year: "numeric", month: "2-digit", day: "2-digit" };
       return new Date(date).toLocaleDateString("ko-KR", options);
@@ -782,10 +815,7 @@ pre {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.review-item:hover {
-  transform: translateY(-5px); /* 살짝 올라가는 효과 */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 강조 */
-}
+
 
 /* 댓글 헤더 (사용자 정보 및 시간) */
 .review-header {
@@ -825,7 +855,7 @@ pre {
 /* 버튼 스타일 */
 .action-btn {
   background-color: #f5b506; /* 밝은 노란색 */
-  color: #000;
+  
   border: none;
   padding: 8px 15px;
   font-size: 0.9rem;
@@ -844,20 +874,20 @@ pre {
   text-align: right;
   margin-top: 20px;
 }
-
-.write-btn {
-  background-color: #fdd835;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+.star-rating {
+  display: inline-block;
 }
 
-.write-btn:hover {
-  background-color: #f57f17;
-  color: white;
+.star {
+  font-size: 1.5em;  /* 별의 크기 조정 */
+  margin-right: 4px;
+  cursor: pointer;  /* 커서를 포인터로 변경 */
 }
+
+.star:hover {
+  color: #ffdd33;  /* 호버 시 색상 변경 */
+}
+
+
+
 </style>

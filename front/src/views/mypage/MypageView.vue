@@ -1,122 +1,46 @@
 <template>
-  <div class="container mt-5">
-    <!-- 사용자 정보 -->
-    <div class="card mb-4">
-      <div class="card-header bg-warning text-white">
-        <h4>User Profile</h4>
-      </div>
-      <div v-for="(data, index) in mypages" :key="index">
-        <div class="card-body">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <strong>Email:</strong> {{ data.email }}
-            </li>
-          </ul>
-        </div>
-      </div>
+<div class="container mt-5">
+  <!-- 사용자 정보 -->
+  <div class="card mb-4">
+    <div class="card-header bg-warning text-white">
+      <h4>프로필</h4>
     </div>
-
-    <!-- 탭 네비게이션 -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a
-          class="nav-link active"
-          id="reservations-tab"
-          data-bs-toggle="tab"
-          href="#reservations"
-          role="tab"
-          aria-controls="reservations"
-          aria-selected="true"
-        >
-          예약
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="coupons-tab"
-          data-bs-toggle="tab"
-          href="#coupons"
-          role="tab"
-          aria-controls="coupons"
-          aria-selected="false"
-        >
-          문의
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          id="coupons-tab"
-          data-bs-toggle="tab"
-          href="#coupons"
-          role="tab"
-          aria-controls="coupons"
-          aria-selected="false"
-        >
-          쿠폰
-        </a>
-      </li>
-    </ul>
-
-    <div class="tab-content mt-3" id="myTabContent">
-      <!-- 예약 탭 -->
-      <div
-        class="tab-pane fade show active"
-        id="reservations"
-        role="tabpanel"
-        aria-labelledby="reservations-tab"
-      >
-        <h5 class="text-warning">My Reservations</h5>
-        <table class="table table-striped">
-          <thead class="bg-warning text-white">
-            <tr>
-              <th>#</th>
-              <th>Reservation Date</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(reservation, index) in reservations" :key="index">
-              <td>{{ reservation.date }}</td>
-              <td>{{ reservation.details }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 쿠폰 탭 -->
-      <div
-        class="tab-pane fade"
-        id="coupons"
-        role="tabpanel"
-        aria-labelledby="coupons-tab"
-      >
-        <h5 class="text-warning">My Coupons</h5>
-        <table class="table table-striped">
-          <thead class="bg-warning text-white">
-            <tr>
-              <th>#</th>
-              <th>Coupon Name</th>
-              <th>Discount</th>
-              <th>Valid Until</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(coupon, index) in coupons" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td>{{ coupon.name }}</td>
-              <td>{{ coupon.discount }}%</td>
-              <td>{{ coupon.validUntil }}</td>
-            </tr>
-          </tbody>
-        </table>
+    <div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <strong>Email:</strong> {{ userEmail }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
+
+  <!-- 쿠폰 목록 -->
+  <h5 class="text-warning">나의 쿠폰</h5>
+  <table class="table table-striped">
+    <thead class="bg-warning text-white">
+      <tr>
+        <th>#</th>
+        <th>쿠폰 ID</th>
+        <th>할인율</th>
+        <th>쿠폰명</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(coupon, index) in coupons" :key="index">
+        <td>{{ index + 1 }}</td>
+        <td>{{ coupon.id }}</td>
+        <td>{{ coupon.value }}%</td>
+        <td>{{ coupon.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </template>
 
 <script>
+import CouponService from "@/services/coupon/CounponService";
 import MypageService from "@/services/mypage/MypageService";
 
 export default {
@@ -127,6 +51,8 @@ export default {
       recordCountPerPage: 1, //화면에 보일개수
       searchKeyword: "",
       mypages: [], // 빈배열(json)
+      userEmail: "", // 이메일 초기화
+      coupons: [],
     };
   },
 
@@ -147,10 +73,47 @@ export default {
         console.log(error);
       }
     },
+
+
+    async fetchCoupons() {
+    try {
+      console.log("Fetching coupons...");
+      const response = await CouponService.getCouponsByEmail();
+      console.log("Coupons fetched successfully:", response.data);
+      this.coupons = response.data; // 가져온 쿠폰 데이터 저장
+    } catch (error) {
+      console.error("쿠폰 조회 실패:", error); // 에러 로그 출력
+      if (error.response) {
+        // 서버에서 응답이 왔으나 실패한 경우
+        console.error("Response error:", error.response.status, error.response.data);
+      } else if (error.request) {
+        // 요청이 전송되었으나 응답이 없을 경우
+        console.error("No response received:", error.request);
+      } else {
+        // 요청 설정 중에 발생한 에러
+        console.error("Request setup error:", error.message);
+      }
+    }
+  },
+
+
+
+
+
+
+
+
   },
 
   mounted() {
     this.getMypage();
+    this.fetchCoupons();
+    const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.email) {
+    this.userEmail = user.email; // 이메일 저장
+  } else {
+    this.$router.push("/login"); // 로그인되지 않은 사용자는 로그인 페이지로 이동
+  }
   },
 };
 </script>
