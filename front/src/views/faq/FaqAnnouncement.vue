@@ -1,43 +1,40 @@
 <template>
-  <div class="bigbox">
+  <div class="bigbox2">
     <hr />
-    <div class="announce_body_box">
-      <div class="notice_container">
-        <div class="notice_search">
-          <form class="search_input" @submit.prevent="searchAnnouncement">
-            <router-link :to="'/faq/list'" class="custom-link"
-              ><p class="ano_top_title">공지사항</p></router-link
-            >
-            <div class="input_box typing form-group search_bar_announce">
+    <div class="announce_body_box2">
+      <div class="notice_container2">
+        <div class="notice_search2">
+          <form class="search_input2" @submit.prevent="searchAnnouncement">
+            <router-link :to="'/faq/list'" class="custom-link2">
+              <p class="ano_top_title2">공지사항</p>
+            </router-link>
+            <div class="input_box2 typing2 form-group2 search_bar_announce2">
               <input
                 placeholder="제목, 내용"
                 v-model="searchKeyword"
-                class="input_text form-control"
+                class="input_text2 form-control2"
               />
-              <i class="bi bi-search search_glass_announce"></i>
+              <i class="bi bi-search search_glass_announce2"></i>
             </div>
           </form>
           <br />
         </div>
 
-        <div class="notice_content">
-          <div class="announcement-list">
+        <div class="notice_content2">
+          <div class="announcement-list2">
             <div v-for="(data, index) in announcementList" :key="index">
-              <router-link
-                :to="'/announcement/' + data.ano"
-                class="custom-link"
-              >
-                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
-                <p class="ano_date">{{ data.createDate }}</p>
+              <router-link :to="'/announcement/' + data.ano" class="custom-link2">
+                <h2 class="ano_title2">&nbsp;&nbsp;{{ data.title }}</h2>
+                <p class="ano_date2">{{ data.createDate }}</p>
               </router-link>
-              <hr class="notice_line" />
+              <hr class="notice_line2" />
             </div>
           </div>
           <p v-if="announcementList.length === 0">
             등록된 공지사항이 없습니다.
           </p>
           <router-link :to="'/faq'">
-            <button type="button" class="btn btn-warning button">
+            <button type="button" class="btn btn-warning button2">
               <i class="bi bi-arrow-return-left"></i>
             </button>
           </router-link>
@@ -45,15 +42,15 @@
         <br />
 
         <!-- 페이징 -->
-        <div class="notice_paging">
-          <ul class="paging pagination">
+        <div class="notice_paging2">
+          <ul class="paging2 pagination2">
             <!-- 이전 버튼 -->
             <li
-              class="page-arrow page-item"
+              class="page-arrow2 page-item2"
               :class="{ disabled: pageIndex === 1 }"
             >
               <a
-                class="page-link"
+                class="page-link2"
                 href="#"
                 @click.prevent="goToPage(pageIndex - 1)"
               >
@@ -65,21 +62,21 @@
             <li
               v-for="page in totalPages"
               :key="page"
-              class="page-item"
+              class="page-item2"
               :class="{ active: page === pageIndex }"
             >
-              <a class="page-link" href="#" @click.prevent="goToPage(page)">
+              <a class="page-link2" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
             <!-- 다음 버튼 -->
             <li
-              class="page-arrow page-item"
+              class="page-arrow2 page-item2"
               :class="{ disabled: pageIndex === totalPages }"
             >
               <a
-                class="page-link"
+                class="page-link2"
                 href="#"
                 @click.prevent="goToPage(pageIndex + 1)"
               >
@@ -138,63 +135,53 @@ export default {
         query: { search: this.searchKeyword },
       });
     },
-    async fetchAnnouncements() {
-      try {
-        const response = await AnnouncementService.getAll();
-        this.announcementList = response.data.results;
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      }
-    },
   },
 
   mounted() {
     // 초기화 시 URL 쿼리값을 동기화
     this.searchKeyword = this.$route.query.search || "";
     this.getAnnouncements();
-    this.fetchAnnouncements();
   },
 };
 </script>
 
 <style>
-
-.ano_top_title {
+.ano_top_title2 {
   font-weight: bolder;
   font-size: x-large;
   position: absolute;
   margin: 3px 0 0 30px;
 }
 /* 공지 전체 */
-.bigbox {
+.bigbox2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.lla,
-.new,
-.announce {
+.lla2,
+.new2,
+.announce2 {
   color: #ffeb33;
   -webkit-text-stroke: 0.4px black;
   font-size: 16px;
   font-family: dohyeon;
 }
 /* 타이틀 */
-.title {
+.title2 {
   text-align: center;
   font-weight: bolder;
   font-size: 25px;
 }
 /* 전체 박스 */
-.announce_body_box {
+.announce_body_box2 {
   width: 70%;
   border: 2.5px solid black;
   border-radius: 10px;
   padding: 15px;
 }
 /* 검색창 */
-.search_bar_announce {
+.search_bar_announce2 {
   width: 35%;
   margin: 1px auto;
   border-radius: 25px;
@@ -205,7 +192,7 @@ export default {
   margin-bottom: 10px;
 }
 /* 돋보기 아이콘 */
-.search_glass_announce {
+.search_glass_announce2 {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -215,7 +202,7 @@ export default {
   cursor: pointer;
 }
 /* 입력 필드 */
-.input_text {
+.input_text2 {
   margin: 10px auto;
   border-radius: 25px;
   border: 1.5px solid #ccc;
@@ -225,47 +212,47 @@ export default {
   background-color: white;
 }
 /* 공지사항 리스트 스타일 */
-.notice_table {
+.notice_table2 {
   list-style: none;
   display: flex;
   flex-direction: column;
   padding: 0;
   margin: 7px 0 0 10px;
 }
-.notice_line {
+.notice_line2 {
   margin: 3px;
 }
-.ano_title {
+.ano_title2 {
   font-size: 23px;
   padding: 5px;
 }
-.ano_title:hover {
+.ano_title2:hover {
   transform: scale(1.01);
   transition: 0.2s;
 }
-.custom-link {
+.custom-link2 {
   text-decoration: none;
   color: inherit; /* 부모의 색상을 따릅니다 */
 }
-.custom-link:visited,
-.custom-link:active {
+.custom-link2:visited,
+.custom-link2:active {
   text-decoration: none; /* 모든 상태에서 밑줄 제거 */
   color: inherit;
 }
-.custom-link:hover {
+.custom-link2:hover {
   transition: 0.3s;
 }
 /* 페이징 스타일 */
-.notice_paging .pagination {
+.notice_paging2 .pagination2 {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   padding: 10px;
 }
-.page-item {
+.page-item2 {
   margin: 0 8px;
 }
-.page-link {
+.page-link2 {
   color: #333;
   border: 1px solid #ccc;
   padding: 8px 16px;
@@ -274,28 +261,28 @@ export default {
   font-weight: bold;
   transition: all 0.3s ease;
 }
-.page-link:hover {
+.page-link2:hover {
   background-color: #f5f5f5;
   color: #333;
   transform: scale(1.1);
 }
-.page-item.active .page-link {
+.page-item2.active .page-link2 {
   background-color: #ffeb33;
   color: #000;
   border: 1px solid #ffeb33;
   font-size: 1rem;
   font-weight: bold;
 }
-.page-item.disabled .page-link {
+.page-item2.disabled .page-link2 {
   color: #ccc;
   cursor: not-allowed;
 }
-.button {
+.button2 {
   position: relative;
   margin-top: 10px;
   left: 94.5%;
 }
-.ano_date {
+.ano_date2 {
   position: absolute;
   margin: -37.5px 0 0 780px;
   font-size: 13px;

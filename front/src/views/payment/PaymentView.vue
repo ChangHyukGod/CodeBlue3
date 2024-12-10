@@ -163,7 +163,7 @@ export default {
         // 채널 키 설정
         channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
         paymentId: `payment-${crypto.randomUUID()}`,
-        orderName: "나이키 와플 트레이너 2 SD",
+        orderName: "",
         totalAmount: 1000,
         currency: "CURRENCY_KRW",
         payMethod: "CARD",
@@ -195,6 +195,7 @@ export default {
           10
         );
         this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
+        this.toss.orderName = this.reservation.tourName;
         PortOne.requestPayment(this.toss);
       } catch (error) {
         console.log(error);

@@ -1,13 +1,13 @@
 <template>
-  <div class="bigbox">
+  <div class="bigbox1">
     <hr />
-    <div class="announce_body_box">
-      <div class="notice_container">
-        <div class="notice_content">
+    <div class="announce_body_box1">
+      <div class="notice_container1">
+        <div class="notice_content1">
           <p>공지 수정</p>
           <br />
           <!-- 제목 수정 -->
-          <div class="form-floating talk_content">
+          <div class="form-floating talk_content1">
             <textarea
               type="text"
               class="form-control"
@@ -21,7 +21,7 @@
           </div>
           <br />
           <!-- 내용 수정 -->
-          <div class="form-floating talk_content">
+          <div class="form-floating talk_content1">
             <textarea
               type="text"
               class="form-control"
@@ -34,7 +34,7 @@
             <label for="contentTextarea">내용</label>
           </div>
         </div>
-        <div class="button-group">
+        <div class="button-group1">
           <!-- 수정 저장 버튼 -->
           <button type="button" class="btn btn-primary me-2" @click="update">
             저장
@@ -44,7 +44,7 @@
           </button>
           <!-- 돌아가기 버튼 -->
           <router-link :to="'/announcement'">
-            <button type="button" class="btn btn-warning backbutton">
+            <button type="button" class="btn btn-warning backbutton1">
               <i class="bi bi-arrow-return-left"></i>
             </button>
           </router-link>
@@ -114,33 +114,33 @@ export default {
 
 <style>
 /* 공지 전체 */
-.bigbox {
+.bigbox1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 /* 전체 박스 */
-.announce_body_box {
+.announce_body_box1 {
   width: 70%;
   border: 2.5px solid black;
   border-radius: 10px;
   padding: 15px;
 }
-.title {
+.title1 {
   text-align: center;
   font-weight: bolder;
   font-size: 25px;
 }
-.content {
+.content1 {
   padding: 5px 5px 5px 10px;
 }
-.button-group {
+.button-group1 {
   display: flex;
   padding: 5px;
   justify-content: end;
 }
-.backbutton {
+.backbutton1 {
   position: relative;
 }
 </style>
