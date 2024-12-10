@@ -11,7 +11,7 @@
           AND
             (#{view} IS NULL OR "VIEW" LIKE '%'||#{view}||'%')
           AND
-            (NAME LIKE '%'||#{searchKeyword}||'%')
+            (LOCATION LIKE '%'||#{searchKeyword}||'%')
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
             FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>

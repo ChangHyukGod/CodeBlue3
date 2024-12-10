@@ -158,19 +158,36 @@
       <button class="btn btn-outline-secondary mx-2" @click="getAll('','산')">산뷰</button>    
     </div>
     <div class="d-flex mb-2">    
-      <input
-            class="form-control me-2 search_text"
-             name="searchKeyword"
-              type="search"
-              placeholder="여행의 모든 것"
-              aria-label="Search"
-              v-model="searchKeyword"
-            />
-      <button class="btn btn-outline-warning search_glass" type="submit" @click="getAll()">
-              <i class="bi bi-search"></i>
-              </button>
+      <button
+    class="btn btn-outline-secondary dropdown-toggle form-control me-2"
+    type="button"
+    id="dropdownMenuButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    {{ searchKeyword || "여행의 모든 것" }}
+  </button>
+  <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
+    <li>
+      <button
+        class="dropdown-item"
+        v-for="keyword in keywords"
+        :key="keyword"
+        @click="selectKeyword(keyword)"
+      >
+        {{ keyword }}
+      </button>
+    </li>
+  </ul>
+  <button
+    class="btn btn-outline-warning search_glass"
+    type="button"
+    @click="getAll()"
+  >
+    <i class="bi bi-search"></i>
+  </button>
             </div>
-            </div>
+      </div>
 
 
     <!-- 상품 카드 2 -->
@@ -259,6 +276,7 @@ export default {
     return {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
+      keywords: ["서울", "부산", "제주", "강원"], //드롭다운 항목
       
     };
   },
@@ -278,7 +296,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      this.searchKeyword = "";
+    },
+
+    selectKeyword(keyword){
+      this.searchKeyword = keyword;
     }
   },
   mounted() {
