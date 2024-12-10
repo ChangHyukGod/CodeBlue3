@@ -35,6 +35,8 @@
         </div>
       </div>
     </div>
+    <br />
+    <hr />
     <!-- 절취선 -->
     <div class="paragraph-wrapper"></div>
     <!-- <h2 class="menu-title2">{{ menuTitle2 }}</h2> -->
@@ -49,112 +51,115 @@
         :src="require(`@/assets/images/${menu.MENU_MAP}`)"
         alt="Additional Detail"
         class="additional-image"
-        style="border: 3px solid yellow"
         @click="navigateToRecommendMap(menu)"
       />
     </div>
+
     <div class="paragraph-wrapper" style="margin-bottom: 50px"></div>
-
-    <!-- 드롭다운 -->
-
-    <div class="accordion" id="operationHours">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingHours">
-          <button
-            class="accordion-button"
-            type="button"
-            @click="toggleCollapse"
-          >
-            오시는 길, 기본정보, 이용시간, 팁
-          </button>
-        </h2>
+    <h3 style="font-weight: bold; margin-right: 500px; margin-bottom: 20px">
+      댓글 리뷰
+    </h3>
+    <div
+      class="review-section"
+      style="border: 1px solid #ddd; padding: 16px; width: 70%; margin: 0 auto"
+    >
+      <!-- 댓글 리스트 -->
+      <div class="review-list">
+        <!-- 반복문으로 댓글 항목 렌더링 -->
         <div
-          id="collapseHours"
-          class="accordion-collapse collapse"
-          :class="{ show: isCollapsed }"
-          aria-labelledby="headingHours"
-          data-bs-parent="#operationHours"
+          v-for="(data, index) in comments"
+          :key="index"
+          class="review-item mb-3"
+          style="border-bottom: 1px solid #ccc; padding: 8px 0"
         >
           <div
-            v-for="menu in menuItems3"
-            :key="menu.MENU_ID3"
-            class="accordion-body"
+            class="review-header"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
           >
-            <ul class="list-unstyled">
-              <pre>{{ menu.MENU_ID3 }}</pre>
-            </ul>
+            <div>
+              <p
+                class="review-user"
+                style="margin: 0; font-weight: bold; color: #ffc107"
+              >
+                {{ data.email }}
+              </p>
+              <p
+                class="review-location"
+                style="
+                  margin: 0;
+                  font-size: 1.2em;
+                  color: black;
+                  font-weight: bold;
+                "
+              >
+                {{ data.commentLoc }}
+              </p>
+            </div>
+            <span
+              class="review-time"
+              style="font-size: 0.8em; color: #777; margin-right: 20px"
+              >{{ formatDate(data.createdAt) }}</span
+            >
+          </div>
+          <div class="review-content" style="margin-top: 8px">
+            <p
+              class="review-text"
+              style="margin-right: 270px; color: #333; font-size: 15px"
+            >
+              {{ data.commentText }}
+            </p>
+            <div
+              class="review-actions"
+              style="margin-top: 8px; text-align: right; margin-right: 10px"
+            >
+              <router-link :to="'/recommendcomupdate/' + data.comId">
+                <button class="btn btn-secondary btn-sm">관리</button>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="review-section" style="border: 3px solid yellow">
-        <!-- 댓글 리스트 -->
-        <div class="review-list">
-          <!-- 반복문으로 댓글 항목 렌더링 -->
-          <div
-            v-for="(data, index) in comments"
-            :key="index"
-            class="review-item border rounded shadow-sm p-3 mb-3"
-          >
-            <div
-              class="review-header d-flex justify-content-between align-items-center"
-            >
-              <div>
-                <p class="review-user mb-1 text-primary fw-bold">
-                  {{ data.email }}
-                </p>
-                <p class="review-location text-warning mb-0">
-                  {{ data.commentLoc }}
-                </p>
-              </div>
-              <span class="review-time text-muted">{{ data.createdAt }}</span>
-            </div>
-            <div class="review-content mt-2">
-              <p class="review-text text-dark">{{ data.commentText }}</p>
-              <div class="review-actions mt-2">
-                <router-link :to="'/recommendcomupdate/' + data.comId">
-                  <button class="action-btn btn btn-warning text-white">
-                    관리
-                  </button>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 페이지네이션 -->
+      <!-- 페이지네이션 -->
+      <div class="d-flex justify-content-center mt-3">
         <b-pagination
           v-model="pageIndex"
           :total-rows="totalCount"
           :per-page="recordCountPerPage"
           @click="getComments"
-          class="mt-3"
           style="
-            --bs-pagination-active-bg: #fdd835;
-            --bs-pagination-active-color: white;
+            --bs-pagination-active-bg: #ffc107; /* 활성화된 숫자 배경색 (Bootstrap Warning 색상) */
+            --bs-pagination-active-color: white; /* 활성화된 숫자 텍스트 색상 */
+            --bs-pagination-hover-bg: #ffc107; /* 호버된 숫자 배경색 */
+            --bs-pagination-hover-color: white; /* 호버된 숫자 텍스트 색상 */
+            --bs-pagination-link-bg: white; /* 화살표와 비활성 숫자 배경색 */
+            --bs-pagination-link-color: white; /* 화살표와 비활성 숫자 텍스트 색상 */
+            --bs-pagination-link-hover-bg: white; /* 화살표 호버 배경색 */
+            --bs-pagination-link-hover-color: white; /* 화살표 호버 텍스트 색상 */
           "
         ></b-pagination>
+      </div>
 
-        <!-- 댓글 쓰기 버튼 -->
-        <div class="review-write-button text-end mt-3">
-          <a
-            href="/recommendcomadd"
-            class="write-btn btn btn-warning text-white"
-          >
-            댓글 쓰기
-          </a>
-        </div>
-        <!-- TODO: 검색어 입력상자 -->
-        <div class="input-group mb-3 mt-3">
+      <!-- 댓글 쓰기 버튼 -->
+      <div style="text-align: right; margin-top: 16px">
+        <a href="/recommendcomadd" class="btn btn-warning btn-sm">댓글 쓰기</a>
+      </div>
+
+      <!-- 검색어 입력상자 -->
+      <div style="margin-top: 16px">
+        <div class="input-group">
           <input
             type="text"
             class="form-control"
-            placeholder="검색어"
+            placeholder="지역 검색"
             v-model="searchKeyword"
-            style="border: 3px solid yellow"
           />
           <button
-            class="btn btn-outline-warning"
+            class="btn btn-outline-secondary btn-sm"
             type="button"
             @click="getComments"
           >
@@ -162,9 +167,9 @@
           </button>
         </div>
       </div>
-
-      <!-- 여기까지 -->
     </div>
+
+    <!-- 여기까지 -->
   </div>
 </template>
 
@@ -205,6 +210,10 @@ export default {
   },
 
   methods: {
+    formatDate(date) {
+      const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+      return new Date(date).toLocaleDateString("ko-KR", options);
+    },
     async fetchDetailData(tdId) {
       try {
         const response = await RecommendService.get(tdId);
@@ -224,27 +233,27 @@ export default {
           this.menuItems = [
             {
               MENU_ID: 1,
-              MENU_NAME: "함안 대평늪",
-              MENU_DETAIL: "천넌기념물 대평습지",
+              // MENU_NAME: "함안 대평늪",
+              MENU_DETAIL: "호수",
               // MENU_PRICE: "3인분 xxx,xxx원",
-              MENU_IMAGE_URL: "메뉴첫번째2.png",
+              MENU_IMAGE_URL: "홋카이도2.jpg",
             },
             {
               MENU_ID: 2,
-              MENU_NAME: "고려동 유적지",
-              MENU_DETAIL: "경상남도 기념물 제56호",
+              // MENU_NAME: "고려동 유적지",
+              MENU_DETAIL: "예쁜꽃",
               // MENU_PRICE: "xxx,xx원",
-              MENU_IMAGE_URL: "메뉴첫번째3.png",
+              MENU_IMAGE_URL: "홋카이도3.jpg",
             },
             {
               MENU_ID: 2,
-              MENU_NAME: "말이산 고분군",
-              MENU_DETAIL: "푸릇한 농과 나홀로 나무",
+              // MENU_NAME: "말이산 고분군",
+              MENU_DETAIL: "오래된 목조품",
               // MENU_PRICE: "3인분 xxx,xx원",
-              MENU_IMAGE_URL: "메뉴첫번째4.png",
+              MENU_IMAGE_URL: "홋카이도4.jpg",
             },
           ];
-          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "맵함안.png" }];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "홋카이도5.jpg" }];
           this.menuItems3 = [
             {
               MENU_ID3: `부산역에서 KTX 또는 SRT를 타고 진주역으로 가서, 거기서 버스나 택시로 함안군으로 이동하면 됩니다.
@@ -412,10 +421,9 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f8f8f8; /* 컨테이너 배경 */
+
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 3px solid #ffc107;
 }
 
 /* 콘텐츠 래퍼: 그리드 레이아웃 */
@@ -447,7 +455,6 @@ export default {
 
 /* 이미지 영역 */
 .image-area {
-  background-color: #fff; /* 흰색 배경 */
   border-radius: 10px; /* 둥근 테두리 */
 
   display: flex;
@@ -479,10 +486,9 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f8f8f8; /* 컨테이너 배경 */
+
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 3px solid #ffc107;
 }
 
 /* 콘텐츠 래퍼: 그리드 레이아웃 */
@@ -565,7 +571,7 @@ export default {
 .menu-card {
   width: 250px;
   background-color: #fff;
-  border: 2px solid #ffc107;
+
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -582,7 +588,6 @@ export default {
   width: 100%;
   height: 160px;
   object-fit: cover;
-  border-bottom: 2px solid #ffc107;
 }
 
 .menu-description {
@@ -599,7 +604,8 @@ export default {
 
 .menu-detail {
   font-size: 14px;
-  color: #666;
+  color: black;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
@@ -622,7 +628,7 @@ export default {
   left: 10%;
   width: 80%;
   height: 1px;
-  background-color: #ffc107; /* 노란색 */
+
   box-shadow: 0 4px 8px rgba(255, 193, 7, 0.5); /* 그림자 효과 */
 }
 
@@ -636,7 +642,6 @@ export default {
   padding-top: 56.25%; /* 16:9 비율 유지 */
   border-radius: 10px; /* 둥근 모서리 */
   overflow: hidden; /* 이미지가 부모 영역을 초과하지 않도록 */
-  background-color: #ddd;
 }
 
 /* 추가 이미지 */
@@ -702,7 +707,7 @@ export default {
 .menu-card {
   width: 250px;
   background-color: #fff;
-  border: 2px solid #ffc107;
+
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -711,7 +716,7 @@ export default {
 
 /* 카드에 호버 효과 */
 .menu-card:hover {
-  transform: scale(2); /* 카드를 5% 확대 */
+  transform: scale(1.3); /* 카드를 5% 확대 */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 카드 호버 시 그림자 강하게 */
 }
 
@@ -761,7 +766,6 @@ pre {
 
 /* 전체 댓글 섹션 스타일 */
 .review-section {
-  background-color: #fffbea; /* 부드러운 노란색 배경 */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 더 부드러운 그림자 효과 */
@@ -771,7 +775,7 @@ pre {
 /* 댓글 리스트 항목 스타일 */
 .review-item {
   background-color: #fff; /* 카드 배경 흰색 */
-  border: 10px solid #fdd835; /* 노란색 테두리 */
+
   border-radius: 8px;
   margin-bottom: 15px;
   padding: 15px;
@@ -820,7 +824,7 @@ pre {
 
 /* 버튼 스타일 */
 .action-btn {
-  background-color: #fdd835; /* 밝은 노란색 */
+  background-color: #f5b506; /* 밝은 노란색 */
   color: #000;
   border: none;
   padding: 8px 15px;
@@ -855,25 +859,5 @@ pre {
 .write-btn:hover {
   background-color: #f57f17;
   color: white;
-}
-
-/* 페이지네이션 스타일 */
-.b-pagination {
-  margin-top: 20px;
-}
-
-.b-pagination .page-item.active .page-link {
-  background-color: #fdd835 !important;
-  color: white !important;
-  border-color: #fdd835 !important;
-}
-
-.b-pagination .page-link {
-  color: #f57c00 !important;
-  transition: background-color 0.3s ease;
-}
-
-.b-pagination .page-link:hover {
-  background-color: #fff59d !important; /* 호버 시 밝은 노란색 */
 }
 </style>
