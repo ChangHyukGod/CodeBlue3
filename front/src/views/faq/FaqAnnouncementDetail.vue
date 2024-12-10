@@ -12,7 +12,7 @@
         </div>
         <!-- ano 값을 동적으로 설정 -->
         <div class="button-group">
-          <router-link :to="`/announcement/fix/${ano}`" >
+          <router-link :to="`/announcement/fix/${ano}`" v-if="userRole === 'ROLE_ADMIN'">
             <button type="button" class="btn btn-warning me-2">수정</button>
           </router-link>
           <router-link to="/announcement">
@@ -33,6 +33,7 @@ import AnnouncementService from "@/services/faq/AnnouncementService";
 export default {
   data() {
     return {
+      userRole:"",
       ano: "",
       title: "",
       content: "",
@@ -57,6 +58,13 @@ export default {
       this.getDetail(ano);
     } else {
       console.error("URL에 'ano' 파라미터가 누락되었습니다.");
+    }
+    const user= localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.userRole = parsedUser.codeName;
+    } else {
+      console.error("No user data found in localStorage.");
     }
   },
 };

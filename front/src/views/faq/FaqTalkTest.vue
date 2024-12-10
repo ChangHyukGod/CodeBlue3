@@ -13,25 +13,6 @@
           <p class="talk_big_title">문의 등록 테스트</p>
           <br />
           <div class="talk_list">
-            <div
-              v-for="(talk, index) in talkList"
-              :key="index"
-              class="talk_item"
-            >
-              제목 : {{ talk.title }}
-              <hr />
-              기본키 : {{ talk.tno }}
-              <hr />
-              내용 : {{ talk.content }}
-              <hr />
-              카테고리 : {{ talk.category }}
-              <hr />
-              사진 : {{ talk.image }}
-              <hr />
-              답변 : {{ talk.reply }}
-              <hr />
-              작성일 : {{ talk.createDate }}
-            </div>
             <router-link :to="'/faq/talk'">
               <button type="button" class="btn btn-warning goto_button">
                 <i class="bi bi-arrow-return-left"></i>
@@ -118,35 +99,5 @@ export default {
   margin-left: 14%;
   margin-right: 2%;
   width: 40%;
-}
-/* 카테고리 */
-.talk_category {
-  width: 30%;
-}
-/* 내용, 사진 */
-.talk_content,
-.talk_picture {
-  margin-left: 14%;
-  width: 72%;
-}
-/* 라운드, 버튼 */
-.talk_round,
-.talk_button {
-  margin-left: 14%;
-}
-.talk_button {
-  display: flex;
-}
-.goto_button {
-  margin-left: 1265%;
-  color: blue;
-}
-.talk_big_title {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-}
-.talk_item {
-  text-align: center;
 }
 </style>

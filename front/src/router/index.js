@@ -64,6 +64,14 @@ const routes = [
     component: () => import("../views/faq/FaqTalkTest.vue"),
   },
   {
+    path: "/faq/talklist",
+    component: () => import("../views/faq/FaqTalkList.vue"),
+  },
+  {
+    path: "/faq/talkanswer/:tno",
+    component: () => import("../views/faq/FaqTalkAnswer.vue"),
+  },
+  {
     path: "/review",
     component: () => import("../views/review/ReviewMain.vue"),
   },
@@ -79,9 +87,6 @@ const routes = [
     path: "/coupon",
     component: () => import("../views/coupon/CouponView.vue"),
   },
-
-
- 
 
   {
     path: "/mypage",

@@ -17,7 +17,7 @@ const insert = (data) => {
 };
 
 const updated = (tno, data) => {
-  return axios.put(`${baseURL}/faq/talk/${tno}`, data);
+  return axios.put(`${baseURL}/faq/talkanswer/${tno}`, data);
 };
 
 const insertForm = (data)=>{
@@ -29,12 +29,21 @@ const insertForm = (data)=>{
 
   return formData;
 };
+
+const updateReply = (tno, reply) => {
+  return axios.put(`${baseURL}/faq/talkanswer/${tno}`, { reply });
+};
+const remove = (tno) => {
+  return axios.delete(baseURL + `/faq/talkanswer/${tno}`);
+};
 const TalkService = {
   get,
   getAll,
   insert,
   updated,
-  insertForm
+  insertForm,
+  remove,
+  updateReply
 };
 
 export default TalkService;
