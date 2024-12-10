@@ -138,6 +138,7 @@
 
 <script>
 import CouponService from "@/services/coupon/CounponService";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -176,7 +177,13 @@ export default {
   methods: {
     processPayment() {
       if (!this.selectedPaymentMethod) {
-        alert("결제 수단을 선택해주세요."); // 결제 수단 미선택 시 경고
+        // 결제 수단 미선택 시 경고
+        Swal.fire({
+          icon: "warning",
+          title: "결제 수단 미선택",
+          text: "결제 수단을 선택해주세요.",
+          confirmButtonText: "확인",
+        });
         return;
       }
     },
