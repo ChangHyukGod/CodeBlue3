@@ -53,7 +53,7 @@
             COMMENT_TEXT=#{commentText},
             COMMENT_LOC = #{commentLoc},
             RATING = #{rating}
-        
+
 
         WHERE COM_ID = #{comId}
     </update>
