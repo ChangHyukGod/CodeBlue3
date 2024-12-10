@@ -28,7 +28,7 @@
     <div class="mb-3">
       <label for="price" class="form-label">가격</label>
       <input
-        type="number"
+        type="text"
         id="price"
         v-model="room.price"
         class="form-control"
