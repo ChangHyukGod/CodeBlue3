@@ -241,6 +241,7 @@
 import MainService from "@/services/main/MainService"; // 숙소 정보 서비스
 import RoomService from "@/services/room/RoomService"; // 방 정보 서비스
 import CartService from "@/services/cart/CartService"; // 장바구니 정보 서비스
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -434,18 +435,27 @@ export default {
       return totalPrice.toLocaleString(); // 예: 1000000 -> "1,000,000"
     },
 
-    // **예약 함수**
-    makeReservation(room) {
+    // ** 예약 **
+    async makeReservation(room) {
       // 사용자가 로그인했는지 확인
       if (!this.userEmail) {
-        alert("로그인이 필요합니다.");
+        await Swal.fire({
+          icon: "warning",
+          title: "로그인 필요",
+          text: "로그인이 필요합니다.",
+        });
         return; // 로그인되지 않았다면 함수 종료
       }
 
       if (!this.reservation.checkOutDate) {
-        alert("체크아웃 날짜를 선택하세요");
+        await Swal.fire({
+          icon: "warning",
+          title: "체크아웃 날짜 미선택",
+          text: "체크아웃 날짜를 선택하세요.",
+        });
         return; // 체크아웃 날짜가 없으면 이후 코드 실행을 멈춤
       }
+
       // 예약 정보를 설정
       this.reservation.totalPrice = this.formatPriceWithStayDuration(
         room.price,
@@ -460,16 +470,46 @@ export default {
       this.reservation.checkInTime = room.checkIn;
       this.reservation.checkOutTime = room.checkOut;
 
-      // 각 방에 대해 독립적인 예약할 정보 저장
-      localStorage.setItem(
-        `reservation_${room.roomId}`,
-        JSON.stringify(this.reservation)
-      );
+      // 입실 및 퇴실 날짜 계산
+      const checkInDate = this.reservation.checkInDate; // 입실 날짜 (YYYY-MM-DD)
+      const checkOutDate = this.reservation.checkOutDate; // 퇴실 날짜 (YYYY-MM-DD)
 
-      // 예약 페이지로 이동
-      this.$router.push(`/payment/${room.roomId}`);
+      // SweetAlert2로 예약 확인 메시지 표시
+      const result = await Swal.fire({
+        icon: "info",
+        title: "예약 확인",
+        html: `
+      <p>숙소: <strong>${this.tour.name}</strong></p>
+      <p>객실: <strong>${room.roomName}</strong></p>
+      <p>입실 날짜: <strong>${checkInDate}</strong></p>
+      <p>퇴실 날짜: <strong>${checkOutDate}</strong></p>
+      <p>총 ${this.stayDuration}박</p>
+      <p>총 금액: <strong>${this.formatPriceWithStayDuration(
+        room.price,
+        this.stayDuration
+      )}원</strong></p>
+      <p>체크인 시간: <strong>${room.checkIn}</strong></p>
+      <p>체크아웃 시간: <strong>${room.checkOut}</strong></p>
+      <p>예약을 진행하시겠습니까?</p>
+    `,
+        showCancelButton: true,
+        confirmButtonText: "예약 진행",
+        cancelButtonText: "취소",
+      });
+
+      if (result.isConfirmed) {
+        // 예약 정보 로컬스토리지에 저장
+        localStorage.setItem(
+          `reservation_${room.roomId}`,
+          JSON.stringify(this.reservation)
+        );
+
+        // 예약 페이지로 이동
+        this.$router.push(`/payment/${room.roomId}`);
+      } else {
+        console.log("예약이 취소되었습니다.");
+      }
     },
-
     syncCheckInDate() {
       // reservation.checkInDate가 변경되면 cartItem.checkInDate에 값 동기화
       this.cartItem.checkInDate = this.reservation.checkInDate;
@@ -488,12 +528,20 @@ export default {
     async addToCart(room) {
       // 사용자가 로그인했는지 확인
       if (!this.userEmail) {
-        alert("로그인이 필요합니다.");
+        await Swal.fire({
+          icon: "warning",
+          title: "로그인 필요",
+          text: "로그인이 필요합니다.",
+        });
         return; // 로그인되지 않았다면 함수 종료
       }
 
       if (!this.reservation.checkOutDate) {
-        alert("체크아웃 날짜를 선택하세요");
+        await Swal.fire({
+          icon: "warning",
+          title: "체크아웃 날짜 미선택",
+          text: "체크아웃 날짜를 선택하세요.",
+        });
         return; // 체크아웃 날짜가 없으면 이후 코드 실행을 멈춤
       }
 
@@ -523,20 +571,32 @@ export default {
         cartCount++;
         localStorage.setItem("cartCount", cartCount);
 
-        // confirm 대화상자 사용
-        const userConfirmed = confirm(
-          "장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?"
-        );
+        // SweetAlert2 confirm 대화상자 사용
+        const result = await Swal.fire({
+          icon: "success",
+          title: "장바구니 추가 성공",
+          text: "장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: "이동",
+          cancelButtonText: "머무르기",
+        });
 
-        if (userConfirmed) {
-          // "확인"을 클릭한 경우, /cart 페이지로 이동
+        if (result.isConfirmed) {
+          // "이동" 버튼 클릭 시 /cart 페이지로 이동
           this.$router.push(`/cart`);
         } else {
-          // "취소"를 클릭한 경우, 그대로 머무름
+          // "머무르기" 클릭 시
           console.log("장바구니 페이지로 이동하지 않았습니다.");
         }
       } catch (error) {
         console.error("Failed to add Cart:", error);
+
+        // 에러 발생 시 SweetAlert2 알림
+        await Swal.fire({
+          icon: "error",
+          title: "오류 발생",
+          text: "장바구니 추가에 실패했습니다. 다시 시도해주세요.",
+        });
       }
     },
   },
