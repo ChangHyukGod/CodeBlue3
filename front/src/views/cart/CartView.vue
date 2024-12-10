@@ -100,6 +100,7 @@
 
 <script>
 import CartService from "@/services/cart/CartService";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -125,40 +126,91 @@ export default {
       }
     },
 
+    // 개별 삭제
     async deleteFromCartId(cartId) {
       try {
+        // 서버에서 삭제 요청
         await CartService.deleteFromCartId(cartId);
-        alert("삭제 되었습니다.");
+
+        // 로컬 상태에서 아이템 제거
         this.cart = this.cart.filter((item) => item.cartId !== cartId);
-        this.calculateTotalPrice(); // 가격 업데이트
-        this.countCartItems(); // 장바구니 개수 업데이트
+
+        // 총 가격 및 장바구니 개수 업데이트
+        this.calculateTotalPrice();
+        this.countCartItems();
+
+        // 삭제 완료 메시지 표시
+        await Swal.fire({
+          icon: "success",
+          title: "삭제되었습니다.",
+          text: "선택한 상품이 장바구니에서 삭제되었습니다.",
+          showConfirmButton: false, // 확인 버튼 제거
+          timer: 1500, // 1.5초 후 자동으로 닫힘
+        });
       } catch (error) {
         console.error("Error deleting item:", error);
+        // 오류 발생 시 사용자 알림
+        await Swal.fire({
+          icon: "error",
+          title: "삭제 실패",
+          text: "삭제 중 문제가 발생했습니다. 다시 시도해주세요.",
+          showConfirmButton: false, // 확인 버튼 제거
+          timer: 1500, // 1.5초 후 자동으로 닫힘
+        });
       }
     },
 
+    // 선택 삭제
     async deleteSelectedItems() {
       if (this.selectedItems.length === 0) {
-        alert("선택된 항목이 없습니다.");
+        await Swal.fire({
+          icon: "warning",
+          title: "선택된 상품이 없습니다.",
+          text: "삭제할 상품을 선택해주세요.",
+          showConfirmButton: false, // 확인 버튼 제거
+          timer: 1500, // 1.5초 후 자동으로 닫힘
+        });
         return;
       }
 
       try {
+        // 선택된 항목들을 삭제 요청
         await Promise.all(
           this.selectedItems.map((cartId) =>
             CartService.deleteFromCartId(cartId)
           )
         );
-        alert("선택된 항목이 삭제되었습니다.");
+
+        // 선택된 항목들을 장바구니에서 제거
         this.cart = this.cart.filter(
           (item) => !this.selectedItems.includes(item.cartId)
         );
-        this.selectedItems = [];
-        this.isAllSelected = false;
-        this.calculateTotalPrice(); // 가격 업데이트
-        this.countCartItems(); // 장바구니 개수 업데이트
+        this.selectedItems = []; // 선택 항목 초기화
+        this.isAllSelected = false; // 전체 선택 초기화
+
+        // 삭제 완료 메시지 표시
+        await Swal.fire({
+          icon: "success",
+          title: "삭제되었습니다.",
+          text: "선택된 상품이 장바구니에서 삭제되었습니다.",
+          showConfirmButton: false, // 확인 버튼 제거
+          timer: 1500, // 1.5초 후 자동으로 닫힘
+        });
+
+        // 가격 업데이트 및 장바구니 개수 갱신
+        this.calculateTotalPrice();
+        this.countCartItems();
       } catch (error) {
         console.error("Error deleting selected items:", error);
+
+        // 오류 발생 시 사용자 알림
+        await Swal.fire({
+          icon: "error",
+          title: "삭제 실패",
+          text: "선택된 상품 삭제 중 문제가 발생했습니다. 다시 시도해주세요.",
+          showConfirmButton: false, // 확인 버튼 제거
+          timer: 1500, // 1.5초 후 자동으로 닫힘
+        });
       }
     },
 
@@ -254,33 +306,56 @@ export default {
     // 체크된 숙소들 단체 결제
     async goToPaymentPage() {
       try {
+        // 선택된 상품이 없는 경우 알림
         if (this.selectedItems.length === 0) {
-          alert("선택된 상품이 없습니다."); // 경고 메시지 출력
+          await Swal.fire({
+            icon: "warning",
+            title: "선택된 상품 없음",
+            text: "선택된 상품이 없습니다.",
+          });
           return;
         }
-        // selectedItems에 포함된 cartId만 필터링해서 객체를 조회합니다.
+
+        // 선택된 상품들의 데이터를 서버에서 조회
         const selectedItemsData = await Promise.all(
           this.cart
-            // 1. this.cart에서 각 아이템을 확인하고, selectedItems 배열에 있는 cartId만 필터링합니다.
-            .filter((item) => this.selectedItems.includes(item.cartId))
-            // 2. 필터링된 각 아이템에 대해 CartService.getItemsFromCartId(item.cartId)를 호출하여
-            // 해당 cartId에 대한 데이터를 서버에서 받아옵니다.
+            .filter((item) => this.selectedItems.includes(item.cartId)) // 선택된 cartId만 필터링
             .map(async (item) => {
               const response = await CartService.getItemsFromCartId(
                 item.cartId
-              ); // 요청
-              // **서버로부터 받은 response 객체에서 실제 데이터만 꺼내서 반환합니다.**
-              return response.data; // **response.data만 반환**
+              );
+              return response.data; // 서버에서 받은 데이터 반환
             })
         );
+
+        // 로컬스토리지에 선택된 상품 데이터를 저장
         localStorage.setItem(
           "selectedItems",
           JSON.stringify(selectedItemsData)
         );
-        this.$router.push("/TotalPayment");
+
+        // 성공 메시지 및 결제 페이지로 이동
+        const result = await Swal.fire({
+          icon: "success",
+          title: "결제 준비 완료",
+          text: "선택된 상품을 결제 페이지로 이동합니다.",
+          showCancelButton: true,
+          confirmButtonText: "결제 페이지로 이동",
+          cancelButtonText: "취소",
+        });
+
+        if (result.isConfirmed) {
+          this.$router.push("/TotalPayment");
+        } else {
+          console.log("결제 페이지 이동이 취소되었습니다.");
+        }
       } catch (error) {
         console.error("Error fetching cart items:", error);
-        alert("결제 페이지로 이동 중 오류가 발생했습니다. 다시 시도해주세요.");
+        await Swal.fire({
+          icon: "error",
+          title: "오류 발생",
+          text: "결제 페이지로 이동 중 오류가 발생했습니다. 다시 시도해주세요.",
+        });
       }
     },
   },

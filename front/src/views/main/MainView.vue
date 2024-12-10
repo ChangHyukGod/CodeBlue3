@@ -10,48 +10,24 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="/maindetail/104">
-          <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/164">
+          <img :src="require(`@/assets/images/main/배너제주.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/104">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
-          </a>
-          <p>광안대교 야경 보면서 따뜻한 연말갬성 챙기자구요~</p>
-        </div>
       </div>
       <div class="carousel-item">
-        <a href="/maindetail/85">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="d-block w-100" width="800" height="600" />
+        <a href="/maindetail/104">
+          <img :src="require(`@/assets/images/main/배너광안.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/maindetail/85">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">속초, 바다 앞 고급호텔!</button>
-          </a>
-          <p>속초 라마다 호텔 예약을 여기로~</p>
-        </div>
       </div>
       <div class="carousel-item">
         <a href="/coupon">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="d-block w-100" width="800" height="600" />
+          <img :src="require(`@/assets/images/main/배너쿠폰.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/coupon">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">신규회원 쿠폰 받아가세요!</button>
-          </a>
-          <p>신규회원 대상, 20% 할인 쿠폰 발급 이벤트 중~</p>
-        </div>
       </div>
       <div class="carousel-item">
-        <a href="/recommenddetail/14">
-          <img :src="require(`@/assets/images/메뉴5.jpg`)" class="d-block w-100" width="800" height="600" />
+        <a href="/recommenddetail/11">
+          <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
         </a>
-        <div class="carousel-caption d-none d-md-block">
-          <a href="/recommenddetail/14">
-            <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">겨울여행 추천!</button>
-          </a>
-          <p>겨울맞이 이런 곳은 어떠신가요? 추천페이지에서 둘러보아요~</p>
-        </div>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -68,24 +44,28 @@
     <!-- 메뉴 1 : 연말특가 -->
     <div>
       <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
-      <p style="font-size: 16px; margin-top: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 400; opacity: 0.8;">아직 늦지 않았어요! 연말엔 이쁜 숙소에서 낭만 가득 휴식 어때요?</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          아직 늦지 않았어요! 연말엔 예쁜 숙소에서 낭만 가득 휴식 어때요?
+        </p>
+      </div>
     </div>
     <!-- 추천 카드 1 -->
     <div class="row row-cols-1 row-cols-md-4 g-3">
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/104">
-            <img :src="require(`@/assets/images/main/Gangan_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천광안.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
             <p class="card-text">부산</p>
             <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
-              <!-- 상세페이지 주소창 하드코딩 예정 -->
+            <p class="text-primary fw-bold">70,000원</p>
               <div style="display: flex; justify-content: space-between">
                 <a href="/maindetail/104"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
               </div>
           </div>
         </div>
@@ -93,15 +73,18 @@
       <!-- 추천 카드 2 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/164">
+            <img :src="require(`@/assets/images/main/추천제주.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">올 겨울, 제주 어때~?</h5>
+            <p class="card-text">제주</p>
+            <p class="card-text">시골갬성 가득, 한옥숙소</p>
+            <p class="text-primary fw-bold">185,400원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/164"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
               </div>
           </div>
         </div>
@@ -109,15 +92,18 @@
       <!-- 추천 카드 3 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/main/Heaundae_1.webp`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/165">
+            <img :src="require(`@/assets/images/main/추천프랑스.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">유럽의 문화 중심지, 프랑스에서 하루</h5>
+            <p class="card-text">프랑스</p>
+            <p class="card-text">프랑스에서 즐기는 지중해 바다</p>
+            <p class="text-primary fw-bold">211,040원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/165"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
               </div>
           </div>
         </div>
@@ -125,15 +111,18 @@
       <!-- 추천 카드 4 -->
       <div class="col">
         <div class="card h-100">
-          <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          <a href="/maindetail/169">
+            <img :src="require(`@/assets/images/main/추천훗카이도.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
-            <p class="card-text">부산</p>
-            <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
-            <p class="text-primary fw-bold">97,000원~</p>
+            <h5 class="card-title mt-2">겨울왕국, 스키타고 즐기는 훗카이도</h5>
+            <p class="card-text">훗카이도</p>
+            <p class="card-text">유명한 스키리조트 윈저스노우 빌리지에서 15분 거리</p>
+            <p class="text-primary fw-bold">152,800원</p>
               <!-- 상세페이지 주소창 하드코딩 예정 -->
               <div style="display: flex; justify-content: space-between">
-                <a href="/"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/maindetail/169"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
               </div>
           </div>
         </div>
@@ -144,18 +133,40 @@
     <!-- 메뉴 2 : 숙소 전체 -->
     <div>
       <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">최다 숙소 보유</button>
-      <p style="font-size: 16px; margin-top: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 400; opacity: 0.8;">여행 전에도, 여행 중에도 언제 어디서든 예약OK</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          여행 전에도, 여행 중에도 언제 어디서든 예약OK
+        </p>
+      </div>
     </div>
 
     <!-- 필터 -->
-    <div class="d-flex mb-4">
-      <button class="btn btn-outline-secondary mx-2">전체보기</button>
-      <button class="btn btn-outline-secondary mx-2">국내숙소</button>
-      <button class="btn btn-outline-secondary mx-2">해외숙소</button>
-      <button class="btn btn-outline-secondary mx-2">바다뷰</button>
-      <button class="btn btn-outline-secondary mx-2">산뷰</button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex  mb-4">
+        <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">자연친화적</button>    
+      </div>
+      <div class="d-flex mb-2">    
+        <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
+        <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
+          <li>
+            <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">{{ keyword }}</button>
+          </li>
+        </ul>
+      <button class="btn btn-outline-warning search_glass" type="button" @click="getAll()">
+        <i class="bi bi-search"></i>
+      </button>
+      </div>
     </div>
+
 
     <!-- 상품 카드 2 -->
     <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -169,13 +180,12 @@
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
             <p class="text-primary fw-bold">{{ data.price }}</p>
-            <!-- 상세페이지 / 수정,삭제 페이지 이동 버튼 -->
             <div style="display: flex; justify-content: space-between">
               <router-link :to="'/maindetail/' + data.tourId">
                 <button class="btn btn-primary">보러가기</button>
               </router-link>
               <router-link :to="'/mainupdate/' + data.tourId">
-                <button class="btn btn-primary">수정/삭제</button>
+                <button class="btn btn-primary" v-if="userRole === 'ROLE_ADMIN'">수정/삭제</button>
               </router-link>
             </div>
           </div>
@@ -187,28 +197,32 @@
     <!-- 메뉴 3 : 추천/쿠폰/리뷰/faq 이동 카드 -->
     <div>
       <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">☆추천 모음집☆</button>
-      <p style="font-size: 16px; margin-top: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 400; opacity: 0.8;">각종 리뷰, 숙소 근처 핫플, 쿠폰혜택까지 놓치지 마세요~!</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          각종 리뷰, 숙소 근처 핫플, 쿠폰혜택까지 놓치지 마세요~!
+        </p>
+      </div>
     </div>
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div class="col">
         <div class="card h-100">
           <a href="/recommend">
-            <img :src="require(`@/assets/images/main/Namcheon_1.webp`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
-          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>숙소 근처 관광지, 인스타 핫플 췍~!</p>
-            <a href="/recommend"><button class="btn btn-primary">추천페이지 보러가기</button></a>
+          <div class="card-body" style="display: flex; gap: 20px; width: 300px;">
+            <a href="/recommend"><button class="btn btn-primary">추천페이지</button></a>
+            <p style="font-size: 20px; font-style: bold;">/</p>
+            <a href="/recommendgoogleview"><button class="btn btn-primary">여행지검색</button></a>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card h-100">
           <a href="/coupon">
-            <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/쿠폰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>쏠쏠한 혜택, 쿠폰/이벤트 췍~!</p>
             <a href="/coupon"><button class="btn btn-primary">쿠폰/이벤트 보러가기</button></a>
           </div>
         </div>
@@ -216,10 +230,9 @@
       <div class="col">
         <div class="card h-100">
           <a href="/review">
-            <img :src="require(`@/assets/images/coupon3.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/리뷰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>다른 사람들의 후기도 궁금해!</p>
             <a href="/review"><button class="btn btn-primary">리뷰게시판 보러가기</button></a>
           </div>
         </div>
@@ -227,17 +240,14 @@
       <div class="col">
         <div class="card h-100">
           <a href="/faq">
-            <img :src="require(`@/assets/images/main/QnA.png`)" class="card-img-top" style="width: 100%; height: 150px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/FAQ.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <p>기타문의 사항은 여기로!</p>
             <a href="/faq"><button class="btn btn-primary">고객센터 보러가기</button></a>
           </div>
         </div>
       </div>
     </div>
-
-  </div>
 </template>
 <script>
 import MainService from "@/services/main/MainService";
@@ -245,12 +255,19 @@ export default {
   data() {
     return {
       mains: [], //빈배열(json)
+      searchKeyword:"", // 검색어
+      keywords: ["국내","해외"], //드롭다운 항목
+      userRole: "", // 유저 권한
     };
   },
   methods: {
-    async getAll(){
+    async getAll(view = ""){
+      this.view = view;
+      console.log(this.category);
+      console.log(this.view);
+      console.log(this.searchKeyword);
       try {
-        let response = await MainService.getALLnp();
+        let response = await MainService.getALLnp(this.searchKeyword,this.view);
         const { results, totalCount } = response.data;
         console.log(response.data);
         this.mains = results;
@@ -258,10 +275,27 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    // 드롭다운 메뉴 선택
+    selectKeyword(keyword){
+      this.searchKeyword = keyword;
+    },
+    // 전체보기 버튼(전체조회)
+    getreset(){
+      this.searchKeyword = "";
+      this.getAll();
+    },
   },
   mounted() {
     this.getAll();
+    // 로컬스토리지에서 토큰 정보 가져오기
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 };
 </script>

@@ -4,10 +4,14 @@
 <mapper namespace="com.simplecoding.simpledms.mapper.main.TourMapper">
     <!-- 전체조회 : public List<?> selectTour(Criteria searchVO); -->
     <select id="selectTour" parameterType="Criteria" resultType="Tour">
-        SELECT * FROM TOUR
-        WHERE NAME LIKE '%'||#{searchKeyword}||'%'
+        SELECT *
+        FROM TOUR
+        WHERE
+            (#{view} IS NULL OR "VIEW" LIKE '%'||#{view}||'%')
+          AND
+            (CATEGORY LIKE '%'||#{searchKeyword}||'%')
         OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
-        FETCH NEXT #{recordCountPerPage} ROWS ONLY
+            FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
 
     <!-- 전체조회 _ 총건수 : public int selectTourTotCnt(Criteria searchVO); -->
@@ -54,4 +58,11 @@
         DELETE FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </delete>
+
+    <select id="getTourName"
+            parameterType="int"
+            resultType="String">
+        SELECT NAME FROM TOUR
+        WHERE TOUR_ID = #{tourId}
+    </select>
 </mapper>

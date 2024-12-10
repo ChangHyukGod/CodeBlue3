@@ -41,15 +41,20 @@
     <!-- targetId 입력 -->
     <div class="input-group">
       <span class="input-group-text" style="font-weight: bold;">상품명</span>
-      <input type="number" v-model="review.targetId" class="form-control" />
+      <select v-model="review.targetId" @change="setTargetId" class="form-select">
+        <option value="" disabled>상품 선택</option>
+        <option v-for="product in tourNames" :key="product.id" :value="product.id">
+          {{ product.name }}
+        </option>
+      </select>
     </div>
-    <hr>
 
     <!-- 내용 입력 섹션 -->
     <div class="mb-3">
       <label for="content" class="form-label" style="font-weight: bold;">내용</label>
-      <textarea v-model="review.content" id="content" class="form-control" rows="10" placeholder="후기 내용을 입력하세요."></textarea>
-      <input type="file" id="imageUpload" @change="insertImage" accept="image/*" class="form-control mt-2" />
+      <textarea v-model="review.content" id="content" class="form-control" rows="10"
+        placeholder="후기 내용을 입력하세요."></textarea>
+      <input type="file" id="imageUpload" ref="file" @change="select" accept="image/*" class="form-control mt-2" />
     </div>
 
     <div class="d-flex justify-content-center" style="margin-top: 40px; margin-bottom: 40px;">
@@ -57,7 +62,7 @@
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         글등록
       </button>
-      <button type="button" class="btn btn-secondary ms-3"
+      <button type="button" class="btn btn-secondary ms-3" @click="goToReview"
         style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px;">
         취소
       </button>
@@ -82,20 +87,22 @@
 </template>
 
 <script>
+import MainService from "@/services/main/MainService";
 import ReviewService from "@/services/review/ReviewService";
 
 export default {
   data() {
     return {
-      review: {      
+      review: {
         rating: 0,
         title: "",
-        content: "", 
+        content: "",
         authorEmail: "",
-        targetId: null, 
+        targetId: null,
         imageUrl: "",
         image: undefined
       },
+
     }
   },
   created() {
@@ -103,32 +110,83 @@ export default {
     this.review.authorEmail = user?.email || "알 수 없음"; // 사용자 이메일 표시
   },
   methods: {
-    insertImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.review.image = file; // 선택한 파일을 review.image에 저장
-        this.review.imageUrl = URL.createObjectURL(file); // 이미지 URL 생성
-      }
+    select() {
+      this.review.image = this.$refs.file.files[0];
     },
-    
+
     setRating(star) {
       this.review.rating = star; // 평점 설정
     },
-    
-    async save() {
-  if (!this.review.title) {
-    alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
-    return;
-  }
 
-  try {
-    let response = await ReviewService.insert(this.review);
-    console.log(response.data);
-    this.$router.push("/review");
-  } catch (error) {
-    console.error(error.response ? error.response.data : error.message);
-  }
-}
+    goToReview() {
+      this.$router.push("/review"); // /review로 이동
+    },
+
+    setTargetId() {
+      const selectedProduct = this.tourNames.find(product => product.id === this.review.targetId);
+      if (selectedProduct) {
+        this.review.targetId = Number(selectedProduct.id); // 정수형으로 변환
+      }
+    },
+
+    async save() {
+      if (!this.review.title) {
+        alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
+        return;
+      }
+
+      try {
+        // TARGET_ID를 정수형으로 변환
+        this.review.targetId = Number(this.review.targetId);
+
+        let response = await ReviewService.insert(this.review);
+        console.log(response.data);
+        this.$router.push("/review");
+      } catch (error) {
+        console.error('Error saving review:', error.response ? error.response.data : error.message);
+        alert('후기 저장 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
+    },
+
+    async getTourIds() {
+      try {
+        const response = await MainService.getTourId();
+        this.tourList = response.data;
+      } catch (error) {
+        console.error("Error fetching tour IDs:", error);
+      }
+    },
+
+    async getTourNames() {
+      try {
+        if (!this.tourList || this.tourList.length === 0) {
+          const savedTourList = localStorage.getItem("tourList");
+          if (savedTourList) {
+            this.tourList = JSON.parse(savedTourList);
+          } else {
+            console.error("No tourList found in localStorage.");
+            return;
+          }
+        }
+
+        const namePromises = this.tourList.map(async (tourId) => {
+          const response = await MainService.getName(tourId);
+          return { id: tourId, name: response.data }; // id와 이름을 함께 반환
+        });
+
+        this.tourNames = await Promise.all(namePromises);
+        console.log("Tour Names:", this.tourNames);
+
+      } catch (error) {
+        console.error("Error fetching tour names:", error);
+      }
+    },
+  },
+  mounted() {
+    this.getTourIds().then(() => {
+      localStorage.setItem("tourList", JSON.stringify(this.tourList));
+      this.getTourNames();
+    });
   },
 }
 </script>

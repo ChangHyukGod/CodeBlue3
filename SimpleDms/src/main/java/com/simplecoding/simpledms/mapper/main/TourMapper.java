@@ -27,4 +27,6 @@ public interface TourMapper {
 
     public int update(Tour tour);  //수정
     public int delete(int tourId);  //삭제
+
+    public String getTourName(int tourId);
 }

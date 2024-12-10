@@ -11,12 +11,13 @@
           style="width: 200px; height: 200px; object-fit: contain; margin-right: 40px;" />
       </div>
     </div>
-
+    
+    <h5 style="margin-top: 50px; font-weight: bold;">최근 베스트 여행후기</h5>
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-3" v-for="review in topReviews" :key="review.reviewId">
           <div class="card" style="width: 15rem; border: none;">
-            <img :src="review.imageUrl || '/images/침대.jfif'" class="card-img-top" alt="...">
+            <img :src="review.imageUrl || '@/assets/images/침대.jpg'" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">
                 <span>
@@ -25,7 +26,7 @@
                       style="color: #FFD700;"></i>
                   </template>
                 </span><br>
-                <span style="font-weight: bold; font-size: 1.1rem; cursor: pointer;"
+                <span class="review-title" style="font-weight: bold; font-size: 1.1rem; cursor: pointer;"
                   @click="goToReviewDetail(review.reviewId)">
                   {{ review.title }}
                 </span><br>
@@ -36,37 +37,47 @@
         </div>
       </div>
     </div>
-
+    
     <div class="container mt-5">
       <table class="table table-hover table-with-top-border">
         <thead>
           <tr>
-            <th scope="col" style="width: 20%;">평점</th>
-            <th scope="col" style="width: 40%;">제목</th>
-            <th scope="col" style="width: 20%;">작성자</th>
-            <th scope="col" style="width: 10%;">작성일</th>
+            <th scope="col" style="width: 10%; padding-bottom: 20px; padding-top: 20px; text-align: center;">번호</th>
+            <th scope="col" style="width: 15%; padding-bottom: 20px; padding-top: 20px; text-align: center;">평점</th>
+            <th scope="col" style="width: 50%; padding-bottom: 20px; padding-top: 20px; text-align: center;">제목</th>
+            <th scope="col" style="width: 15%; padding-bottom: 20px; padding-top: 20px; text-align: center;">작성자</th>
+            <th scope="col" style="width: 10%; padding-bottom: 20px; padding-top: 20px; text-align: center;">작성일</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(review, index) in reviews" :key="index">
-            <th>
+            <th style="text-align: center;">{{ totalCount - (pageIndex - 1) * recodeCountPerPage - index }}</th>
+            <td style="text-align: center;">
               <template v-for="star in 5" :key="star">
                 <i class="bi" :class="star <= review.rating ? 'bi-star-fill' : 'bi-star'" style="color: #FFD700;"></i>
               </template>
-            </th>
-            <td style="cursor: pointer;" @click="goToReviewDetail(review.reviewId)">
-              {{ review.title }}
             </td>
-            <td>{{ review.authorEmail }}</td>
-            <td>{{ formatDate(review.createdAt) }}</td>
+            <td style="cursor: pointer;" @click="goToReviewDetail(review.reviewId)">
+              <span class="review-title">
+                {{ review.title }}
+                <span v-if="isNew(review.createdAt)" class="new-icon">N</span>
+              </span>
+            </td>
+            <td style="text-align: center;">{{ review.authorEmail }}</td>
+            <td style="text-align: center;">{{ formatDate(review.createdAt) }}</td>
           </tr>
         </tbody>
       </table>
 
       <!-- 페이지네이션 추가 -->
-      <div class="mt-3 d-flex justify-content-center">
-        <b-pagination v-model="pageIndex" :total-rows="totalCount" :per-page="recodeCountPerPage" @change="getReview"
-          class="custom-pagination"></b-pagination>
+      <div class="d-flex justify-content-center mt-3">
+        <b-pagination
+          v-model="pageIndex"
+          :total-rows="totalCount"
+          :per-page="recodeCountPerPage"
+          @click="getReview"
+          class="pagination"
+        ></b-pagination>
       </div>
 
       <!-- 글등록 버튼 추가 -->
@@ -83,7 +94,7 @@
       <div class="card-body">
         <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
         <hr>
-        <p class="card-text mt-4" style="font-size: 14px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
+        <p class="card-text mt-4" style="font-size: 14px; padding: 20px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
           예) 주민등록번호, 전화번호, 여권번호, 신용카드번호, 계좌번호, 주소 등
           <br>
           - 해당 게시판과 글의 성격이 맞지 않을 경우, 관리자에 의해 게시글이 이동될 수 있습니다.
@@ -127,7 +138,7 @@ export default {
           this.recodeCountPerPage
         );
         const { results, totalCount } = response.data;
-        this.reviews = results;
+        this.reviews = results.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 작성일 기준으로 정렬
         this.totalCount = totalCount;
       } catch (error) {
         console.error("리뷰 목록을 가져오는 중 오류가 발생했습니다:", error);
@@ -143,6 +154,13 @@ export default {
     goToReviewDetail(reviewId) {
       this.$router.push(`/review/${reviewId}`);
     },
+    // 최근 작성된 글인지 확인하는 메서드
+    isNew(createdAt) {
+      const today = new Date();
+      const createdDate = new Date(createdAt);
+      const diffDays = Math.floor((today - createdDate) / (1000 * 60 * 60 * 24));
+      return diffDays <= 7; // 작성일이 7일 이내라면 true 반환
+    },
   },
   mounted() {
     this.getReview();
@@ -151,6 +169,53 @@ export default {
 </script>
 
 <style>
+.new-icon {
+  background-color: red; /* 배경색 */
+  color: white; /* 흰색 글자 */
+  font-size: 0.6rem; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  padding: 2px 4px; /* 안쪽 여백 */
+  margin-left: 6px; /* 제목과의 간격 */
+  border-radius: 20px; /* 둥근 모서리 */
+}
 
+.review-title {
+  text-decoration: none; /* 기본 텍스트 장식 제거 */
+}
+
+.review-title:hover {
+  text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 20px 0; /* 위 아래 여백 */
+}
+
+.pagination .page-item {
+  margin: 0 5px; /* 페이지 아이템 간격 */
+}
+
+.pagination .page-item .page-link {
+  border: none; /* 테두리 제거 */
+  background-color: transparent; /* 배경 색상 제거 */
+  color: black; /* 링크 색상 */
+  padding: 10px 15px; /* 여백 */
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ffc107; /* 활성화된 페이지 링크 색상 */
+  border-color: #ffc107; /* 활성화된 링크 테두리 색상 */
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef; /* 마우스 오버 색상 */
+  color: tan; /* 마우스 오버 링크 색상 */
+}
+
+.table {
+  border-top: 4px solid bisque; /* 테이블 상단 테두리 색상 */
+}
 
 </style>

@@ -2,6 +2,7 @@ package com.simplecoding.simpledms.service.review;
 
 import com.simplecoding.simpledms.mapper.review.ReviewMapper;
 import com.simplecoding.simpledms.vo.common.Criteria;
+import com.simplecoding.simpledms.vo.main.Tour;
 import com.simplecoding.simpledms.vo.review.Review;
 import jakarta.servlet.Servlet;
 import lombok.RequiredArgsConstructor;
@@ -43,21 +44,17 @@ public class ReviewService {
         int reviewId = reviewMapper.selectGenerateReviewId();
         review.setReviewId(reviewId);
 
-        // 이미지 데이터가 있는 경우에만 URL 생성
-        if (review.getImageData() != null) {
-            String url = generateReviewUrl(review.getReviewId());
-            review.setImageUrl(url);
-            reviewMapper.updateReviewUrl(review);
-        } else {
-            // 이미지 데이터가 없으면 기본 URL 또는 처리하지 않음
-            review.setImageUrl(null); // 필요에 따라 null을 유지하거나 기본 값을 설정
-        }
+        //      URL생성
+        String url = generateReviewUrl(review.getReviewId());
+        review.setImageUrl(url);
+//      URL 업데이트
+        reviewMapper.updateReviewUrl(review);
     }
 
     public String generateReviewUrl(int reviewId) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/api/review/review")
+                .path("/api/review/")
                 .path(String.valueOf(reviewId))
                 .toUriString();
     }
@@ -67,6 +64,10 @@ public class ReviewService {
 
     //    리뷰수정
     public void update(Review review) {
+        int reviewId = review.getReviewId();
+        String url = generateReviewUrl(reviewId);
+        review.setReviewId(reviewId);
+        review.setImageUrl(url);
         reviewMapper.update(review);
     }
 
@@ -74,6 +75,12 @@ public class ReviewService {
     public void delete(int reviewId) {
         reviewMapper.delete(reviewId);
     }
+
+    public List<Integer> getTourId() {
+        return reviewMapper.getTourId();
+    }
+
+
 
 
 }

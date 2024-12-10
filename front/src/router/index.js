@@ -80,8 +80,12 @@ const routes = [
     component: () => import("../views/review/AddReview.vue"),
   },
   {
-    path: "/review/:reviewid",
+    path: "/review/:reviewId",
     component: () => import("../views/review/ReviewDetail.vue"),
+  },
+  {
+    path: "/reviewupdate/:reviewId",
+    component: () => import("../views/review/UpdateReview.vue"),
   },
   {
     path: "/coupon",
@@ -208,6 +212,7 @@ const routes = [
   {
     path: "/TotalPayment",
     component: () => import("../views/payment/TotalPayment.vue"),
+
   },
 ];
 const router = createRouter({
