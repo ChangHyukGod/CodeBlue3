@@ -177,7 +177,7 @@
             <img :src="data.tourFileUrl" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </router-link>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">{{ data.name }}</h5>
+            <h5 class="card-title mt-2">{{ data.comment }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
             <p class="text-primary fw-bold">{{ data.price }}</p>

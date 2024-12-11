@@ -46,7 +46,9 @@ public class TourController {
                                     @RequestParam(defaultValue = "") String price,
                                     @RequestParam(required = false) MultipartFile image,
                                     @RequestParam(defaultValue = "") String view,
-                                    @RequestParam(defaultValue = "") String category) throws Exception {
+                                    @RequestParam(defaultValue = "") String category,
+                                    @RequestParam(defaultValue = "") String comment,
+                                    @RequestParam(defaultValue = "") String pop) throws Exception {
         byte[] imageData = null;
         // 이미지가 있으면 byte 배열로 변환
         if (image != null && !image.isEmpty()) {
@@ -54,7 +56,7 @@ public class TourController {
         }
 
         // Tour 객체 생성
-        Tour tour = new Tour(name, location, description, price, imageData, view, category);
+        Tour tour = new Tour(name, location, description, price, imageData, view, category, comment, pop);
         tourService.insert(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -92,7 +94,9 @@ public class TourController {
                                     @RequestParam(defaultValue = "") String price,
                                     @RequestParam(required = false) MultipartFile image,
                                     @RequestParam(defaultValue = "") String view,
-                                    @RequestParam(defaultValue = "") String category) throws Exception {
+                                    @RequestParam(defaultValue = "") String category,
+                                    @RequestParam(defaultValue = "") String comment,
+                                    @RequestParam(defaultValue = "") String pop) throws Exception {
         byte[] imageData = null;
         // 이미지가 있으면 byte 배열로 변환
         if (image != null && !image.isEmpty()) {
@@ -100,7 +104,7 @@ public class TourController {
         }
 
         // Tour 객체 생성 (이미지가 없으면 null 값 처리)
-        Tour tour = new Tour(tourId, name, location, description, price, imageData, view, category);
+        Tour tour = new Tour(tourId, name, location, description, price, imageData, view, category, comment, pop);
         tourService.update(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -112,6 +116,7 @@ public class TourController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//  리뷰게시판
     @GetMapping("api/tour/tourname/{tourId}")
     public ResponseEntity<?> tourname(@PathVariable int tourId) {
         String name= tourService.ListName(tourId);
