@@ -76,6 +76,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/room/**").permitAll()
                         .requestMatchers("/api/cart/**").permitAll()
                         .requestMatchers("/api/coupon/**").permitAll()
+                        .requestMatchers("/api/email/**").permitAll()
                         .requestMatchers("/api/comments/**").permitAll()
                         .requestMatchers("/api/review/**").permitAll()
                         .requestMatchers("/api/user/hasCoupons").authenticated()

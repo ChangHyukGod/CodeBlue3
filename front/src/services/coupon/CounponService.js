@@ -20,18 +20,21 @@ const getCouponsByEmail = () => {
   return axios.get(baseURL + `/use/coupon`, { headers: token });
 };
 
-
 const checkUserHasCoupons = () => {
-  return axios.get(`/user/hasCoupons`, { headers: token });
+  return axios.get(baseURL + `/user/hasCoupons`, { headers: token });
 };
 
-
+const couponByEmail = (memberEmail) => {
+  console.log("memberEmail", memberEmail);
+  return axios.get(baseURL + `/coupon/email/${memberEmail}`);
+};
 
 const CouponService = {
   insert,
   getAll,
   getCouponsByEmail,
-  checkUserHasCoupons
+  checkUserHasCoupons,
+  couponByEmail,
 };
 
 export default CouponService;
