@@ -96,6 +96,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+<<<<<<< HEAD
     <br />
 
     <!-- 메뉴 1 : 연말특가 -->
@@ -117,6 +118,52 @@
       >
         아직 늦지 않았어요! 연말엔 이쁜 숙소에서 낭만 가득 휴식 어때요?
       </p>
+=======
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="/maindetail/164">
+          <img :src="require(`@/assets/images/main/배너제주.png`)" class="d-block w-100" width="800" height="600" />
+        </a>
+      </div>
+      <div class="carousel-item">
+        <a href="/maindetail/104">
+          <img :src="require(`@/assets/images/main/배너광안.png`)" class="d-block w-100" width="800" height="600" />
+        </a>
+      </div>
+      <div class="carousel-item">
+        <a href="/coupon">
+          <img :src="require(`@/assets/images/main/배너쿠폰.png`)" class="d-block w-100" width="800" height="600" />
+        </a>
+      </div>
+      <div class="carousel-item">
+        <a href="/recommenddetail/11">
+          <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
+        </a>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  </div>
+  
+  <br/>
+
+    <!-- 메뉴 1 : 연말특가 -->
+    <div>
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          아직 늦지 않았어요! 연말엔 예쁜 숙소에서 낭만 가득 휴식 어때요?
+        </p>
+      </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
     </div>
     <!-- 추천 카드 1 -->
     <div class="row row-cols-1 row-cols-md-4 g-3">
@@ -146,11 +193,18 @@
               광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡
             </p>
             <p class="text-primary fw-bold">70,000원</p>
+<<<<<<< HEAD
             <div style="display: flex; justify-content: space-between">
               <a href="/maindetail/104"
                 ><button class="btn btn-primary">보러가기</button></a
               >
             </div>
+=======
+              <div style="display: flex; justify-content: space-between">
+                <a href="/maindetail/104"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
+              </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
           </div>
         </div>
       </div>
@@ -177,12 +231,20 @@
             <p class="card-text">제주</p>
             <p class="card-text">시골갬성 가득, 한옥숙소</p>
             <p class="text-primary fw-bold">185,400원</p>
+<<<<<<< HEAD
             <!-- 상세페이지 주소창 하드코딩 예정 -->
             <div style="display: flex; justify-content: space-between">
               <a href="/maindetail/164"
                 ><button class="btn btn-primary">보러가기</button></a
               >
             </div>
+=======
+              <!-- 상세페이지 주소창 하드코딩 예정 -->
+              <div style="display: flex; justify-content: space-between">
+                <a href="/maindetail/164"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
+              </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
           </div>
         </div>
       </div>
@@ -209,12 +271,20 @@
             <p class="card-text">프랑스</p>
             <p class="card-text">프랑스에서 즐기는 지중해 바다</p>
             <p class="text-primary fw-bold">211,040원</p>
+<<<<<<< HEAD
             <!-- 상세페이지 주소창 하드코딩 예정 -->
             <div style="display: flex; justify-content: space-between">
               <a href="/maindetail/165"
                 ><button class="btn btn-primary">보러가기</button></a
               >
             </div>
+=======
+              <!-- 상세페이지 주소창 하드코딩 예정 -->
+              <div style="display: flex; justify-content: space-between">
+                <a href="/maindetail/165"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
+              </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
           </div>
         </div>
       </div>
@@ -243,12 +313,20 @@
               유명한 스키리조트 윈저스노우 빌리지에서 15분 거리
             </p>
             <p class="text-primary fw-bold">152,800원</p>
+<<<<<<< HEAD
             <!-- 상세페이지 주소창 하드코딩 예정 -->
             <div style="display: flex; justify-content: space-between">
               <a href="/maindetail/169"
                 ><button class="btn btn-primary">보러가기</button></a
               >
             </div>
+=======
+              <!-- 상세페이지 주소창 하드코딩 예정 -->
+              <div style="display: flex; justify-content: space-between">
+                <a href="/maindetail/169"><button class="btn btn-primary">보러가기</button></a>
+                <a href="/recommenddetail/12"><button class="btn btn-primary">근처 여행지</button></a>
+              </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
           </div>
         </div>
       </div>
@@ -258,6 +336,7 @@
 
     <!-- 메뉴 2 : 숙소 전체 -->
     <div>
+<<<<<<< HEAD
       <button
         class="btn btn-warning"
         style="border-radius: 10px; color: white; font-size: 21px"
@@ -275,10 +354,20 @@
       >
         여행 전에도, 여행 중에도 언제 어디서든 예약OK
       </p>
+=======
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">최다 숙소 보유</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          여행 전에도, 여행 중에도 언제 어디서든 예약OK
+        </p>
+      </div>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
     </div>
 
     <!-- 필터 -->
     <div class="d-flex justify-content-between align-items-center mb-4">
+<<<<<<< HEAD
       <div class="d-flex mb-4">
         <button class="btn btn-outline-secondary mx-2" @click="getreset()">
           전체보기
@@ -337,10 +426,34 @@
         >
           <i class="bi bi-search"></i>
         </button>
+=======
+      <div class="d-flex  mb-4">
+        <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">자연친화적</button>    
+      </div>
+      <div class="d-flex mb-2">    
+        <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
+        <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
+          <li>
+            <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">{{ keyword }}</button>
+          </li>
+        </ul>
+      <button class="btn btn-outline-warning search_glass" type="button" @click="getAll()">
+        <i class="bi bi-search"></i>
+      </button>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
       </div>
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- 상품 카드 2 -->
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div class="col" v-for="(data, index) in mains" :key="index">
@@ -375,10 +488,90 @@
                 수정/삭제
               </button>
             </router-link>
+=======
+
+    <!-- 상품 카드 2 -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col" v-for="(data, index) in mains" :key="index">
+        <div class="card h-100">
+          <router-link :to="'/maindetail/' + data.tourId">
+            <img :src="data.tourFileUrl" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </router-link>
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
+            <h5 class="card-title mt-2">{{ data.name }}</h5>
+            <p class="card-text">{{ data.location }}</p>
+            <p class="card-text">{{ data.description }}</p>
+            <p class="text-primary fw-bold">{{ data.price }}</p>
+            <div style="display: flex; justify-content: space-between">
+              <router-link :to="'/maindetail/' + data.tourId">
+                <button class="btn btn-primary">보러가기</button>
+              </router-link>
+              <router-link :to="'/mainupdate/' + data.tourId">
+                <button class="btn btn-primary" v-if="userRole === 'ROLE_ADMIN'">수정/삭제</button>
+              </router-link>
+            </div>
+          </div>
+        </div> 
+      </div> <!-- 카드 닫는태그 -->
+    </div>
+    <br/>
+
+    <!-- 메뉴 3 : 추천/쿠폰/리뷰/faq 이동 카드 -->
+    <div>
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">☆추천 모음집☆</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          각종 리뷰, 숙소 근처 핫플, 쿠폰혜택까지 놓치지 마세요~!
+        </p>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col">
+        <div class="card h-100">
+          <a href="/recommend">
+            <img :src="require(`@/assets/images/main/추천.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
+          <div class="card-body" style="display: flex; gap: 20px; width: 300px;">
+            <a href="/recommend"><button class="btn btn-primary">추천페이지</button></a>
+            <p style="font-size: 20px; font-style: bold;">/</p>
+            <a href="/recommendgoogleview"><button class="btn btn-primary">여행지검색</button></a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <a href="/coupon">
+            <img :src="require(`@/assets/images/main/쿠폰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
+            <a href="/coupon"><button class="btn btn-primary">쿠폰/이벤트 보러가기</button></a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <a href="/review">
+            <img :src="require(`@/assets/images/main/리뷰.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
+            <a href="/review"><button class="btn btn-primary">리뷰게시판 보러가기</button></a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <a href="/faq">
+            <img :src="require(`@/assets/images/main/FAQ.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+          </a>
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
+            <a href="/faq"><button class="btn btn-primary">고객센터 보러가기</button></a>
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
           </div>
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     <!-- 카드 닫는태그 -->
   </div>
   <br />
@@ -501,6 +694,8 @@
       </div>
     </div>
   </div>
+=======
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
 </template>
 <script>
 import MainService from "@/services/main/MainService";
@@ -508,9 +703,15 @@ export default {
   data() {
     return {
       mains: [], //빈배열(json)
+<<<<<<< HEAD
       searchKeyword: "", // 검색어
 
       keywords: ["국내", "해외"], //드롭다운 항목
+=======
+      searchKeyword:"", // 검색어
+      keywords: ["국내","해외"], //드롭다운 항목
+      userRole: "", // 유저 권한
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
     };
   },
   methods: {
@@ -532,12 +733,21 @@ export default {
         console.log(error);
       }
     },
+<<<<<<< HEAD
 
     selectKeyword(keyword) {
       this.searchKeyword = keyword;
     },
 
     getreset() {
+=======
+    // 드롭다운 메뉴 선택
+    selectKeyword(keyword){
+      this.searchKeyword = keyword;
+    },
+    // 전체보기 버튼(전체조회)
+    getreset(){
+>>>>>>> ba6a01427f2cf96c6cef8371734a34457a19f905
       this.searchKeyword = "";
       this.getAll();
     },

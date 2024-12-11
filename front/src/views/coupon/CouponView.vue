@@ -107,7 +107,7 @@ export default {
 
         Swal.fire({
           title: "쿠폰 발급 성공!",
-          text: "결제창에서 쿠폰을 사용하세요.",
+          text: "결제페이지에서 쿠폰을 사용하세요.",
           icon: "success",
           confirmButtonText: "확인",
         });
@@ -115,7 +115,15 @@ export default {
         this.$router.push("/");
       } catch (error) {
         console.error("쿠폰 발급 중 오류 발생:", error);
-        alert("쿠폰 발급 실패");
+       
+        Swal.fire({
+          title: "쿠폰 발급 실패!",
+          text: "이미 쿠폰을 받으셨습니다.",
+          icon: "error",
+          confirmButtonText: "확인",
+        });
+
+
       }
     },
   },

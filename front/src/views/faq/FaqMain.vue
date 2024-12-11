@@ -357,7 +357,7 @@ export default {
 /* 메인 아이콘 스타일 */
 .custom-icon {
   font-size: 60px;
-  color: #ffeb33;
+  color: #ffc107;
   margin-bottom: 0.5rem; /* 아이콘과 텍스트 간격 */
 }
 /* 버튼 그룹 스타일 */
@@ -462,7 +462,7 @@ export default {
 }
 /* 해시태그 아이콘 */
 #hashtag-icon {
-  color: #ffeb33;
+  color: #ffc107;
   font-size: 25px;
 }
 /* 해시태그 호버 */
@@ -517,7 +517,7 @@ export default {
 }
 /* 카드 버튼 */
 .card-button {
-  background-color: #ffeb33;
+  background-color: #ffc107;
   border: 1px solid black !important;
   color: black;
 }
