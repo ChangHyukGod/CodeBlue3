@@ -152,7 +152,7 @@ export default {
 
       selectedPaymentMethod: null, // 선택된 결제 수단
 
-      showCouponForm: false, // 쿠폰 폼 표시 여부
+      showCouponForm: false, // 쿠폰 폼 표시 여부 커밋용주석
 
       coupons: null,
 
