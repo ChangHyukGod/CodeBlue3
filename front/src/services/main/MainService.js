@@ -64,6 +64,11 @@ const getName = (tourId) => {
     return axios.get(baseURL+`/tour/tourname/${tourId}`)
 }
 
+// 최저값 가져오기
+const getRoomMinPrice = (tourId) => {
+    return axios.get(baseURL+`/tour/minprice/${tourId}`)
+}
+
 const MainService = {
     getAll,
     insert,
@@ -72,7 +77,8 @@ const MainService = {
     remove,
     getALLnp,
     getTourId,
-    getName
+    getName,
+    getRoomMinPrice
 };
 
 export default MainService;
