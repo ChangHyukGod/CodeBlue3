@@ -94,7 +94,6 @@
           />
         </label>
       </div>
-
       <!-- 쿠폰등록하기 버튼 -->
       <div class="mt-3">
         <button class="btn btn-warning" @click="toggleCouponForm">
@@ -103,38 +102,40 @@
       </div>
 
       <!-- 쿠폰 선택 폼 -->
-      <div v-if="showCouponForm" class="mt-3 p-3 bg-light border rounded">
+      <div
+        v-if="showCouponForm && coupons !== null"
+        class="mt-3 p-3 bg-light border rounded"
+      >
         <h5>쿠폰 선택</h5>
-        <ul class="list-group">
-          <li
-            v-for="coupon in coupons"
-            :key="coupon.id"
-            class="list-group-item d-flex justify-content-between align-items-center"
-          >
-            <span>{{ coupon.name }} ({{ coupon.value }}%)</span>
-            <button
-              class="btn btn-primary btn-sm"
-              @click="selectCoupon(coupon)"
-            >
-              선택
-            </button>
-          </li>
-        </ul>
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span>{{ coupons.name }} ({{ coupons.value }}%)</span>
+          <button class="btn btn-primary btn-sm" @click="selectCoupon(coupons)">
+            선택
+          </button>
+        </div>
       </div>
+
+      <!-- 쿠폰이 없을 경우 안내 메시지 -->
+      <p v-if="coupons === null && showCouponForm">
+        현재 사용 가능한 쿠폰이 없습니다.
+      </p>
 
       <!-- 선택된 쿠폰 표시 -->
       <div v-if="selectedCoupon" class="mt-3 alert alert-success">
         선택된 쿠폰: {{ selectedCoupon.name }} ({{ selectedCoupon.value }}%)
       </div>
-    </div>
 
-    <div class="payment-section">
-      <button class="payment-button primary-button" @click="processPayment">
-        {{ reservation.totalPrice }}원 결제하기
-      </button>
-      <button class="payment-button secondary-button" @click="returnPage">
-        뒤로가기
-      </button>
+      <!-- 결제 버튼 섹션 -->
+      <div class="payment-section mt-4">
+        <button class="payment-button primary-button" @click="processPayment">
+          {{ reservation.totalPrice }}원 결제하기
+        </button>
+        <button class="payment-button secondary-button" @click="returnPage">
+          뒤로가기
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -151,7 +152,9 @@ export default {
       selectedPaymentMethod: "", // 선택된 결제 수단
 
       showCouponForm: false, // 쿠폰 폼 표시 여부
-      coupons: [],
+
+      coupons: null,
+
       pageIndex: 1, //현재페이지번호
       totalCount: 0, // 전체개수
       recordCountPerPage: 1, //화면에 보일개수
@@ -160,6 +163,7 @@ export default {
       value: 20.0,
       name: "",
       id: "",
+      userEmail: "",
     };
   },
   mounted() {
@@ -175,6 +179,17 @@ export default {
       alert("예약 정보가 없습니다.");
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
+
+    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.user = parsedUser;
+      this.userEmail = parsedUser.email;
+    } else {
+      console.error("No user data found in localStorage.");
+    }
+
     this.getCoupon();
   },
   methods: {
@@ -196,15 +211,19 @@ export default {
       this.$router.go(-1);
     },
 
+    // 쿠폰 폼 토글
     toggleCouponForm() {
-      this.showCouponForm = !this.showCouponForm;
+      if (this.coupons === null) {
+        alert("현재 사용 가능한 쿠폰이 없습니다.");
+      } else {
+        this.showCouponForm = !this.showCouponForm;
+      }
     },
 
+    // 쿠폰 선택
     selectCoupon(coupon) {
-      // 선택된 쿠폰 저장
       this.selectedCoupon = coupon;
 
-      // 원래 금액에서 할인 적용
       if (this.reservation.originalPrice === undefined) {
         this.reservation.originalPrice = parseInt(
           this.reservation.totalPrice.replace(/,/g, ""),
@@ -212,30 +231,31 @@ export default {
         );
       }
 
-      const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
+      const discountRate = coupon.value / 100;
       const discountedPrice =
         this.reservation.originalPrice * (1 - discountRate);
-      this.reservation.totalPrice = discountedPrice.toLocaleString(); // 쉼표 형식 적용
+      this.reservation.totalPrice = discountedPrice.toLocaleString();
 
       this.showCouponForm = false; // 폼 닫기
-      console.log("선택된 쿠폰:", coupon);
-      console.log("할인된 금액:", discountedPrice);
     },
 
+    // 이메일로 쿠폰 조회
     async getCoupon() {
       try {
-        let response = await CouponService.getAll(
-          this.searchKeyword,
-          this.pageIndex - 1,
-          this.recordCountPerPage
-        );
-        // TODO: 백엔드 전송되는 것 : results(배열), totalCount(총개수)
-        const { results, totalCount } = response.data;
-        console.log(response.data); // 디버깅
-        this.coupons = results;
-        this.totalCount = totalCount;
+        let response = await CouponService.couponByEmail(this.userEmail);
+        // 쿠폰이 하나라면 객체로 저장
+        if (response.data && response.data.name && response.data.value) {
+          this.coupons = response.data;
+        } else {
+          this.coupons = null; // 쿠폰이 없으면 null 처리
+        }
+        console.log("Coupons:", this.coupons); // 디버깅
       } catch (error) {
         console.log(error);
+        if (error.response) {
+          console.log("Error response:", error.response);
+        }
+        console.log("User Email:", this.userEmail); // 이메일 출력
       }
     },
   },

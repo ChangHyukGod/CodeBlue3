@@ -76,9 +76,10 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/room/**").permitAll()
                         .requestMatchers("/api/cart/**").permitAll()
                         .requestMatchers("/api/coupon/**").permitAll()
+                        .requestMatchers("/api/email/**").permitAll()
                         .requestMatchers("/api/comments/**").permitAll()
                         .requestMatchers("/api/review/**").permitAll()
-
+                        .requestMatchers("/api/user/hasCoupons").authenticated()
                         .requestMatchers("/**").permitAll()                           // 첫 페이지는 모두 접근 허용(로그인 관계없이)
                         .anyRequest().authenticated() // => 나머지 url들은 인증(로그인) 해야 볼 수 있음
         );

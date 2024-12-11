@@ -71,6 +71,7 @@ public class TourService {
         tourMapper.delete(tourId);
     }
 
+//  리뷰게시판
     public String ListName(int tourId){
         return tourMapper.getTourName(tourId);
     }

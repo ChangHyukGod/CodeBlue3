@@ -38,19 +38,20 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
+  </div>  
   <br/>
 
     <!-- 메뉴 1 : 연말특가 -->
     <div>
       <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
-        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <span class="bi bi-chat-right-heart" style="font-size: 18px; cursor: pointer;"></span>
         <p style="margin: 0; font-size: 16px; color: #555;">
           아직 늦지 않았어요! 연말엔 예쁜 숙소에서 낭만 가득 휴식 어때요?
         </p>
       </div>
     </div>
+
     <!-- 추천 카드 1 -->
     <div class="row row-cols-1 row-cols-md-4 g-3">
       <div class="col">
@@ -145,17 +146,23 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex  mb-4">
         <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
+        <!-- 인기 급상승 ON/OFF 버튼 -->
+        <button class="btn mx-2"
+                :class="{ 'btn-outline-secondary': pop !== '인기급상승',  // 기본 배경색
+                          'bg-light-gray text-dark': pop === '인기급상승'  // 인기급상승 상태일 때 진한 회색 배경
+                        }" @click="togglePopular" >
+        인기급상승
+        </button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">자연친화적</button>    
+        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">고즈넉한</button>    
       </div>
       <div class="d-flex mb-2">    
         <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
         type="button"
         id="dropdownMenuButton"
         data-bs-toggle="dropdown"
-        aria-expanded="false">{{ searchKeyword || "여행의 모든 것" }}</button>
+        aria-expanded="false">{{ searchKeyword || "국내외 구분" }}</button>
         <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
           <li>
             <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">{{ keyword }}</button>
@@ -176,7 +183,7 @@
             <img :src="data.tourFileUrl" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </router-link>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">{{ data.name }}</h5>
+            <h5 class="card-title mt-2">{{ data.comment }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
             <p class="text-primary fw-bold">{{ data.price }}</p>
@@ -190,30 +197,30 @@
             </div>
           </div>
         </div> 
-      </div> <!-- 카드 닫는태그 -->
-    </div>
+      </div> <!-- 반복문 닫는태그 -->
+    </div> <!-- 카드 닫는태그 -->
     <br/>
 
     <!-- 메뉴 3 : 추천/쿠폰/리뷰/faq 이동 카드 -->
     <div>
       <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">☆추천 모음집☆</button>
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
-        <span style="font-size: 18px; cursor: pointer;">👍</span>
+        <span class="bi bi-clipboard-check" style="font-size: 18px; cursor: pointer;"></span>
         <p style="margin: 0; font-size: 16px; color: #555;">
           각종 리뷰, 숙소 근처 핫플, 쿠폰혜택까지 놓치지 마세요~!
         </p>
       </div>
     </div>
+
+    <!-- 각 페이지 이동카드(링크) -->
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div class="col">
         <div class="card h-100">
           <a href="/recommend">
             <img :src="require(`@/assets/images/main/추천.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
-          <div class="card-body" style="display: flex; gap: 20px; width: 300px;">
+          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <a href="/recommend"><button class="btn btn-primary">추천페이지</button></a>
-            <p style="font-size: 20px; font-style: bold;">/</p>
-            <a href="/recommendgoogleview"><button class="btn btn-primary">여행지검색</button></a>
           </div>
         </div>
       </div>
@@ -247,7 +254,8 @@
           </div>
         </div>
       </div>
-    </div></div>
+    </div>  <!-- 페이지 이동링크 닫는태그 -->
+  </div>  <!-- 전체 닫는태그 -->
 </template>
 <script>
 import MainService from "@/services/main/MainService";
@@ -256,6 +264,7 @@ export default {
     return {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
+      pop:"", // 인기급상승 확인
       keywords: ["국내","해외"], //드롭다운 항목
       userRole: "", // 유저 권한
     };
@@ -263,11 +272,12 @@ export default {
   methods: {
     async getAll(view = ""){
       this.view = view;
-      console.log(this.category);
+      // 디버깅용
+      console.log(this.pop);
       console.log(this.view);
       console.log(this.searchKeyword);
       try {
-        let response = await MainService.getALLnp(this.searchKeyword,this.view);
+        let response = await MainService.getALLnp(this.searchKeyword,this.view,this.pop);
         const { results, totalCount } = response.data;
         console.log(response.data);
         this.mains = results;
@@ -283,6 +293,12 @@ export default {
     // 전체보기 버튼(전체조회)
     getreset(){
       this.searchKeyword = "";
+      this.pop ="";
+      this.getAll();
+    },
+    //인기급상승 on/off
+    togglePopular() {
+      this.pop = this.pop === '인기급상승' ? '' : '인기급상승'; // 값 토글
       this.getAll();
     },
   },

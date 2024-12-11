@@ -20,6 +20,7 @@
 
       SELECT * FROM COUPONS
       WHERE NAME LIKE '%신규 회원 20%할인%'
+
       OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
           FETCH NEXT #{recordCountPerPage} ROWS ONLY
 
@@ -33,7 +34,25 @@
         SELECT COUNT(*)
         FROM COUPONS
         WHERE NAME LIKE '%신규 회원 20%할인%'
+
     </select>
+
+
+    <select id="selectCouponsByEmail" parameterType="String" resultType="com.simplecoding.simpledms.vo.coupon.Coupon">
+        SELECT *
+        FROM COUPONS
+        WHERE member_email = #{email}
+    </select>
+
+    <select id="couponByEmail" parameterType="String" resultType="com.simplecoding.simpledms.vo.coupon.Coupon">
+        SELECT *
+        FROM COUPONS
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </select>
+
+
+
+
 
 
 

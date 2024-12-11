@@ -17,9 +17,11 @@ import java.util.Map;
 public interface CouponMapper {
 
    int insert(Coupon coupon);  // 쿠폰 insert 메서드
+   List<Coupon> selectCouponsByEmail(String email);
    public List<?> selectCouponList(Criteria searchVO);   // 전체조회
    public int selectCouponListTotCnt(Criteria searchVO); // 총건수구하기
-
+   
+   public Coupon couponByEmail(String memberEmail); // 각 이메일마다 쿠폰 조회
 
 
 }

@@ -69,10 +69,10 @@ public class Criteria implements Serializable {
 
 	private String updateTime;
 
-
 	private String category; // 카테고리 추가
 
 	private String view;     // 뷰 추가
 
-}
+	private String pop;     // 인기급상승 컬럼 추가
 
+}
