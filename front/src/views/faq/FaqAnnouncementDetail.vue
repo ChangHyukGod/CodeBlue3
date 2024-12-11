@@ -5,7 +5,7 @@
       <div class="notice_container">
         <div class="notice_content">
           <br /><br />
-          <p class="title">{{ x.title }}</p>
+          <p class="title">{{ title }}</p>
           <hr />
 
           <p class="content">{{ content }}</p>

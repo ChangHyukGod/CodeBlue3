@@ -4,16 +4,16 @@
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
-        <router-link :to="'/faq/talk'">
+        <div>
           <b-button
             variant="outline-dark"
             class="custom-button"
-            :disabled="!user"
+            @click.prevent="handleClick"
           >
             <i class="bi bi-chat-square-dots custom-icon"></i>
             <br />1:1 문의
-          </b-button></router-link
-        >
+          </b-button>
+        </div>
 
         <router-link :to="'/faq/list'">
           <b-button variant="outline-dark" class="custom-button">
@@ -130,6 +130,17 @@
 <script>
 import * as bootstrap from "bootstrap";
 export default {
+  methods: {
+    handleClick(event) {
+      if (this.user === null) {
+        event.preventDefault(); // 기본 링크 이동 방지
+        alert("로그인이 필요합니다. 로그인을 먼저 해주세요.");
+        return;
+      } else {
+        this.$router.push("/faq/talk"); // 링크 이동
+      }
+    },
+  },
   // 팝오버
   name: "FaqMain",
   mounted() {
@@ -156,7 +167,7 @@ export default {
 
   data() {
     return {
-      user: "",
+      user: null,
       cards: [
         {
           id: "reservation",
@@ -351,10 +362,10 @@ export default {
 </script>
 
 <style scoped>
-button.custom-button:disabled {
-  opacity: 0.2; /* 버튼 흐리게 표시 */
-  cursor: not-allowed;
-  color: red; /* 마우스 포인터를 '금지' 상태로 표시 */
+.disabled-link {
+  pointer-events: none; /* 클릭 차단 */
+  opacity: 0.6; /* 비활성화된 스타일 */
+  cursor: not-allowed; /* 마우스 커서 변경 */
 }
 .popover {
   background: white;
