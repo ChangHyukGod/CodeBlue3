@@ -23,18 +23,23 @@ public class Tour {
 //    TOUR_FILE_URL	VARCHAR2(1000 BYTE)
 //    VIEW	VARCHAR2(100 BYTE)
 //    CATEGORY	VARCHAR2(100 BYTE)
+//    COMMENT	VARCHAR2(100 BYTE)
+//    POP	VARCHAR2(20 BYTE)
     private int tourId;  //기본키
-    private String name;
-    private String location;
-    private String description;
+    private String name;  //숙소명
+    private String location;  //숙소위치
+    private String description;  //메인페이지_숙소 간단설명
     private String price;
     private byte[] tourData;
     private String tourFileUrl;
-    private String view;
-    private String category;
+    private String view;  //메인필터_숙소 카테고리
+    private String category;  //메인필터_숙소 국내외 구분
+    private String comment;  //메인페이지_숙소 제목
+    private String pop;  //메인필터_인기급상승 테그
 
 //  생성자
-    public Tour(int tourId, String name, String location, String description, String price, byte[] tourData, String view, String category) {
+    public Tour(int tourId, String name, String location, String description, String price, byte[] tourData, String view,
+                String category, String comment, String pop) {
         this.tourId = tourId;
         this.name = name;
         this.location = location;
@@ -43,9 +48,12 @@ public class Tour {
         this.tourData = tourData;
         this.view = view;
         this.category = category;
+        this.comment = comment;
+        this.pop = pop;
     }
 
-    public Tour(String name, String location, String description, String price, byte[] tourData, String view, String category) {
+    public Tour(String name, String location, String description, String price, byte[] tourData, String view, String category,
+                String comment, String pop) {
         this.name = name;
         this.location = location;
         this.description = description;
@@ -53,5 +61,7 @@ public class Tour {
         this.tourData = tourData;
         this.view = view;
         this.category = category;
+        this.comment = comment;
+        this.pop = pop;
     }
 }
