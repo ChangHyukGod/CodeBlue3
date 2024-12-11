@@ -179,7 +179,7 @@
             <h5 class="card-title mt-2">{{ data.comment }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
-            <p class="text-primary fw-bold">{{ data.minPrice }}</p>
+            <p class="text-primary fw-bold">{{ data.minPrice }}원~</p>
             <div style="display: flex; justify-content: space-between">
               <router-link :to="'/maindetail/' + data.tourId">
                 <button class="btn btn-primary">보러가기</button>
