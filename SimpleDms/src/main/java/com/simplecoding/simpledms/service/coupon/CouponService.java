@@ -31,7 +31,6 @@ public class CouponService {
     }            // 쿠폰인서트
 
 
-
     //    TODO: 전체조회 + 총건수(Criteria 의 totalItems 변수 저장)
     public List<?> selectCouponList(Criteria searchVO) {
         List<?> page = couponMapper.selectCouponList(searchVO);
@@ -42,11 +41,6 @@ public class CouponService {
 
         return page;
     }
-
-
-
-
-
 
 
     public List<Coupon> selectCouponsByEmail(String email) {
@@ -61,9 +55,9 @@ public class CouponService {
         return !userCoupons.isEmpty(); // 이미 쿠폰이 있으면 true 반환
     }
 
-
-
-
+    public  Coupon couponByEmail(String memberEmail) {
+        return couponMapper.couponByEmail(memberEmail);
+    }
 
 
 }
