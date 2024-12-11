@@ -95,7 +95,11 @@
                     </div>
                   </div>
                   <div>
-                    <router-link :to="'/faq/talkanswer/' + talk.tno" class="talk_button2">
+                    <router-link
+                      :to="'/faq/talkanswer/' + talk.tno"
+                      class="talk_button2"
+                      v-if="userRole === 'ROLE_ADMIN'"
+                    >
                       <button type="button" class="btn btn-warning">
                         <i class="bi bi-arrow-return-left"></i>
                       </button>
@@ -127,6 +131,7 @@ import TalkService from "@/services/faq/TalkService";
 export default {
   data() {
     return {
+      userRole: "",
       talkList: [], // 전체 데이터를 저장할 리스트
       searchKeyword: "", // 검색어
       pageIndex: 1, // 현재 페이지
@@ -152,6 +157,14 @@ export default {
     },
   },
   mounted() {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.userRole = parsedUser.codeName;
+    } else {
+      console.error("No user data found in localStorage.");
+    }
+
     this.fetchTalks(); // 컴포넌트가 마운트될 때 데이터 로드
   },
 };
@@ -207,15 +220,17 @@ export default {
 .talk_info1 {
   display: flex;
   justify-content: space-between;
-  margin: 25px 0 10px 0;
+  margin: 10px 0 10px 0;
 }
 /* 카테고리 */
 .talk_category1 {
-  margin-left: 20%;
+  width: 100%;
+  margin: 5px 5px 10px 30px;
 }
 /* 날짜 */
 .talk_date1 {
-  margin-right: 20%;
+  width: 100%;
+  margin: 5px 30px 10px 5px;
 }
 
 /* 내용, 답변 박스 */

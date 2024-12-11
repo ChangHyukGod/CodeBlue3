@@ -1,33 +1,33 @@
 <template>
-  <div class="bigbox2">
+  <div class="bigbox">
     <hr />
-    <div class="announce_body_box2">
-      <div class="notice_container2">
-        <div class="notice_search2">
-          <form class="search_input2" @submit.prevent="searchAnnouncement">
-            <router-link :to="'/faq/list'" class="custom-link2">
-              <p class="ano_top_title2">공지사항</p>
+    <div class="announce_body_box">
+      <div class="notice_container">
+        <div class="notice_search">
+          <form class="search_input" @submit.prevent="searchAnnouncement">
+            <router-link :to="'/faq/list'" class="custom-link">
+              <p class="ano_top_title">공지사항</p>
             </router-link>
-            <div class="input_box2 typing2 form-group2 search_bar_announce2">
+            <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
                 v-model="searchKeyword"
-                class="input_text2 form-control2"
+                class="input_text form-control"
               />
-              <i class="bi bi-search search_glass_announce2"></i>
+              <i class="bi bi-search search_glass_announce"></i>
             </div>
           </form>
           <br />
         </div>
 
-        <div class="notice_content2">
-          <div class="announcement-list2">
+        <div class="notice_content">
+          <div class="announcement-list">
             <div v-for="(data, index) in announcementList" :key="index">
-              <router-link :to="'/announcement/' + data.ano" class="custom-link2">
-                <h2 class="ano_title2">&nbsp;&nbsp;{{ data.title }}</h2>
-                <p class="ano_date2">{{ data.createDate }}</p>
+              <router-link :to="'/announcement/' + data.ano" class="custom-link">
+                <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
+                <p class="ano_date">{{ data.createDate }}</p>
               </router-link>
-              <hr class="notice_line2" />
+              <hr class="notice_line" />
             </div>
           </div>
           <p v-if="announcementList.length === 0">
@@ -42,15 +42,15 @@
         <br />
 
         <!-- 페이징 -->
-        <div class="notice_paging2">
-          <ul class="paging2 pagination2">
+        <div class="notice_paging">
+          <ul class="paging pagination">
             <!-- 이전 버튼 -->
             <li
-              class="page-arrow2 page-item2"
+              class="page-arrow page-item"
               :class="{ disabled: pageIndex === 1 }"
             >
               <a
-                class="page-link2"
+                class="page-link"
                 href="#"
                 @click.prevent="goToPage(pageIndex - 1)"
               >
@@ -62,21 +62,21 @@
             <li
               v-for="page in totalPages"
               :key="page"
-              class="page-item2"
+              class="page-item"
               :class="{ active: page === pageIndex }"
             >
-              <a class="page-link2" href="#" @click.prevent="goToPage(page)">
+              <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
             <!-- 다음 버튼 -->
             <li
-              class="page-arrow2 page-item2"
+              class="page-arrow page-item"
               :class="{ disabled: pageIndex === totalPages }"
             >
               <a
-                class="page-link2"
+                class="page-link"
                 href="#"
                 @click.prevent="goToPage(pageIndex + 1)"
               >
@@ -146,42 +146,42 @@ export default {
 </script>
 
 <style>
-.ano_top_title2 {
+.ano_top_title {
   font-weight: bolder;
   font-size: x-large;
   position: absolute;
   margin: 3px 0 0 30px;
 }
 /* 공지 전체 */
-.bigbox2 {
+.bigbox {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.lla2,
-.new2,
-.announce2 {
+.lla,
+.new,
+.announce {
   color: #ffeb33;
   -webkit-text-stroke: 0.4px black;
   font-size: 16px;
   font-family: dohyeon;
 }
 /* 타이틀 */
-.title2 {
+.title {
   text-align: center;
   font-weight: bolder;
   font-size: 25px;
 }
 /* 전체 박스 */
-.announce_body_box2 {
+.announce_body_box {
   width: 70%;
   border: 2.5px solid black;
   border-radius: 10px;
   padding: 15px;
 }
 /* 검색창 */
-.search_bar_announce2 {
+.search_bar_announce {
   width: 35%;
   margin: 1px auto;
   border-radius: 25px;
@@ -192,7 +192,7 @@ export default {
   margin-bottom: 10px;
 }
 /* 돋보기 아이콘 */
-.search_glass_announce2 {
+.search_glass_announce {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -202,7 +202,7 @@ export default {
   cursor: pointer;
 }
 /* 입력 필드 */
-.input_text2 {
+.input_text {
   margin: 10px auto;
   border-radius: 25px;
   border: 1.5px solid #ccc;
@@ -212,47 +212,47 @@ export default {
   background-color: white;
 }
 /* 공지사항 리스트 스타일 */
-.notice_table2 {
+.notice_table {
   list-style: none;
   display: flex;
   flex-direction: column;
   padding: 0;
   margin: 7px 0 0 10px;
 }
-.notice_line2 {
+.notice_line {
   margin: 3px;
 }
-.ano_title2 {
+.ano_title {
   font-size: 23px;
   padding: 5px;
 }
-.ano_title2:hover {
+.ano_title:hover {
   transform: scale(1.01);
   transition: 0.2s;
 }
-.custom-link2 {
+.custom-link {
   text-decoration: none;
   color: inherit; /* 부모의 색상을 따릅니다 */
 }
-.custom-link2:visited,
-.custom-link2:active {
+.custom-link:visited,
+.custom-link:active {
   text-decoration: none; /* 모든 상태에서 밑줄 제거 */
   color: inherit;
 }
-.custom-link2:hover {
+.custom-link:hover {
   transition: 0.3s;
 }
 /* 페이징 스타일 */
-.notice_paging2 .pagination2 {
+.notice_paging .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   padding: 10px;
 }
-.page-item2 {
+.page-item {
   margin: 0 8px;
 }
-.page-link2 {
+.page-link {
   color: #333;
   border: 1px solid #ccc;
   padding: 8px 16px;
@@ -261,19 +261,19 @@ export default {
   font-weight: bold;
   transition: all 0.3s ease;
 }
-.page-link2:hover {
+.page-link:hover {
   background-color: #f5f5f5;
   color: #333;
   transform: scale(1.1);
 }
-.page-item2.active .page-link2 {
+.page-item.active .page-link {
   background-color: #ffeb33;
   color: #000;
   border: 1px solid #ffeb33;
   font-size: 1rem;
   font-weight: bold;
 }
-.page-item2.disabled .page-link2 {
+.page-item.disabled .page-link {
   color: #ccc;
   cursor: not-allowed;
 }
@@ -282,7 +282,7 @@ export default {
   margin-top: 10px;
   left: 94.5%;
 }
-.ano_date2 {
+.ano_date {
   position: absolute;
   margin: -37.5px 0 0 780px;
   font-size: 13px;

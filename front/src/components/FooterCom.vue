@@ -2,18 +2,6 @@
   <div class="full-foot">
     <nav class="bg-light">
       <hr />
-      <div>
-        <!-- 푸터메뉴 -->
-        <b-nav class="footer_menu">
-          <div class="footer_menu_link">
-            <b-nav-item>공지사항</b-nav-item>
-            <b-nav-item>|</b-nav-item>
-            <b-nav-item>이용약관</b-nav-item>
-            <b-nav-item>|</b-nav-item>
-            <b-nav-item>고객센터</b-nav-item>
-          </div>
-        </b-nav>
-      </div>
       <br />
       <div class="footer-container">
         <div class="downfoot-container">
@@ -86,9 +74,18 @@ export default {};
   font-size: 12px;
   margin-left: 17%;
   margin-top: -0.5%;
+  text-decoration: none;
+  color: inherit;
+}
+.footer_menu_link:visited,
+.ooter_menu_link:active {
+  text-decoration: none; /* 모든 상태에서 밑줄 제거 */
+  color: inherit;
 }
 .footer_menu_link .nav-link {
   color: black !important; /* 원하는 색상 (주황색) */
+  text-decoration: none;
+  color: inherit;
 }
 /* 링크 색상 변경 - hover 상태 */
 .footer_menu_link .nav-link:hover {

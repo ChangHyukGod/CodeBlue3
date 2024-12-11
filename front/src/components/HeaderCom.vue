@@ -1,26 +1,20 @@
 <template>
   <!-- 최상단 메뉴 -->
-  <div>
+  <div class="hearder_big_box">
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
         <b-nav-item v-if="!this.$store.state.loggedIn" href="/login">로그인</b-nav-item>
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
-
         <b-nav-item v-if="!this.$store.state.loggedIn" href="/register">회원가입</b-nav-item>
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
-
         <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout">로그아웃</b-nav-item>
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
-
         <b-nav-item>예약확인</b-nav-item>
         <b-nav-item>|</b-nav-item>
-
         <b-nav-item href="/faq">고객센터</b-nav-item>
         <b-nav-item>|</b-nav-item>
-
         <b-nav-item href="/add-main" v-if="userRole === 'ROLE_ADMIN'">추가</b-nav-item>
         <b-nav-item>|</b-nav-item>
-
         <b-nav-item href="/cart">
           <i class="bi bi-cart"></i>
           <span class="badge bg-danger cart-count">{{ cartCount }}</span>
@@ -29,81 +23,36 @@
       </div>
     </b-nav>
   </div>
-
   <div class="full-head">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <img
-          src="@/assets/logo.jpg"
-          class="gpt-icon"
-          href="/"
-          onclick="location.href='/'"
-        />
-        &nbsp;&nbsp;
-        <a class="navbar-brand" href="/"></a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!-- 검색창 -->
-        <div class="search_box">
-          <form class="d-flex search_bar" method="get" action="">
-            <input
-              class="form-control me-2 search_text"
-              name="searchKeyword"
-              type="search"
-              placeholder="여행의 모든 것"
-              aria-label="Search"
-              v-model="searchKeyword"
-            />
-            <button class="btn btn-outline-warning search_glass" type="submit" @click="getAll">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
-        </div>
+    <div class="container-fluid">
+      <img
+        src="@/assets/logo3.png"
+        class="gpt-icon"
+        href="/"
+        onclick="location.href='/'"
+      />
+    </div>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse second_menu_box" id="navbarSupportedContent">
-          <router-link to="/coupon" class="nav-menu">
-            <a class="nav-link" aria-current="page">
-              <i class="bi bi-ticket"></i> 쿠폰
-            </a>
-          </router-link>
-          &nbsp;|&nbsp;
-          <router-link to="/recommendgoogleview" class="nav-menu">
-            <a class="nav-link" aria-current="page">
-              <i class="bi bi-geo-alt"></i> 여행지검색
-            </a>
-          </router-link>
-          &nbsp;|&nbsp;
-          <router-link to="/recommend" class="nav-menu"> <!-- 수정된 링크 -->
-            <a class="nav-link" aria-current="page">
-              <i class="bi bi-star"></i> 추천여행지 <!-- 추천 여행지 아이콘 변경 -->
-            </a>
-          </router-link>
-          &nbsp;|&nbsp;
-          <router-link to="/review" class="nav-menu">
-            <a class="nav-link" aria-current="page">
-              <i class="bi bi-pencil"></i> 리뷰게시판
-            </a>
-          </router-link>
-          &nbsp;|&nbsp;
-          <router-link to="/mypage" class="nav-menu">
-            <a class="nav-link" aria-current="page">
-              <i class="bi bi-person-plus" id="person-icon"></i>
-            </a>
-          </router-link>
-        </div>
-      </div>
-    </nav>
+    <div class="second_menu_box">
+      <router-link to="/coupon" class="header_menu">
+        <i class="bi bi-ticket"></i> 쿠폰
+      </router-link>
+      &nbsp;|&nbsp;
+      <router-link to="/recommendgoogleview" class="header_menu">
+        <i class="bi bi-geo-alt"></i> 여행지검색
+      </router-link>
+      &nbsp;|&nbsp;
+      <router-link to="/recommend" class="header_menu">
+        <i class="bi bi-star"></i> 추천여행지
+      </router-link>
+      &nbsp;|&nbsp;
+      <router-link to="/review" class="header_menu">
+        <i class="bi bi-pencil"></i> 리뷰게시판
+      </router-link>      &nbsp;|&nbsp;
+      <router-link to="/mypage" class="header_menu">
+        <i class="bi bi-person-plus"></i> 마이페이지
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -147,90 +96,74 @@ export default {
 </script>
 
 <style>
-/* 기존 스타일 유지 */
-.second_menu_box {
-  font-size: 25px;
-  font-family: hanna;
-  padding-left: 23%;
-  position: relative;
+.container-fluid {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  height: 240px; /* 전체 컨테이너 높이 */
+  position: relative; /* 위치 설정 */
 }
 
+.gpt-icon {
+  max-width: 80%;
+  height: auto;
+  object-fit: contain; /* 이미지 비율 유지 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
+}
+
+.second_menu_box {
+  font-size: 18px;
+  font-family: hanna;
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+.header_menu {
+  gap: 5px; /* 아이콘과 텍스트 사이 간격 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+  color: inherit; /* 부모 요소의 색상 유지 */
+}
+.header_menu i {
+  font-size: 22px;
+}
+.header_menu:hover {
+  color: #ffc107; /* 호버 시 색상 변경 */
+  transform: scale(1.05); /* 약간 확대 효과 */
+}
 .nav-link {
   text-decoration: none !important;
   color: inherit !important;
 }
-
 .nav-link:hover {
   text-decoration: none !important;
   color: #ffeb33 !important;
-}
-
-.nav-menu {
-  text-decoration: none !important;
-  color: inherit !important;
-}
-
-#person-icon {
-  font-size: 30px;
 }
 
 /* 최상단 메뉴 */
 .upper_menu {
   background-color: #000000;
 }
-
 .upper_menu_link {
   display: inline-flex;
   font-size: 11px;
   margin-left: 67%;
 }
-
 .upper_menu_link .nav-link {
   color: #ffffff !important;
 }
-
 .upper_menu_link .nav-link:hover {
   color: #ffeb33 !important;
 }
-
 .upper_menu_link .nav-item {
   margin-right: -25px;
 }
-
-.navbar-brand {
-  font-size: 50px;
-  color: #d9cab6;
-  display: inline-block;
-  transform: scaleY(1.8);
-  font-family: euljiro;
-}
-
-.search_bar {
-  width: 135%;
-  height: 45px;
-}
-
-.search_glass {
-  right: 1px;
-}
-
-.search_bar .search_text {
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border: 2.5px solid #ffc100;
-}
-
-.search_bar .search_glass {
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  border: 2.5px solid #ffc100;
-}
-
 .badge {
   font-size: 1rem;
   padding: 0.4rem;
 }
-
 .cart-count {
   font-size: 0.9rem;
 }
