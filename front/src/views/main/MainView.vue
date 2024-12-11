@@ -146,7 +146,13 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex  mb-4">
         <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('인기급상승')">인기급상승</button>
+        <!-- 인기 급상승 ON/OFF 버튼 -->
+        <button class="btn mx-2"
+                :class="{ 'btn-outline-secondary': pop !== '인기급상승',  // 기본 배경색
+                          'bg-light-gray text-dark': pop === '인기급상승'  // 인기급상승 상태일 때 진한 회색 배경
+                        }" @click="togglePopular" >
+        인기급상승
+        </button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
         <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">고즈넉한</button>    
@@ -259,6 +265,7 @@ export default {
     return {
       mains: [], //빈배열(json)
       searchKeyword:"", // 검색어
+      pop:"", // 인기급상승 확인
       keywords: ["국내","해외"], //드롭다운 항목
       userRole: "", // 유저 권한
     };
@@ -266,11 +273,12 @@ export default {
   methods: {
     async getAll(view = ""){
       this.view = view;
-      console.log(this.category);
+      // 디버깅용
+      console.log(this.pop);
       console.log(this.view);
       console.log(this.searchKeyword);
       try {
-        let response = await MainService.getALLnp(this.searchKeyword,this.view);
+        let response = await MainService.getALLnp(this.searchKeyword,this.view,this.pop);
         const { results, totalCount } = response.data;
         console.log(response.data);
         this.mains = results;
@@ -286,6 +294,12 @@ export default {
     // 전체보기 버튼(전체조회)
     getreset(){
       this.searchKeyword = "";
+      this.pop ="";
+      this.getAll();
+    },
+    //인기급상승 on/off
+    togglePopular() {
+      this.pop = this.pop === '인기급상승' ? '' : '인기급상승'; // 값 토글
       this.getAll();
     },
   },

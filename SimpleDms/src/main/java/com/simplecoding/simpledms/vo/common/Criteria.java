@@ -73,4 +73,6 @@ public class Criteria implements Serializable {
 
 	private String view;     // 뷰 추가
 
+	private String pop;     // 인기급상승 컬럼 추가
+
 }

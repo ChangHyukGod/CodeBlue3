@@ -7,6 +7,8 @@
         SELECT *
         FROM TOUR
         WHERE
+            (#{pop} IS NULL OR "POP" LIKE '%'||#{pop}||'%')
+          AND
             (#{view} IS NULL OR "VIEW" LIKE '%'||#{view}||'%')
           AND
             (CATEGORY LIKE '%'||#{searchKeyword}||'%')

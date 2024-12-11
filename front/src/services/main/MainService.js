@@ -2,13 +2,14 @@ import axios from "axios";
 // 백엔드 주소 ↓ : springboot 주소(컨트롤러 주소)
 const baseURL = "http://localhost:8000/api";
 
-// 전체조회
+// 전체조회 (페이징 O 현재 사용안하는 중)
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
     return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
 };
 
-const getALLnp = (searchKeyword,view) => {
-    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&view=${view}`);
+// 전체조회(페이징 X) 
+const getALLnp = (searchKeyword,view,pop) => {
+    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&view=${view}&pop=${pop}`);
 };
 
 // 이미지 업로드 및 FormData 생성
