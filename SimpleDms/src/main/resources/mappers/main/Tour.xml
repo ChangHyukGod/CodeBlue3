@@ -73,11 +73,9 @@
         WHERE TOUR_ID = #{tourId}
     </select>
 
-    <select id="getRoomMinPrice"
-            parameterType="int"
-            resultType="String">
-        SELECT PRICE
-        FROM ROOM
+    <!-- 최저값 가져오기 -->
+    <select id="getRoomMinPrice" parameterType="int" resultType="String">
+        SELECT PRICE FROM ROOM
         WHERE TOUR_ID = #{tourId}
     </select>
 

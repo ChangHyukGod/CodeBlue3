@@ -47,5 +47,6 @@ export default {
   font-family: "hanna";
   src: url("/src/assets/font/BMHANNA_11yrs_ttf.ttf") format("truetype");
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Diphylleia&family=Jua&family=Moirai+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Diphylleia&family=Dongle&family=Jua&family=Moirai+One&display=swap');
 </style>
