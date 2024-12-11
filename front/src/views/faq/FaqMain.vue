@@ -1,13 +1,17 @@
 <template>
-  <div>
-  </div>
+  <div></div>
   <div class="container d-flex justify-content-center align-items-center">
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
         <router-link :to="'/faq/talk'">
-          <b-button variant="outline-dark" class="custom-button">
-            <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
+          <b-button
+            variant="outline-dark"
+            class="custom-button"
+            :disabled="!user"
+          >
+            <i class="bi bi-chat-square-dots custom-icon"></i>
+            <br />1:1 문의
           </b-button></router-link
         >
 
@@ -107,11 +111,12 @@
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
-                  <router-link :to="{ path: 'faq/list', query: { search: question.link } }"
+                  <router-link
+                    :to="{ path: 'faq/list', query: { search: question.link } }"
                     ><b-button variant="danger" class="card-button"
-                      ><i class="bi bi-three-dots"></i> <i class="bi bi-info-circle"></i></b-button
-                    ></router-link
-                  >
+                      ><i class="bi bi-three-dots"></i>
+                      <i class="bi bi-info-circle"></i></b-button
+                  ></router-link>
                 </b-card>
               </div>
             </div>
@@ -139,10 +144,19 @@ export default {
         placement: "right", // 팝오버 위치 (필요시 조정)
       });
     });
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.user = parsedUser;
+      this.userEmail = parsedUser.email;
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 
   data() {
     return {
+      user: "",
       cards: [
         {
           id: "reservation",
@@ -337,6 +351,11 @@ export default {
 </script>
 
 <style scoped>
+button.custom-button:disabled {
+  opacity: 0.2; /* 버튼 흐리게 표시 */
+  cursor: not-allowed;
+  color: red; /* 마우스 포인터를 '금지' 상태로 표시 */
+}
 .popover {
   background: white;
   border: 5px solid #ccc;
