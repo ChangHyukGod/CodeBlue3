@@ -6,10 +6,14 @@
     <select id="selectTour" parameterType="Criteria" resultType="Tour">
         SELECT *
         FROM TOUR
-        WHERE (#{category} IS NULL OR CATEGORY LIKE '%' || #{category} || '%')
-          AND (#{view} IS NULL OR "VIEW" LIKE '%' || #{view} || '%')
-          AND (NAME LIKE '%' || #{searchKeyword} || '%')
-        OFFSET #{pageIndex} * #{recordCountPerPage} ROWS FETCH NEXT #{recordCountPerPage} ROWS ONLY
+        WHERE
+            (#{pop} IS NULL OR "POP" LIKE '%'||#{pop}||'%')
+          AND
+            (#{view} IS NULL OR "VIEW" LIKE '%'||#{view}||'%')
+          AND
+            (CATEGORY LIKE '%'||#{searchKeyword}||'%')
+        OFFSET #{pageIndex} * #{recordCountPerPage} ROWS
+            FETCH NEXT #{recordCountPerPage} ROWS ONLY
     </select>
 
     <!-- 전체조회 _ 총건수 : public int selectTourTotCnt(Criteria searchVO); -->
@@ -21,9 +25,10 @@
 
     <!-- 추가, 업로드 : public int insert(Tour tour);-->
     <insert id="insert" parameterType="Tour">
-        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL, "VIEW", CATEGORY)
-        VALUES (TOUR_SEQ.NEXTVAL, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl}, #{view},
-                #{category})
+
+        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL, "VIEW", CATEGORY, COMMENT, POP)
+        VALUES(TOUR_SEQ.NEXTVAL, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl}, #{view}, #{category},
+               #{comment}, #{pop})
     </insert>
 
     <!-- URL 업데이트 : public int updateTourUrl(Tour tour); -->
@@ -49,14 +54,9 @@
     <!-- 수정 : public int update(Tour tour); -->
     <update id="update" parameterType="Tour">
         UPDATE TOUR
-        SET NAME          = #{name},
-            LOCATION      = #{location},
-            DESCRIPTION   = #{description},
-            PRICE         = #{price},
-            TOUR_DATA     = #{tourData},
-            TOUR_FILE_URL = #{tourFileUrl},
-            "VIEW"        = #{view},
-            CATEGORY      = #{category}
+        SET NAME = #{name}, LOCATION = #{location}, DESCRIPTION = #{description},
+            PRICE = #{price}, TOUR_DATA = #{tourData}, TOUR_FILE_URL = #{tourFileUrl},
+            "VIEW" = #{view}, CATEGORY = #{category}, COMMENT = #{comment}, POP = #{pop}
         WHERE TOUR_ID = #{tourId}
     </update>
 
@@ -67,11 +67,9 @@
         WHERE TOUR_ID = #{tourId}
     </delete>
 
-    <select id="getTourName"
-            parameterType="int"
-            resultType="String">
-        SELECT NAME
-        FROM TOUR
+    <!-- 리뷰게시판 -->
+    <select id="getTourName" parameterType="int" resultType="String">
+        SELECT NAME FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </select>
 

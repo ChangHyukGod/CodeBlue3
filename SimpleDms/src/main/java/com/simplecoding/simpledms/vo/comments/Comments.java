@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+
 /**
  * @author : KTE-149
  * @fileName : Comment
@@ -23,8 +24,8 @@ public class Comments {
     private String email;         // EMAIL (VARCHAR2)
     private Timestamp createdAt;  // CREATED_AT (TIMESTAMP)
     private String commentLoc;
+    private Integer rating;            // RATING (NUMBER) 추가
 
-
-    public void setMemberEmail(String email) {
-    }
+//    public void setMemberEmail(String email) {
+//    }
 }

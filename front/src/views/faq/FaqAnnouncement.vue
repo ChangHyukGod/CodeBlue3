@@ -5,9 +5,9 @@
       <div class="notice_container">
         <div class="notice_search">
           <form class="search_input" @submit.prevent="searchAnnouncement">
-            <router-link :to="'/faq/list'" class="custom-link"
-              ><p class="ano_top_title">공지사항</p></router-link
-            >
+            <router-link :to="'/faq/list'" class="custom-link">
+              <p class="ano_top_title">공지사항</p>
+            </router-link>
             <div class="input_box typing form-group search_bar_announce">
               <input
                 placeholder="제목, 내용"
@@ -23,10 +23,7 @@
         <div class="notice_content">
           <div class="announcement-list">
             <div v-for="(data, index) in announcementList" :key="index">
-              <router-link
-                :to="'/announcement/' + data.ano"
-                class="custom-link"
-              >
+              <router-link :to="'/announcement/' + data.ano" class="custom-link">
                 <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
                 <p class="ano_date">{{ data.createDate }}</p>
               </router-link>
@@ -37,7 +34,7 @@
             등록된 공지사항이 없습니다.
           </p>
           <router-link :to="'/faq'">
-            <button type="button" class="btn btn-warning button">
+            <button type="button" class="btn btn-warning button2">
               <i class="bi bi-arrow-return-left"></i>
             </button>
           </router-link>
@@ -138,27 +135,17 @@ export default {
         query: { search: this.searchKeyword },
       });
     },
-    async fetchAnnouncements() {
-      try {
-        const response = await AnnouncementService.getAll();
-        this.announcementList = response.data.results;
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      }
-    },
   },
 
   mounted() {
     // 초기화 시 URL 쿼리값을 동기화
     this.searchKeyword = this.$route.query.search || "";
     this.getAnnouncements();
-    this.fetchAnnouncements();
   },
 };
 </script>
 
 <style>
-
 .ano_top_title {
   font-weight: bolder;
   font-size: x-large;
@@ -290,7 +277,7 @@ export default {
   color: #ccc;
   cursor: not-allowed;
 }
-.button {
+.button2 {
   position: relative;
   margin-top: 10px;
   left: 94.5%;

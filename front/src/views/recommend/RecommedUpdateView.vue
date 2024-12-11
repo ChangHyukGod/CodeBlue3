@@ -12,7 +12,7 @@
       <label for="tdName">tdName</label>
     </div>
 
-    <!-- loc -->
+    <!-- loc dd-->
     <div class="form-floating mb-3">
       <input
         type="text"
@@ -23,9 +23,9 @@
       />
       <label for="loc">loc</label>
     </div>
-    
-     <!-- description -->
-     <div class="form-floating mb-3">
+
+    <!-- description -->
+    <div class="form-floating mb-3">
       <input
         type="text"
         class="form-control"
@@ -35,7 +35,6 @@
       />
       <label for="description">description</label>
     </div>
-
 
     <!-- TODO: 현재이미지 보기 -->
 
@@ -48,14 +47,9 @@
       />
     </div>
 
+    <!-- 파일선택상자 -->
 
-
-
-
-
-     <!-- 파일선택상자 -->
-
-     <div class="input-group">
+    <div class="input-group">
       <input type="file" class="form-control" ref="file" @change="select" />
       <button class="btn btn-warning" type="button" @click="update">
         수정
@@ -67,19 +61,18 @@
   </div>
 </template>
 <script>
-
 import RecommendService from "@/services/recommend/RecommendService";
 
 export default {
   data() {
     return {
       recommend: {
-        tdId: "" ,
+        tdId: "",
         tdName: "",
         loc: "",
         description: "",
         imageUrl: "", //다운로드 url
-        
+
         image: undefined, // 선택이미지
       },
     };
@@ -125,19 +118,17 @@ export default {
       }
     },
 
-      // 삭제
+    // 삭제
     async remove() {
       try {
         let response = await RecommendService.remove(this.recommend.tdId);
         console.log(response.data);
-        alert("삭제됨")
+        alert("삭제됨");
         this.$router.push("/recommend");
       } catch (error) {
         console.log(error);
       }
     },
-
-
   },
 
   mounted() {

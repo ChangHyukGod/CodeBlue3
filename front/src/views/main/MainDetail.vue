@@ -5,7 +5,7 @@
       v-if="userRole === 'ROLE_ADMIN'"
       :href="'/addRoom/' + tourId"
       class="btn btn-primary px-4 py-2 rounded-pill shadow-sm text-white mb-3"
-      style="backgroundcolor: black"
+      style="background-color: black"
     >
       방 추가
     </b-nav-item>
@@ -172,7 +172,7 @@
             >
               <strong>인원(기준) :</strong> {{ room.capacity }}인<br />
               <strong>가격 : </strong>
-              <span style="clokr: black; font-weight: bold"
+              <span style="color: black; font-weight: bold"
                 >{{
                   stayDuration >= 0
                     ? (

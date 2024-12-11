@@ -282,7 +282,7 @@ export default {
     border-radius: 10px;
     padding: 15px;
     background-color: #f9f9f9;
-    margin-left: 42px;
+    margin-left: 90px;
 }
 
 /* 내용 섹션 */

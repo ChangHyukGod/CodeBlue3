@@ -4,6 +4,7 @@ const baseURL = "http://localhost:8000/api/announcement";
 
 // 공지 전체 목록 조회
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
+
   return axios.get(
     `${baseURL}?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
   );
@@ -27,6 +28,7 @@ const update = (ano, data) => {
 const remove = (ano) => {
   return axios.delete(`${baseURL}/fix/${ano}`);
 };
+
 
 // 서비스 객체
 const AnnouncementService = {

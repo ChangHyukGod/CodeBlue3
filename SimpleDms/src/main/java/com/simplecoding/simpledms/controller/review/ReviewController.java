@@ -45,6 +45,7 @@ public class ReviewController {
             @RequestParam(defaultValue = "0") int targetId,
             @RequestParam(required = false) MultipartFile image) throws Exception {
 
+
         log.debug("title" + title);
         log.debug("content" + content);
         // 이미지가 없을 경우 대비
@@ -56,6 +57,8 @@ public class ReviewController {
         // 리뷰 객체 생성
         Review review = new Review(title, content, rating, authorEmail, targetId, imageData);
 
+
+      
         // 서비스 호출
         reviewService.insert(review); // 서비스 클래스에서 리뷰 등록 로직 구현
 
@@ -99,6 +102,7 @@ public class ReviewController {
                                     @RequestParam String authorEmail,
                                     @RequestParam int targetId,
                                     @RequestParam(required = false) MultipartFile image) throws Exception {
+
         Review review = new Review(title, content, rating, authorEmail, targetId, image.getBytes());
         review.setReviewId(reviewId); // 요청된 ID로 review 객체 업데이트
         reviewService.update(review);

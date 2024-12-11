@@ -62,17 +62,17 @@ public class Criteria implements Serializable {
 	/**
 	 * recordCountPerPage
 	 */
-	private int recordCountPerPage = 10; // 화면에 보일 갯수
+	private int recordCountPerPage = 16; // 화면에 보일 갯수
 	private int totalItems = 0; // 총 건수
 
 	private String insertTime;
 
 	private String updateTime;
 
-
 	private String category; // 카테고리 추가
 
 	private String view;     // 뷰 추가
 
-}
+	private String pop;     // 인기급상승 컬럼 추가
 
+}

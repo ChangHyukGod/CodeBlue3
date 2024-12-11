@@ -56,7 +56,7 @@
                   >
                     {{ data.hashtag }}
                   </button>
-                  <router-link :to="`/faq/list/${data.fno}`">
+                  <router-link :to="`/faq/list/${data.fno}`" v-if="userRole === 'ROLE_ADMIN'">
                     <button type="button" class="btn btn-warning me-2">
                       수정
                     </button>
@@ -66,7 +66,7 @@
             </div>
           </div>
           <p v-if="faqList.length === 0">등록된 질문이 없습니다.</p>
-          <router-link :to="'/faq'">
+          <router-link :to="'/faq'" >
             <button type="button" class="btn btn-warning button">
               <i class="bi bi-arrow-return-left"></i>
             </button>
@@ -129,6 +129,7 @@ import FaqService from "@/services/faq/FaqService";
 export default {
   data() {
     return {
+      userRole: "",
       pageIndex: 1,
       totalPages: 1,
       searchKeyword: "",
@@ -190,6 +191,14 @@ export default {
   //   },
   // },
   mounted() {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.userRole = parsedUser.codeName;
+    } else {
+      console.error("No user data found in localStorage.");
+    }
+
     // 초기화 시 URL 쿼리값을 동기화
     this.searchKeyword = this.$route.query.search || "";
     this.getFaq();

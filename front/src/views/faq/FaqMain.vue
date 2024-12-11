@@ -1,15 +1,19 @@
 <template>
-  <div>
-  </div>
+  <div></div>
   <div class="container d-flex justify-content-center align-items-center">
     <!-- 버튼 그룹 박스 -->
     <div class="mt-3" id="main_button_group">
       <b-button-group size="lg" class="custom-button-group">
-        <router-link :to="'/faq/talk'">
-          <b-button variant="outline-dark" class="custom-button">
-            <i class="bi bi-chat-square-dots custom-icon"></i> <br />1:1 문의
-          </b-button></router-link
-        >
+        <div>
+          <b-button
+            variant="outline-dark"
+            class="custom-button"
+            @click.prevent="handleClick"
+          >
+            <i class="bi bi-chat-square-dots custom-icon"></i>
+            <br />1:1 문의
+          </b-button>
+        </div>
 
         <router-link :to="'/faq/list'">
           <b-button variant="outline-dark" class="custom-button">
@@ -107,11 +111,12 @@
                     <h3 class="popover-title">Popover Title</h3>
                     <div class="popover-content">I am popover content!</div>
                   </div>
-                  <router-link :to="{ path: 'faq/list', query: { search: question.link } }"
+                  <router-link
+                    :to="{ path: 'faq/list', query: { search: question.link } }"
                     ><b-button variant="danger" class="card-button"
-                      ><i class="bi bi-three-dots"></i> <i class="bi bi-info-circle"></i></b-button
-                    ></router-link
-                  >
+                      ><i class="bi bi-three-dots"></i>
+                      <i class="bi bi-info-circle"></i></b-button
+                  ></router-link>
                 </b-card>
               </div>
             </div>
@@ -125,6 +130,17 @@
 <script>
 import * as bootstrap from "bootstrap";
 export default {
+  methods: {
+    handleClick(event) {
+      if (this.user === null) {
+        event.preventDefault(); // 기본 링크 이동 방지
+        alert("로그인이 필요합니다. 로그인을 먼저 해주세요.");
+        return;
+      } else {
+        this.$router.push("/faq/talk"); // 링크 이동
+      }
+    },
+  },
   // 팝오버
   name: "FaqMain",
   mounted() {
@@ -139,10 +155,19 @@ export default {
         placement: "right", // 팝오버 위치 (필요시 조정)
       });
     });
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.user = parsedUser;
+      this.userEmail = parsedUser.email;
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 
   data() {
     return {
+      user: null,
       cards: [
         {
           id: "reservation",
@@ -337,6 +362,11 @@ export default {
 </script>
 
 <style scoped>
+.disabled-link {
+  pointer-events: none; /* 클릭 차단 */
+  opacity: 0.6; /* 비활성화된 스타일 */
+  cursor: not-allowed; /* 마우스 커서 변경 */
+}
 .popover {
   background: white;
   border: 5px solid #ccc;
@@ -357,7 +387,7 @@ export default {
 /* 메인 아이콘 스타일 */
 .custom-icon {
   font-size: 60px;
-  color: #ffeb33;
+  color: #ffc107;
   margin-bottom: 0.5rem; /* 아이콘과 텍스트 간격 */
 }
 /* 버튼 그룹 스타일 */
@@ -462,7 +492,7 @@ export default {
 }
 /* 해시태그 아이콘 */
 #hashtag-icon {
-  color: #ffeb33;
+  color: #ffc107;
   font-size: 25px;
 }
 /* 해시태그 호버 */
@@ -517,7 +547,7 @@ export default {
 }
 /* 카드 버튼 */
 .card-button {
-  background-color: #ffeb33;
+  background-color: #ffc107;
   border: 1px solid black !important;
   color: black;
 }

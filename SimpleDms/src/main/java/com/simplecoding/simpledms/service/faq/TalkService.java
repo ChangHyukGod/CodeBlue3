@@ -34,6 +34,8 @@ public class TalkService {
     }
 
 
+
+
     public Optional<Talk> selectTalk(int tno) {
         return talkMapper.selectTalk(tno);
     }

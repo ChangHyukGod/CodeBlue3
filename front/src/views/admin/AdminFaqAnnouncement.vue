@@ -37,9 +37,14 @@
                         <div class="accordion" id="announcementAccordion">
                             <div class="accordion-item" v-for="(data, index) in announcementList" :key="index">
                                 <h2 class="accordion-header" :id="'heading-' + index">
-                                    <router-link :to="`/announcement/${data.ano}`" class="accordion-button collapsed">
+                                    <router-link :to="'/announcement/' + data.ano" class="custom-link">
                                         {{ data.title }}
                                     </router-link>
+                                    <div class="upde">
+                                        <button class="updede" @click="upde(data.ano)">
+                                            수정/삭제
+                                        </button>
+                                    </div>
 
                                 </h2>
                                 <div :id="'collapse-' + index" class="accordion-collapse collapse"
@@ -98,6 +103,8 @@ export default {
             totalPages: 1, // 전체 페이지 수
             searchKeyword: "", // 검색어
             announcementList: [], // 공지사항 데이터 리스트
+
+            detailAnnounce: {},
         };
     },
     methods: {
@@ -115,24 +122,45 @@ export default {
                 console.error("공지사항 데이터를 가져오는 중 에러 발생:", error);
             }
         },
+
+        async getAnnouncementsDetail() {
+            try {
+                const response = await AnnouncementService.getDetail();
+                this.detailAnnounce = response.data;
+            } catch (error) {
+                console.error("공지사항 데이터를 가져오는 중 에러 발생:", error);
+            }
+        },
+
         goToPage(page) {
             if (page > 0 && page <= this.totalPages) {
                 this.pageIndex = page;
                 this.getAnnouncements();
             }
         },
-        searchAnnouncement() {
+        searchAnnouncements() {
             this.pageIndex = 1;
-            this.getAnnouncements();
+            this.getAnnouncements(); // 수정: getAnnouncements()로 변경
         },
+
+        updateQuery() {
+            this.$router.push({
+                path: "list",
+                query: { search: this.searchKeyword },
+            });
+        },
+        upde(ano) {
+            this.$router.push(`/announcement/${ano}`);  // 수정된 부분
+        }
     },
     mounted() {
         // 초기화 시 URL 쿼리값을 동기화
         this.searchKeyword = this.$route.query.search || "";
-        this.getAnnouncements();
+        this.getAnnouncements(); // 수정: getFaq() -> getAnnouncements()
     },
 };
 </script>
+
 
 <style>
 .container {
@@ -215,7 +243,7 @@ export default {
 .announce {
     color: #ffeb33;
     -webkit-text-stroke: 0.4px black;
-    font-size: 16px;
+    font-size: 12px;
     font-family: dohyeon;
 }
 
@@ -225,6 +253,10 @@ export default {
     top: 30px;
     right: 16%;
     position: relative;
+    font-size: 0.9rem;
+    /* 글씨 크기 줄이기 */
+    color: black !important;
+    /* 강제 적용 */
 }
 
 /* 전체 박스 */
@@ -278,11 +310,10 @@ export default {
     flex-direction: column;
     padding: 0;
     margin: 7px 0 0 10px;
+
 }
 
-.notice_line {
-    margin: 3px;
-}
+
 
 .notice_title {
     text-decoration: none;
@@ -290,6 +321,7 @@ export default {
     font-weight: bold;
     display: flex;
     justify-content: space-between;
+
 }
 
 /* 페이징 스타일 */
@@ -331,5 +363,76 @@ export default {
 .page-item.disabled .page-link {
     color: #ccc;
     cursor: not-allowed;
+}
+
+/* 수정/삭제 버튼 스타일 */
+/* 수정/삭제 버튼 스타일 */
+.accordion-header button {
+    font-size: 12px;
+    /* 글씨 크기 줄이기 */
+    padding: 5px 10px;
+    /* 버튼 크기 줄이기 */
+    border: 1px solid #ccc;
+    /* 버튼 테두리 */
+    background-color: transparent;
+    /* 배경색 투명하게 */
+    color: #333;
+    /* 글씨 색 */
+    cursor: pointer;
+    /* 클릭 가능한 손 모양 */
+    transition: background-color 0.3s;
+    /* 배경색 변환 효과 */
+}
+
+/* 호버 상태에서 버튼 색상 변경 */
+.accordion-header button:hover {
+    background-color: #ffeb33;
+    /* 호버 시 배경색 변경 */
+    color: #000;
+    /* 호버 시 글씨 색 변경 */
+}
+
+/* 수정/삭제 버튼의 새 스타일 (노란색 배경으로 변경) */
+.accordion-header button.updede {
+    background-color: white;
+    /* 배경색을 노란색으로 설정 */
+    color: black;
+    /* 글씨 색을 검정색으로 설정 */
+    border: 1px solid #ffcc00;
+    /* 노란색 테두리 설정 */
+    padding: 8px 15px;
+    /* 버튼 크기와 여백 조정 */
+    font-weight: bold;
+    /* 글씨 두껍게 */
+    border-radius: 8px;
+    /* 둥근 테두리 추가 */
+}
+
+/* 호버 상태에서 버튼 색상 변경 */
+.accordion-header button.updede:hover {
+    background-color: yellow;
+    /* 호버 시 더 진한 노란색으로 변경 */
+    color: black;
+    /* 글씨 색을 검정색으로 유지 */
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upde {
+    margin-left: auto;
+    margin-right: 10px;
+    margin-bottom: 7px;
+    /* 왼쪽 여백을 자동으로 설정하여 오른쪽 정렬 */
+    text-align: right;
+
+}
+
+.updede {
+    border-radius: 10px;
+    background-color: yellow;
 }
 </style>

@@ -6,19 +6,35 @@ let user = JSON.parse(localStorage.getItem("user"));
 const token = { Authorization: "Bearer " + user?.accessToken };
 
 const insert = (data) => {
-  return axios.post(baseURL + `/coupon/coupon`, data, { headers: token });
+  return axios.post(baseURL + `/add/coupon`, data, { headers: token });
 };
 
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   return axios.get(
     baseURL +
-      `/coupon/coupon?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
+      `/list/coupon?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
   );
+};
+
+const getCouponsByEmail = () => {
+  return axios.get(baseURL + `/use/coupon`, { headers: token });
+};
+
+const checkUserHasCoupons = () => {
+  return axios.get(baseURL + `/user/hasCoupons`, { headers: token });
+};
+
+const couponByEmail = (memberEmail) => {
+  console.log("memberEmail", memberEmail);
+  return axios.get(baseURL + `/coupon/email/${memberEmail}`);
 };
 
 const CouponService = {
   insert,
   getAll,
+  getCouponsByEmail,
+  checkUserHasCoupons,
+  couponByEmail,
 };
 
 export default CouponService;
