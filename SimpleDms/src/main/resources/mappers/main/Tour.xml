@@ -18,12 +18,14 @@
 
     <!-- 전체조회 _ 총건수 : public int selectTourTotCnt(Criteria searchVO); -->
     <select id="selectTourTotCnt" parameterType="Criteria" resultType="int">
-        SELECT COUNT(*) FROM TOUR
-        WHERE NAME LIKE '%'||#{searchKeyword}||'%'
+        SELECT COUNT(*)
+        FROM TOUR
+        WHERE NAME LIKE '%' || #{searchKeyword} || '%'
     </select>
 
     <!-- 추가, 업로드 : public int insert(Tour tour);-->
     <insert id="insert" parameterType="Tour">
+
         INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL, "VIEW", CATEGORY, COMMENT, POP)
         VALUES(TOUR_SEQ.NEXTVAL, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl}, #{view}, #{category},
                #{comment}, #{pop})
@@ -38,12 +40,14 @@
 
     <!-- 생성된 tourId를 조회 : public int selectGenerateTourId(); -->
     <select id="selectGenerateTourId" resultType="int">
-        SELECT TOUR_SEQ.CURRVAL FROM DUAL
+        SELECT TOUR_SEQ.CURRVAL
+        FROM DUAL
     </select>
 
     <!-- 상세조회 : public Optional<Tour> select(int tourId); -->
     <select id="select" parameterType="int" resultType="Tour">
-        SELECT * FROM TOUR
+        SELECT *
+        FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </select>
 
@@ -58,7 +62,8 @@
 
     <!-- 삭제 : public int delete(int tourId);-->
     <delete id="delete" parameterType="int">
-        DELETE FROM TOUR
+        DELETE
+        FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </delete>
 
@@ -67,4 +72,13 @@
         SELECT NAME FROM TOUR
         WHERE TOUR_ID = #{tourId}
     </select>
+
+    <select id="getRoomMinPrice"
+            parameterType="int"
+            resultType="String">
+        SELECT PRICE
+        FROM ROOM
+        WHERE TOUR_ID = #{tourId}
+    </select>
+
 </mapper>

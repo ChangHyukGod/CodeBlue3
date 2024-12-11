@@ -29,6 +29,24 @@
           <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
         </a>
       </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -59,8 +77,18 @@
           <a href="/maindetail/104">
             <img :src="require(`@/assets/images/main/추천광안.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
-          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
+          <div
+            class="card-body"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              width: 300px;
+            "
+          >
+            <h5 class="card-title mt-2">
+              낭만가득, 연인과 함께 즐기는 광안대교 뷰
+            </h5>
             <p class="card-text">부산</p>
             <p class="card-text">광안대교 뷰가 보이는 숙소에서 낭만 한잔 어떠세요♡</p>
             <p class="text-primary fw-bold">70,000원</p>
@@ -128,8 +156,9 @@
           </div>
         </div>
       </div>
-    </div>  <!-- 연말특가 닫는태그 -->
-    <br/>
+    </div>
+    <!-- 연말특가 닫는태그 -->
+    <br />
 
     <!-- 메뉴 2 : 숙소 전체 -->
     <div>
@@ -180,13 +209,27 @@
       <div class="col" v-for="(data, index) in mains" :key="index">
         <div class="card h-100">
           <router-link :to="'/maindetail/' + data.tourId">
-            <img :src="data.tourFileUrl" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img
+              :src="data.tourFileUrl"
+              class="card-img-top"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
           </router-link>
-          <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">{{ data.comment }}</h5>
+          <div
+            class="card-body"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              width: 300px;
+            "
+          >
+            <h5 class="card-title mt-2">{{ data.name }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
-            <p class="text-primary fw-bold">{{ data.price }}</p>
+            <p class="card-text">{{ data.minPrice }}~</p>
+            <!-- 추가된 minPrice 출력 -->
+            <!-- 상세페이지 / 수정,삭제 페이지 이동 버튼 -->
             <div style="display: flex; justify-content: space-between">
               <router-link :to="'/maindetail/' + data.tourId">
                 <button class="btn btn-primary">보러가기</button>
@@ -279,11 +322,29 @@ export default {
       try {
         let response = await MainService.getALLnp(this.searchKeyword,this.view,this.pop);
         const { results, totalCount } = response.data;
-        console.log(response.data);
-        this.mains = results;
+
+        // 모든 tourId의 최솟값 가져오기
+        const updatedResults = await Promise.all(
+          // results 배열을 반복 처리
+          results.map(async (item) => {
+            // 각 item에 대해 비동기 함수 getMinPrice 호출
+            // 해당 item의 tourId를 이용해 최솟값(minPrice)을 가져옴
+            const minPrice = await this.getMinPrice(item.tourId);
+
+            // 기존 item 객체에 minPrice 속성을 추가하여 새 객체를 반환
+            return {
+              ...item, // 기존 item 속성을 모두 유지
+              minPrice, // 새로 계산된 minPrice 속성을 추가
+            };
+          })
+        );
+        // Promise.all: 모든 비동기 작업(map 내부의 async 함수)이 완료될 때까지 기다리고
+        // 완료된 결과 배열을 반환 (updatedResults는 새로운 배열)
+
+        this.mains = updatedResults;
         this.totalCount = totalCount;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     // 드롭다운 메뉴 선택
@@ -293,9 +354,31 @@ export default {
     // 전체보기 버튼(전체조회)
     getreset(){
       this.searchKeyword = "";
-      this.pop ="";
+            this.pop ="";
       this.getAll();
     },
+    async getMinPrice(tourId) {
+      try {
+        // Java에서 반환된 데이터의 price 배열 추출
+        const response = await MainService.getRoomMinPrice(tourId);
+        const prices = response.data; // price 데이터 가져오기
+
+        // 응답 데이터가 비어 있는 경우
+        if (!prices || prices.length === 0) {
+          return "가격 없음";
+        }
+
+        // 문자열 배열을 숫자 배열로 변환
+        const numericPrices = prices.map((price) =>
+          parseInt(price.replace(/,/g, ""), 10)
+        );
+        const minPrice = Math.min(...numericPrices);
+
+        return minPrice.toLocaleString(); // 최솟값 반환
+      } catch (error) {
+        console.error(`Failed to fetch prices for tourId ${tourId}:`, error);
+        return "데이터 없음"; // 에러 발생 시 기본 메시지
+      }
     //인기급상승 on/off
     togglePopular() {
       this.pop = this.pop === '인기급상승' ? '' : '인기급상승'; // 값 토글

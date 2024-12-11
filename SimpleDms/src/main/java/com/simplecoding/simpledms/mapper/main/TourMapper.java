@@ -28,5 +28,8 @@ public interface TourMapper {
     public int update(Tour tour);  //수정
     public int delete(int tourId);  //삭제
 
-    public String getTourName(int tourId);  //리뷰게시판
+    public String getTourName(int tourId);
+
+    public List<String> getRoomMinPrice(int tourId); // 방 최저값 갖고오기
+
 }
