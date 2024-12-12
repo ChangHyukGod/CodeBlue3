@@ -26,7 +26,7 @@
     <!-- 추가, 업로드 : public int insert(Tour tour);-->
     <insert id="insert" parameterType="Tour">
 
-        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL, "VIEW", CATEGORY, COMMENT, POP)
+        INSERT INTO TOUR(TOUR_ID, NAME, LOCATION, DESCRIPTION, PRICE, TOUR_DATA, TOUR_FILE_URL, "VIEW", CATEGORY, "COMMENT", "POP")
         VALUES(TOUR_SEQ.NEXTVAL, #{name}, #{location}, #{description}, #{price}, #{tourData}, #{tourFileUrl}, #{view}, #{category},
                #{comment}, #{pop})
     </insert>
@@ -56,7 +56,7 @@
         UPDATE TOUR
         SET NAME = #{name}, LOCATION = #{location}, DESCRIPTION = #{description},
             PRICE = #{price}, TOUR_DATA = #{tourData}, TOUR_FILE_URL = #{tourFileUrl},
-            "VIEW" = #{view}, CATEGORY = #{category}, COMMENT = #{comment}, POP = #{pop}
+            "VIEW" = #{view}, CATEGORY = #{category}, "COMMENT" = #{comment}, "POP" = #{pop}
         WHERE TOUR_ID = #{tourId}
     </update>
 

@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       review: {
-        rating: 0,
+        rating: 1,
         title: "",
         content: "",
         authorEmail: "",
@@ -115,7 +115,7 @@ export default {
     },
 
     setRating(star) {
-      this.review.rating = star; // 평점 설정
+      this.review.rating = star > 0 ? star : 1; // 최소값을 1로 설정
     },
 
     goToReview() {

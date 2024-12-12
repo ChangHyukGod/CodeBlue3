@@ -228,35 +228,35 @@ export default {
 .main-layout {
     display: flex;
     gap: 20px;
+    flex-grow: 1;
+    /* 부모 요소가 가능한 공간을 모두 차지하도록 설정 */
 }
 
-/* 공지 전체 */
 .bigbox {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    flex-shrink: 1;
+    width: 100px;
+    /* 가로 길이를 100px로 줄임 */
 }
 
+/* 타이틀 글씨 크기 줄이기 */
+.title {
+    font-size: 0.8rem;
+    /* 글씨 크기 줄임 */
+}
+
+/* .lla, .new, .announce 글씨 크기 줄이기 */
 .lla,
 .new,
 .announce {
-    color: #ffeb33;
-    -webkit-text-stroke: 0.4px black;
-    font-size: 12px;
-    font-family: dohyeon;
-}
-
-/* 타이틀 */
-.title {
-    display: inline-flex;
-    top: 30px;
-    right: 16%;
-    position: relative;
-    font-size: 0.9rem;
-    /* 글씨 크기 줄이기 */
-    color: black !important;
-    /* 강제 적용 */
+    font-size: 10px;
+    /* 글씨 크기 줄임 */
 }
 
 /* 전체 박스 */
@@ -265,8 +265,8 @@ export default {
     border: 2.5px solid black;
     border-radius: 10px;
     padding: 15px;
-    margin-left: 50px;
-    width: 75%;
+    margin-left: 115px;
+    width: 58%;
 }
 
 /* 검색창 */
@@ -310,6 +310,8 @@ export default {
     flex-direction: column;
     padding: 0;
     margin: 7px 0 0 10px;
+
+
 
 }
 
@@ -367,53 +369,75 @@ export default {
 
 /* 수정/삭제 버튼 스타일 */
 /* 수정/삭제 버튼 스타일 */
-.accordion-header button {
-    font-size: 12px;
-    /* 글씨 크기 줄이기 */
-    padding: 5px 10px;
-    /* 버튼 크기 줄이기 */
-    border: 1px solid #ccc;
-    /* 버튼 테두리 */
-    background-color: transparent;
-    /* 배경색 투명하게 */
-    color: #333;
-    /* 글씨 색 */
-    cursor: pointer;
-    /* 클릭 가능한 손 모양 */
-    transition: background-color 0.3s;
-    /* 배경색 변환 효과 */
-}
-
-/* 호버 상태에서 버튼 색상 변경 */
-.accordion-header button:hover {
-    background-color: #ffeb33;
-    /* 호버 시 배경색 변경 */
-    color: #000;
-    /* 호버 시 글씨 색 변경 */
-}
-
-/* 수정/삭제 버튼의 새 스타일 (노란색 배경으로 변경) */
+/* 수정/삭제 버튼의 새 스타일 (패딩을 더 크게 설정) */
+/* 수정/삭제 버튼의 새 스타일 (패딩과 크기 조정) */
+/* 수정/삭제 버튼 스타일 */
 .accordion-header button.updede {
-    background-color: white;
-    /* 배경색을 노란색으로 설정 */
-    color: black;
-    /* 글씨 색을 검정색으로 설정 */
-    border: 1px solid #ffcc00;
-    /* 노란색 테두리 설정 */
-    padding: 8px 15px;
-    /* 버튼 크기와 여백 조정 */
+    margin: 5px;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    /* 글씨 크기 키움 */
     font-weight: bold;
-    /* 글씨 두껍게 */
-    border-radius: 8px;
-    /* 둥근 테두리 추가 */
+    padding: 15px 30px;
+    /* 패딩을 크게 설정 */
+    height: 30px;
+    width: 100px;
+    /* 버튼 높이 설정 */
+    line-height: 20px;
+    /* 글씨와 버튼 사이 간격 조정 */
+    background-color: #ffee00b4;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+
 }
 
 /* 호버 상태에서 버튼 색상 변경 */
 .accordion-header button.updede:hover {
-    background-color: yellow;
-    /* 호버 시 더 진한 노란색으로 변경 */
-    color: black;
+    background-color: #e0c200;
+    border-color: #e0c200;
+    color: #fff;
+}
+
+
+
+/* 수정/삭제 버튼의 새 스타일 (노란색 배경으로 변경) */
+.accordion-header button.updede {
+    text-align: center;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    background-color: #ffc107;
+    /* 노란색 배경 */
+    color: white;
+    /* 검은색 텍스트 */
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 호버 상태에서 버튼 색상 변경 */
+.accordion-header button.updede:hover {
+    background-color: #ff9800;
+    /* 살짝 어두운 노란색으로 변경 */
+    border-color: #ff9800;
+    /* 테두리 색도 변경 */
+    color: #fff;
+    transform: scale(1.05);
     /* 글씨 색을 검정색으로 유지 */
+}
+
+.accordion-header button.updede:active {
+    background-color: #e68900;
+    border-color: #e68900;
+    transform: scale(1);
+
 }
 
 .accordion-header {
@@ -429,10 +453,29 @@ export default {
     /* 왼쪽 여백을 자동으로 설정하여 오른쪽 정렬 */
     text-align: right;
 
+
 }
 
 .updede {
     border-radius: 10px;
     background-color: yellow;
+
+}
+
+/* router-link 스타일 수정 */
+.custom-link {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    font-size: 18px;
+    margin-left: 15px;
+    /* 글씨 색상 상속 (기본 글씨색과 동일) */
+}
+
+.custom-link:hover {
+    text-decoration: none;
+    /* 호버 시에도 밑줄 제거 */
+    color: inherit;
+    /* 호버 시에도 글씨 색상 상속 */
 }
 </style>
