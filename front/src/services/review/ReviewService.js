@@ -20,6 +20,9 @@ const token2 = {
 };
 
 
+const getReviewsByEmail = (email) => {
+  return axios.get(`${baseURL}/reviews?email=${email}`);
+};
 
 
 
@@ -98,6 +101,7 @@ const ReviewService = {
   get,
   update,
   remove,
+  getReviewsByEmail
 };
 
 export default ReviewService;

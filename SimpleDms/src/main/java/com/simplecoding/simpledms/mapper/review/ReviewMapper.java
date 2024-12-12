@@ -24,6 +24,7 @@ public interface ReviewMapper {
     public int update(Review review);
     public int delete(int reviewId);
     public List<Integer> getTourId();
+    List<Review> getReviewsByEmail(String authorEmail);
 
 
 }
