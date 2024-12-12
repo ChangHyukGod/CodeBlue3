@@ -49,10 +49,11 @@
         @click="navigateToRecommendMap(menu)"
       />
     </div>
-
+    <br />
     <hr />
+    <br />
 
-    <h3 style="font-weight: bold; margin-right: 500px; margin-bottom: 20px">
+    <h3 style="font-weight: bold; margin-right: 700px; margin-bottom: 20px">
       댓글 리뷰
     </h3>
     <div class="review-list">
@@ -139,8 +140,8 @@
           >
             <router-link :to="'/recommendcomupdate/' + data.comId">
               <button
-                v-if="data.email === userEmail"
-                class="btn btn-outline-primary btn-sm"
+                v-if="data.email === userEmail || userRole === 'ROLE_ADMIN'"
+                class="btn btn-outline-warning btn-sm"
               >
                 관리
               </button>
@@ -580,7 +581,7 @@ export default {
           });
         }
       } else if (tdId == 18) {
-        /* ㅇㅇ */
+        /* ㅇㅇasd */
         if (menu.MENU_ID2 === 1) {
           this.$router.push({
             path: "/recommendmap8",

@@ -37,65 +37,6 @@
       </div>
     </div>
 
-    <!-- 결제 수단 섹션 추가 -->
-    <div class="payment-method">
-      <h3>결제 수단</h3>
-      <div class="payment-options">
-        <!-- 카카오페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="kakaoPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅋㅋㅇㅍㅇ 아이콘.png"
-            alt="카카오페이"
-          />
-        </label>
-        <!-- 토스페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="tossPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅌㅅ 아이콘.png"
-            alt="토스페이"
-          />
-        </label>
-        <!-- 네이버페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="naverPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㄴㅇㅂㅍㅇ 아이컨.png"
-            alt="네이버페이"
-          />
-        </label>
-        <!-- 휴대폰 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="phonePay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅎㄷㅍ 아이콘.png"
-            alt="휴대폰"
-          />
-        </label>
-      </div>
-    </div>
-
     <!-- 쿠폰등록하기 버튼 -->
     <div class="mt-3">
       <button class="btn btn-warning" @click="toggleCouponForm">
@@ -144,7 +85,8 @@
 <script>
 import CouponService from "@/services/coupon/CounponService";
 import PortOne from "@portone/browser-sdk/v2";
-
+import TossService from "@/services/toss/TossService";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -152,7 +94,7 @@ export default {
 
       selectedPaymentMethod: null, // 선택된 결제 수단
 
-      showCouponForm: false, // 쿠폰 폼 표시 여부 커밋용주석
+      showCouponForm: false, // 쿠폰 폼 표시 여부
 
       coupons: null,
 
@@ -170,8 +112,12 @@ export default {
         // 채널 키 설정
         channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
         paymentId: `payment-${crypto.randomUUID()}`,
+        order: {
+          name: "라마다 호텔",
+          amount: 90870,
+        },
         orderName: "",
-        totalAmount: 1000,
+        totalAmount: "",
         currency: "CURRENCY_KRW",
         payMethod: "CARD",
       },
@@ -193,7 +139,7 @@ export default {
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
 
-    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드
+    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드asd
     const user = localStorage.getItem("user");
     if (user) {
       const parsedUser = JSON.parse(user);
@@ -207,21 +153,6 @@ export default {
   },
 
   methods: {
-    processPayment() {
-      try {
-        // 쉼표를 제거하고 정수형으로 변환
-        const sanitizedPrice = parseInt(
-          this.reservation.totalPrice.replace(/,/g, ""),
-          10
-        );
-        this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
-        this.toss.orderName = this.reservation.tourName;
-        PortOne.requestPayment(this.toss);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     returnPage() {
       // 이전 페이지로 이동
       this.$router.go(-1);
@@ -230,7 +161,12 @@ export default {
     // 쿠폰 폼 토글
     toggleCouponForm() {
       if (this.coupons === null) {
-        alert("현재 사용 가능한 쿠폰이 없습니다.");
+        Swal.fire({
+          title: "알림",
+          text: "현재 사용 가능한 쿠폰이 없습니다.",
+          icon: "info", // 아이콘 유형: 'success', 'error', 'warning', 'info', 'question'
+          confirmButtonText: "확인",
+        });
       } else {
         this.showCouponForm = !this.showCouponForm;
       }
@@ -251,10 +187,8 @@ export default {
       const discountedPrice =
         this.reservation.originalPrice * (1 - discountRate);
       this.reservation.totalPrice = discountedPrice.toLocaleString();
-
       this.showCouponForm = false; // 폼 닫기
     },
-
     // 이메일로 쿠폰 조회
     async getCoupon() {
       try {
@@ -272,6 +206,30 @@ export default {
           console.log("Error response:", error.response);
         }
         console.log("User Email:", this.userEmail); // 이메일 출력
+      }
+    },
+
+    async processPayment() {
+      try {
+        // 쉼표를 제거하고 정수형으로 변환
+        const sanitizedPrice = parseInt(
+          this.reservation.totalPrice.replace(/,/g, ""),
+          10
+        );
+        this.toss.order.amount = sanitizedPrice; // 정수형으로 업데이트
+        this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
+        this.toss.orderName = this.reservation.tourName;
+        const response = await PortOne.requestPayment(this.toss);
+        if (response.code !== undefined) {
+          //오류 발생
+          return alert(response.message);
+        }
+
+        TossService.notified(this.toss)
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error.response.data));
+      } catch (error) {
+        console.log(error);
       }
     },
   },

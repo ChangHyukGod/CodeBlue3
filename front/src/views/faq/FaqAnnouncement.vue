@@ -34,7 +34,7 @@
             등록된 공지사항이 없습니다.
           </p>
           <router-link :to="'/faq'">
-            <button type="button" class="btn btn-warning button">
+            <button type="button" class="btn btn-warning button23">
               <i class="bi bi-arrow-return-left"></i>
             </button>
           </router-link>
@@ -302,7 +302,7 @@ export default {
   cursor: not-allowed;
 }
 
-.button {
+.button23 {
   position: relative;
   margin-top: 10px;
   left: 94.5%;

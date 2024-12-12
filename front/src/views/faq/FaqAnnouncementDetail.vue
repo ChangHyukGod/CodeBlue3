@@ -12,7 +12,7 @@
           <p>{{ createDate }}</p>
         </div>
         <!-- ano 값을 동적으로 설정 -->
-        <div class="button-group">
+        <div class="button-group23">
           <router-link :to="`/announcement/fix/${ano}`" v-if="userRole === 'ROLE_ADMIN'">
             <button type="button" class="btn btn-warning me-2">수정</button>
           </router-link>
@@ -99,7 +99,7 @@ export default {
   padding: 5px 5px 5px 10px;
 }
 
-.button-group {
+.button-group23 {
   display: flex;
   padding: 5px;
   justify-content: end;
