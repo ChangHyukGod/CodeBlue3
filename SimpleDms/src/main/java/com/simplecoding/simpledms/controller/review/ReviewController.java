@@ -103,7 +103,13 @@ public class ReviewController {
                                     @RequestParam int targetId,
                                     @RequestParam(required = false) MultipartFile image) throws Exception {
 
-        Review review = new Review(title, content, rating, authorEmail, targetId, image.getBytes());
+        byte[] imageData = null;
+        // 이미지가 있으면 byte 배열로 변환
+        if (image != null && !image.isEmpty()) {
+            imageData = image.getBytes();
+        }
+
+        Review review = new Review(title, content, rating, authorEmail, targetId, imageData);
         review.setReviewId(reviewId); // 요청된 ID로 review 객체 업데이트
         reviewService.update(review);
         return new ResponseEntity<>(HttpStatus.OK); // 200 OK

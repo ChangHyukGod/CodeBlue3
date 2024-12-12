@@ -95,11 +95,28 @@
         목록
       </button>
     </div>
+        <!-- 하단 코드 (예: 주의사항 카드) -->
+        <div class="card w-100 mt-5 mb-5">
+      <div class="card-body">
+        <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
+        <hr>
+        <p class="card-text mt-4" style="font-size: 14px; padding: 20px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
+          예) 주민등록번호, 전화번호, 여권번호, 신용카드번호, 계좌번호, 주소 등
+          <br>
+          - 해당 게시판과 글의 성격이 맞지 않을 경우, 관리자에 의해 게시글이 이동될 수 있습니다.
+          <br>
+          - 상업적인 광고 및 욕설, 도배성, 음해성 글의 경우 서비스 관리자에 의해 임의 수정 또는 삭제될 수 있음을 알려드립니다.
+          <br>
+          - 저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시글은 이용약관 및 관련법률에 의해 제재를 받을 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import ReviewService from "@/services/review/ReviewService";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -155,7 +172,14 @@ export default {
           this.review
         );
         console.log(response.data); // 디버깅
-        alert("수정되었습니다.");
+
+        
+        Swal.fire({
+          title: "수정 완료",
+          
+          icon: "success",
+          confirmButtonText: "확인",
+        });
       } catch (error) {
         this.review.image = undefined;
         console.log(error);
@@ -166,6 +190,16 @@ export default {
         let response = await ReviewService.remove(this.review.reviewId);
         console.log(response.data); // 디버깅
         // 전체조회 화면 강제 이동
+
+        Swal.fire({
+          title: "삭제 성공",
+          
+          icon: "success",
+          confirmButtonText: "확인",
+        });
+
+
+
         this.$router.push("/review");
       } catch (error) {
         console.log(error);
