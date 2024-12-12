@@ -37,8 +37,6 @@
       </div>
     </div>
 
-    
-
     <!-- 쿠폰등록하기 버튼 -->
     <div class="mt-3">
       <button class="btn btn-warning" @click="toggleCouponForm">
@@ -88,6 +86,7 @@
 import CouponService from "@/services/coupon/CounponService";
 import PortOne from "@portone/browser-sdk/v2";
 import TossService from "@/services/toss/TossService";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -114,8 +113,8 @@ export default {
         channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
         paymentId: `payment-${crypto.randomUUID()}`,
         order: {
-            name: "라마다 호텔",
-            amount: 90870
+          name: "라마다 호텔",
+          amount: 90870,
         },
         orderName: "",
         totalAmount: "",
@@ -140,7 +139,7 @@ export default {
       this.$router.push("/"); // 예약 정보가 없으면 홈으로 리다이렉트
     }
 
-    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드
+    // 사용자가 쿠폰을 보유한 경우 쿠폰 데이터를 로드asd
     const user = localStorage.getItem("user");
     if (user) {
       const parsedUser = JSON.parse(user);
@@ -221,14 +220,14 @@ export default {
         this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
         this.toss.orderName = this.reservation.tourName;
         const response = await PortOne.requestPayment(this.toss);
-        if(response.code !== undefined){
+        if (response.code !== undefined) {
           //오류 발생
           return alert(response.message);
         }
 
         TossService.notified(this.toss)
-        .then((response) => console.log(response))
-        .catch((error) => console.error(error.response.data));
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error.response.data));
       } catch (error) {
         console.log(error);
       }
