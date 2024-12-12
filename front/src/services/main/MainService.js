@@ -16,11 +16,13 @@ const getALLnp = (searchKeyword,view,pop) => {
 const insertForm = (data) => {
     let formData = new FormData();
     formData.append("name", data.name);
+    formData.append("comment", data.comment);
     formData.append("location", data.location);
     formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("view", data.view);
     formData.append("category", data.category);
+    formData.append("pop", data.pop);
     
     // 이미지가 있을 경우만 추가
     if (data.image) {

@@ -6,6 +6,12 @@
       <label for="name">name</label>
     </div>
 
+    <!-- comment -->
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="comment" placeholder="comment" v-model="tour.comment"/>
+      <label for="comment">comment</label>
+    </div>
+
     <!-- location -->
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="location" placeholder="location" v-model="tour.location"/>
@@ -34,6 +40,12 @@
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="category" placeholder="category" v-model="tour.category"/>
       <label for="category">category</label>
+    </div>
+
+    <!-- pop -->
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="pop" placeholder="pop" v-model="tour.pop"/>
+      <label for="pop">pop</label>
     </div>
 
     <!-- TODO: 현재 이미지 보기 -->
@@ -68,6 +80,8 @@ export default {
             tourFileUrl: "",
             view: "",
             category: "",
+            comment:"",
+            pop:"",
             image: undefined
         }
       }
