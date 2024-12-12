@@ -12,9 +12,7 @@
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin3">
                     <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
                 </b-button>
-                <b-button variant="outline-dark" class="custom-button" href="/mainadmin4">
-                    <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-                </b-button>
+
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin5">
                     <i class="bi bi-megaphone custom-icon"></i><br />공지사항
                 </b-button>
@@ -150,7 +148,7 @@ export default {
             });
         },
         upde(ano) {
-            this.$router.push(`/announcement/${ano}`);  // 수정된 부분
+            this.$router.push(`/admin/fix/${ano}`);  // 수정된 부분
         }
     },
     mounted() {
@@ -241,7 +239,6 @@ export default {
     box-sizing: border-box;
     font-size: 0.8rem;
     flex-shrink: 1;
-    width: 100px;
     /* 가로 길이를 100px로 줄임 */
 }
 
@@ -265,8 +262,8 @@ export default {
     border: 2.5px solid black;
     border-radius: 10px;
     padding: 15px;
-    margin-left: 115px;
-    width: 58%;
+    margin-left: 66px;
+    width: 62.7%;
 }
 
 /* 검색창 */
@@ -310,8 +307,6 @@ export default {
     flex-direction: column;
     padding: 0;
     margin: 7px 0 0 10px;
-
-
 
 }
 
@@ -367,11 +362,6 @@ export default {
     cursor: not-allowed;
 }
 
-/* 수정/삭제 버튼 스타일 */
-/* 수정/삭제 버튼 스타일 */
-/* 수정/삭제 버튼의 새 스타일 (패딩을 더 크게 설정) */
-/* 수정/삭제 버튼의 새 스타일 (패딩과 크기 조정) */
-/* 수정/삭제 버튼 스타일 */
 .accordion-header button.updede {
     margin: 5px;
     text-align: center;

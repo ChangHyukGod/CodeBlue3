@@ -11,9 +11,6 @@
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin3">
                     <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
                 </b-button>
-                <b-button variant="outline-dark" class="custom-button" href="/mainadmin4">
-                    <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-                </b-button>
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin5">
                     <i class="bi bi-megaphone custom-icon"></i><br />공지사항
                 </b-button>
@@ -42,7 +39,7 @@
                                             :aria-expanded="false" :aria-controls="'collapse-' + index">
                                             {{ data.question }}
                                             <div class="upde">
-                                                <button class="updede" @click="upde(data.ano)">
+                                                <button class="updede" @click="upde(data.fno)">
                                                     수정/삭제
                                                 </button>
                                             </div>
@@ -149,7 +146,7 @@ export default {
         },
 
         upde(fno) {
-            this.$router.push(`addadmin/${fno}`)
+            this.$router.push(`/admin/list/${fno}`);
         }
     },
     mounted() {
@@ -218,19 +215,19 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90% !important;
+    width: 80%;
     /* 너비를 90%로 설정, !important 추가 */
-    max-width: 1600px !important;
     /* 최대 너비를 1600px로 설정, !important 추가 */
     margin: -30px auto;
     padding: 5px 10px 10px;
 }
 
 .announce_body_box {
-    width: 70%;
+    width: 80%;
     border: 2.5px solid black;
     border-radius: 10px;
     padding: 15px;
+    margin-left: -50px;
 }
 
 .search_bar_announce {
