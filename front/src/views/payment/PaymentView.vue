@@ -162,7 +162,12 @@ export default {
     // 쿠폰 폼 토글
     toggleCouponForm() {
       if (this.coupons === null) {
-        alert("현재 사용 가능한 쿠폰이 없습니다.");
+        Swal.fire({
+          title: "알림",
+          text: "현재 사용 가능한 쿠폰이 없습니다.",
+          icon: "info", // 아이콘 유형: 'success', 'error', 'warning', 'info', 'question'
+          confirmButtonText: "확인",
+        });
       } else {
         this.showCouponForm = !this.showCouponForm;
       }
