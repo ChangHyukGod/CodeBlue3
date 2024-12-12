@@ -371,7 +371,118 @@ export default {
                 `,
             },
           ];
-        }
+        }  else if (tdId == 14) {
+       
+          this.menuItems = [
+            {
+              MENU_ID: 5,
+             
+              MENU_IMAGE_URL: "제주2.jpg",
+            },
+            {
+              MENU_ID: 6,
+          
+              MENU_IMAGE_URL: "제주3.jpg",
+            },
+            {
+              MENU_ID: 6,
+           
+              MENU_IMAGE_URL: "제주4.jpg",
+            },
+          ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "제주5.png" }];
+
+        } else if (tdId == 15) {
+       
+       this.menuItems = [
+         {
+           MENU_ID: 5,
+          
+           MENU_IMAGE_URL: "속초2.jpg",
+         },
+         {
+           MENU_ID: 6,
+       
+           MENU_IMAGE_URL: "속초3.jpg",
+         },
+         {
+           MENU_ID: 6,
+        
+           MENU_IMAGE_URL: "속초4.jpg",
+         },
+       ];
+       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "속초5.png" }];
+ 
+     }      else if (tdId == 16) {
+       
+       this.menuItems = [
+         {
+           MENU_ID: 5,
+          
+           MENU_IMAGE_URL: "시드니2.jpg",
+         },
+         {
+           MENU_ID: 6,
+       
+           MENU_IMAGE_URL: "시드니3.jpg",
+         },
+         {
+           MENU_ID: 6,
+        
+           MENU_IMAGE_URL: "시드니4.jpg",
+         },
+       ];
+       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "시드니5.png" }];
+
+     }
+
+        // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
+        else if (tdId == 17) {
+       
+       this.menuItems = [
+         {
+           MENU_ID: 5,
+          
+           MENU_IMAGE_URL: "다낭2.jpg",
+         },
+         {
+           MENU_ID: 6,
+       
+           MENU_IMAGE_URL: "다낭3.jpg",
+         },
+         {
+           MENU_ID: 6,
+        
+           MENU_IMAGE_URL: "다낭4.jpg",
+         },
+       ];
+       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "다낭5.png" }];
+
+     }
+
+        // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
+        else if (tdId == 18) {
+       
+       this.menuItems = [
+         {
+           MENU_ID: 5,
+          
+           MENU_IMAGE_URL: "오타루2.jpg",
+         },
+         {
+           MENU_ID: 6,
+       
+           MENU_IMAGE_URL: "오타루3.jpg",
+         },
+         {
+           MENU_ID: 6,
+        
+           MENU_IMAGE_URL: "오타루4.jpg",
+         },
+       ];
+       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "오타루5.png" }];
+
+     }
 
         // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
       } catch (error) {
@@ -440,9 +551,84 @@ export default {
           this.$router.push({
             path: "/recommendmap3",
             query: { menuId: menu.MENU_ID2 },
+          }); 
+        }
+      }      else if (tdId == 14) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap4",
+            query: { menuId: menu.MENU_ID2 },
           });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap4",
+            query: { menuId: menu.MENU_ID2 },
+          }); 
         }
       }
+     
+      else if (tdId == 15) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap5",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap5",
+            query: { menuId: menu.MENU_ID2 },
+          }); 
+        }
+      }
+       // else if 
+       else if (tdId == 16) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap6",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap6",
+            query: { menuId: menu.MENU_ID2 },
+          }); 
+        }
+      }
+       // else if
+       else if (tdId == 17) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap7",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap7",
+            query: { menuId: menu.MENU_ID2 },
+          }); 
+        }
+      }
+       // else if
+
+       else if (tdId == 18) {
+        // tdId가 9일 때
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap8",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap8",
+            query: { menuId: menu.MENU_ID2 },
+          }); 
+        }
+      }
+       // else if
     },
   },
 };

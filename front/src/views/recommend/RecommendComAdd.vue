@@ -16,9 +16,14 @@
     <div class="form-floating mb-3">
       <select class="form-select" id="commentLoc" v-model="comments.commentLoc">
         <option value="" disabled selected>Choose a location</option>
-        <option value="홋카이도 소베츠 수조원">홋카이도 소베츠 수조원</option>
-        <option value="니스 성 니콜라스 성당">니스 성 니콜라스 성당</option>
-        <option value="해운대구 해마루">해운대구 해마루</option>
+        <option value="소베츠 수조원">소베츠 수조원</option>
+        <option value="성 니콜라스 성당">성 니콜라스 성당</option>
+        <option value="해마루">해마루</option>
+        <option value="교래자연휴양림">교래 자연 휴양림</option>
+        <option value="비룡폭포">비룡폭포</option>
+        <option value="시드니 오페라 하우스">시드니 오페라 하우스</option>
+        <option value="선월드 다낭 원더스 대관람차">선월드 다낭 원더스 대관람차</option>
+        <option value="오타루">오타루</option>
       </select>
       <label for="commentLoc">Location</label>
     </div>

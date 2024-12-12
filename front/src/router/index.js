@@ -133,6 +133,32 @@ const routes = [
   },
 
   {
+    path: "/recommendmap4",
+    component: () => import("../views/recommend/RecommendMap4.vue"),
+  },
+
+  {
+    path: "/recommendmap5",
+    component: () => import("../views/recommend/RecommendMap5.vue"),
+  },
+
+  {
+    path: "/recommendmap6",
+    component: () => import("../views/recommend/RecommendMap6.vue"),
+  },
+
+
+  {
+    path: "/recommendmap7",
+    component: () => import("../views/recommend/RecommendMap7.vue"),
+  },
+
+  {
+    path: "/recommendmap8",
+    component: () => import("../views/recommend/RecommendMap8.vue"),
+  },
+
+  {
     path: "/recommendcomadd",
     component: () => import("../views/recommend/RecommendComAdd.vue"),
   },
