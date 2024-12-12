@@ -7,16 +7,25 @@
                 <p>귀하의 웹사이트 관리 기능을 확인하세요</p>
             </div>
 
-            <!-- 버튼 그룹 박스 (왼쪽) -->
+            <!-- 버튼 그룹 박스 -->
             <div id="main_button_group" class="custom-button-group">
-                <b-button variant="outline-dark" class="custom-button" href="/mainadmin1">
-                    <i class="bi bi-question-circle custom-icon"></i><br />FAQ 페이지
+                <b-button variant="outline-dark" class="custom-button" href="/">
+                    <i class="bi bi-house-door custom-icon"></i><br />메인페이지
                 </b-button>
-                <b-button variant="outline-dark" class="custom-button" href="/review">
-                    <i class="bi bi-chat-left-quote custom-icon"></i><br />리뷰게시판
+                <b-button variant="outline-dark" class="custom-button" href="/add-main">
+                    <i class="bi bi-journal-plus custom-icon"></i><br />메인 추가 페이지
+                </b-button>
+                <b-button variant="outline-dark" class="custom-button" href="/coupon">
+                    <i class="bi bi-ticket custom-icon"></i><br />쿠폰 페이지
                 </b-button>
                 <b-button variant="outline-dark" class="custom-button" href="/recommend">
-                    <i class="bi bi-map custom-icon"></i><br />추천여행지 페이지
+                    <i class="bi bi-star custom-icon"></i><br />추천여행지 페이지
+                </b-button>
+                <b-button variant="outline-dark" class="custom-button" href="/review">
+                    <i class="bi bi-pencil custom-icon"></i><br />리뷰게시판
+                </b-button>
+                <b-button variant="outline-dark" class="custom-button" href="/mainadmin1">
+                    <i class="bi bi-question-circle custom-icon"></i><br />FAQ 페이지
                 </b-button>
             </div>
         </div>
@@ -36,11 +45,8 @@ export default {
     height: 100vh;
     display: flex;
     justify-content: center;
-    /* 수평 중앙 정렬 */
     align-items: flex-start;
-    /* 위쪽 정렬 */
     padding-top: 60px;
-    /* 위쪽 여백 추가 */
 }
 
 /* 관리자 페이지 레이아웃 */
@@ -76,10 +82,14 @@ export default {
 
 /* 버튼 그룹 스타일 */
 .custom-button-group {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 40px;
+    /* 각 줄 간격을 40px로 설정 */
+    column-gap: 20px;
+    /* 열 간격은 기존 20px 유지 */
+    width: 100%;
+    justify-items: center;
 }
 
 /* 버튼 스타일 */
@@ -89,7 +99,7 @@ export default {
     color: #333;
     border: 2px solid #ccc;
     text-align: center;
-    width: 220px;
+    width: 200px;
     height: 120px;
     display: flex;
     flex-direction: column;
@@ -122,15 +132,18 @@ export default {
     box-shadow: 0 0 0 2px rgba(255, 235, 51, 0.6);
 }
 
-/* 반응형 디자인: 작은 화면에서 버튼을 세로로 배치 */
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .custom-button-group {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(2, 1fr);
+        /* 작은 화면에서는 2개씩 배치 */
     }
+}
 
-    .custom-button {
-        width: 90%;
+@media (max-width: 480px) {
+    .custom-button-group {
+        grid-template-columns: 1fr;
+        /* 더 작은 화면에서는 1개씩 배치 */
     }
 }
 </style>
