@@ -1,9 +1,15 @@
 <template>
 <div>
+    <!-- comment -->
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="comment" placeholder="comment" v-model="main.comment" />
+        <label for="comment">comment</label>
+    </div>
+
     <!-- name -->
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="name" placeholder="name" v-model="main.name" />
-        <label for="dname">name</label>
+        <label for="name">name</label>
     </div>
 
     <!-- location -->
@@ -36,6 +42,12 @@
         <label for="category">category</label>
     </div>
 
+    <!-- pop -->
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="pop" placeholder="pop" v-model="main.pop" />
+        <label for="pop">pop</label>
+    </div>
+
     <!-- image -->
     <div class="input-group">
       <input type="file" class="form-control" ref="file" @change="select"/>
@@ -54,6 +66,7 @@ export default {
     data() {
         return {
             main:{
+                comment:"",
                 name:"",
                 location:"",
                 description:"",
@@ -61,6 +74,7 @@ export default {
                 tourFileUrl: "",
                 view: "",
                 category: "",
+                pop:"",
                 image: undefined
             }
         }
