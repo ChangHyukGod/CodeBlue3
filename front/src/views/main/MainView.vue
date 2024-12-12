@@ -10,12 +10,12 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="/maindetail/164">
+        <a href="/maindetail/227">
           <img :src="require(`@/assets/images/main/배너제주.png`)" class="d-block w-100" width="800" height="600" />
         </a>
       </div>
       <div class="carousel-item">
-        <a href="/maindetail/104">
+        <a href="/maindetail/228">
           <img :src="require(`@/assets/images/main/배너광안.png`)" class="d-block w-100" width="800" height="600" />
         </a>
       </div>
@@ -25,7 +25,7 @@
         </a>
       </div>
       <div class="carousel-item">
-        <a href="/recommenddetail/11">
+        <a href="/recommend">
           <img :src="require(`@/assets/images/main/배너추천.png`)" class="d-block w-100" width="800" height="600" />
         </a>
       </div>
@@ -57,7 +57,7 @@
     <div class="row row-cols-1 row-cols-md-4 g-3">
       <div class="col">
         <div class="card" style="border: 1px solid lightgray; border-radius: 20px; overflow: hidden; height: 400px;">
-          <a href="/maindetail/104" style="text-decoration: none;">
+          <a href="/maindetail/228" style="text-decoration: none;">
             <img :src="require(`@/assets/images/main/추천광안.jpg`)" class="card-img-top" style="width: 100%; height: 400px;
             object-fit: cover;"/>
             <h5 class="card-title mt-2" style="font-size: 22px; font-family: Jua, sans-serif; color: white; 
@@ -69,7 +69,7 @@
       <!-- 추천 카드 2 -->
       <div class="col">
         <div class="card" style="border: 1px solid lightgray; border-radius: 20px; overflow: hidden; height: 400px;">
-          <a href="/maindetail/104" style="text-decoration: none;">
+          <a href="/maindetail/227" style="text-decoration: none;">
             <img :src="require(`@/assets/images/main/추천제주.jpg`)" class="card-img-top" style="width: 100%; height: 400px;
             object-fit: cover;"/>
             <h5 class="card-title mt-2" style="font-size: 22px; font-family: Jua, sans-serif; color: white; 
@@ -81,24 +81,24 @@
       <!-- 추천 카드 3 -->
       <div class="col">
         <div class="card" style="border: 1px solid lightgray; border-radius: 20px; overflow: hidden; height: 400px;">
-          <a href="/maindetail/104" style="text-decoration: none;">
+          <a href="/maindetail/226" style="text-decoration: none;">
             <img :src="require(`@/assets/images/main/추천프랑스.png`)" class="card-img-top" style="width: 100%; height: 400px;
             object-fit: cover;"/>
             <h5 class="card-title mt-2" style="font-size: 22px; font-family: Jua, sans-serif; color: white; 
             top: 340px; left: 14px; position: absolute;">디즈니랜드</h5>
-            <p style="font-size: 18px; font-weight: bolder; color: white; top: 345px; left: 180px; position: absolute;">1,200,000원~</p>
+            <p style="font-size: 18px; font-weight: bolder; color: white; top: 345px; left: 180px; position: absolute;">1,267,208원~</p>
           </a>
         </div>
       </div>
       <!-- 추천 카드 4 -->
       <div class="col">
         <div class="card" style="border: 1px solid lightgray; border-radius: 20px; overflow: hidden; height: 400px;">
-          <a href="/maindetail/104" style="text-decoration: none;">
+          <a href="/maindetail/169" style="text-decoration: none;">
             <img :src="require(`@/assets/images/main/추천일본.png`)" class="card-img-top" style="width: 100%; height: 400px;
             object-fit: cover;"/>
             <h5 class="card-title mt-2" style="font-size: 22px; font-family: Jua, sans-serif; color: white; 
             top: 340px; left: 14px; position: absolute;">료칸에서 온천까지</h5>
-            <p style="font-size: 18px; font-weight: bolder; color: white; top: 345px; left: 195px; position: absolute;">791,000원~</p>
+            <p style="font-size: 18px; font-weight: bolder; color: white; top: 345px; left: 195px; position: absolute;">163,273원~</p>
           </a>
         </div>
       </div>
