@@ -88,6 +88,8 @@
 
 <script>
 import ReviewService from "@/services/review/ReviewService";
+import Swal from "sweetalert2";
+
 
 export default {
   data() {
@@ -133,9 +135,15 @@ export default {
       }
     },
     
-async update() {
+    async update() {
   if (!this.review.title) {
     alert("제목을 입력해 주세요."); // 제목이 비어 있을 경우 경고 메시지
+    return;
+  }
+
+  if (!this.review.image && !this.review.imageUrl) {
+    // 이미지가 첨부되지 않았거나, 기존 이미지 URL이 없는 경우
+    alert("사진을 첨부해주세요.");
     return;
   }
 
@@ -150,13 +158,20 @@ async update() {
       this.review.reviewId,
       payload
     );
+    
     console.log(response.data);
+    Swal.fire({
+          title: "수정 완료",
+          icon: "success",
+          confirmButtonText: "확인",
+        });
+    this.$router.push("/review")
+    
+    //   //   .then(() => {
+    //   // window.location.reload(); // 자동 새로고침
+    // });
 
-    this.$router.push("/review").then(() => {
-      window.location.reload(); // 자동 새로고침
-    });
 
-    alert("수정 완료되었습니다");
   } catch (error) {
     console.log(error);
   }
