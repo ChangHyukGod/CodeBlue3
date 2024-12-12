@@ -38,7 +38,6 @@ const insertForm = (data) => {
   formData.append("title", data.title);
   formData.append("content", data.content);
   formData.append("rating", data.rating);
-  formData.append("image", data.image);
   formData.append("authorEmail", data.authorEmail);
   formData.append("targetId", data.targetId);
   formData.append("createdAt", data.createdAt);

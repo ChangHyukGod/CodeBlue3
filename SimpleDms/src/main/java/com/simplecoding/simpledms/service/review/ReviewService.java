@@ -44,9 +44,20 @@ public class ReviewService {
         int reviewId = reviewMapper.selectGenerateReviewId();
         review.setReviewId(reviewId);
 
-        //      URL생성
-        String url = generateReviewUrl(review.getReviewId());
-        review.setImageUrl(url);
+
+        String url = "";
+
+        // URL 생성
+        // 1) if: review.getImageData() != null
+        if (review.getImageData() != null) {
+            // 이미지 데이터가 있는 경우, reviewId를 기반으로 URL을 생성
+            url = generateReviewUrl(review.getReviewId());
+            review.setImageUrl(url);
+        } else {
+            // 2) else: 기본 이미지 URL 설정
+            // 이미지 데이터가 없는 경우 기본 이미지를 사용
+            review.setImageUrl("https://picsum.photos/600/400");
+        }
 //      URL 업데이트
         reviewMapper.updateReviewUrl(review);
     }
