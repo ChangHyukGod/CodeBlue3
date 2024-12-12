@@ -4,20 +4,74 @@
     <div class="d-flex align-items-center justify-content-between">
       <div>
         <h2 style="margin-bottom: 20px; font-weight: bold;">숙박업소후기</h2>
-        <h5 style="margin-bottom: 20px;">숙박업소를 다녀온 고객분들의 솔직한 후기</h5>
+        <h5 style="margin-bottom: 50px; ">숙박업소를 다녀온 고객분들의 솔직한 후기</h5>
       </div>
-      <div class="image-container" style="margin-right: 20px">
+      <!-- <div class="image-container" style="margin-right: 20px">
         <img src="/images/icon-7680929_1920.png" alt="따봉"
           style="width: 200px; height: 200px; object-fit: contain; margin-right: 40px;" />
+      </div> -->
+    </div>
+    <h5 style="margin-top: 50px; margin-bottom: 50px; font-weight: bold;">최근 베스트 여행후기</h5>
+    <div
+  id="carouselExampleAutoplaying"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  data-bs-interval="1500"
+  style="margin-bottom: 20px"
+>
+  <div class="carousel-inner">
+    <div
+      class="carousel-item"
+      v-for="(review, index) in topReviews"
+      :key="review.reviewId"
+      :class="{ active: index === 0 }"
+    >
+      <img
+        :src="review.imageUrl || require('@/assets/images/침대.jpg')"
+        class="d-block w-100 img-fluid rounded shadow"
+        alt="Review Image"
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5 style="font-weight: bold; font-size: 1.1rem; cursor: pointer;" @click="goToReviewDetail(review.reviewId)">
+          {{ review.title }}
+        </h5>
+        <p>
+          {{ review.authorEmail }} / {{ formatDate(review.createdAt) }}
+        </p>
+        <span>
+          <template v-for="star in 5" :key="star">
+            <i class="bi" :class="star <= review.rating ? 'bi-star-fill' : 'bi-star'" style="color: #FFD700;"></i>
+          </template>
+        </span>
       </div>
     </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleAutoplaying"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleAutoplaying"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
     
-    <h5 style="margin-top: 50px; font-weight: bold;">최근 베스트 여행후기</h5>
+
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-3" v-for="review in topReviews" :key="review.reviewId">
-          <div class="card" style="width: 15rem; border: none;">
-            <img :src="review.imageUrl || '@/assets/images/침대.jpg'" class="card-img-top" alt="...">
+          <div class="card" style="width: 19rem; border: none;">
+            <img :src="review.imageUrl || '@/assets/images/침대.jpg'" class="card-img-top" alt="..." width="200px" height="180px">
             <div class="card-body">
               <p class="card-text">
                 <span>
@@ -216,6 +270,17 @@ export default {
 
 .table {
   border-top: 4px solid bisque; /* 테이블 상단 테두리 색상 */
+}
+
+/* 캐러셀 디자인 */
+.carousel-inner img {
+  height: 400px; /* 캐러셀 이미지 크기 조정 */
+  object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* 화이트 컬러로 아이콘 */
 }
 
 </style>
