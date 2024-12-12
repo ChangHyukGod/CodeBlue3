@@ -202,10 +202,6 @@ const routes = [
     component: () => import("../views/admin/AdminHowtoPay.vue"),
   },
   {
-    path: "/mainadmin4",
-    component: () => import("../views/admin/MainAdmin4.vue"),
-  },
-  {
     path: "/mainadmin5",
 
     component: () => import("../views/admin/AdminFaqAnnouncement.vue"),
@@ -240,6 +236,15 @@ const routes = [
     component: () => import("../views/payment/TotalPayment.vue"),
 
   },
+    {
+    path: "/admin/list/:fno",
+    component: () => import("../views/admin/AdminFaqQuestionfix.vue"),
+  },
+    {
+    path: "/admin/fix/:ano",
+    component: () => import("../views/admin/AdminAnnouncementfix.vue"),
+  },
+
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

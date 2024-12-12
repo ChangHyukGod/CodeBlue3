@@ -12,9 +12,7 @@
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin3">
                     <i class="bi bi-cash-coin custom-icon"></i><br />결제 방법
                 </b-button>
-                <b-button variant="outline-dark" class="custom-button" href="/mainadmin4">
-                    <i class="bi bi-ticket-perforated custom-icon"></i><br />쿠폰 안내
-                </b-button>
+
                 <b-button variant="outline-dark" class="custom-button" href="/mainadmin5">
                     <i class="bi bi-megaphone custom-icon"></i><br />공지사항
                 </b-button>
