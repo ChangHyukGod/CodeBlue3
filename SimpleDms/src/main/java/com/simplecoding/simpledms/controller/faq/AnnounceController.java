@@ -33,7 +33,7 @@ public class AnnounceController {
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/ano/add")
     public ResponseEntity<?> insertAnouncement(@RequestBody Announce announce) {
         announceService.insertAno(announce);
         return new ResponseEntity<>(HttpStatus.OK);

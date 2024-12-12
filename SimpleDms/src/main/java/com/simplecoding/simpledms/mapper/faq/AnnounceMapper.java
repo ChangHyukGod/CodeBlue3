@@ -2,6 +2,7 @@ package com.simplecoding.simpledms.mapper.faq;
 
 import com.simplecoding.simpledms.vo.common.Criteria;
 import com.simplecoding.simpledms.vo.faq.Announce;
+import com.simplecoding.simpledms.vo.recommend.Recommend;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

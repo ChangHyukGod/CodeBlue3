@@ -22,7 +22,7 @@
 
     <insert id="insertAnnounce" parameterType="Announce">
         INSERT INTO ANNOUNCE (ano, title, content, create_date)
-        VALUES (INT_SEQ.NEXTVAL, #{title} #{content}, #{createDate})
+        VALUES (INT_SEQ.NEXTVAL, #{title}, #{content}, #{createDate})
     </insert>
 
     <select id="selectAnnounceById" parameterType="int" resultType="Announce">

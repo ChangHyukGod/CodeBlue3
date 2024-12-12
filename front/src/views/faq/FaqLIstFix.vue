@@ -76,7 +76,7 @@ export default {
         let response = await FaqService.update(this.faq.fno, this.faq);
         console.log(response.data); // 디버깅
         alert("수정 완료");
-        this.$router.push("/faq/list");
+        this.$router.push("/adminfaqquestionlist");
       } catch (error) {
         console.log(error);
       }
@@ -86,7 +86,7 @@ export default {
         let response = await FaqService.remove(this.faq.fno);
         console.log(response.data); // 디버깅
         alert("삭제 완료");
-        this.$router.push("/faq/list");
+        this.$router.push("/adminfaqquestionlist");
       } catch (error) {
         console.log(error);
       }

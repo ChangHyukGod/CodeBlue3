@@ -173,43 +173,42 @@ const routes = [
     component: () => import("../views/recommend/RecommendGoogleView.vue"),
   },
 
-  {
-    path: "/addadmin",
-    component: () => import("../views/admin/AddAdminDb.vue"),
-  },
-
-  {
-    path: "/adminlist",
-    component: () => import("../views/admin/AdminDbDetail.vue"),
-  },
+ 
   {
     path: "/mainadmin",
     component: () => import("../views/admin/MainAdmin.vue"),
   },
-  {
-    path: "/mainadmin1",
+ 
 
-    component: () => import("../views/admin/AdminFaqTalk.vue"),
-  },
   {
-    path: "/mainadmin2",
-
-    component: () => import("../views/admin/AdminFaqQuestion.vue"),
-  },
-  {
-    path: "/mainadmin3",
-
-    component: () => import("../views/admin/AdminHowtoPay.vue"),
-  },
-  {
-    path: "/mainadmin4",
-    component: () => import("../views/admin/MainAdmin4.vue"),
-  },
-  {
-    path: "/mainadmin5",
+    path: "/adminfaqannouncement",
 
     component: () => import("../views/admin/AdminFaqAnnouncement.vue"),
   },
+
+  {
+    path: "/adminanoadd",
+
+    component: () => import("../views/admin/AdminAnoAdd.vue"),
+  },
+
+
+ {
+    path: "/adminfaqquestionlist",
+
+    component: () => import("../views/admin/AdminFaqQuestionList.vue"),
+  },
+
+
+  {
+    path: "/adminquestionadd",
+
+    component: () => import("../views/admin/AdminQuestionAdd.vue"),
+  },
+
+
+
+
   {
     path: "/addRoom/:tourId",
     component: () => import("../views/room/AddRoomView.vue"),

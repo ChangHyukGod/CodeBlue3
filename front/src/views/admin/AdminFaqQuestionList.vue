@@ -1,7 +1,9 @@
 <template>
-    <div class="container">
-          <!-- 관리자 강조 박스들 -->
-  <div class="container text-center admin-dashboard">
+
+
+<div class="container">
+
+<div class="container text-center admin-dashboard">
     <div class="row justify-content-center mt-4">
       <!-- 공지사항 박스 -->
       <div class="col-md-3">
@@ -46,15 +48,23 @@
 
 <!-- 여기까지 탭 -->
 
+
+
+
+
+
+
+
     <div class="bigbox">
+      <div class="title"></div>
       <hr />
       <div class="announce_body_box">
         <div class="notice_container">
           <div class="notice_search">
-            <form class="search_input" @submit.prevent="searchAnnouncement">
-              <router-link :to="'/faq/list'" class="custom-link">
-                <p class="ano_top_title">공지사항(ADMIN)</p>
-              </router-link>
+            <p class="faq_top_title" onclick="window.location.href='/faq/list'">
+              자주 묻는 질문
+            </p>
+            <form class="search_input" @submit.prevent="searchFaq">
               <div class="input_box typing form-group search_bar_announce">
                 <input
                   placeholder="제목, 내용"
@@ -68,29 +78,61 @@
           </div>
   
           <div class="notice_content">
-            <div class="announcement-list">
-              <div v-for="(data, index) in announcementList" :key="index">
-                <router-link :to="'/announcement/' + data.ano" class="custom-link">
-                  <h2 class="ano_title">&nbsp;&nbsp;{{ data.title }}</h2>
-                  <p class="ano_date">{{ data.createDate }}</p>
-                </router-link>
-                <hr class="notice_line" />
+            <div class="accordion" id="faqAccordion">
+              <div
+                class="accordion-item"
+                v-for="(data, index) in faqList"
+                :key="index"
+              >
+                <h2 class="accordion-header" :id="'heading-' + index">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    :data-bs-target="'#collapse-' + index"
+                    :aria-expanded="false"
+                    :aria-controls="'collapse-' + index"
+                  >
+                    {{ data.question }}
+                  </button>
+                </h2>
+                <div
+                  :id="'collapse-' + index"
+                  class="accordion-collapse collapse"
+                  :aria-labelledby="'heading-' + index"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    {{ data.answer }}
+                    <br />
+                    <button
+                      type="button"
+                      class="btn btn-link"
+                      @click="redirectToHashtag(data.hashtag)"
+                    >
+                      {{ data.hashtag }}
+                    </button>
+                    <router-link :to="`/faq/list/${data.fno}`" v-if="userRole === 'ROLE_ADMIN'">
+                      <button type="button" class="btn btn-warning me-2">
+                        수정
+                      </button>
+                    </router-link>
+                  </div>
+                </div>
               </div>
             </div>
-            <p v-if="announcementList.length === 0">
-              등록된 공지사항이 없습니다.
-            </p>
-            <router-link :to="'/faq'">
-              <button type="button" class="btn btn-warning button23">
+            <p v-if="faqList.length === 0">등록된 질문이 없습니다.</p>
+            <router-link :to="'/faq'" >
+              <button type="button" class="btn btn-warning button">
                 <i class="bi bi-arrow-return-left"></i>
               </button>
             </router-link>
           </div>
           <br />
-                 
+
           <div style="display: flex; justify-content: flex-end;">
   <router-link
-    to="/adminanoadd"
+    to="/adminquestionadd"
     class="btn btn-warning btn-sm ml-3"
   >
     추가
@@ -98,7 +140,9 @@
 </div>
 
 
-       
+
+
+  
           <!-- 페이징 -->
           <div class="notice_paging">
             <ul class="paging pagination">
@@ -123,14 +167,12 @@
                 class="page-item"
                 :class="{ active: page === pageIndex }"
               >
-  
                 <a class="page-link" href="#" @click.prevent="goToPage(page)">
                   {{ page }}
                 </a>
               </li>
   
               <!-- 다음 버튼 -->
-  
               <li
                 class="page-arrow page-item"
                 :class="{ disabled: pageIndex === totalPages }"
@@ -140,7 +182,6 @@
                   href="#"
                   @click.prevent="goToPage(pageIndex + 1)"
                 >
-  
                   &raquo;
                 </a>
               </li>
@@ -149,80 +190,116 @@
         </div>
       </div>
     </div>
-    </div>
+</div>
   </template>
   
-  
   <script>
-  import AnnouncementService from "@/services/faq/AnnouncementService";
+  import FaqService from "@/services/faq/FaqService";
   
   export default {
     data() {
       return {
-        pageIndex: 1, // 현재 페이지
-        totalPages: 5, // 전체 페이지 수
-        searchKeyword: "", // 검색어
-        announcementList: [], // 공지사항 데이터 리스트
+        userRole: "",
+        pageIndex: 1,
+        totalPages: 1,
+        searchKeyword: "",
+        faqList: [],
       };
     },
     methods: {
-      async getAnnouncements() {
+      async getFaq() {
         try {
-          const response = await AnnouncementService.getAll(
-            this.searchKeyword,
-            this.pageIndex - 1,
-            10 // 한 페이지에 표시할 데이터 개수
-          );
-          const { results, totalCount } = response.data;
-          this.announcementList = results || [];
-          this.totalPages = Math.ceil(totalCount / 10);
-        } catch (error) {
-          console.error("공지사항 데이터를 가져오는 중 에러 발생:", error);
-        }
+    const response = await FaqService.getAll(
+      this.searchKeyword,
+      this.pageIndex - 1,
+      10
+    );
+    const { results, totalCount } = response.data;
+    this.faqList = results || [];
+    this.totalPages = totalCount > 0 ? Math.ceil(totalCount / 10) : 1;  // totalCount가 0일 경우 1페이지로 설정
+  } catch (error) {
+    console.error("FAQ 데이터를 가져오는 중 에러 발생:", error);
+  }
       },
       goToPage(page) {
         if (page > 0 && page <= this.totalPages) {
           this.pageIndex = page;
           this.updateQuery();
-          this.getAnnouncements();
+          this.getFaq();
         }
       },
-      searchAnnouncement() {
+      searchFaq() {
         this.pageIndex = 1;
         this.updateQuery();
-        this.getAnnouncements();
+        this.getFaq();
+      },
+      searchByHashtag(hashtag) {
+        this.searchKeyword = hashtag;
+        this.searchFaq();
       },
       updateQuery() {
         this.$router.push({
-          path: this.$route.path,
+            path: this.$route.path,
           query: { search: this.searchKeyword },
         });
       },
-    },
   
+      redirectToHashtag(hashtag) {
+        const sanitizedHashtag = hashtag.replace(/^#/, ""); // `#` 제거
+        this.searchKeyword = sanitizedHashtag;
+        this.pageIndex = 1; // 검색 시 첫 페이지로 초기화
+        this.updateQuery(); // URL 쿼리 업데이트
+        this.getFaq(); // 데이터 갱신
+      },
+    },
+    // watch: {
+    //   "$route.query.search"(newQuery) {
+    //     if (newQuery !== this.searchKeyword) {
+    //       this.searchKeyword = newQuery || "";
+    //       this.getFaq();
+    //     }
+    //   },
+    // },
     mounted() {
+      const user = localStorage.getItem("user");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        this.userRole = parsedUser.codeName;
+      } else {
+        console.error("No user data found in localStorage.");
+      }
+  
       // 초기화 시 URL 쿼리값을 동기화
       this.searchKeyword = this.$route.query.search || "";
-      this.getAnnouncements();
+      this.getFaq();
     },
   };
   </script>
   
   <style>
-  .ano_top_title {
-    font-weight: bolder;
-    font-size: x-large;
-    position: absolute;
-    margin: 3px 0 0 30px;
+  .custom-link {
+    text-decoration: none;
+    color: inherit; /* 부모의 색상을 따릅니다 */
   }
   
+  .custom-link:visited,
+  .custom-link:active {
+    text-decoration: none; /* 모든 상태에서 밑줄 제거 */
+    color: inherit;
+  }
+  .custom-link:hover {
+    color: #ffeb33;
+    transition: 0.3s;
+  }
   /* 공지 전체 */
+  
   .bigbox {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+  
   .lla,
   .new,
   .announce {
@@ -234,9 +311,10 @@
   
   /* 타이틀 */
   .title {
-    text-align: center;
-    font-weight: bolder;
-    font-size: 25px;
+    display: inline-flex;
+    top: 30px;
+    right: 16%;
+    position: relative;
   }
   
   /* 전체 박스 */
@@ -257,6 +335,13 @@
     background-color: white;
     margin-right: 10px;
     margin-bottom: 10px;
+  }
+  
+  .faq_top_title {
+    font-weight: bolder;
+    font-size: x-large;
+    position: absolute;
+    margin: 3px 0 0 30px;
   }
   
   /* 돋보기 아이콘 */
@@ -294,30 +379,12 @@
     margin: 3px;
   }
   
-  .ano_title {
-    font-size: 23px;
-    padding: 5px;
-  }
-  
-  .ano_title:hover {
-    transform: scale(1.01);
-    transition: 0.2s;
-  }
-  
-  .custom-link {
+  .notice_title {
     text-decoration: none;
-    color: inherit;
-    /* 부모의 색상을 따릅니다 */
-  }
-  
-  .custom-link:visited,
-  .custom-link:active {
-    text-decoration: none; /* 모든 상태에서 밑줄 제거 */
-    color: inherit;
-  }
-  
-  .custom-link:hover {
-    transition: 0.3s;
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
   }
   
   /* 페이징 스타일 */
@@ -360,20 +427,13 @@
     color: #ccc;
     cursor: not-allowed;
   }
-  
-  .button23 {
+  .button {
     position: relative;
     margin-top: 10px;
     left: 94.5%;
   }
-  
-  .ano_date {
-    position: absolute;
-    margin: -37.5px 0 0 780px;
-    font-size: 13px;
-  }
 
-  /* 관리자 강조 영역 */
+   /* 관리자 강조 영역 */
 .admin-dashboard {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -432,15 +492,6 @@
 .custom-link:hover {
   transition: 0.3s;
 }
-
-
-
-
-
-
-
-
-
 
 
   </style>

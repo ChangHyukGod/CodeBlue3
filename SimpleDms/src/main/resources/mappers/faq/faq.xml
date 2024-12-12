@@ -12,10 +12,14 @@
         FROM FAQ
         WHERE QUESTION LIKE '%' || #{searchKeyword} || '%'
     </select>
+
+
     <insert id="insertFaq" parameterType="Faq">
         INSERT INTO FAQ (FNO, QUESTION, ANSWER, HASHTAG)
         VALUES (FAQ_SEQ.NEXTVAL, #{question}, #{answer}, #{hashtag})
     </insert>
+    
+
     <select id="selectFaq" parameterType="int" resultType="Faq">
         SELECT *
         FROM FAQ

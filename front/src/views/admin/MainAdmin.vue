@@ -24,7 +24,7 @@
                 <b-button variant="outline-dark" class="custom-button" href="/review">
                     <i class="bi bi-pencil custom-icon"></i><br />리뷰게시판
                 </b-button>
-                <b-button variant="outline-dark" class="custom-button" href="/mainadmin1">
+                <b-button variant="outline-dark" class="custom-button" href="/adminfaqannouncement">
                     <i class="bi bi-question-circle custom-icon"></i><br />FAQ 페이지
                 </b-button>
             </div>

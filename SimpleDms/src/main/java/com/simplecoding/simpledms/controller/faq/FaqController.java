@@ -31,7 +31,7 @@ public class FaqController {
         return new ResponseEntity<>(resultDto, HttpStatus.OK);
     }
 
-    @PostMapping("/api/faq/list")
+    @PostMapping("/api/faq/add")
     public ResponseEntity<?> insertFaq(@RequestBody Faq faq) {
         faqService.insertFaq(faq);
         return new ResponseEntity<>(HttpStatus.OK);
