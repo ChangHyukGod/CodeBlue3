@@ -107,10 +107,11 @@ export default {
 .gpt-icon {
   max-width: 80%;
   height: auto;
-  object-fit: contain; /* 이미지 비율 유지 */
   position: absolute;
   top: 50%;
   left: 50%;
+  height:  60%;
+  width: 45%;
   transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
 }
 
