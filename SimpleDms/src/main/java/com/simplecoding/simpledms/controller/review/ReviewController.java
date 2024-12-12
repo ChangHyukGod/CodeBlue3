@@ -127,4 +127,23 @@ public class ReviewController {
         List<Integer> list = reviewService.getTourId();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+
+
+
+
+
+    // 이메일로 리뷰 목록을 조회하는 API
+    @GetMapping("/api/reviews")
+    public List<Review> getReviewsByEmail(@RequestParam String email) {
+        return reviewService.getReviewsByEmail(email);
+    }
+
+
+
+
+
+
+
+
 }

@@ -94,6 +94,36 @@
 
 
 
+    <!-- ReviewMapper.xml -->
+
+        <!-- 로그인한 사용자의 리뷰 조회 -->
+        <select id="getReviewsByEmail" resultType="com.simplecoding.simpledms.vo.review.Review">
+            SELECT review_id AS reviewId,
+                   title,
+                   content,
+                   rating,
+                   image_url AS imageUrl,
+                   author_email AS authorEmail,
+                   target_id AS targetId,
+                   created_at AS createdAt,
+                   updated_at AS updatedAt,
+                   image_data AS imageData
+            FROM reviews
+            WHERE author_email = #{authorEmail}
+        </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </mapper>

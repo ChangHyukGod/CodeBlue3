@@ -91,6 +91,12 @@ public class ReviewService {
         return reviewMapper.getTourId();
     }
 
+    // 이메일을 받아 해당 사용자가 작성한 리뷰 목록을 반환
+    public List<Review> getReviewsByEmail(String authorEmail) {
+        return reviewMapper.getReviewsByEmail(authorEmail);
+    }
+
+
 
 
 
