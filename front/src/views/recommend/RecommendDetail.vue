@@ -28,7 +28,6 @@
           :alt="menu.MENU_NAME"
           class="menu-image"
         />
-     
       </div>
     </div>
     <br />
@@ -51,106 +50,104 @@
       />
     </div>
 
-    <hr>
+    <hr />
 
     <h3 style="font-weight: bold; margin-right: 500px; margin-bottom: 20px">
       댓글 리뷰
     </h3>
-   <div class="review-list">
-  <!-- 반복문으로 댓글 항목 렌더링 -->
-  <div
-    v-for="(data, index) in comments"
-    :key="index"
-    class="review-item mb-4"
-    style="
-      border-bottom: 1px solid #ddd;
-      padding: 16px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-    "
-  >
-    <div
-      class="review-header"
-      style="
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-      "
-    >
-      <div>
-        <p
-          class="review-user"
-          style="
-            margin: 0;
-            font-weight: bold;
-            color: #ffc107;
-            font-size: 1.1em;
-            text-transform: capitalize;
-          "
-        >
-          {{ data.email }}
-        </p>
-        <p
-          class="review-location"
-          style="
-            margin: 4px 0 0;
-            font-size: 1em;
-            color: #333;
-            font-weight: bold;
-          "
-        >
-          {{ data.commentLoc }}
-        </p>
-
-        <!-- 별점 디자인 추가 -->
-        <div class="star-rating" style="margin-top: 8px;">
-          <span
-            v-for="n in 5"
-            :key="n"
-            class="star"
-            :style="{ color: n <= data.rating ? '#ffc107' : '#ddd' }"
-            
-          >
-            ★
-          </span>
-        </div>
-      </div>
-
-      <span
-        class="review-time"
-        style="font-size: 0.85em; color: #777; align-self: flex-start"
-      >
-        {{ formatDate(data.createdAt) }}
-      </span>
-    </div>
-
-    <div
-      class="review-content"
-      style="margin-top: 16px; padding-top: 8px; border-top: 1px solid #ddd;"
-    >
-      <p
-        class="review-text"
+    <div class="review-list">
+      <!-- 반복문으로 댓글 항목 렌더링 -->
+      <div
+        v-for="(data, index) in comments"
+        :key="index"
+        class="review-item mb-4"
         style="
-          color: #333;
-          font-size: 1em;
-          line-height: 1.6;
-          margin: 0;
+          border-bottom: 1px solid #ddd;
+          padding: 16px;
+          background-color: #f9f9f9;
+          border-radius: 8px;
         "
       >
-        {{ data.commentText }}
-      </p>
+        <div
+          class="review-header"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+          "
+        >
+          <div>
+            <p
+              class="review-user"
+              style="
+                margin: 0;
+                font-weight: bold;
+                color: #ffc107;
+                font-size: 1.1em;
+                text-transform: capitalize;
+              "
+            >
+              {{ data.email }}
+            </p>
+            <p
+              class="review-location"
+              style="
+                margin: 4px 0 0;
+                font-size: 1em;
+                color: #333;
+                font-weight: bold;
+              "
+            >
+              {{ data.commentLoc }}
+            </p>
 
-      <div
-        class="review-actions"
-        style="margin-top: 16px; text-align: right"
-      >
-        <router-link :to="'/recommendcomupdate/' + data.comId">
-          <button class="btn btn-outline-primary btn-sm">관리</button>
-        </router-link>
+            <!-- 별점 디자인 추가 -->
+            <div class="star-rating" style="margin-top: 8px">
+              <span
+                v-for="n in 5"
+                :key="n"
+                class="star"
+                :style="{ color: n <= data.rating ? '#ffc107' : '#ddd' }"
+              >
+                ★
+              </span>
+            </div>
+          </div>
+
+          <span
+            class="review-time"
+            style="font-size: 0.85em; color: #777; align-self: flex-start"
+          >
+            {{ formatDate(data.createdAt) }}
+          </span>
+        </div>
+
+        <div
+          class="review-content"
+          style="margin-top: 16px; padding-top: 8px; border-top: 1px solid #ddd"
+        >
+          <p
+            class="review-text"
+            style="color: #333; font-size: 1em; line-height: 1.6; margin: 0"
+          >
+            {{ data.commentText }}
+          </p>
+
+          <div
+            class="review-actions"
+            style="margin-top: 16px; text-align: right"
+          >
+            <router-link :to="'/recommendcomupdate/' + data.comId">
+              <button
+                v-if="data.email === userEmail"
+                class="btn btn-outline-primary btn-sm"
+              >
+                관리
+              </button>
+            </router-link>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-
 
       <!-- 페이지네이션 -->
       <div class="d-flex justify-content-center mt-3">
@@ -227,6 +224,8 @@ export default {
       menuTitle: "", // 메뉴 데이터를 저장할 배열
       // menuTitle2: "",
       isCollapsed: false,
+
+      userEmail: "",
     };
   },
 
@@ -235,14 +234,18 @@ export default {
     console.log("Received tdId:", tdId);
     this.fetchDetailData(tdId);
     this.getComments();
+
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+      this.userEmail = parsedUser.email; // 이메일 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 
   methods: {
-   
-
-  
-
-
     formatDate(date) {
       const options = { year: "numeric", month: "2-digit", day: "2-digit" };
       return new Date(date).toLocaleDateString("ko-KR", options);
@@ -371,118 +374,7 @@ export default {
                 `,
             },
           ];
-        }  else if (tdId == 14) {
-       
-          this.menuItems = [
-            {
-              MENU_ID: 5,
-             
-              MENU_IMAGE_URL: "제주2.jpg",
-            },
-            {
-              MENU_ID: 6,
-          
-              MENU_IMAGE_URL: "제주3.jpg",
-            },
-            {
-              MENU_ID: 6,
-           
-              MENU_IMAGE_URL: "제주4.jpg",
-            },
-          ];
-          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "제주5.png" }];
-
-        } else if (tdId == 15) {
-       
-       this.menuItems = [
-         {
-           MENU_ID: 5,
-          
-           MENU_IMAGE_URL: "속초2.jpg",
-         },
-         {
-           MENU_ID: 6,
-       
-           MENU_IMAGE_URL: "속초3.jpg",
-         },
-         {
-           MENU_ID: 6,
-        
-           MENU_IMAGE_URL: "속초4.jpg",
-         },
-       ];
-       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "속초5.png" }];
- 
-     }      else if (tdId == 16) {
-       
-       this.menuItems = [
-         {
-           MENU_ID: 5,
-          
-           MENU_IMAGE_URL: "시드니2.jpg",
-         },
-         {
-           MENU_ID: 6,
-       
-           MENU_IMAGE_URL: "시드니3.jpg",
-         },
-         {
-           MENU_ID: 6,
-        
-           MENU_IMAGE_URL: "시드니4.jpg",
-         },
-       ];
-       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "시드니5.png" }];
-
-     }
-
-        // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
-        else if (tdId == 17) {
-       
-       this.menuItems = [
-         {
-           MENU_ID: 5,
-          
-           MENU_IMAGE_URL: "다낭2.jpg",
-         },
-         {
-           MENU_ID: 6,
-       
-           MENU_IMAGE_URL: "다낭3.jpg",
-         },
-         {
-           MENU_ID: 6,
-        
-           MENU_IMAGE_URL: "다낭4.jpg",
-         },
-       ];
-       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "다낭5.png" }];
-
-     }
-
-        // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
-        else if (tdId == 18) {
-       
-       this.menuItems = [
-         {
-           MENU_ID: 5,
-          
-           MENU_IMAGE_URL: "오타루2.jpg",
-         },
-         {
-           MENU_ID: 6,
-       
-           MENU_IMAGE_URL: "오타루3.jpg",
-         },
-         {
-           MENU_ID: 6,
-        
-           MENU_IMAGE_URL: "오타루4.jpg",
-         },
-       ];
-       this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "오타루5.png" }];
-
-     }
+        }
 
         // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
       } catch (error) {
@@ -551,84 +443,9 @@ export default {
           this.$router.push({
             path: "/recommendmap3",
             query: { menuId: menu.MENU_ID2 },
-          }); 
-        }
-      }      else if (tdId == 14) {
-        // tdId가 9일 때
-        if (menu.MENU_ID2 === 1) {
-          this.$router.push({
-            path: "/recommendmap4",
-            query: { menuId: menu.MENU_ID2 },
           });
-        } else if (menu.MENU_ID2 === 2) {
-          this.$router.push({
-            path: "/recommendmap4",
-            query: { menuId: menu.MENU_ID2 },
-          }); 
         }
       }
-     
-      else if (tdId == 15) {
-        // tdId가 9일 때
-        if (menu.MENU_ID2 === 1) {
-          this.$router.push({
-            path: "/recommendmap5",
-            query: { menuId: menu.MENU_ID2 },
-          });
-        } else if (menu.MENU_ID2 === 2) {
-          this.$router.push({
-            path: "/recommendmap5",
-            query: { menuId: menu.MENU_ID2 },
-          }); 
-        }
-      }
-       // else if 
-       else if (tdId == 16) {
-        // tdId가 9일 때
-        if (menu.MENU_ID2 === 1) {
-          this.$router.push({
-            path: "/recommendmap6",
-            query: { menuId: menu.MENU_ID2 },
-          });
-        } else if (menu.MENU_ID2 === 2) {
-          this.$router.push({
-            path: "/recommendmap6",
-            query: { menuId: menu.MENU_ID2 },
-          }); 
-        }
-      }
-       // else if
-       else if (tdId == 17) {
-        // tdId가 9일 때
-        if (menu.MENU_ID2 === 1) {
-          this.$router.push({
-            path: "/recommendmap7",
-            query: { menuId: menu.MENU_ID2 },
-          });
-        } else if (menu.MENU_ID2 === 2) {
-          this.$router.push({
-            path: "/recommendmap7",
-            query: { menuId: menu.MENU_ID2 },
-          }); 
-        }
-      }
-       // else if
-
-       else if (tdId == 18) {
-        // tdId가 9일 때
-        if (menu.MENU_ID2 === 1) {
-          this.$router.push({
-            path: "/recommendmap8",
-            query: { menuId: menu.MENU_ID2 },
-          });
-        } else if (menu.MENU_ID2 === 2) {
-          this.$router.push({
-            path: "/recommendmap8",
-            query: { menuId: menu.MENU_ID2 },
-          }); 
-        }
-      }
-       // else if
     },
   },
 };
@@ -1001,8 +818,6 @@ pre {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
 /* 댓글 헤더 (사용자 정보 및 시간) */
 .review-header {
   display: flex;
@@ -1041,7 +856,7 @@ pre {
 /* 버튼 스타일 */
 .action-btn {
   background-color: #f5b506; /* 밝은 노란색 */
-  
+
   border: none;
   padding: 8px 15px;
   font-size: 0.9rem;
@@ -1065,15 +880,12 @@ pre {
 }
 
 .star {
-  font-size: 1.5em;  /* 별의 크기 조정 */
+  font-size: 1.5em; /* 별의 크기 조정 */
   margin-right: 4px;
-  cursor: pointer;  /* 커서를 포인터로 변경 */
+  cursor: pointer; /* 커서를 포인터로 변경 */
 }
 
 .star:hover {
-  color: #ffdd33;  /* 호버 시 색상 변경 */
+  color: #ffdd33; /* 호버 시 색상 변경 */
 }
-
-
-
 </style>
