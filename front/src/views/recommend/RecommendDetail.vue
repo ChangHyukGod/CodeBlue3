@@ -33,7 +33,7 @@
     <br />
     <hr />
     <!-- 절취선 -->
-    <div class="paragraph-wrapper"></div>
+
     <!-- <h2 class="menu-title2">{{ menuTitle2 }}</h2> -->
     <br />
     <!-- 맵 이미지 영역 -->
@@ -343,37 +343,121 @@ export default {
           this.menuItems = [
             {
               MENU_ID: 5,
-              // MENU_NAME: "유니버설 스튜디오 재팬",
-              // MENU_DETAIL:
-              //   "남녀노소 누구나 즐길 수 있는 오사카 최고의 테마파크",
-              // MENU_PRICE: "12,000짯",
+
               MENU_IMAGE_URL: "광안리2.jpg",
             },
             {
               MENU_ID: 6,
-              // MENU_NAME: "오사카 성",
-              // MENU_DETAIL: "오사카 여행 필수 명소",
-              // MENU_PRICE: "4,000짯(500ml)",
+
               MENU_IMAGE_URL: "광안리3.jpeg",
             },
             {
               MENU_ID: 6,
-              // MENU_NAME: "가이유칸 수족관",
-              // MENU_DETAIL: "세계 최대 규모의 수족관",
-              // MENU_PRICE: "4,000짯(500ml)",
+
               MENU_IMAGE_URL: "광안리1.jpg",
             },
           ];
           this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "광안리5.jpg" }];
-
-          this.menuItems3 = [
+        } else if (tdId == 14) {
+          // this.menuTitle = "ㅇㅇ";
+          this.menuItems = [
             {
-              MENU_ID3: `오사카 항공이 위치한 간사이 공항에서 도톤보리까지는 JR 간사이 공항선으로 난카이 난바역까지 이동한 후,
-             도보로 약 10분 정도 소요됩니다.
-            또는 난카이 공항선으로 난바역까지 가서, 도톤보리까지도 가까운 거리입니다.
-                `,
+              MENU_ID: 5,
+
+              MENU_IMAGE_URL: "제주2.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "제주3.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "제주4.jpg",
             },
           ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "제주5.png" }];
+        } else if (tdId == 15) {
+          // this.menuTitle = "ㅇㅇ";
+          this.menuItems = [
+            {
+              MENU_ID: 5,
+
+              MENU_IMAGE_URL: "속초2.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "속초3.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "속초4.jpg",
+            },
+          ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "속초5.png" }];
+        } else if (tdId == 16) {
+          // this.menuTitle = "ㅇㅇ";
+          this.menuItems = [
+            {
+              MENU_ID: 5,
+
+              MENU_IMAGE_URL: "시드니2.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "시드니3.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "시드니4.jpg",
+            },
+          ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "시드니5.png" }];
+        } else if (tdId == 17) {
+          // this.menuTitle = "ㅇㅇ";
+          this.menuItems = [
+            {
+              MENU_ID: 5,
+
+              MENU_IMAGE_URL: "다낭2.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "다낭3.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "다낭4.jpg",
+            },
+          ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "다낭5.png" }];
+        } else if (tdId == 18) {
+          // this.menuTitle = "ㅇㅇ";
+          this.menuItems = [
+            {
+              MENU_ID: 5,
+
+              MENU_IMAGE_URL: "오타루2.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "오타루3.jpg",
+            },
+            {
+              MENU_ID: 6,
+
+              MENU_IMAGE_URL: "오타루4.jpg",
+            },
+          ];
+          this.menuItems2 = [{ MENU_ID2: 1, MENU_MAP: "오타루5.png" }];
         }
 
         // 추가적인 tdId에 대한 조건을 계속 추가할 수 있음
@@ -433,7 +517,6 @@ export default {
           });
         }
       } else if (tdId == 13) {
-        // tdId가 9일 때
         if (menu.MENU_ID2 === 1) {
           this.$router.push({
             path: "/recommendmap3",
@@ -445,7 +528,72 @@ export default {
             query: { menuId: menu.MENU_ID2 },
           });
         }
+      } else if (tdId == 14) {
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap4",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap4",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 15) {
+        /* ㅇㅇ */
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap5",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap5",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 16) {
+        /* ㅇㅇ */
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap6",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap6",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 17) {
+        /* ㅇㅇ */
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap7",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap7",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
+      } else if (tdId == 18) {
+        /* ㅇㅇ */
+        if (menu.MENU_ID2 === 1) {
+          this.$router.push({
+            path: "/recommendmap8",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        } else if (menu.MENU_ID2 === 2) {
+          this.$router.push({
+            path: "/recommendmap8",
+            query: { menuId: menu.MENU_ID2 },
+          });
+        }
       }
+      /* ㅇㅇ */
     },
   },
 };
