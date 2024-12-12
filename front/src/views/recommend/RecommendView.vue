@@ -74,7 +74,10 @@
               {{ data.description }}
             </p>
             <!-- 수정 버튼 -->
-            <div class="d-flex justify-content-between">
+            <div
+              class="d-flex justify-content-between"
+              v-if="userRole === 'ROLE_ADMIN'"
+            >
               <router-link
                 :to="'/recommendupdate/' + data.tdId"
                 class="btn btn-dark btn-sm"
@@ -113,7 +116,11 @@
       ></b-pagination>
 
       <!-- 추가 버튼 -->
-      <router-link to="/add-recommend" class="btn btn-warning btn-sm ml-3">
+      <router-link
+        to="/add-recommend"
+        class="btn btn-warning btn-sm ml-3"
+        v-if="userRole === 'ROLE_ADMIN'"
+      >
         추가
       </router-link>
     </div>
@@ -131,6 +138,7 @@ export default {
       searchKeyword: "",
       recommends: [],
       carouselItems: [],
+      userRole: "", // 유저 권한
     };
   },
 
@@ -160,6 +168,14 @@ export default {
 
   mounted() {
     this.getrecommend();
+    // 로컬스토리지에서 토큰 정보 가져오기
+    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    if (user) {
+      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
+      this.userRole = parsedUser.codeName; // 권한 정보 저장
+    } else {
+      console.error("No user data found in localStorage.");
+    }
   },
 };
 </script>
