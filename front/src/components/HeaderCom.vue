@@ -27,6 +27,7 @@
     <div class="container-fluid">
       <img
         src="@/assets/logo3.png"
+        id="logo"
         class="gpt-icon"
         href="/"
         onclick="location.href='/'"
@@ -51,6 +52,7 @@
       </router-link>      &nbsp;|&nbsp;
       <router-link to="/mypage" class="header_menu">
         <i class="bi bi-person-plus"></i> 마이페이지
+
       </router-link>
     </div>
   </div>
@@ -100,17 +102,18 @@ export default {
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 가로 중앙 정렬 */
-  height: 240px; /* 전체 컨테이너 높이 */
+  height: 180px; /* 전체 컨테이너 높이 */
   position: relative; /* 위치 설정 */
 }
 
 .gpt-icon {
   max-width: 80%;
   height: auto;
-  object-fit: contain; /* 이미지 비율 유지 */
   position: absolute;
   top: 50%;
   left: 50%;
+  height:  80%;
+  width: 45%;
   transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
 }
 
