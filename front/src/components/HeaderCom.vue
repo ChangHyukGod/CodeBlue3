@@ -100,7 +100,7 @@ export default {
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 가로 중앙 정렬 */
-  height: 240px; /* 전체 컨테이너 높이 */
+  height: 180px; /* 전체 컨테이너 높이 */
   position: relative; /* 위치 설정 */
 }
 
@@ -110,7 +110,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  height:  60%;
+  height:  80%;
   width: 45%;
   transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
 }
