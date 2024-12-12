@@ -27,6 +27,7 @@
     <div class="container-fluid">
       <img
         src="@/assets/logo3.png"
+        id="logo"
         class="gpt-icon"
         href="/"
         onclick="location.href='/'"
@@ -51,6 +52,7 @@
       </router-link>      &nbsp;|&nbsp;
       <router-link to="/mypage" class="header_menu">
         <i class="bi bi-person-plus"></i> 마이페이지
+
       </router-link>
     </div>
   </div>
