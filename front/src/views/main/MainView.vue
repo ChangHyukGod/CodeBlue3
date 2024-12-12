@@ -58,7 +58,7 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/104">
-            <img :src="require(`@/assets/images/main/추천광안.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천광안.jpg`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">낭만가득, 연인과 함께 즐기는 광안대교 뷰</h5>
@@ -76,7 +76,7 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/164">
-            <img :src="require(`@/assets/images/main/추천제주.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천제주.jpg`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">올 겨울, 제주 어때~?</h5>
@@ -95,7 +95,7 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/165">
-            <img :src="require(`@/assets/images/main/추천프랑스.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천프랑스.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">유럽의 문화 중심지, 프랑스에서 하루</h5>
@@ -114,7 +114,7 @@
       <div class="col">
         <div class="card h-100">
           <a href="/maindetail/169">
-            <img :src="require(`@/assets/images/main/추천훗카이도.avif`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
+            <img :src="require(`@/assets/images/main/추천일본.png`)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </a>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
             <h5 class="card-title mt-2">겨울왕국, 스키타고 즐기는 훗카이도</h5>
