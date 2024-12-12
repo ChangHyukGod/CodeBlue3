@@ -43,7 +43,8 @@
 
     <!-- 메뉴 1 : 연말특가 -->
     <div>
-      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">2024 연말, 마지막 특가</button>
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;
+      font-family: Jua, sans-serif;">2024 연말, 마지막 특가</button>
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
         <span class="bi bi-chat-right-heart" style="font-size: 18px; cursor: pointer;"></span>
         <p style="margin: 0; font-size: 16px; color: #555;">
@@ -133,7 +134,8 @@
 
     <!-- 메뉴 2 : 숙소 전체 -->
     <div>
-      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">최다 숙소 보유</button>
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;
+      font-family: Jua, sans-serif;">최다 숙소 보유</button>
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
         <span style="font-size: 18px; cursor: pointer;">👍</span>
         <p style="margin: 0; font-size: 16px; color: #555;">
@@ -143,34 +145,25 @@
     </div>
 
     <!-- 필터 -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div class="d-flex  mb-4">
-        <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
-        <!-- 인기 급상승 ON/OFF 버튼 -->
-        <button class="btn mx-2"
-                :class="{ 'btn-outline-secondary': pop !== '인기급상승',  // 기본 배경색
-                          'bg-light-gray text-dark': pop === '인기급상승'  // 인기급상승 상태일 때 진한 회색 배경
-                        }" @click="togglePopular" >
-        인기급상승
-        </button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
-        <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">고즈넉한</button>    
-      </div>
-      <div class="d-flex mb-2">    
-        <button class="btn btn-outline-secondary dropdown-toggle form-control me-2"
-        type="button"
-        id="dropdownMenuButton"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">{{ searchKeyword || "국내외 구분" }}</button>
-        <ul class="dropdown-menu w-10" aria-labelledby="dropdownMenuButton">
-          <li>
-            <button class="dropdown-item" v-for="keyword in keywords" :key="keyword" @click="selectKeyword(keyword)">{{ keyword }}</button>
-          </li>
-        </ul>
-      <button class="btn btn-outline-warning search_glass" type="button" @click="getAll()">
-        <i class="bi bi-search"></i>
-      </button>
+    <div class="flex justify-content-between align-items-center mb-4">
+      <div class="flex  mb-4">
+        <!-- 상위 카테고리 -->
+        <div>
+          <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
+          <!-- 인기 급상승 ON/OFF 버튼 -->
+          <button class="btn mx-2"
+                  :class="{ 'btn-outline-secondary': pop !== '인기급상승',  // 기본 배경색
+                            'bg-gray text-dark': pop === '인기급상승'  // 인기급상승 상태일 때 진한 회색 배경
+                          }" @click="togglePopular" >인기급상승</button>
+          <button class="btn btn-outline-secondary mx-2" @click="selectKeyword('국내')">국내</button>
+          <button class="btn btn-outline-secondary mx-2" @click="selectKeyword('해외')">해외</button>
+        </div>
+        <!-- 하위 카테고리 -->
+        <div>
+          <button class="btn btn-outline-secondary mx-2" @click="getAll('교통편의')">교통편의</button>
+          <button class="btn btn-outline-secondary mx-2" @click="getAll('바다')"> 해변가근처</button>
+          <button class="btn btn-outline-secondary mx-2" @click="getAll('산')">고즈넉한</button>
+        </div>
       </div>
     </div>
 
@@ -186,7 +179,7 @@
             <h5 class="card-title mt-2">{{ data.comment }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <p class="card-text">{{ data.description }}</p>
-            <p class="text-primary fw-bold">{{ data.price }}</p>
+            <p class="text-primary fw-bold">{{ data.minPrice }}원~</p>
             <div style="display: flex; justify-content: space-between">
               <router-link :to="'/maindetail/' + data.tourId">
                 <button class="btn btn-primary">보러가기</button>
@@ -203,7 +196,8 @@
 
     <!-- 메뉴 3 : 추천/쿠폰/리뷰/faq 이동 카드 -->
     <div>
-      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;">☆추천 모음집☆</button>
+      <button class="btn btn-warning" style="border-radius: 10px; color: white; font-size: 21px;
+      font-family: Jua, sans-serif;">페이지별 모음집</button>
       <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
         <span class="bi bi-clipboard-check" style="font-size: 18px; cursor: pointer;"></span>
         <p style="margin: 0; font-size: 16px; color: #555;">
@@ -281,15 +275,34 @@ export default {
         let response = await MainService.getALLnp(this.searchKeyword,this.view,this.pop);
         const { results, totalCount } = response.data;
         console.log(response.data);
-        this.mains = results;
+
+        // 모든 tourId의 최솟값 가져오기
+        const updatedResults = await Promise.all(
+          // results 배열을 반복 처리
+          results.map(async (item) => {
+            // 각 item에 대해 비동기 함수 getMinPrice 호출
+            // 해당 item의 tourId를 이용해 최솟값(minPrice)을 가져옴
+            const minPrice = await this.getMinPrice(item.tourId);
+
+            // 기존 item 객체에 minPrice 속성을 추가하여 새 객체를 반환
+            return {
+              ...item, // 기존 item 속성을 모두 유지
+              minPrice, // 새로 계산된 minPrice 속성을 추가
+            };
+          })
+        );
+        // Promise.all: 모든 비동기 작업(map 내부의 async 함수)이 완료될 때까지 기다리고
+        // 완료된 결과 배열을 반환 (updatedResults는 새로운 배열)
+        this.mains = updatedResults;
         this.totalCount = totalCount;
       } catch (error) {
         console.log(error);
       }
     },
-    // 드롭다운 메뉴 선택
+    // 국내/해외 키워드 값 보내고 해당 키워드값 전체조회 실행
     selectKeyword(keyword){
       this.searchKeyword = keyword;
+      this.getAll();
     },
     // 전체보기 버튼(전체조회)
     getreset(){
@@ -301,6 +314,30 @@ export default {
     togglePopular() {
       this.pop = this.pop === '인기급상승' ? '' : '인기급상승'; // 값 토글
       this.getAll();
+    },
+    // 최저가 불러오기
+    async getMinPrice(tourId) {
+      try {
+        // Java에서 반환된 데이터의 price 배열 추출
+        const response = await MainService.getRoomMinPrice(tourId);
+        const prices = response.data; // price 데이터 가져오기
+
+        // 응답 데이터가 비어 있는 경우
+        if (!prices || prices.length === 0) {
+          return "가격 없음";
+        }
+
+        // 문자열 배열을 숫자 배열로 변환
+        const numericPrices = prices.map((price) =>
+          parseInt(price.replace(/,/g, ""), 10)
+        );
+        const minPrice = Math.min(...numericPrices);
+
+        return minPrice.toLocaleString(); // 최솟값 반환
+      } catch (error) {
+        console.error(`Failed to fetch prices for tourId ${tourId}:`, error);
+        return "데이터 없음"; // 에러 발생 시 기본 메시지
+      }
     },
   },
   mounted() {

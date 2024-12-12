@@ -9,7 +9,11 @@
               <p class="ano_top_title">공지사항</p>
             </router-link>
             <div class="input_box typing form-group search_bar_announce">
-              <input placeholder="제목, 내용" v-model="searchKeyword" class="input_text form-control" />
+              <input
+                placeholder="제목, 내용"
+                v-model="searchKeyword"
+                class="input_text form-control"
+              />
               <i class="bi bi-search search_glass_announce"></i>
             </div>
           </form>
@@ -41,22 +45,44 @@
         <div class="notice_paging">
           <ul class="paging pagination">
             <!-- 이전 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: pageIndex === 1 }">
-              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex - 1)">
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === 1 }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex - 1)"
+              >
                 &laquo;
               </a>
             </li>
 
             <!-- 페이지 번호 -->
-            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === pageIndex }">
+            <li
+              v-for="page in totalPages"
+              :key="page"
+              class="page-item"
+              :class="{ active: page === pageIndex }"
+            >
+
               <a class="page-link" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
             <!-- 다음 버튼 -->
-            <li class="page-arrow page-item" :class="{ disabled: pageIndex === totalPages }">
-              <a class="page-link" href="#" @click.prevent="goToPage(pageIndex + 1)">
+
+            <li
+              class="page-arrow page-item"
+              :class="{ disabled: pageIndex === totalPages }"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click.prevent="goToPage(pageIndex + 1)"
+              >
+
                 &raquo;
               </a>
             </li>
@@ -138,7 +164,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 .lla,
 .new,
 .announce {
@@ -228,8 +253,7 @@ export default {
 
 .custom-link:visited,
 .custom-link:active {
-  text-decoration: none;
-  /* 모든 상태에서 밑줄 제거 */
+  text-decoration: none; /* 모든 상태에서 밑줄 제거 */
   color: inherit;
 }
 

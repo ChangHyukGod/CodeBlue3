@@ -122,4 +122,13 @@ public class TourController {
         String name= tourService.ListName(tourId);
         return new ResponseEntity<>(name, HttpStatus.OK);
     }
+
+    // 최저값 list 받아오기
+    @GetMapping("/api/tour/minprice/{tourId}")
+    public ResponseEntity<List<String>> getRoomMinPrice(@PathVariable int tourId) {
+        List<String> prices = tourService.getRoomMinPrice(tourId);
+
+        return new ResponseEntity<>(prices, HttpStatus.OK);
+    }
+
 }

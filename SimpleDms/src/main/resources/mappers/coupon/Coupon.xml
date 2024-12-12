@@ -42,7 +42,12 @@
         SELECT *
         FROM COUPONS
         WHERE member_email = #{email}
+    </select>
 
+    <select id="couponByEmail" parameterType="String" resultType="com.simplecoding.simpledms.vo.coupon.Coupon">
+        SELECT *
+        FROM COUPONS
+        WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
 

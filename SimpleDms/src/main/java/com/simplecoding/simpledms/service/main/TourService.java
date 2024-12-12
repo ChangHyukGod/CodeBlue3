@@ -75,4 +75,11 @@ public class TourService {
     public String ListName(int tourId){
         return tourMapper.getTourName(tourId);
     }
+
+
+    // 최저값 갖고오기
+    public List<String>getRoomMinPrice(int tourId){
+        return tourMapper.getRoomMinPrice(tourId);
+    }
+
 }

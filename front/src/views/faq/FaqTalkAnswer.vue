@@ -24,15 +24,21 @@
             ></textarea>
             <label for="validationDefault02">내용</label>
           </div>
-          <router-link :to="'/faq/talklist'">
-            <button type="button" class="btn btn-warning me-2" @click="update">
-              저장
-            </button> </router-link
-          ><router-link :to="'/faq/talklist'">
-            <button type="button" class="btn btn-danger me-2" @click="remove">
-              삭제
-            </button>
-          </router-link>
+          <div class="talkanswer_button_box">
+            <router-link :to="'/faq/talklist'">
+              <button
+                type="button"
+                class="btn btn-warning me-2"
+                @click="update"
+              >
+                저장
+              </button> </router-link
+            ><router-link :to="'/faq/talklist'">
+              <button type="button" class="btn btn-danger me-2" @click="remove">
+                삭제
+              </button>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -91,6 +97,12 @@ export default {
 };
 </script>
 <style>
+.talkanswer_button_box{
+  display: flex;
+  margin-top: 1%;
+  justify-content: end;
+  margin: 15px 120px 10px 0;
+}
 .talk_button1 {
   margin-top: 1%;
   margin-left: 94.5%;

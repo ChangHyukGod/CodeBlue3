@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-
 /**
  * @author : KTE-149
  * @fileName : CouponController
@@ -28,16 +27,12 @@ public class CouponController {
     private final CouponService couponService;
 
 
- // 쿠폰발급
+    // 쿠폰발급
     @PostMapping("/api/add/coupon")
     public ResponseEntity<?> insert(
             @RequestBody Coupon coupon,
             Authentication authentication // Spring Security의 Authentication 객체 주입
     ) {
-
-
-
-
 
 
         // 현재 인증된 사용자의 이메일 추출
@@ -50,7 +45,6 @@ public class CouponController {
         }
 
 
-
         // Coupon 객체에 이메일 설정
         coupon.setMemberEmail(email);
 
@@ -59,7 +53,7 @@ public class CouponController {
     }
 
 
- //쿠폰 회원마다 필터링
+    //쿠폰 회원마다 필터링
 
     @GetMapping("/api/use/coupon")
     public ResponseEntity<?> getCouponsByUser(Authentication authentication) {
@@ -89,8 +83,17 @@ public class CouponController {
     }
 
 
+    // 이메일마다 쿠폰 조회
+    @GetMapping("/api/coupon/email/{memberEmail}")
+    public ResponseEntity<?> couponByEmail(@PathVariable String memberEmail) {
+        Coupon coupon = couponService.couponByEmail(memberEmail);
 
+        if (coupon == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 쿠폰이 없는 경우
+        }
 
+        return new ResponseEntity<>(coupon, HttpStatus.OK); // 정상 데이터 반환
+    }
 
 
 }

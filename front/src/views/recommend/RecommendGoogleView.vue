@@ -8,7 +8,7 @@
       <input
         ref="searchInputRef"
         type="text"
-        placeholder="장소를 검색하세요"
+        placeholder="숙소 반경10KM 별점4개 이상의 관광지"
         style="width: 300px; padding: 10px; font-size: 15px"
       />
     </div>
