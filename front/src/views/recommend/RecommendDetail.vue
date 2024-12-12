@@ -581,7 +581,7 @@ export default {
           });
         }
       } else if (tdId == 18) {
-        /* ㅇㅇ */
+        /* ㅇㅇasd */
         if (menu.MENU_ID2 === 1) {
           this.$router.push({
             path: "/recommendmap8",
