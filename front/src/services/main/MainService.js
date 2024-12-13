@@ -2,14 +2,23 @@ import axios from "axios";
 // 백엔드 주소 ↓ : springboot 주소(컨트롤러 주소)
 const baseURL = "http://localhost:8000/api";
 
+// TODO : 웹토큰 가져오기(로컬스토리지) => user.accessToken
+let user = JSON.parse(localStorage.getItem("user"));
+// TODO : 백엔드로 웹토큰 전송
+const token = { Authorization: "Bearer " + user?.accessToken };
+// insert/update용
+const token2 = { "Content-Type": "multipart/form-data", Authorization: "Bearer " + user?.accessToken };
+// TODO : 전송 : axios.get("url", {headers : token}), axios.post("url", data, {headers : token})
+
 // 전체조회 (페이징 O 현재 사용안하는 중)
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
-    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`);
+    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`,
+    {headers : token});
 };
 
 // 전체조회(페이징 X) 
 const getALLnp = (searchKeyword,view,pop) => {
-    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&view=${view}&pop=${pop}`);
+    return axios.get(baseURL+`/tour?searchKeyword=${searchKeyword}&view=${view}&pop=${pop}`, {headers : token});
 };
 
 // 이미지 업로드 및 FormData 생성
@@ -18,8 +27,6 @@ const insertForm = (data) => {
     formData.append("name", data.name);
     formData.append("comment", data.comment);
     formData.append("location", data.location);
-    formData.append("description", data.description);
-    formData.append("price", data.price);
     formData.append("view", data.view);
     formData.append("category", data.category);
     formData.append("pop", data.pop);
@@ -35,12 +42,12 @@ const insertForm = (data) => {
 // 추가 및 업로드
 const insert = (data) => {
     let form = insertForm(data);
-    return axios.post(baseURL+"/tour/add", form);
+    return axios.post(baseURL+"/tour/add", form, {headers : token2});
 };
 
 // 상세조회
 const get = (tourId) => {
-    return axios.get(baseURL+`/tour/get/${tourId}`);
+    return axios.get(baseURL+`/tour/get/${tourId}`, {headers : token});
 };
 
 // 수정
@@ -49,13 +56,13 @@ const update = (tourId, data) => {
     return axios.put(baseURL+`/tour/update/${tourId}`, form, {
         headers: {
             'Content-Type': 'multipart/form-data' // 이미지 업로드를 위한 헤더 설정
-        }
-    });
+        },
+    }, {headers : token2});
 };
 
 // 삭제
 const remove = (tourId) => {
-    return axios.delete(baseURL+`/tour/deletion/${tourId}`);
+    return axios.delete(baseURL+`/tour/deletion/${tourId}`, {headers : token});
 };
 
 // 기본키 가져오기

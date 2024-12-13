@@ -70,18 +70,19 @@ public class WebSecurityConfig {
         // 2) 권한: 화면별로 (관리자/유저) 관리자가 볼 수 있는것,
         //                               유저가 볼 수 있는것을 나눈것
         http.authorizeHttpRequests(
-                req -> req.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll() // 옵션(페이지이동  허용)
-                        .requestMatchers("/api/auth/**").permitAll()                // 이 url은 모두 접근 허용(로그인 관계없이)
-                        .requestMatchers("/api/tour/**").permitAll()
-                        .requestMatchers("/api/room/**").permitAll()
-                        .requestMatchers("/api/cart/**").permitAll()
-                        .requestMatchers("/api/coupon/**").permitAll()
-                        .requestMatchers("/api/email/**").permitAll()
-                        .requestMatchers("/api/comments/**").permitAll()
-                        .requestMatchers("/api/review/**").permitAll()
-                        .requestMatchers("/api/payment/complete").permitAll()
-                        .requestMatchers("/api/user/hasCoupons").authenticated()
-                        .requestMatchers("/**").permitAll()                           // 첫 페이지는 모두 접근 허용(로그인 관계없이)
+                // 옵션(페이지이동) redirect기능, permitAll() url은 모두 접근 허용(로그인 관계없이)
+                req -> req.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/api/auth/**").permitAll() // 로그인/회원가입 페이지
+                        .requestMatchers("/api/tour/**").permitAll() // 메인 페이지
+                        .requestMatchers("/api/faq/**").permitAll() // FAQ 페이지
+//                        .requestMatchers("/api/room/**").permitAll() // 예약 페이지
+//                        .requestMatchers("/api/cart/**").permitAll() // 결제 페이지
+//                        .requestMatchers("/api/coupon/**").permitAll() // 쿠폰 페이지
+//                        .requestMatchers("/api/comments/**").permitAll() // 추천여행지 댓글 게시판
+//                        .requestMatchers("/api/review/**").permitAll() // 리뷰 게시판
+//                        .requestMatchers("/api/payment/complete").permitAll() // 결제 완료 게시판
+//                        .requestMatchers("/api/user/hasCoupons").authenticated() // 유저 쿠폰내역 확인?
+//                        .requestMatchers("/**").permitAll() // 첫 페이지는 모두 접근 허용(로그인 관계없이)
                         .anyRequest().authenticated() // => 나머지 url들은 인증(로그인) 해야 볼 수 있음
         );
         
@@ -90,9 +91,4 @@ public class WebSecurityConfig {
         
         return http.build(); // 권한/인증 규칙 설정완료(반영)
     }
-
-    
-
-
-    
 }

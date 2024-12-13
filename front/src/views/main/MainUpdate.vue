@@ -18,18 +18,6 @@
       <label for="location">location</label>
     </div>
 
-    <!-- description -->
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="description" placeholder="description" v-model="tour.description"/>
-      <label for="description">description</label>
-    </div>
-
-    <!-- price -->
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="price" placeholder="price" v-model="tour.price"/>
-      <label for="price">price</label>
-    </div>
-
     <!-- view -->
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="view" placeholder="view" v-model="tour.view"/>
@@ -75,8 +63,6 @@ export default {
             tourId: "",
             name:"",
             location:"",
-            description:"",
-            price:"",
             tourFileUrl: "",
             view: "",
             category: "",

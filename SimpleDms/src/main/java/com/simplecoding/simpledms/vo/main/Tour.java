@@ -17,8 +17,6 @@ public class Tour {
 //    TOUR_ID	NUMBER(38,0)
 //    NAME	VARCHAR2(100 BYTE)
 //    LOCATION	VARCHAR2(255 BYTE)
-//    DESCRIPTION	CLOB
-//    PRICE	VARCHAR2(100 BYTE)
 //    TOUR_DATA	BLOB
 //    TOUR_FILE_URL	VARCHAR2(1000 BYTE)
 //    VIEW	VARCHAR2(100 BYTE)
@@ -28,8 +26,6 @@ public class Tour {
     private int tourId;  //기본키
     private String name;  //숙소명
     private String location;  //숙소위치
-    private String description;  //메인페이지_숙소 간단설명
-    private String price;
     private byte[] tourData;
     private String tourFileUrl;
     private String view;  //메인필터_숙소 카테고리
@@ -38,13 +34,11 @@ public class Tour {
     private String pop;  //메인필터_인기급상승 테그
 
 //  생성자
-    public Tour(int tourId, String name, String location, String description, String price, byte[] tourData, String view,
+    public Tour(int tourId, String name, String location, byte[] tourData, String view,
                 String category, String comment, String pop) {
         this.tourId = tourId;
         this.name = name;
         this.location = location;
-        this.description = description;
-        this.price = price;
         this.tourData = tourData;
         this.view = view;
         this.category = category;
@@ -52,12 +46,10 @@ public class Tour {
         this.pop = pop;
     }
 
-    public Tour(String name, String location, String description, String price, byte[] tourData, String view, String category,
+    public Tour(String name, String location, byte[] tourData, String view, String category,
                 String comment, String pop) {
         this.name = name;
         this.location = location;
-        this.description = description;
-        this.price = price;
         this.tourData = tourData;
         this.view = view;
         this.category = category;
