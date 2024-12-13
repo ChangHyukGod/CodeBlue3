@@ -123,10 +123,7 @@
         <!-- 상위 카테고리 -->
           <button class="btn btn-outline-secondary mx-2" @click="getreset()">전체보기</button>
           <!-- 인기 급상승 ON/OFF 버튼 -->
-          <button class="btn mx-2"
-                  :class="{ 'btn-outline-secondary': pop !== '인기급상승',  // 기본 배경색
-                            'bg-gray text-dark': pop === '인기급상승'  // 인기급상승 상태일 때 진한 회색 배경
-                          }" @click="togglePopular" >인기급상승</button>
+          <button class="btn btn-outline-secondary mx-2" @click="togglePopular('인기급상승')">인기급상승</button>
           <button class="btn btn-outline-secondary mx-2" @click="selectKeyword('국내')">국내</button>
           <button class="btn btn-outline-secondary mx-2" @click="selectKeyword('해외')">해외</button>
         <!-- 하위 카테고리 -->
@@ -150,7 +147,7 @@
             <img :src="data.tourFileUrl" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;"/>
           </router-link>
           <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; width: 300px;">
-            <h5 class="card-title mt-2">{{ data.comment }}</h5>
+            <h5 class="card-title mt-2 fw-bold">{{ data.comment }}</h5>
             <p class="card-text">{{ data.location }}</p>
             <div style="display: flex; justify-content: space-between;">
               <p class="text-primary fw-bold" style="margin-top:10px;">{{ data.minPrice }}원~</p>
@@ -286,6 +283,7 @@ export default {
     // 국내/해외 키워드 값 보내고 해당 키워드값 전체조회 실행
     selectKeyword(keyword){
       this.searchKeyword = keyword;
+      this.pop = "";
       this.getAll();
     },
     // 전체보기 버튼(전체조회)
@@ -294,9 +292,10 @@ export default {
       this.pop ="";
       this.getAll();
     },
-    //인기급상승 on/off
-    togglePopular() {
-      this.pop = this.pop === '인기급상승' ? '' : '인기급상승'; // 값 토글
+    //인기급상승 키워드 값 보내고 해당 키워드값 전체조회 실행
+    togglePopular(pop) {
+      this.pop = pop;
+      this.searchKeyword = "";
       this.getAll();
     },
     // 최저가 불러오기

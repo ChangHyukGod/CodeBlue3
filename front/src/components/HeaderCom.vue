@@ -9,10 +9,7 @@
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
         <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout">로그아웃</b-nav-item>
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
-        <b-nav-item href="/faq">고객센터</b-nav-item>
-        <b-nav-item>|</b-nav-item>
-        <b-nav-item href="/add-main" v-if="userRole === 'ROLE_ADMIN'">추가</b-nav-item>
-        <b-nav-item>|</b-nav-item>
+        <b-nav-item href="/faq">고객센터</b-nav-item><b-nav-item>|</b-nav-item>
         <b-nav-item href="/cart">
           <i class="bi bi-cart"></i>
           <span class="badge bg-danger cart-count">{{ cartCount }}</span>
