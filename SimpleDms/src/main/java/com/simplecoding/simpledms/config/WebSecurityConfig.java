@@ -42,7 +42,8 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring().requestMatchers(
                 "/img/**",
                 "/css/**",
-                "/js/**"
+                "/js/**",
+                "/api/review/{reviewId}" // 이미지 다운로드 함수 주소, 리뷰게시판 접근권한 설정에 따른 이미지 개별설정(보안무시)
 //                "/api/advanced/fileDb/{uuid}", // 이미지 다운로드 함수 주소 => 보안 무시 => 이미지 보임
 //                "/api/advanced/gallery/{uuid}" // 이미지 다운로드 함수 주소 => 보안 무시 => 이미지 보임
                 // /api/advanced/gallery/{uuid}이나{uuid123}이나 Spring Security에서 이 두 경로를 다르게 인식하지 않습니다.
@@ -75,14 +76,15 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll() // 로그인/회원가입 페이지
                         .requestMatchers("/api/tour/**").permitAll() // 메인 페이지
                         .requestMatchers("/api/faq/**").permitAll() // FAQ 페이지
-//                        .requestMatchers("/api/room/**").permitAll() // 예약 페이지
-//                        .requestMatchers("/api/cart/**").permitAll() // 결제 페이지
-//                        .requestMatchers("/api/coupon/**").permitAll() // 쿠폰 페이지
+                        .requestMatchers("/api/room/**").permitAll() // 예약, 상세 페이지
+                        .requestMatchers("/api/cart/**").permitAll() // 장바구니 페이지
+                        .requestMatchers("/api/coupon/**").permitAll() // 쿠폰 페이지
+                        .requestMatchers("/api/recommend/**").permitAll() // 추천여행지 페이지
 //                        .requestMatchers("/api/comments/**").permitAll() // 추천여행지 댓글 게시판
 //                        .requestMatchers("/api/review/**").permitAll() // 리뷰 게시판
-//                        .requestMatchers("/api/payment/complete").permitAll() // 결제 완료 게시판
+//                        .requestMatchers("/api/payment/complete").permitAll() // 결제 페이지
 //                        .requestMatchers("/api/user/hasCoupons").authenticated() // 유저 쿠폰내역 확인?
-//                        .requestMatchers("/**").permitAll() // 첫 페이지는 모두 접근 허용(로그인 관계없이)
+//                        .requestMatchers("/**").permitAll() // 모두 접근 허용(로그인 관계없이), 작업편의상 설정해놓음
                         .anyRequest().authenticated() // => 나머지 url들은 인증(로그인) 해야 볼 수 있음
         );
         
