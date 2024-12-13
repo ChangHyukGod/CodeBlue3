@@ -21,7 +21,7 @@ const token2 = {
 
 
 const getReviewsByEmail = (email) => {
-  return axios.get(`${baseURL}/reviews?email=${email}`);
+  return axios.get(`${baseURL}/reviews?email=${email}`, { headers: token });
 };
 
 
@@ -92,7 +92,7 @@ const update = (reviewId, data) => {
 
 // 리뷰 삭제
 const remove = (reviewId) => {
-  return axios.delete(baseURL + `/review/deletion/${reviewId}`);
+  return axios.delete(baseURL + `/review/deletion/${reviewId}`, { headers: token });
 };
 
 const ReviewService = {

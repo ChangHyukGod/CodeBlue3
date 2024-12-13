@@ -2,14 +2,22 @@ import axios from "axios";
 
 const baseURL = "http://localhost:8000/api";
 
+// TODO : 웹토큰 가져오기(로컬스토리지) => user.accessToken
+let user = JSON.parse(localStorage.getItem("user"));
+// TODO : 백엔드로 웹토큰 전송
+const token = { Authorization: "Bearer " + user?.accessToken };
+// insert/update용
+const token2 = { "Content-Type": "multipart/form-data", Authorization: "Bearer " + user?.accessToken };
+// TODO : 전송 : axios.get("url", {headers : token}), axios.post("url", data, {headers : token})
+
 // 투어 ID로 방 목록 가져오기
 const getRoomsByTourId = (tourId) => {
-  return axios.get(baseURL + `/room/tour/${tourId}`);
+  return axios.get(baseURL + `/room/tour/${tourId}`, {headers : token});
 };
 
 // 방 1개 상세조회
 const DetailRoom = (roomId) => {
-  return axios.get(baseURL + `/room/detail/${roomId}`);
+  return axios.get(baseURL + `/room/detail/${roomId}`, {headers : token});
 };
 
 const insertForm = (data) => {
@@ -35,7 +43,7 @@ const addRoom = (data) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-  });
+  }, {headers : token2});
 };
 
 // 방 업데이트
@@ -46,12 +54,12 @@ const UpdateRoom = (roomId, roomData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-  });
+  }, {headers : token2});
 };
 
 // 방 삭제
 const RemoveRoom = (roomId) => {
-  return axios.delete(baseURL + `/room/delete/${roomId}`);
+  return axios.delete(baseURL + `/room/delete/${roomId}`, {headers : token});
 };
 
 // insertForm2 - 방 이미지 추가용
@@ -71,12 +79,12 @@ const addRoomPhoto = (data) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-  });
+  }, {headers : token2});
 };
 
 // 룸 ID로 이미지 경로 가져오기
 const getUrlsByRoomId = (roomId) => {
-  return axios.get(baseURL + `/room/image/url/${roomId}`);
+  return axios.get(baseURL + `/room/image/url/${roomId}`, {headers : token});
 };
 
 const RoomService = {
