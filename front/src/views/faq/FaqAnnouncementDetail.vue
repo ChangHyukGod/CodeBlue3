@@ -16,7 +16,7 @@
           <router-link :to="`/announcement/fix/${ano}`" v-if="userRole === 'ROLE_ADMIN'">
             <button type="button" class="btn btn-warning me-2">수정</button>
           </router-link>
-          <router-link to="/announcement">
+          <router-link to="/adminfaqannouncement">
             <button type="button" class="btn btn-warning button">
               <i class="bi bi-arrow-return-left"></i>
             </button>

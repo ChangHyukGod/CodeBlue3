@@ -89,7 +89,7 @@ export default {
           this.announcement
         );
         console.log("공지 수정 성공:", response.data);
-        this.$router.push("/announcement");
+        this.$router.push("/adminfaqannouncement");
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +99,7 @@ export default {
         const response = await AnnouncementService.remove(this.announcement.ano);
         console.log("삭제 성공:", response.data); // 디버깅
         alert("삭제 완료");
-        this.$router.push("/announcement");
+        this.$router.push("/adminfaqannouncement");
       } catch (error) {
         console.error("삭제 실패:", error);
         alert("삭제 실패: 서버에 문제가 발생했습니다.");

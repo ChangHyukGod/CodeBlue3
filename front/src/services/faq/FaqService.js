@@ -20,11 +20,18 @@ const remove = (fno) => {
   return axios.delete(baseURL + `/faq/list/delete/${fno}`);
 };
 
+
+const insert = (data) => {
+  return axios.post(baseURL + `/faq/add`, data, );
+};
+
+
 const FaqService = {
   getAll,
   get,
   update,
   remove,
+  insert
 };
 
 export default FaqService;

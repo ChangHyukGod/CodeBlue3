@@ -10,7 +10,7 @@
           <br />
         </div>
         <div class="notice_content_big_box">
-          <p class="talk_big_title">문의 등록 목록 테스트</p>
+          <p class="talk_big_title"> 1:1 문의</p>
           <br />
           <div class="notice_content1">
             <div class="accordion acco_box" id="talkAccordion">
@@ -95,13 +95,14 @@
                     </div>
                   </div>
                   <div>
+                    
                     <router-link
                       :to="'/faq/talkanswer/' + talk.tno"
                       class="talk_button2"
                       v-if="userRole === 'ROLE_ADMIN'"
                     >
                       <button type="button" class="btn btn-warning">
-                        <i class="bi bi-arrow-return-left"></i>
+                        <i class="bi bi-arrow-return-left">답변</i>
                       </button>
                     </router-link>
                   </div>
