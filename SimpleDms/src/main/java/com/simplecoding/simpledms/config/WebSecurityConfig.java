@@ -81,7 +81,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/coupon/**").permitAll() // 쿠폰 페이지
                         .requestMatchers("/api/recommend/**").permitAll() // 추천여행지 페이지
 //                        .requestMatchers("/api/comments/**").permitAll() // 추천여행지 댓글 게시판
-//                        .requestMatchers("/api/review/**").permitAll() // 리뷰 게시판
+                        .requestMatchers("/api/review/review").permitAll() // 리뷰 게시판(메인), 글등록 등 나머지 안됨
+                        .requestMatchers("/api/review/get/{reviewId}").permitAll() // 리뷰 게시판(상세), 글등록 등 나머지 안됨
 //                        .requestMatchers("/api/payment/complete").permitAll() // 결제 페이지
 //                        .requestMatchers("/api/user/hasCoupons").authenticated() // 유저 쿠폰내역 확인?
 //                        .requestMatchers("/**").permitAll() // 모두 접근 허용(로그인 관계없이), 작업편의상 설정해놓음

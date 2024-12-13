@@ -200,6 +200,12 @@ export default {
       }
     },
     goToAddReview() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user);
+      if(user == null)
+    {
+      this.$router.push("/login");
+    }else
       this.$router.push('/add-review');
     },
     formatDate(date) {
