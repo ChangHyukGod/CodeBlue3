@@ -34,7 +34,7 @@
       <!-- 1:1 문의 박스 -->
       <div class="col-md-3">
         <div class="box-container">
-          <router-link to="/support" class="custom-link">
+          <router-link to="/faq/talklist" class="custom-link">
             <div class="box">
               <i class="bi bi-chat-dots box-icon"></i>
               <h3 class="box-title">1:1 문의(ADMIN)</h3>

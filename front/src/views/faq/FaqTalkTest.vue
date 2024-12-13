@@ -10,7 +10,7 @@
           <br />
         </div>
         <div class="notice_content">
-          <p class="talk_big_title">문의 등록 테스트</p>
+          <p class="talk_big_title">1:1 문의</p>
           <br />
           <div class="talk_list">
             <router-link :to="'/faq/talk'">
