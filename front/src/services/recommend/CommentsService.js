@@ -4,7 +4,7 @@ const baseURL = "http://localhost:8000/api";
 
 let user = JSON.parse(localStorage.getItem("user"));
 // 조회용
-// const token = { Authorization: "Bearer " + user?.accessToken };
+const token = { Authorization: "Bearer " + user?.accessToken };
 
 // insert/update 용
 
@@ -23,12 +23,12 @@ const insert = (data) => {
 const getAll = (searchKeyword, pageIndex, recordCountPerPage) => {
   return axios.get(
     baseURL +
-      `/comments?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`
+      `/comments?searchKeyword=${searchKeyword}&pageIndex=${pageIndex}&recordCountPerPage=${recordCountPerPage}`, {headers : token}
   );
 };
 
 const get = (comId) => {
-  return axios.get(baseURL + `/comments/get/${comId}`);
+  return axios.get(baseURL + `/comments/get/${comId}`, {headers : token});
 };
 
 /* TODO: 수정(dno) */

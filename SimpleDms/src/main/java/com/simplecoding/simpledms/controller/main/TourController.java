@@ -42,8 +42,6 @@ public class TourController {
     @PostMapping("/api/tour/add")
     public ResponseEntity<?> insert(@RequestParam(defaultValue = "") String name,
                                     @RequestParam(defaultValue = "") String location,
-                                    @RequestParam(defaultValue = "") String description,
-                                    @RequestParam(defaultValue = "") String price,
                                     @RequestParam(required = false) MultipartFile image,
                                     @RequestParam(defaultValue = "") String view,
                                     @RequestParam(defaultValue = "") String category,
@@ -56,7 +54,7 @@ public class TourController {
         }
 
         // Tour 객체 생성
-        Tour tour = new Tour(name, location, description, price, imageData, view, category, comment, pop);
+        Tour tour = new Tour(name, location, imageData, view, category, comment, pop);
         tourService.insert(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -90,8 +88,6 @@ public class TourController {
     public ResponseEntity<?> update(@PathVariable int tourId,
                                     @RequestParam(defaultValue = "") String name,
                                     @RequestParam(defaultValue = "") String location,
-                                    @RequestParam(defaultValue = "") String description,
-                                    @RequestParam(defaultValue = "") String price,
                                     @RequestParam(required = false) MultipartFile image,
                                     @RequestParam(defaultValue = "") String view,
                                     @RequestParam(defaultValue = "") String category,
@@ -104,7 +100,7 @@ public class TourController {
         }
 
         // Tour 객체 생성 (이미지가 없으면 null 값 처리)
-        Tour tour = new Tour(tourId, name, location, description, price, imageData, view, category, comment, pop);
+        Tour tour = new Tour(tourId, name, location, imageData, view, category, comment, pop);
         tourService.update(tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }
