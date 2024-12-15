@@ -11,19 +11,19 @@
         <img
           src="/images/icon-7680929_1920.png"
           alt="따봉"
-          style="
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            margin-right: 40px;
-          "
+          style="width: 200px; height: 200px; object-fit: contain; margin-right: 40px;"
         />
       </div>
     </div>
     <br />
+
+    <!-- 제목 -->
     <h3 v-if="review.title" style="font-weight: bold; padding: 3px">
       {{ review.title }}
     </h3>
+
+
+
     <div
       class="d-flex justify-content-between align-items-center"
       style="margin-top: 10px"
@@ -46,6 +46,11 @@
       </div>
     </div>
     <hr />
+        <!-- 선택된 상품명 -->
+        <p v-if="review.targetName" style="font-size: 1.2rem; font-weight: bold; color: #555; margin-top: 5px;">
+      상품명: {{ review.targetName }}
+    </p>
+    <hr>
 
     <br />
     <div class="mb-3 col-12">
@@ -60,28 +65,17 @@
         type="button"
         class="btn btn-secondary"
         @click="goToUpdateReview(review.reviewId)"
-        style="
-          font-size: 1.5rem;
-          font-weight: bold;
-          padding: 8px 40px;
-          margin-right: 20px;
-        "
+        style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px; margin-right: 20px;"
       >
         수정
       </button>
 
       <button
         v-if="review.authorEmail === userEmail || userRole === 'ROLE_ADMIN'"
-        
         type="button"
         class="btn btn-danger"
         @click="remove"
-        style="
-          font-size: 1.5rem;
-          font-weight: bold;
-          padding: 8px 40px;
-          margin-right: 20px;
-        "
+        style="font-size: 1.5rem; font-weight: bold; padding: 8px 40px; margin-right: 20px;"
       >
         삭제
       </button>
@@ -95,18 +89,20 @@
         목록
       </button>
     </div>
-        <!-- 하단 코드 (예: 주의사항 카드) -->
-        <div class="card w-100 mt-5 mb-5">
+
+    <!-- 하단 카드 (주의사항) -->
+    <div class="card w-100 mt-5 mb-5">
       <div class="card-body">
-        <h5 class="card-title"> <i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
-        <hr>
-        <p class="card-text mt-4" style="font-size: 14px; padding: 20px;">- 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
+        <h5 class="card-title"><i class="bi bi-exclamation-circle"></i> 꼭 읽어주세요</h5>
+        <hr />
+        <p class="card-text mt-4" style="font-size: 14px; padding: 20px;">
+          - 글 작성 시 정보 유출에 의한 피해방지를 위해 개인정보 기재는 삼가주시기 바랍니다.
           예) 주민등록번호, 전화번호, 여권번호, 신용카드번호, 계좌번호, 주소 등
-          <br>
+          <br />
           - 해당 게시판과 글의 성격이 맞지 않을 경우, 관리자에 의해 게시글이 이동될 수 있습니다.
-          <br>
+          <br />
           - 상업적인 광고 및 욕설, 도배성, 음해성 글의 경우 서비스 관리자에 의해 임의 수정 또는 삭제될 수 있음을 알려드립니다.
-          <br>
+          <br />
           - 저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시글은 이용약관 및 관련법률에 의해 제재를 받을 수 있습니다.
         </p>
       </div>
@@ -116,6 +112,7 @@
 
 <script>
 import ReviewService from "@/services/review/ReviewService";
+import MainService from "@/services/main/MainService";
 import Swal from "sweetalert2";
 
 export default {
@@ -128,11 +125,12 @@ export default {
         content: "",
         authorEmail: "",
         targetId: null,
+        targetName: "", // 상품명 추가
         imageUrl: "",
         image: undefined,
-      }, // 선택된 리뷰 정보를 저장할 객체
-
+      },
       userEmail: "",
+      userRole: "",
     };
   },
   methods: {
@@ -143,17 +141,16 @@ export default {
     async getDetail(reviewId) {
       try {
         let response = await ReviewService.get(reviewId); // 리뷰 상세 정보 가져오기
-        this.review = response.data; // 리뷰 정보를 저장
+        this.review = response.data;
+
+        // 상품명을 추가로 가져오기
+        if (this.review.targetId) {
+          const targetResponse = await MainService.getName(this.review.targetId);
+          this.review.targetName = targetResponse.data; // 상품명 저장
+        }
       } catch (error) {
-        console.error(
-          "리뷰 상세 정보를 가져오는 중 오류가 발생했습니다:",
-          error
-        );
-        // 오류 메시지를 화면에 표시하는 등의 처리 필요
+        console.error("리뷰 상세 정보를 가져오는 중 오류가 발생했습니다:", error);
       }
-    },
-    setRating(star) {
-      this.review.rating = star; // 평점 설정
     },
     select() {
       this.review.image = this.$refs.file.files[0];
@@ -164,59 +161,45 @@ export default {
     goToUpdateReview(reviewId) {
       this.$router.push(`/reviewupdate/${reviewId}`);
     },
-
     async update() {
       try {
         let response = await ReviewService.update(
           this.review.reviewId,
           this.review
         );
-        console.log(response.data); // 디버깅
-
-        
+        console.log(response.data);
         Swal.fire({
           title: "수정 완료",
-          
           icon: "success",
           confirmButtonText: "확인",
         });
       } catch (error) {
-        this.review.image = undefined;
         console.log(error);
       }
     },
     async remove() {
       try {
         let response = await ReviewService.remove(this.review.reviewId);
-        console.log(response.data); // 디버깅
-        // 전체조회 화면 강제 이동
-
+        console.log(response.data);
         Swal.fire({
           title: "삭제 성공",
-          
           icon: "success",
           confirmButtonText: "확인",
         });
-
-
-
         this.$router.push("/review");
       } catch (error) {
         console.log(error);
       }
     },
-    goToReview() {
-      this.$router.push("/review"); // /review로 이동
-    },
   },
   mounted() {
     this.getDetail(this.$route.params.reviewId); // 리뷰 정보 가져오기
 
-    const user = localStorage.getItem("user"); // 저장된 사용자 정보 가져오기
+    const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user); // JSON 문자열을 객체로 파싱
-      this.userRole = parsedUser.codeName; // 권한 정보 저장
-      this.userEmail = parsedUser.email; // 이메일 정보 저장
+      const parsedUser = JSON.parse(user);
+      this.userRole = parsedUser.codeName;
+      this.userEmail = parsedUser.email;
     } else {
       console.error("No user data found in localStorage.");
     }
