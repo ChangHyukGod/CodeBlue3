@@ -7,12 +7,12 @@ let user = JSON.parse(localStorage.getItem("user"));
 // TODO : 백엔드로 웹토큰 전송
 const token = { Authorization: "Bearer " + user?.accessToken };
 // insert/update용
-const token2 = { "Content-Type": "multipart/form-data", Authorization: "Bearer " + user?.accessToken };
+// const token2 = { "Content-Type": "multipart/form-data", Authorization: "Bearer " + user?.accessToken };
 // TODO : 전송 : axios.get("url", {headers : token}), axios.post("url", data, {headers : token})
 
 // 장바구니에 추가
 const addToCart = (data) => {
-  return axios.post(baseURL + `/cart/add`, data, {headers : token2});
+  return axios.post(baseURL + `/cart/add`, data, {headers : token});
 };
 
 // 이메일마다 장바구니 전체조회

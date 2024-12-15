@@ -7,17 +7,20 @@ let user = JSON.parse(localStorage.getItem("user"));
 // TODO : 백엔드로 웹토큰 전송
 const token = { Authorization: "Bearer " + user?.accessToken };
 // insert/update용
-const token2 = { "Content-Type": "multipart/form-data", Authorization: "Bearer " + user?.accessToken };
+const token2 = {
+  "Content-Type": "multipart/form-data",
+  Authorization: "Bearer " + user?.accessToken,
+};
 // TODO : 전송 : axios.get("url", {headers : token}), axios.post("url", data, {headers : token})
 
 // 투어 ID로 방 목록 가져오기
 const getRoomsByTourId = (tourId) => {
-  return axios.get(baseURL + `/room/tour/${tourId}`, {headers : token});
+  return axios.get(baseURL + `/room/tour/${tourId}`, { headers: token });
 };
 
 // 방 1개 상세조회
 const DetailRoom = (roomId) => {
-  return axios.get(baseURL + `/room/detail/${roomId}`, {headers : token});
+  return axios.get(baseURL + `/room/detail/${roomId}`, { headers: token });
 };
 
 const insertForm = (data) => {
@@ -39,27 +42,19 @@ const insertForm = (data) => {
 const addRoom = (data) => {
   let form = insertForm(data);
 
-  return axios.post(baseURL + `/room/add`, form, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }, {headers : token2});
+  return axios.post(baseURL + `/room/add`, form, { headers: token2 });
 };
 
 // 방 업데이트
 const UpdateRoom = (roomId, roomData) => {
   let form = insertForm(roomData);
 
-  return axios.put(baseURL + `/room/update/${roomId}`, form, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }, {headers : token2});
+  return axios.put(baseURL + `/room/update/${roomId}`, form, { headers: token2 });
 };
 
 // 방 삭제
 const RemoveRoom = (roomId) => {
-  return axios.delete(baseURL + `/room/delete/${roomId}`, {headers : token});
+  return axios.delete(baseURL + `/room/delete/${roomId}`, { headers: token });
 };
 
 // insertForm2 - 방 이미지 추가용
@@ -75,16 +70,12 @@ const insertForm2 = (data) => {
 const addRoomPhoto = (data) => {
   let form = insertForm2(data);
 
-  return axios.post(baseURL + `/room/image/add`, form, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }, {headers : token2});
+  return axios.post(baseURL + `/room/image/add`, form, { headers: token2 });
 };
 
 // 룸 ID로 이미지 경로 가져오기
 const getUrlsByRoomId = (roomId) => {
-  return axios.get(baseURL + `/room/image/url/${roomId}`, {headers : token});
+  return axios.get(baseURL + `/room/image/url/${roomId}`, { headers: token });
 };
 
 const RoomService = {

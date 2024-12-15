@@ -30,8 +30,8 @@
         저장
       </button>
 
-      <button class="btn btn-warning me-3" type="button" @click="returnMain">
-        홈
+      <button class="btn btn-warning me-3" type="button" @click="returnBefore">
+        뒤로가기
       </button>
     </div>
   </div>
@@ -79,8 +79,8 @@ export default {
       }
     },
 
-    returnMain() {
-      this.$router.push("/");
+    returnBefore() {
+      this.$router.go(-1);
     },
   },
   mounted() {
