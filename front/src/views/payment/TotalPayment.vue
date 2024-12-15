@@ -49,64 +49,9 @@
       <p class="no-items">선택된 항목이 없습니다.</p>
     </div>
 
-    <!-- 결제 수단 섹션 추가 -->
-    <!-- 결제 수단 섹션 추가 -->
+    
     <div class="payment-method">
       <h3>결제 수단</h3>
-      <div class="payment-options">
-        <!-- 카카오페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="kakaoPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅋㅋㅇㅍㅇ 아이콘.png"
-            alt="카카오페이"
-          />
-        </label>
-        <!-- 토스페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="tossPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅌㅅ 아이콘.png"
-            alt="토스페이"
-          />
-        </label>
-        <!-- 네이버페이 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="naverPay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㄴㅇㅂㅍㅇ 아이컨.png"
-            alt="네이버페이"
-          />
-        </label>
-        <!-- 휴대폰 -->
-        <label class="payment-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="phonePay"
-            v-model="selectedPaymentMethod"
-          />
-          <img
-            src="@/assets/images/PaymentMethod/ㅎㄷㅍ 아이콘.png"
-            alt="휴대폰"
-          />
-        </label>
-      </div>
       <!-- 쿠폰등록하기 버튼 -->
       <div class="mt-3">
         <button class="btn btn-warning" @click="toggleCouponForm">
