@@ -220,7 +220,7 @@ export default {
       const today = new Date();
       const createdDate = new Date(createdAt);
       const diffDays = Math.floor((today - createdDate) / (1000 * 60 * 60 * 24));
-      return diffDays <= 1; // 작성일이 7일 이내라면 true 반환
+      return diffDays <= 1; // 작성일이 1일 이내라면 true 반환
     },
   },
   mounted() {
