@@ -14,8 +14,6 @@
         <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
           >로그아웃</b-nav-item
         >
-        <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
-        <b-nav-item>예약확인</b-nav-item>
         <b-nav-item>|</b-nav-item>
         <b-nav-item href="/faq">고객센터</b-nav-item>
 
@@ -24,11 +22,6 @@
           <i class="bi bi-cart"></i>
           <span class="badge bg-danger cart-count">{{ cartCount }}</span>
         </b-nav-item>
-
-        <b-nav-item v-show="userRole === 'ROLE_ADMIN'">|</b-nav-item>
-        <b-nav-item href="/add-main" v-show="userRole === 'ROLE_ADMIN'"
-          >숙소추가</b-nav-item
-        >
 
         <b-nav-item v-show="userRole === 'ROLE_ADMIN'"> |</b-nav-item>
         <b-nav-item v-show="userRole === 'ROLE_ADMIN'" href="/mainadmin"
