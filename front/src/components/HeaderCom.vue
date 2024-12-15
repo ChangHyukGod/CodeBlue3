@@ -3,18 +3,37 @@
   <div class="hearder_big_box">
     <b-nav class="upper_menu">
       <div class="upper_menu_link">
-        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login">로그인</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/login"
+          >로그인</b-nav-item
+        >
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
-        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register">회원가입</b-nav-item>
+        <b-nav-item v-if="!this.$store.state.loggedIn" href="/register"
+          >회원가입</b-nav-item
+        >
         <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
-        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout">로그아웃</b-nav-item>
+        <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
+          >로그아웃</b-nav-item
+        >
         <b-nav-item v-if="this.$store.state.loggedIn">|</b-nav-item>
-        <b-nav-item href="/faq">고객센터</b-nav-item><b-nav-item>|</b-nav-item>
+        <b-nav-item>예약확인</b-nav-item>
+        <b-nav-item>|</b-nav-item>
+        <b-nav-item href="/faq">고객센터</b-nav-item>
+
+        <b-nav-item>|</b-nav-item>
         <b-nav-item href="/cart">
           <i class="bi bi-cart"></i>
           <span class="badge bg-danger cart-count">{{ cartCount }}</span>
         </b-nav-item>
-        <b-nav-item v-if="userRole === 'ROLE_ADMIN'" href="/mainadmin">관리자 페이지</b-nav-item>
+
+        <b-nav-item v-show="userRole === 'ROLE_ADMIN'">|</b-nav-item>
+        <b-nav-item href="/add-main" v-show="userRole === 'ROLE_ADMIN'"
+          >숙소추가</b-nav-item
+        >
+
+        <b-nav-item v-show="userRole === 'ROLE_ADMIN'"> |</b-nav-item>
+        <b-nav-item v-show="userRole === 'ROLE_ADMIN'" href="/mainadmin"
+          >관리자 페이지</b-nav-item
+        >
       </div>
     </b-nav>
   </div>
@@ -44,10 +63,10 @@
       &nbsp;|&nbsp;
       <router-link to="/review" class="header_menu">
         <i class="bi bi-pencil"></i> 리뷰게시판
-      </router-link>      &nbsp;|&nbsp;
+      </router-link>
+      &nbsp;|&nbsp;
       <router-link to="/mypage" class="header_menu">
         <i class="bi bi-person-plus"></i> 마이페이지
-
       </router-link>
     </div>
   </div>
@@ -77,14 +96,16 @@ export default {
       if (this.cartCount !== updatedCount) {
         this.cartCount = updatedCount;
       }
+
+      // 주기적으로 userRole 업데이트
+      const user = localStorage.getItem("user");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        if (this.userRole !== parsedUser.codeName) {
+          this.userRole = parsedUser.codeName;
+        }
+      }
     }, 200);
-    const user = localStorage.getItem("user");
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      this.userRole = parsedUser.codeName;
-    } else {
-      console.error("No user data found in localStorage.");
-    }
   },
   beforeUnmount() {
     clearInterval(this.intervalId);
@@ -107,7 +128,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  height:  80%;
+  height: 80%;
   width: 45%;
   transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
 }
