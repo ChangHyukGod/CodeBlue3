@@ -135,6 +135,9 @@ export default {
         // 로컬 상태에서 아이템 제거
         this.cart = this.cart.filter((item) => item.cartId !== cartId);
 
+        // 선택 항목에서 삭제된 항목 제거
+        this.selectedItems = this.selectedItems.filter((id) => id !== cartId);
+
         // 총 가격 및 장바구니 개수 업데이트
         this.calculateTotalPrice();
         this.countCartItems();
@@ -185,7 +188,7 @@ export default {
         this.cart = this.cart.filter(
           (item) => !this.selectedItems.includes(item.cartId)
         );
-        this.selectedItems = []; // 선택 항목 초기화
+
         this.isAllSelected = false; // 전체 선택 초기화
 
         // 삭제 완료 메시지 표시
@@ -200,6 +203,7 @@ export default {
         // 가격 업데이트 및 장바구니 개수 갱신
         this.calculateTotalPrice();
         this.countCartItems();
+        this.selectedItems = []; // 선택 항목 초기화
       } catch (error) {
         console.error("Error deleting selected items:", error);
 
