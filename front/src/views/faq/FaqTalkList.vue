@@ -89,7 +89,7 @@
                         placeholder="답변"
                         readonly
                         style="height: 250px"
-                        :value="talk.reply || '아직 질문이 없습니다.'"
+                        :value="talk.reply || '아직 답변이 없습니다.'"
                       ></textarea>
                       <label for="validationDefault02">답변</label>
                     </div>
@@ -150,7 +150,7 @@ export default {
         const { results } = response.data; // 서버에서 반환된 결과
         this.talkList = results.map((talk) => ({
           ...talk,
-          reply: talk.reply || "아직 질문이 없습니다.", // 기본값 설정
+          reply: talk.reply || "아직 답변이 없습니다.", // 기본값 설정
         }));
       } catch (error) {
         console.error("문의 전체 조회 실패:", error);

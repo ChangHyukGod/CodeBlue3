@@ -41,7 +41,7 @@ export default {
       anno: {
         content:"",
         title: "",
-    
+        createDate: ""
       },
     };
   },
