@@ -120,14 +120,14 @@ export default {
         this.errorMessage = "이름을 입력해주세요.";
         return false;
       }
-      
+
       if (!namePattern.test(this.user.name)) {
         this.errorMessage = "이름에는 숫자나 특수기호를 사용할 수 없습니다.";
         return false;
       }
 
       // 주민등록번호 숫자 체크
-      const ssnPattern = /^\d+$/; // 숫자만 허용
+      const ssnPattern = /^\d{13}$/; // 정확히 13자리 숫자만 허용
 
       if (!this.user.ssn.trim()) {
         this.errorMessage = "주민등록번호를 입력해주세요.";
@@ -135,7 +135,7 @@ export default {
       }
 
       if (!ssnPattern.test(this.user.ssn)) {
-        this.errorMessage = "주민등록번호는 숫자로만 입력해주세요.";
+        this.errorMessage = "주민등록번호는 13자리 숫자로 입력해주세요.";
         return false;
       }
 
