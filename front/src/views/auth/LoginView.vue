@@ -204,6 +204,7 @@
 <script>
 import MemberService from "@/services/auth/MemberService";
 import CartService from "@/services/cart/CartService";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -251,47 +252,77 @@ export default {
       }
     },
 
+    // 아이디 찾기
     async findEmail() {
       try {
         let response = await MemberService.findEmail(this.findEmailData);
-        let emailList = "아이디 목록:\n";
-        response.data.forEach((email) => {
-          emailList += `${email}\n`;
+        let emailList = response.data.join("\n"); // 이메일 리스트 생성
+
+        // 성공 메시지 알림창
+        Swal.fire({
+          icon: "success",
+          title: "아이디 찾기 성공",
+          html: `<pre style="text-align: left;">아이디 목록:<br>${emailList}</pre>`,
+          confirmButtonText: "확인",
+        }).then(() => {
+          // 모달 닫기 및 리다이렉트 처리
+          this.showFindEmailModal = false;
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 500); // 0.5초 후 이동
         });
-
-        // 알림창 표시 후 모달 닫기
-        alert(emailList);
-
-        // 모달 닫고, 리다이렉트
-        this.showFindEmailModal = false;
-
-        // 0.5초 후 홈 페이지로 리다이렉트
-        setTimeout(() => {
-          this.$router.push("/login");
-        }, 500);
       } catch (error) {
         console.error(error);
-        alert("아이디를 찾을 수 없습니다.");
+
+        // 실패 메시지 알림창
+        Swal.fire({
+          icon: "error",
+          title: "아이디 찾기 실패",
+          text: "아이디를 찾을 수 없습니다.",
+          confirmButtonText: "확인",
+        });
       }
     },
 
+    // 비밀번호 변경
     async updatePassword() {
       try {
         let response = await MemberService.updatePassword(
           this.updatePasswordData
         );
+
         if (response.status === 200) {
-          alert("비밀번호 변경이 성공했습니다.");
-          this.showUpdatePasswordModal = false; // 모달 닫기
-          setTimeout(() => {
-            this.$router.push("/login");
-          }, 500); // alert 후 0.5초 뒤에 리다이렉트
+          // 성공 알림창
+          Swal.fire({
+            icon: "success",
+            title: "비밀번호 변경 성공",
+            text: "비밀번호가 성공적으로 변경되었습니다.",
+            confirmButtonText: "확인",
+          }).then(() => {
+            this.showUpdatePasswordModal = false; // 모달 닫기
+            setTimeout(() => {
+              this.$router.push("/login");
+            }, 500); // 0.5초 후 로그인 페이지로 리다이렉트
+          });
         } else {
-          alert(response.data || "비밀번호를 변경할 수 없습니다.");
+          // 서버에서 제공하는 메시지 사용
+          Swal.fire({
+            icon: "warning",
+            title: "비밀번호 변경 실패",
+            text: response.data || "비밀번호를 변경할 수 없습니다.",
+            confirmButtonText: "확인",
+          });
         }
       } catch (error) {
         console.error(error);
-        alert("비밀번호를 변경할 수 없습니다. 잠시 후 다시 시도해 주세요.");
+
+        // 에러 알림창
+        Swal.fire({
+          icon: "error",
+          title: "에러 발생",
+          text: "비밀번호를 변경할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+          confirmButtonText: "확인",
+        });
       }
     },
   },
