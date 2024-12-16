@@ -141,6 +141,7 @@ export default {
         // 총 가격 및 장바구니 개수 업데이트
         this.calculateTotalPrice();
         this.countCartItems();
+        this.updateSelectAllStatus();
 
         // 삭제 완료 메시지 표시
         await Swal.fire({
