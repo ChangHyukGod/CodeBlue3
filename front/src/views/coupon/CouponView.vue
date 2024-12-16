@@ -40,46 +40,7 @@
       </div>
     </div>
 
-    <!-- 겨울 시즌 할인 쿠폰 섹션 -->
-    <div class="row justify-content-center my-4">
-      <div class="col-md-6">
-        <div class="card border-info shadow-custom">
-          <div class="card-body">
-            <!-- 쿠폰 헤더 -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="card-title text-info fw-bold">겨울 시즌 할인 쿠폰</h5>
-            </div>
-
-            <!-- 쿠폰 정보 -->
-            <div class="d-flex align-items-center mb-3">
-              <div
-                class="discount-circle bg-gradient-info text-light border-info fw-bold"
-              >
-                10%
-              </div>
-              <div class="ms-3">
-                <p class="mb-1 text-muted">최소 구매금액 제한 없음</p>
-              </div>
-            </div>
-
-            <!-- 추가 정보 -->
-            <ul class="list-unstyled text-muted mb-4">
-              <li>겨울시즌 할인 쿠폰</li>
-              <li>적용 기간: 24년 11월 25일 ~ 2월 1일</li>
-              <li>쿠폰 기한 50일</li>
-            </ul>
-
-            <!-- 쿠폰 받기 버튼 -->
-            <button
-              class="btn btn-gradient-info w-100"
-              @click="getWinterCoupon"
-            >
-              겨울시즌 할인 쿠폰 받기
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </template>
 
