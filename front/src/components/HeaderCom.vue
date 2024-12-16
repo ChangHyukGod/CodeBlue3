@@ -10,7 +10,7 @@
         <b-nav-item v-if="!this.$store.state.loggedIn" href="/register"
           >회원가입</b-nav-item
         >
-        <b-nav-item v-if="!this.$store.state.loggedIn">|</b-nav-item>
+      
         <b-nav-item v-if="this.$store.state.loggedIn" href @click="logout"
           >로그아웃</b-nav-item
         >
