@@ -52,12 +52,8 @@ const get = (tourId) => {
 
 // 수정
 const update = (tourId, data) => {
-    let form = insertForm(data); // 이미지가 없으면 formData에 image가 추가되지 않음
-    return axios.put(baseURL+`/tour/update/${tourId}`, form, {
-        headers: {
-            'Content-Type': 'multipart/form-data' // 이미지 업로드를 위한 헤더 설정
-        },
-    }, {headers : token2});
+    let form = insertForm(data); 
+    return axios.put(baseURL+`/tour/update/${tourId}`, form, {headers : token2});
 };
 
 // 삭제
@@ -67,16 +63,16 @@ const remove = (tourId) => {
 
 // 기본키 가져오기
 const getTourId = () => {
-    return axios.get(baseURL+`/review/tourId`)
+    return axios.get(baseURL+`/review/tourId`, {headers : token})
 }
 
 const getName = (tourId) => {
-    return axios.get(baseURL+`/tour/tourname/${tourId}`)
+    return axios.get(baseURL+`/tour/tourname/${tourId}`, {headers : token})
 }
 
 // 최저값 가져오기
 const getRoomMinPrice = (tourId) => {
-    return axios.get(baseURL+`/tour/minprice/${tourId}`)
+    return axios.get(baseURL+`/tour/minprice/${tourId}`, {headers : token})
 }
 
 const MainService = {
