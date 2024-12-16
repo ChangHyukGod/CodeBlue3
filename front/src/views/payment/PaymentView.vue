@@ -185,7 +185,7 @@ export default {
 
       const discountRate = coupon.value / 100;
       const discountedPrice =
-        this.reservation.originalPrice * (1 - discountRate);
+        Math.floor(this.reservation.originalPrice * (1 - discountRate));
       this.reservation.totalPrice = discountedPrice.toLocaleString();
       this.showCouponForm = false; // 폼 닫기
     },

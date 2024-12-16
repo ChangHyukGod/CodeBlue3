@@ -90,7 +90,6 @@ import CouponService from "@/services/coupon/CounponService";
 import TossService from "@/services/toss/TossService";
 import PortOne from "@portone/browser-sdk/v2";
 
-
 export default {
   data() {
     return {
@@ -119,8 +118,8 @@ export default {
         channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
         paymentId: `payment-${crypto.randomUUID()}`,
         order: {
-            name: "라마다 호텔",
-            amount: 90870
+          name: "라마다 호텔",
+          amount: 90870,
         },
         orderName: "",
         totalAmount: "",
@@ -168,14 +167,14 @@ export default {
         this.toss.orderName = this.reservation.tourName;
         this.toss.order.name = this.reservation.tourName;
         const response = await PortOne.requestPayment(this.toss);
-        if(response.code !== undefined){
+        if (response.code !== undefined) {
           //오류 발생
           return alert(response.message);
         }
 
         TossService.notified(this.toss)
-        .then((response) => console.log(response))
-        .catch((error) => console.error(error.response.data));
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error.response.data));
       } catch (error) {
         console.log(error);
       }
@@ -207,8 +206,10 @@ export default {
       }
 
       const discountRate = coupon.value / 100;
-      const discountedPrice =
-        this.reservation.originalPrice * (1 - discountRate);
+      const discountedPrice = Math.floor(
+        this.reservation.originalPrice * (1 - discountRate)
+      );
+
       this.reservation.totalPrice = discountedPrice.toLocaleString();
 
       this.showCouponForm = false; // 폼 닫기

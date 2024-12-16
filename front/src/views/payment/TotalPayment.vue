@@ -49,7 +49,6 @@
       <p class="no-items">선택된 항목이 없습니다.</p>
     </div>
 
-    
     <div class="payment-method">
       <h3>결제 수단</h3>
       <!-- 쿠폰등록하기 버튼 -->
@@ -112,7 +111,6 @@ import CouponService from "@/services/coupon/CounponService";
 import TossService from "@/services/toss/TossService";
 import PortOne from "@portone/browser-sdk/v2";
 
-
 export default {
   data() {
     return {
@@ -144,8 +142,8 @@ export default {
         channelKey: "channel-key-0f8548f7-3030-42ee-b5e4-fce98be8af2f",
         paymentId: `payment-${crypto.randomUUID()}`,
         order: {
-            name: "라마다 호텔",
-            amount: 90870
+          name: "라마다 호텔",
+          amount: 90870,
         },
         orderName: "",
         totalAmount: "",
@@ -198,23 +196,20 @@ export default {
 
     async processPayment() {
       try {
-        // 쉼표를 제거하고 정수형으로 변환
-        const sanitizedPrice = parseInt(
-          this.reservation.totalPrice.replace(/,/g, ""),
-          10
-        );
-        this.toss.order.amount = sanitizedPrice; // 정수형으로 업데이트
-        this.toss.totalAmount = sanitizedPrice; // 정수형으로 업데이트
-        this.toss.orderName = this.reservation.tourName;
+        const firstTourName = this.selectedItems[0].tourName; // 0번째 이름
+        const remainingCount = this.selectedItems.length - 1; // 나머지 데이터 개수
+        this.toss.order.amount = this.totalPrice;
+        this.toss.totalAmount = this.totalPrice; 
+        this.toss.orderName = `${firstTourName} 외 ${remainingCount}건`;
         const response = await PortOne.requestPayment(this.toss);
-        if(response.code !== undefined){
+        if (response.code !== undefined) {
           //오류 발생
           return alert(response.message);
         }
 
         TossService.notified(this.toss)
-        .then((response) => console.log(response))
-        .catch((error) => console.error(error.response.data));
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error.response.data));
       } catch (error) {
         console.log(error);
       }
@@ -240,7 +235,7 @@ export default {
       }
 
       const discountRate = coupon.value / 100; // 할인율 (예: 20% -> 0.2)
-      const discountedPrice = this.originalPrice * (1 - discountRate);
+      const discountedPrice =  Math.floor(this.originalPrice * (1 - discountRate));
 
       this.totalPrice = Math.max(0, discountedPrice); // 최소 0으로 설정
       this.showCouponForm = false; // 폼 닫기
